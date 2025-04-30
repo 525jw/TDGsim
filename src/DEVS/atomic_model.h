@@ -1,8 +1,8 @@
-#include "basic_model.h"
+#include "model.h"
 
 #define TIME_TYPE float
 
-class AtomicModel{
+class AtomicModel : public Model{
 private:
 
 public:
