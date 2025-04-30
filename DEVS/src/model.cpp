@@ -20,6 +20,9 @@ void Model::AddState(const std::string& state){
 void Model::RemoveState(const std::string& state){
     states.erase(std::remove(states.begin(), states.end(), state), states.end());
 }
+void Model::SetParentModel(Model* model){
+    parentModel=model;
+}
 void Model::SetModelID(int id){
     modelID=id;
 }
@@ -33,6 +36,9 @@ const std::vector<std::string>& Model::GetOutputEvents() const{
 const std::vector<std::string>& Model::GetStates() const{
     return states;
 }
-int Model::GetModelID() const{
+const Model* Model::GetParentModel() const{
+    return parentModel;
+}
+const int Model::GetModelID() const{
     return modelID;
 }
