@@ -4,15 +4,21 @@
 #include <any>
 #include <string>
 
-#define TIME_TYPE float
-
 class AtomicModel : public Model{
 private:
-
+    time_t time=0;
 public:
-    virtual bool HandleExtEvent(inPort,) {return false;}
+    AtomicModel(int modelID);
+
+    // Ref: System Modeling Simulation, KTG, 108p 2-6-8
+    virtual bool HandleExtEvent(const std::string inPort, time_t curTime) {return false;}
+    virtual bool HandleTimeAdvance() {return false;}
+
     virtual bool ExtTransFn(const std::any& message) {return false;}
     virtual bool IntTransFn() {return false;}
     virtual bool OuputFn() {return false;}
-    virtual TIME_TYPE TimeAdvanceFn() {return -1;}
+    virtual time_t TimeAdvanceFn() {return -1;}
+
+    const time_t getTime() const;
+    void addOutputEvent();
 };

@@ -3,16 +3,16 @@
 #include <algorithm>
 
 void Model::AddInputPort(const std::string& input){
-    inputEvents.push_back(input);
+    inputs.push_back(input);
 }
 void Model::AddOutputPort(const std::string& output){
-    outputEvents.push_back(output);
+    outputs.push_back(output);
 }
 void Model::RemoveInputPort(const std::string& input){
-    inputEvents.erase(std::remove(inputEvents.begin(), inputEvents.end(), input), inputEvents.end());
+    inputs.erase(std::remove(inputs.begin(), inputs.end(), input), inputs.end());
 }
 void Model::RemoveOutputPort(const std::string& output){
-    outputEvents.erase(std::remove(outputEvents.begin(), outputEvents.end(), output), outputEvents.end());
+    outputs.erase(std::remove(outputs.begin(), outputs.end(), output), outputs.end());
 }
 void Model::AddState(const std::string& state){
     states.push_back(state);
@@ -28,10 +28,10 @@ void Model::SetModelID(int id){
 }
 
 const std::vector<std::string>& Model::GetInputEvents() const{
-    return inputEvents;
+    return inputs;
 }
 const std::vector<std::string>& Model::GetOutputEvents() const{
-    return outputEvents;
+    return outputs;
 }
 const std::vector<std::string>& Model::GetStates() const{
     return states;

@@ -4,8 +4,8 @@
 
 class Model{
 private:
-    std::vector<std::string> inputEvents;
-    std::vector<std::string> outputEvents;
+    std::vector<std::string> inputs;
+    std::vector<std::string> outputs;
     std::vector<std::string> states;
     Model* parentModel = nullptr;
     int modelID = 0;
