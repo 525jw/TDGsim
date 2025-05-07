@@ -1,9 +1,9 @@
-#include "event.h"
+#include "event.hpp"
 
-Event::Event(const std::any& senderModel, const std::string& senderPort, const std::any& message)
-    : senderModel(senderModel), senderPort(senderPort), message(message) {}
+Event::Event(const Model& senderModel, const std::string& senderPort, const std::any& message)
+    : senderModel(&senderModel), senderPort(senderPort), message(message) {}
 
-const std::any& Event::getSenderModel() const {
+const Model* Event::getSenderModel() const {
     return senderModel;
 }
 

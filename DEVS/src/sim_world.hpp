@@ -1,5 +1,5 @@
 #pragma once
-#include "coupled_model.h"
+#include "coupled_model.hpp"
 
 class SimWorld : public CoupledModel{
 

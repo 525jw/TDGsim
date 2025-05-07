@@ -1,25 +1,30 @@
 #pragma once
-#include "model.h"
-#include "event.h"
+#include "model.hpp"
+#include "event.hpp"
 #include <any>
 #include <string>
 
+class Engine;
+
 class AtomicModel : public Model{
 private:
-    float time=0;
+    TIME_T time;
+    TIME_T nextTime;
+    Engine* engine;
 public:
     AtomicModel(int modelID);
 
     virtual bool ExtTransFn(const std::any& message) {return false;}
     virtual bool IntTransFn() {return false;}
-    virtual bool OuputFn() {return false;}
-    virtual float TimeAdvanceFn() {return -1;}
+    virtual bool OutputFn() {return false;}
+    virtual TIME_T TimeAdvanceFn() {return -1;}
 
-    void HandleExtEvent(const Event extEvent, const std::string inPort, time_t curTime);
-    void HandleTimeAdvance();
-    void UpdateTime();
-    const float getTime() const;
-    void addOutputEvent();
+    void UpdateNextTime();
+    void addOutputEvent(const std::string outPort, std::any *message);
+
+    void HandleExtEvent(const Event extEvent, const std::string inPort, TIME_T engineTime);
+    void HandleTimeAdvance(const TIME_T engineTime);
+    const TIME_T queryNextTime() const;
 };
 
 

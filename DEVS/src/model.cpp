@@ -1,44 +1,50 @@
 #pragma once
-#include "model.h"
+#include "model.hpp"
+#include "engine.hpp"
 #include <algorithm>
 
 void Model::AddInputPort(const std::string& input){
-    inputs.push_back(input);
+    this->inputs.push_back(input);
 }
 void Model::AddOutputPort(const std::string& output){
-    outputs.push_back(output);
+    this->outputs.push_back(output);
 }
 void Model::RemoveInputPort(const std::string& input){
-    inputs.erase(std::remove(inputs.begin(), inputs.end(), input), inputs.end());
+    this->inputs.erase(std::remove(this->inputs.begin(), this->inputs.end(), input), this->inputs.end());
 }
 void Model::RemoveOutputPort(const std::string& output){
-    outputs.erase(std::remove(outputs.begin(), outputs.end(), output), outputs.end());
+    this->outputs.erase(std::remove(this->outputs.begin(), this->outputs.end(), output), this->outputs.end());
 }
 void Model::AddState(const std::string& state){
-    states.push_back(state);
+    this->states.push_back(state);
 }
 void Model::RemoveState(const std::string& state){
-    states.erase(std::remove(states.begin(), states.end(), state), states.end());
+    this->states.erase(std::remove(this->states.begin(), this->states.end(), state), this->states.end());
 }
-void Model::SetParentModel(Model* model){
-    parentModel=model;
+void Model::SetParentModel(Model& model){
+    this->parentModel = &model;
 }
 void Model::SetModelID(int id){
-    modelID=id;
+    this->modelID=id;
 }
-
+void Model::SetEngine(Engine& engine) { 
+    this->engine = &engine; 
+}
 const std::vector<std::string>& Model::GetInputEvents() const{
-    return inputs;
+    return this->inputs;
 }
 const std::vector<std::string>& Model::GetOutputEvents() const{
-    return outputs;
+    return this->outputs;
 }
 const std::vector<std::string>& Model::GetStates() const{
-    return states;
+    return this->states;
 }
 const Model* Model::GetParentModel() const{
-    return parentModel;
+    return this->parentModel;
 }
 const int Model::GetModelID() const{
-    return modelID;
+    return this->modelID;
+}
+const Engine* Model::GetEngine() const{
+    return this->engine;
 }
