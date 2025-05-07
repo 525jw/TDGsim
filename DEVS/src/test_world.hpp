@@ -1,6 +1,6 @@
 #pragma once
 #include "coupled_model.hpp"
 
-class SimWorld : public CoupledModel{
+class TestWorld : public CoupledModel{
 
 };

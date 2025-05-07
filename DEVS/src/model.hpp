@@ -22,9 +22,11 @@ public:
     void AddInputPort(const std::string& input);
     void AddOutputPort(const std::string& output);
     void AddState(const std::string& state);
+
     void RemoveInputPort(const std::string& input);
     void RemoveOutputPort(const std::string& output);
     void RemoveState(const std::string& state);
+    
     void SetParentModel(Model& model);
     void SetModelID(int id);
     void SetEngine(Engine& engine);

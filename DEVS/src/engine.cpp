@@ -1,6 +1,9 @@
 #pragma once
 #include "engine.hpp"
 
+Engine::Engine() 
+    : couplingGraph(this), currentTime(0), rootModel(nullptr) {}
+
 void Engine::SetOutMostModel(Model* model){
     
 }
@@ -16,7 +19,8 @@ void Engine::Run(){
         Event* event = nullptr;
         while(!this->eventQueue.empty()){
             *event = this->eventQueue.front();
-            
+            this->eventQueue.pop();
+            this->couplingGraph.broadcastEvent(*event);
         }
     }
 }

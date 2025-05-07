@@ -1,12 +1,12 @@
 #pragma once
 #include "engine.hpp"
-#include "sim_world.hpp"
+#include "test_world.hpp"
 #include <iostream>
 
 int main(){
-    SimWorld simWorld = SimWorld();
+    TestWorld testWorld = TestWorld();
     Engine engine = Engine();
-    engine.SetOutMostModel(simWorld);
+    engine.SetOutMostModel(testWorld);
     engine.Run();
     return 0;
 }
