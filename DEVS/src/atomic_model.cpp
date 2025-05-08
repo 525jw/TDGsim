@@ -33,3 +33,7 @@ void AtomicModel::addOutputEvent(const std::string outPort, std::any* message){
 const TIME_T AtomicModel::queryNextTime() const {
     return this->nextTime;
 }
+
+// const bool Model::IsAtomic() const{
+//     return true;
+// }

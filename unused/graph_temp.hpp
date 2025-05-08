@@ -56,8 +56,6 @@ class GraphNode {
 			const std::string& getModelID() const;
 			const std::string& getPort() const;
 			void* getModel() const;
-			bool isDynamicCoupledModel() const;
-			bool isMRDEVSCoupledModel() const;
 	
 			std::string toString() const;
 			bool equals(const GraphNode& other) const;

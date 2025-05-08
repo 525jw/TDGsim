@@ -1,12 +1,12 @@
 #pragma once
 #include "engine.hpp"
-#include "test_world.hpp"
+#include "test_cannonsys.cpp"
 #include <iostream>
 
 int main(){
-    TestWorld testWorld = TestWorld();
+    TestCannonSys testCannonsys = TestCannonSys();
     Engine engine = Engine();
-    engine.SetOutMostModel(testWorld);
+    engine.SetOutMostModel(testCannonSys);
     engine.Run();
     return 0;
 }

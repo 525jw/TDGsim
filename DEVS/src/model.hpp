@@ -17,7 +17,6 @@ private:
     Model* parentModel = nullptr;
     int modelID = 0;
     Engine* engine = nullptr;
-
 public:
     void AddInputPort(const std::string& input);
     void AddOutputPort(const std::string& output);
@@ -41,4 +40,6 @@ public:
     virtual void HandleExtEvent(const Event extEvent, const std::string inPort, TIME_T engineTime);
     virtual void HandleTimeAdvance(const TIME_T engineTime);
     virtual const TIME_T queryNextTime() const;
+
+    // const bool IsAtomic() const; // Used as isInstance alternative
 };

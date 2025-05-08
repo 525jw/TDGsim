@@ -1,11 +1,24 @@
 #pragma once
 #include "engine.hpp"
+#include <queue>
 
 Engine::Engine() 
     : couplingGraph(this), currentTime(0), rootModel(nullptr) {}
 
-void Engine::SetOutMostModel(Model* model){
-    
+void Engine::BuildCouplingGraph(Model* model){
+    this->rootModel = model;
+    subModels.push_back(rootModel);
+    // std::queue<Model*> modelBFS; // Traversal Queue
+    // Model* currentModel = nullptr;
+    // while(!modelBFS.empty()){
+    //     currentModel = modelBFS.front(); 
+    //     modelBFS.pop();
+    //     if(!currentModel->IsAtomic()){
+            
+    //     }
+    // }
+    this->couplingGraph.AddNode();
+    this->couplingGraph.AddEdge();
 }
 
 void Engine::Run(){
