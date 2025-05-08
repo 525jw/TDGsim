@@ -44,7 +44,7 @@ bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort) {
 }
 
 void CoupledModel::HandleExtEvent(const Event extEvent, const std::string inPort, TIME_T engineTime){
-
+    
 }
 void CoupledModel::HandleTimeAdvance(const TIME_T engineTime){
 

@@ -3,14 +3,14 @@
 #include "engine.hpp"
 #include "event.hpp"
 
-AtomicModel::AtomicModel(int modelID)
-    : time(0.0), nextTime(INF_FLOAT)
+AtomicModel::AtomicModel(int modelID, Engine* engine)
+    : time(0.0), nextTime(INF_FLOAT), parentEngine(engine)
 {
     SetModelID(modelID);
 }
 
 void AtomicModel::HandleExtEvent(const Event extEvent, const std::string inPort, TIME_T engineTime) {
-    ExtTransFn(extEvent.getMessage());
+    ExtTransFn(inPort, extEvent.getMessage());
     this->time = engineTime;
     UpdateNextTime();
 }
@@ -27,7 +27,7 @@ void AtomicModel::UpdateNextTime(){
 
 void AtomicModel::addOutputEvent(const std::string outPort, std::any* message){
     Event event(*this, outPort, message);
-    this->engine->AddEvent(event);
+    this->parentEngine->AddEvent(event);
 }
 
 const TIME_T AtomicModel::queryNextTime() const {

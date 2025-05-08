@@ -10,11 +10,11 @@ class AtomicModel : public Model{
 private:
     TIME_T time;
     TIME_T nextTime;
-    Engine* engine;
+    Engine* parentEngine;
 public:
-    AtomicModel(int modelID);
+    AtomicModel(int modelID, Engine* engine);
 
-    virtual bool ExtTransFn(const std::any& message) {return false;}
+    virtual bool ExtTransFn(const std::string inPort, const std::any& message) {return false;}
     virtual bool IntTransFn() {return false;}
     virtual bool OutputFn() {return false;}
     virtual TIME_T TimeAdvanceFn() {return -1;}

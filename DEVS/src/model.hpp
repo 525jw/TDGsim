@@ -14,6 +14,7 @@ private:
     std::vector<std::string> inputs;
     std::vector<std::string> outputs;
     std::vector<std::string> states;
+    std::string curState;
     Model* parentModel = nullptr;
     int modelID = 0;
     Engine* engine = nullptr;
@@ -29,10 +30,12 @@ public:
     void SetParentModel(Model& model);
     void SetModelID(int id);
     void SetEngine(Engine& engine);
+    void SetCurState(std::string state);
 
     const std::vector<std::string>& GetInputEvents() const;
     const std::vector<std::string>& GetOutputEvents() const;
     const std::vector<std::string>& GetStates() const;
+    const std::string& GetCurState() const;
     const Model* GetParentModel() const;
     const int GetModelID() const;
     const Engine* GetEngine() const;
