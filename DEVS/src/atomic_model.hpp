@@ -8,7 +8,6 @@ class Engine;
 
 class AtomicModel : public Model{
 private:
-    TIME_T time;
     TIME_T nextTime;
     Engine* parentEngine;
 public:

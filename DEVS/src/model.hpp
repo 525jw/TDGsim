@@ -7,9 +7,12 @@
 #define INF_FLOAT 1e30f
 
 class Engine;
+class Event;
 
 
 class Model{
+protected:
+    TIME_T time;
 private:
     std::vector<std::string> inputs;
     std::vector<std::string> outputs;

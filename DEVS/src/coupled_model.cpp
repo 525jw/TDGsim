@@ -18,35 +18,19 @@ bool CoupledModel::AddCoupling(Model* srcModel, std::string* srcPort,
 }
 bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort,
                                   Model* detModel, std::string detPort) {
-    auto it = std::remove_if(couplings.begin(), couplings.end(),
-        [&](const Coupling& c) {
-            return c.getSrcModel() == srcModel &&
-                    *c.getSrcPort() == *srcPort &&
-                    c.getDetModel() == detModel &&
-                    *c.getDetPort() == detPort;
-        });
-    if (it != couplings.end()) {
-        couplings.erase(it, couplings.end());
-        return true;
-    }
+                        
     return false;
 }
 bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort) {
-    auto it = std::remove_if(couplings.begin(), couplings.end(),
-        [&](const Coupling& c) {
-            return c.getSrcModel() == srcModel && *c.getSrcPort() == *srcPort;
-        });
-    if (it != couplings.end()) {
-        couplings.erase(it, couplings.end());
-        return true;
-    }
+
     return false;
 }
 
 void CoupledModel::HandleExtEvent(const Event extEvent, const std::string inPort, TIME_T engineTime){
-    
+    // powergridsim 따라가면 필요없음
 }
 void CoupledModel::HandleTimeAdvance(const TIME_T engineTime){
+    this->time = engineTime;
 
 }
 const TIME_T CoupledModel::queryNextTime() const{
