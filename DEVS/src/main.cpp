@@ -6,7 +6,9 @@
 int main(){
     SimWorld simWorld = SimWorld();
     Engine engine = Engine();
-    engine.SetOutMostModel(simWorld);
+
+    engine.SetOutMostModel(&simWorld);
     engine.Run();
+    
     return 0;
 }

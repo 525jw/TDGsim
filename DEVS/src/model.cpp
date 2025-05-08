@@ -14,18 +14,37 @@ void Model::RemoveInputPort(const std::string& input){
 void Model::RemoveOutputPort(const std::string& output){
     outputs.erase(std::remove(outputs.begin(), outputs.end(), output), outputs.end());
 }
-void Model::AddState(const std::string& state){
-    states.push_back(state);
+
+// 상태 관리
+void Model::AddState(const std::string& state, const std::any& value){
+    states[state] = value;
 }
 void Model::RemoveState(const std::string& state){
-    states.erase(std::remove(states.begin(), states.end(), state), states.end());
+    states.erase(state);
 }
+void Model::SetStateValue(const std::string& state, const std::any& value){
+    states[state] = value;
+}
+std::any Model::GetStateValue(const std::string& state) const{
+    auto it = states.find(state);
+    if (it != states.end()) return it->second;
+    return {}; // Return an empty std::any if the state is not found
+}
+
+
 void Model::SetParentModel(Model* model){
     parentModel=model;
+}
+const Model* Model::GetParentModel() const{
+    return parentModel;
 }
 void Model::SetModelID(int id){
     modelID=id;
 }
+const int Model::GetModelID() const{
+    return modelID;
+}
+
 
 const std::vector<std::string>& Model::GetInputEvents() const{
     return inputs;
@@ -33,12 +52,14 @@ const std::vector<std::string>& Model::GetInputEvents() const{
 const std::vector<std::string>& Model::GetOutputEvents() const{
     return outputs;
 }
-const std::vector<std::string>& Model::GetStates() const{
+const std::unordered_map<std::string, std::any>& Model::GetStates() const{
     return states;
 }
-const Model* Model::GetParentModel() const{
-    return parentModel;
+
+
+void Model::SetEngine(Engine* e) {
+    engine = e;
 }
-const int Model::GetModelID() const{
-    return modelID;
+Engine* Model::GetEngine() const {
+    return engine;
 }

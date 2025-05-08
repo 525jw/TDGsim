@@ -6,20 +6,34 @@
 
 class AtomicModel : public Model{
 private:
-    float time=0;
+    float time = 0.0f;              // 현재 시각
+    float nextTimeAdvance = 0.0f;   // 다음 전이까지 걸리는 시간
+    float nextTime = 0.0f;          // 다음 전이 시각
+    bool continueFlag = false;      // 외부 천이 후 내부 시간전진 할지말지...
+
 public:
     AtomicModel(int modelID);
 
-    virtual bool ExtTransFn(const std::any& message) {return false;}
-    virtual bool IntTransFn() {return false;}
-    virtual bool OuputFn() {return false;}
-    virtual float TimeAdvanceFn() {return -1;}
+    // 각 모델이 오버라이드 해야 하는 함수들
+    virtual bool ExtTransFn(const std::string& port, const std::any& message) {return false;}    // 외부 전이 함수
+    virtual bool IntTransFn() {return false;}       // 내부 전이 함수
+    virtual bool OutputFn() {return false;}         // 출력 함수
+    virtual float TimeAdvanceFn() {return -1.0f;}   // 시간 전진 함수
 
-    void HandleExtEvent(const Event extEvent, const std::string inPort, time_t curTime);
+    // 외부 이벤트 수신 및 처리
+    void HandleExtEvent(const Event& extEvent, const std::string& inPort, float currentTime);
+    // 시간 전진 요청 처리
     void HandleTimeAdvance();
-    void UpdateTime();
+    
+    void ContinueTimeAdvance();
+    bool CheckContinue();
+
+    void AddOutputEvent(const std::string& outPort, const std::any& message);
+    void ExecTimeAdvance();
+
     const float getTime() const;
-    void addOutputEvent();
+    float GetNextTimeAdvance() const;
+    float GetNextTime() const;
 };
 
 

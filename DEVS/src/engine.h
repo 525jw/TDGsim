@@ -10,7 +10,7 @@ private:
     std::priority_queue<Event> eventQueue;
     float currentTime;
 public:
-    void SetOutMostModel(Model model);
+    void SetOutMostModel(Model* model);
     void Run();
     void AddEvent(Event event);
 };
