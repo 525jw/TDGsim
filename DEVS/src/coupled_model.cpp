@@ -10,15 +10,15 @@ void CoupledModel::AddModel(Model* model) {
     model->SetParentModel(this);
     model->SetEngine(engine); // 상속받은 엔진 주입
 }
-void CoupledModel::AddCoupling(Model* src, const std::string& srcPort, Model* dst, const std::string& dstPort) {
-    couplings.emplace_back(src, srcPort, dst, dstPort);
+void CoupledModel::AddCoupling(Model* src, const std::string& srcPort, Model* tgt, const std::string& tgtPort) {
+    couplings.emplace_back(src, srcPort, tgt, tgtPort);
 }
 
-void CoupledModel::AddExternallInputPort(const std::string& inPort, Model* dstModel, const std::string& dstPort) {
+void CoupledModel::AddExternalInputPort(const std::string& inPort, Model* dstModel, const std::string& dstPort) {
     // 외부 입력 포트 추가
     AddCoupling(this, inPort, dstModel, dstPort);
 }
-void CoupledModel::AddExternallOutputPort(Model* srcModel, const std::string& srcPort, const std::string& outPort) {
+void CoupledModel::AddExternalOutputPort(Model* srcModel, const std::string& srcPort, const std::string& outPort) {
     // 외부 출력 포트 추가
     AddCoupling(srcModel, srcPort, this, outPort);
 }
@@ -36,11 +36,33 @@ void CoupledModel::HandleTimeAdvance() {
 }
 
 
+float CoupledModel::GetNextTimeAdvance() const {
+    float minNextTimeAdvance = std::numeric_limits<float>::max();
+    for (const auto* m : subModels) {
+        float time = m->GetNextTimeAdvance();
+        if (time < minNextTimeAdvance) {
+            minNextTimeAdvance = time;
+        }
+    }
+    return minNextTimeAdvance;
+}
+// 자식 모델들 중 가장 먼저 움직이는 시간
+float CoupledModel::GetNextTime() const {
+    float minNextTime = std::numeric_limits<float>::max();
+    for (const auto* m : subModels) {
+        float time = m->GetNextTime();
+        if (time < minNextTime) {
+            minNextTime = time;
+        }
+    }
+    return minNextTime;
+}
 
+// 타겟은 coupling을 기준으로 동적으로 결정됨
 void CoupledModel::BroadcastEvent(const Event& e) {
     for (const auto& edge : couplings) {
-        if (edge.sourceModel == e.getSenderModel() && edge.sourcePort == e.getSenderPort()) {
-            edge.targetModel->HandleExtEvent(e, edge.targetPort, e.getEventTime());
+        if (edge.sourceModel == e.GetSenderModel() && edge.sourcePort == e.GetSenderPort()) {
+            edge.targetModel->HandleExtEvent(e, edge.targetPort, e.GetEventTime());
         }
     }
 }

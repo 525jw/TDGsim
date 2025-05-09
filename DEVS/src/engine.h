@@ -6,11 +6,18 @@
 
 class Engine {
 private:
-    Model* rootModel;
     std::priority_queue<Event> eventQueue;
-    float currentTime;
+    std::vector<Model*> models;
+    float currentTime = 0.0f;
 public:
-    void SetOutMostModel(Model* model);
-    void Run();
+    Engine();
+
+    void AddModel(Model* model);
     void AddEvent(Event event);
+    float GetCurrentTime() const;
+
+    void Run();
+
+    void Reset();
+    //void SetOutMostModel(Model* model);
 };

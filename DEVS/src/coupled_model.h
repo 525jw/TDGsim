@@ -4,6 +4,7 @@
 #include "event.h"
 #include <vector>
 #include <map>
+#include <limits>
 
 class CoupledModel : public Model{
 private:
@@ -16,10 +17,10 @@ public:
 
     // sub model 추가, 연결 추가
     void AddModel(Model* model);
-    void AddCoupling(Model* src, const std::string& srcPort, Model* dst, const std::string& dstPort);
+    void AddCoupling(Model* src, const std::string& srcPort, Model* tgt, const std::string& tgtPort);
 
-    void AddExternallInputPort(const std::string& inPort, Model* dstModel, const std::string& dstPort);
-    void AddExternallOutputPort(Model* srcModel, const std::string& srcPort, const std::string& outPort);
+    void AddExternalInputPort(const std::string& inPort, Model* dstModel, const std::string& dstPort);
+    void AddExternalOutputPort(Model* srcModel, const std::string& srcPort, const std::string& outPort);
 
     void HandleExtEvent(const Event& extEvent, const std::string& port, float time) override;
     void HandleTimeAdvance() override;

@@ -12,7 +12,7 @@ void AtomicModel::HandleExtEvent(const Event& extEvent, const std::string& inPor
     continueFlag = false;
     time = currentTime;
     
-    ExtTransFn(inPort, extEvent.getMessage());
+    ExtTransFn(inPort, extEvent.GetMessage());
     if (!continueFlag) {
         ExecTimeAdvance();
     }
@@ -45,10 +45,10 @@ void AtomicModel::AddOutputEvent(const std::string& outPort, const std::any& mes
 
 void AtomicModel::ExecTimeAdvance() {
     nextTimeAdvance = TimeAdvanceFn();
-    nextTime = time + nextTimeAdvance;
+    nextTime = time + nextTimeAdvance; 
 }
 
-const float AtomicModel::getTime() const {
+float AtomicModel::GetTime() const {
     return time;
 }
 

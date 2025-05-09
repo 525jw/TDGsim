@@ -31,7 +31,7 @@ public:
     void AddOutputEvent(const std::string& outPort, const std::any& message);
     void ExecTimeAdvance();
 
-    const float getTime() const;
+    float GetTime() const;
     float GetNextTimeAdvance() const;
     float GetNextTime() const;
 };

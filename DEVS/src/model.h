@@ -37,7 +37,7 @@ public:
     void SetParentModel(Model* model);
     const Model* GetParentModel() const;
     void SetModelID(int id);
-    const int GetModelID() const;
+    int GetModelID() const;
 
     // getter
     const std::vector<std::string>& GetInputEvents() const;
@@ -53,5 +53,8 @@ public:
     virtual void HandleExtEvent(const Event& e, const std::string& port, float time) = 0;
     virtual void HandleTimeAdvance() = 0;
 
+    virtual float GetNextTime() const = 0;
+    virtual float GetNextTimeAdvance() const = 0;
+    
     virtual ~Model() = default; // Virtual destructor for proper cleanup of derived classes
 };

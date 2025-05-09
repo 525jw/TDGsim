@@ -1,4 +1,3 @@
-#pragma once
 #include "model.h"
 #include <algorithm>
 
@@ -41,7 +40,7 @@ const Model* Model::GetParentModel() const{
 void Model::SetModelID(int id){
     modelID=id;
 }
-const int Model::GetModelID() const{
+int Model::GetModelID() const{
     return modelID;
 }
 

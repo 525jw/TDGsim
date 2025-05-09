@@ -14,10 +14,10 @@ private:
 public:
     Event(Model* senderModel, const std::string& senderPort, const std::any& message, float eventTime);
     
-    float getEventTime() const;
-    const Model* getSenderModel() const;
-    const std::string& getSenderPort() const;
-    const std::any& getMessage() const;
+    float GetEventTime() const;
+    const Model* GetSenderModel() const;
+    const std::string& GetSenderPort() const;
+    const std::any& GetMessage() const;
     
     bool operator<(const Event& other) const {
         return eventTime > other.eventTime; // For max-heap
