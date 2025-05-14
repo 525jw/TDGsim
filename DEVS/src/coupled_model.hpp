@@ -4,12 +4,14 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <iostream>
+
+enum CouplingType { EIC, EOC, IC };
 
 class CoupledModel : public Model{
 private:
-    std::vector<Model> subModels; // TODO : change to a hash table for searching ID -> which model?
-    // Q : 하위모델을 모두 호출할거면 vector만으로 충분한거 아닌가? , powersim SimulationEngine.py line 27  
-    std::vector<Coupling> couplings;
+    std::vector<Model> subModels;
+    std::unordered_map<CouplingType, std::vector<Coupling>> couplings;
     
 public:
     // CoupledModel(int modelID, Engine* engine);
@@ -17,7 +19,7 @@ public:
 
     bool AddComponent(Model model);
 
-    bool AddCoupling(Model* srcModel, std::string* srcPort, Model* detModel, std::string* detPort);
+    bool AddCoupling(Model* srcModel, std::string* srcPort, Model* detModel, std::string* detPort, CouplingType* type);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort, Model* detModel, std::string* detPort);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort);
 

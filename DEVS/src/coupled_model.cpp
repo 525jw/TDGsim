@@ -16,9 +16,20 @@ bool CoupledModel::AddComponent(Model model) {
     return true;
 }
 
-bool CoupledModel::AddCoupling(Model* srcModel, std::string* srcPort, 
-                               Model* detModel, std::string* detPort) {
-    couplings.emplace_back(srcModel, srcPort, detModel, detPort);
+bool CoupledModel::AddCoupling(
+        Model* srcModel, std::string* srcPort, 
+        Model* detModel, std::string* detPort,
+        CouplingType* type = nullptr
+) {
+    CouplingType tp;
+
+    if (type != nullptr) {
+        tp = *type;
+    } else { 
+        // TODO: automatic CouplingType inference
+        std::cerr << "[AddCoupling] Please explicitly provide one of the following types: EIC, EOC, IC.\n";
+    }
+    couplings[tp].emplace_back(srcModel, srcPort, detModel, detPort);
     return true;
 }
 bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort,
@@ -35,7 +46,7 @@ bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort) {
 void CoupledModel::ReceiveExternalEvent(const Event& externalEvent, TIME_T engineTime){
     TIME_T minTime,newTime;
     minTime=newTime=TIME_INF;
-    for (auto& cp : couplings){
+    for (auto& cp : couplings[CouplingType :: EIC]){
         if (cp.getSrcModel() == externalEvent.getSenderModel() && cp.getSrcPort() == externalEvent.getSenderPort()){
             cp.getDetModel()->ReceiveExternalEvent(externalEvent, engineTime); //Broadcasting
             newTime = cp.getDetModel()->QueryNextTime();

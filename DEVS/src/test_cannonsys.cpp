@@ -6,8 +6,7 @@ class Engine;
 
 class TestCannonSys : public CoupledModel{
     
-    TestCannonSys(int id, Engine* engine){
-        this->SetModelID(id);
+    TestCannonSys(Engine* engine){
         this->SetEngine(engine);
         TestWorld();        
     }

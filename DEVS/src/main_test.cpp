@@ -5,7 +5,7 @@
 
 int main(){
     Engine engine = Engine();
-    TestCannonSys testCannonsys = TestCannonSys(0,&engine);
+    TestCannonSys testCannonsys = TestCannonSys(&engine);
     engine.SetOutMostModel(testCannonSys);
     engine.Run();
     return 0;
