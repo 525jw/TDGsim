@@ -34,11 +34,11 @@ bool CoupledModel::AddCoupling(
 }
 bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort,
                                   Model* detModel, std::string* detPort) {
-    // Unimplemented
+    // TODO : RemoveCoupling Unimplemented
     return false;
 }
 bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort) {
-    // Unimplemented
+    // TODO : RemoveCoupling Unimplemented
     return false;
 }
 
@@ -58,7 +58,7 @@ void CoupledModel::ReceiveExternalEvent(const Event& externalEvent, TIME_T engin
 }
 void CoupledModel::ReceiveTimeAdvanceRequest(const TIME_T engineTime){
     for (auto& sm : subModels){
-        ReceiveTimeAdvanceRequest(engineTime);
+        sm->ReceiveTimeAdvanceRequest(engineTime);
         lastTime = engineTime;
         nextTime = QueryNextTime();
     }

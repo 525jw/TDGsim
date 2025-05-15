@@ -37,9 +37,9 @@ public:
 
     bool ExtTransFn(const std::string& inPort, const FIREINFO& message) {
         if(inPort == "fire_in" && this->GetCurState() != "dead"){
-            if(this->myPosXY.first == message.targetX && this->myPosXY.second == message.targetY)
+            if(this->myPosXY.first == message.targetX && this->myPosXY.second == message.targetY){
                 health -= message.damage;
-            else
+            }else
                 return true;
             if(health > 0){
                 this->SetCurState("engage");
@@ -79,5 +79,10 @@ public:
             return 0.5f + static_cast<TIME_T>(rand()) / RAND_MAX;
         }
         return -1;
+    }
+    void UpdateTime(const TIME_T engineTime){
+        this->lastTime = engineTime;
+        this->nextTime = engineTime + TimeAdvanceFn();
+        std::cout<<this->myName<<" : lastTIme, nextTime = ("<<this->lastTime<<","<<this->nextTime<<") \n";
     }
 };
