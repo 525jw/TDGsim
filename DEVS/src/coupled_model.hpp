@@ -10,14 +10,14 @@ enum CouplingType { EIC, EOC, IC };
 
 class CoupledModel : public Model{
 private:
-    std::vector<Model> subModels;
-    std::unordered_map<CouplingType, std::vector<Coupling>> couplings;
+    std::vector<Model*> subModels;
+    std::unordered_map<CouplingType, std::vector<Coupling*>> couplings;
     
 public:
     // CoupledModel(int modelID, Engine* engine);
     CoupledModel(Engine* engine);
 
-    bool AddComponent(Model model);
+    bool AddComponent(Model* model);
 
     bool AddCoupling(Model* srcModel, std::string* srcPort, Model* detModel, std::string* detPort, CouplingType* type);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort, Model* detModel, std::string* detPort);

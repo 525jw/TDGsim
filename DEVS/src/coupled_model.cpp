@@ -11,7 +11,7 @@ CoupledModel::CoupledModel(Engine* engine)
     SetEngine(engine);
 }
 
-bool CoupledModel::AddComponent(Model model) {
+bool CoupledModel::AddComponent(Model* model) {
     subModels.push_back(model);
     return true;
 }
@@ -47,23 +47,28 @@ void CoupledModel::ReceiveExternalEvent(const Event& externalEvent, TIME_T engin
     TIME_T minTime,newTime;
     minTime=newTime=TIME_INF;
     for (auto& cp : couplings[CouplingType :: EIC]){
-        if (cp.getSrcModel() == externalEvent.getSenderModel() && cp.getSrcPort() == externalEvent.getSenderPort()){
-            cp.getDetModel()->ReceiveExternalEvent(externalEvent, engineTime); //Broadcasting
-            newTime = cp.getDetModel()->QueryNextTime();
+        if (cp->getSrcModel() == externalEvent.getSenderModel() && cp->getSrcPort() == externalEvent.getSenderPort()){
+            cp->getDetModel()->ReceiveExternalEvent(externalEvent, engineTime); //Broadcasting
+            newTime = cp->getDetModel()->QueryNextTime();
             minTime =  newTime < minTime ? newTime : minTime;
         }
     }
     lastTime = engineTime;
-    nextTime = minTime;
+    nextTime = minTime; // TODO : QueryNextTime과 중복코드 여지 존재
 }
 void CoupledModel::ReceiveTimeAdvanceRequest(const TIME_T engineTime){
     for (auto& sm : subModels){
-        if(sm.QueryNextTime() == nextTime){
-            sm.ReceiveTimeAdvanceRequest(engineTime);
-            
-        }
+        ReceiveTimeAdvanceRequest(engineTime);
+        lastTime = engineTime;
+        nextTime = QueryNextTime();
     }
 }
 const TIME_T CoupledModel::QueryNextTime() const{
-
+    TIME_T minTime,newTime;
+    minTime=newTime=TIME_INF;
+    for (auto& sm : subModels){
+        newTime=sm->QueryNextTime();
+        minTime = newTime < minTime ? newTime : minTime;
+    }
+    return minTime;
 }
