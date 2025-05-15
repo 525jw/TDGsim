@@ -1,12 +1,15 @@
 #pragma once
 #include "engine.hpp"
 #include "test_cannonsys.cpp"
+#include "test_world.hpp"
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <ctime> 
 
-std::vector<std::vector<int>> worldMap(5,std::vector<int>(5,0));
 
 int main(){
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
     Engine engine = Engine();
     TestCannonSys testCannonsys = TestCannonSys(&engine);
     engine.BuildDEVS(&testCannonsys);

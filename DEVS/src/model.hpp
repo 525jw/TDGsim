@@ -35,7 +35,8 @@ public:
     const std::vector<std::string>& GetInputPorts() const;
     const std::vector<std::string>& GetOutputPorts() const;
     
-    virtual void ReceiveExternalEvent(const Event& externalEvent, TIME_T engineTime); // when receive (x,t) 
-    virtual void ReceiveTimeAdvanceRequest(const TIME_T engineTime); // when receive (*,t)
-    virtual const TIME_T QueryNextTime() const;
+    virtual void ReceiveExternalEvent(const Event& externalEvent, TIME_T engineTime) = 0; // when receive (x,t) 
+    virtual void ReceiveTimeAdvanceRequest(const TIME_T engineTime) = 0; // when receive (*,t)
+    virtual const TIME_T QueryNextTime() const = 0;
+    virtual ~Model();
 };

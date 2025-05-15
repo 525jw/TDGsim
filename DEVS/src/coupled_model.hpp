@@ -18,8 +18,9 @@ public:
     CoupledModel(Engine* engine);
 
     bool AddComponent(Model* model);
-
-    bool AddCoupling(Model* srcModel, std::string* srcPort, Model* detModel, std::string* detPort, CouplingType* type);
+    
+    //
+    bool AddCoupling(Model* srcModel, std::string srcPort, Model* detModel, std::string detPort, CouplingType type);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort, Model* detModel, std::string* detPort);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort);
 

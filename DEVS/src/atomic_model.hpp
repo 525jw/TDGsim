@@ -25,7 +25,7 @@ public:
     const TIME_T QueryNextTime() const;
 
     void UpdateTime(const TIME_T engineTime);
-    void addOutputEvent(const std::string& outputPort, std::any& message);
+    void AddOutputEvent(const std::string& outputPort, std::any& message);
 
     virtual bool ExtTransFn(const std::string& inPort, const std::any& message) {return false;}
     virtual bool IntTransFn() {return false;}

@@ -17,5 +17,5 @@ public:
 
     void Run();
     void AddEvent(Event* event); // The only method accessible from external classes (e.g., AtomicModel)
-    // const TIME_T GetEngineTime() const;
+    const TIME_T GetCurrentTime() const;
 };

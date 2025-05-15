@@ -34,3 +34,4 @@ const std::vector<std::string>& Model::GetInputPorts() const{
 const std::vector<std::string>& Model::GetOutputPorts() const{
     return this->outputPorts;
 }
+Model::~Model() = default;
