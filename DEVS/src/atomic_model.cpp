@@ -4,14 +4,11 @@
 #include "event.hpp"
 #include <algorithm>
 
-// AtomicModel::AtomicModel(int modelID, Engine* engine)
-// {
-//     SetModelID(modelID);
-//     SetEngine(engine);
-// }
-AtomicModel::AtomicModel(Engine* engine)
+AtomicModel::AtomicModel(int modelID, Engine* engine)
 {
+    SetModelID(modelID);
     SetEngine(engine);
+    this->engine->RegisterModelWithID(this);
 }
 
 const std::vector<std::string>& AtomicModel::GetStates() const{
@@ -35,14 +32,18 @@ void AtomicModel::RemoveState(const std::string& state) {
 
 
 void AtomicModel::ReceiveExternalEvent(const Event& externalEvent,TIME_T engineTime){
-    ExtTransFn(externalEvent.getSenderPort(), externalEvent.getMessage());
-    UpdateTime(engineTime);
+    if(this->lastTime <= engineTime && engineTime <= this->nextTime){
+        ExtTransFn(externalEvent.getSenderPort(), externalEvent.getMessage());
+        UpdateTime(engineTime);
+    }
 }
 
 void AtomicModel::ReceiveTimeAdvanceRequest(const TIME_T engineTime){
-    OutputFn();
-    IntTransFn();
-    UpdateTime(engineTime);
+    if(engineTime >= this->nextTime){
+        OutputFn();
+        IntTransFn();
+        UpdateTime(engineTime);
+    }
 }
 const TIME_T AtomicModel::QueryNextTime() const{
     return this->nextTime;
@@ -55,6 +56,6 @@ void AtomicModel::UpdateTime(const TIME_T engineTime){
 }
 
 void AtomicModel::AddOutputEvent(const std::string& outputPort, std::any& message){
-    Event event(*this, outputPort, message);
-    this->engine->AddEvent(&event);
+    Event* event = new Event(*this, outputPort, message);
+    this->engine->AddEvent(event);
 }

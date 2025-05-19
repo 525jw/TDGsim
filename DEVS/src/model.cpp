@@ -3,15 +3,15 @@
 #include "engine.hpp"
 #include <algorithm>
 
-// void Model::SetModelID(int id){
-//     this->modelID=id;
-// }
+void Model::SetModelID(int id){
+    this->modelID=id;
+}
 void Model::SetEngine(Engine* engine) { 
     this->engine = engine; 
 }
-// const int Model::GetModelID() const{
-//     return this->modelID;
-// }
+const int Model::GetModelID() const{
+    return this->modelID;
+}
 const Engine* Model::GetEngine() const{
     return this->engine;
 }
