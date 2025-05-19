@@ -2,6 +2,7 @@
 #include "atomic_model.hpp"
 #include "test_world.hpp"
 #include "message.cpp"
+#include "logger.hpp"
 #include <utility>
 #include <iostream>
 #include <string>
@@ -12,8 +13,8 @@ private:
     int health = 100;
     std::string myName;
 public:
-    TestCannon(Engine* engine, std::string name)
-        :  AtomicModel(engine)
+    TestCannon(int modelID, Engine* engine, std::string name)
+        :  AtomicModel(modelID, engine)
     {
         this->myName=name;
         std::pair<int,int> myPosXY;
@@ -24,12 +25,13 @@ public:
         } while (worldMap[y][x] != 0);
         myPosXY.first=x; myPosXY.second=y;
         worldMap[y][x]=1;
-        std::cout<<"! ! ! "<<myName<<" created , pos(x,y) = ("<<myPosXY.first<<","<<myPosXY.second<<") \n";
+        logger<<"! ! ! "<<myName<<" created id:"<<this->GetModelID()<<", pos(x,y) = ("<<myPosXY.first<<","<<myPosXY.second<<") \n";
 
+        this->AddState("idle");
         this->AddState("engage");
         this->AddState("dead");
 
-        this->SetCurState("engage");
+        this->SetCurState("idle");
         
         this->AddInputPort("fire_in");
         this->AddOutputPort("fire_out");
@@ -39,6 +41,7 @@ public:
         if(inPort == "fire_in" && this->GetCurState() != "dead"){
             if(this->myPosXY.first == message.targetX && this->myPosXY.second == message.targetY){
                 health -= message.damage;
+                logger<<"[Model] "<<this->myName<<"hit ! health = "<<this->health<<std::endl;
             }else
                 return true;
             if(health > 0){
@@ -51,7 +54,9 @@ public:
         return true;
     }
     bool IntTransFn() {
-        if(this->GetCurState()=="engage"){
+        if(this->GetCurState()=="idle"){
+            this->SetCurState("engage");
+        }else if(this->GetCurState()=="engage"){
             // TODO : transition engage -> dead when health is low
         }
         return true;
@@ -75,14 +80,28 @@ public:
         return true;
     }
     TIME_T TimeAdvanceFn() {
-        if(this->GetCurState()=="engage"){
-            return 0.5f + static_cast<TIME_T>(rand()) / RAND_MAX;
+        if (this->GetCurState() == "engage") {
+            int steps = 10; // 0.5<= N <1.5 는 0.1 간격으로 10개 값 (0.5, 0.6, ..., 1.4)
+            int rnd = std::rand() % steps; // 0 ~ 9
+            return 0.5f + rnd * 0.1f;
         }
         return -1;
-    }
+    }    
     void UpdateTime(const TIME_T engineTime){
         this->lastTime = engineTime;
         this->nextTime = engineTime + TimeAdvanceFn();
-        std::cout<<this->myName<<" : lastTIme, nextTime = ("<<this->lastTime<<","<<this->nextTime<<") \n";
+        logger<<"! ! ! "<<this->myName<<" : lastTIme, nextTime = ("<<this->lastTime<<","<<this->nextTime<<") \n";
+    }
+    void ReceiveTimeAdvanceRequest(const TIME_T engineTime) override{
+        AtomicModel::ReceiveTimeAdvanceRequest(engineTime);
+        logger<<"! ! ! "<<this->myName<<" received (*,"<<engineTime<<"), next TA updated to "<<this->nextTime<<"\n";
+    }
+    void ReceiveExternalEvent(const Event& externalEvent,TIME_T engineTime) override{
+        AtomicModel::ReceiveExternalEvent(externalEvent, engineTime);
+        logger<<"! ! ! "<<this->myName<<" received (x,"<<engineTime<<"), next TA updated to "<<this->nextTime<<"\n";
+    }
+    const TIME_T QueryNextTime() const override{
+        logger<<"! ! ! "<<this->myName<<" ("<<this->GetCurState()<<") "<<" sends TA : "<<this->nextTime<<std::endl;
+        return AtomicModel::QueryNextTime();
     }
 };

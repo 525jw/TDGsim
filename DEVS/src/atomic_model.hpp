@@ -11,8 +11,7 @@ private:
     std::vector<std::string> states;
     std::string currentState;
 public:
-    // AtomicModel(int modelID, Engine* engine);
-    AtomicModel(Engine* engine);
+    AtomicModel(int modelID, Engine* engine);
 
     void AddState(const std::string& state);
     void RemoveState(const std::string& state);

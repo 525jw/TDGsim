@@ -16,16 +16,17 @@ protected:
     TIME_T nextTime = 0.0;
 
 private:
-    //int modelID = 0;
+    int modelID;
     
     // input and output event sets
     std::vector<std::string> inputPorts;
     std::vector<std::string> outputPorts;
     
-public:    
-    //void SetModelID(int id);
+public: 
+    // Model(int modelID, Engine* engine);
+    void SetModelID(int id);
     void SetEngine(Engine* engine);
-    //const int GetModelID() const;
+    const int GetModelID() const;
     const Engine* GetEngine() const;
     
     void AddInputPort(const std::string& inputPort);
