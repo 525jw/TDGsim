@@ -42,7 +42,7 @@ void AtomicModel::ReceiveExternalEvent(const Event& externalEvent,TIME_T engineT
 }
 
 void AtomicModel::ReceiveTimeAdvanceRequest(const TIME_T engineTime){
-    if(engineTime >= this->nextTime){ // if t=tN then
+    if(engineTime == this->nextTime){ // if t=tN then
         OutputFn();
         IntTransFn();
         UpdateTime(engineTime);

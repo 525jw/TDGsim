@@ -8,7 +8,7 @@
 class Engine {
 private:
     Model* rootModel;
-    std::unordered_map<int, Model*> modelsWithID;
+    std::unordered_map<int, Model*> modelsWithID; // TODO : coupled model 멤버 변수와 같은 구조, 통합이 가능한지 논의 필요
     std::queue<Event*> eventQueue;
     TIME_T engineTime;
 public:

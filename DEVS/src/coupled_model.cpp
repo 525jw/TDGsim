@@ -38,28 +38,31 @@ bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort) {
 //Handling EIC
 void CoupledModel::ReceiveExternalEvent(const Event& externalEvent, TIME_T engineTime){
     if(this->lastTime <= engineTime && engineTime <= this->nextTime){
-        TIME_T minTime,newTime;
-        minTime=newTime=TIME_INF;
         for (auto& cp : couplings[EIC]) {
+            // TODO : port끼리만 검사?, sender model은 달라질 수 있음, coupling의 분류는 coupled model기준으로 모두 설정되어야 함
             if (cp->getSrcModel()->GetModelID() == externalEvent.getSenderModel()->GetModelID() && cp->getSrcPort() == externalEvent.getSenderPort()){
                 cp->getDetModel()->ReceiveExternalEvent(externalEvent, engineTime); //Broadcasting
-                newTime = cp->getDetModel()->QueryNextTime();
-                minTime =  newTime < minTime ? newTime : minTime;
             }
         }
-        lastTime = engineTime;
-        nextTime = minTime; // TODO : QueryNextTime과 중복코드 여지 존재
+        // update time
     }else{
         // ERROR
     }
 }
 void CoupledModel::ReceiveTimeAdvanceRequest(const TIME_T engineTime){
-    if(engineTime >= this->nextTime){
-        for (auto& mid : modelsWithID){
-            mid.second->ReceiveTimeAdvanceRequest(engineTime);
+    if(engineTime == this->nextTime){ // if t=tN then
+        for (auto& mid : modelsWithID){ // find component(s) with tN
+            if(this->nextTime == mid.second->nextTime){
+                
+            }
         }
-        lastTime = engineTime;
-        nextTime = QueryNextTime();
+        // for (auto& mid : modelsWithID){
+        //     mid.second->ReceiveTimeAdvanceRequest(engineTime);
+        // }
+        // lastTime = engineTime;
+        // nextTime = QueryNextTime();
+    }else{
+        // ERROR
     }
 }
 const TIME_T CoupledModel::QueryNextTime() const{
