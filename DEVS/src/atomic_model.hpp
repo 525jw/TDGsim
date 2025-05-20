@@ -10,6 +10,8 @@ class AtomicModel : public Model{
 private:
     std::vector<std::string> states;
     std::string currentState;
+// proteced:
+    // TIME_T executedTime; // NOTE : Currently unused; specified in the textbook;
 public:
     AtomicModel(int modelID, Engine* engine);
 

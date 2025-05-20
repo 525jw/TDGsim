@@ -40,17 +40,17 @@ void CoupledModel::ReceiveExternalEvent(const Event& externalEvent, TIME_T engin
     if(this->lastTime <= engineTime && engineTime <= this->nextTime){
         TIME_T minTime,newTime;
         minTime=newTime=TIME_INF;
-        for (CouplingType type : {EIC, IC, EOC}) {
-            for (auto& cp : couplings[type]) {
-                if (cp->getSrcModel()->GetModelID() == externalEvent.getSenderModel()->GetModelID() && cp->getSrcPort() == externalEvent.getSenderPort()){
-                    cp->getDetModel()->ReceiveExternalEvent(externalEvent, engineTime); //Broadcasting
-                    newTime = cp->getDetModel()->QueryNextTime();
-                    minTime =  newTime < minTime ? newTime : minTime;
-                }
+        for (auto& cp : couplings[EIC]) {
+            if (cp->getSrcModel()->GetModelID() == externalEvent.getSenderModel()->GetModelID() && cp->getSrcPort() == externalEvent.getSenderPort()){
+                cp->getDetModel()->ReceiveExternalEvent(externalEvent, engineTime); //Broadcasting
+                newTime = cp->getDetModel()->QueryNextTime();
+                minTime =  newTime < minTime ? newTime : minTime;
             }
         }
         lastTime = engineTime;
         nextTime = minTime; // TODO : QueryNextTime과 중복코드 여지 존재
+    }else{
+        // ERROR
     }
 }
 void CoupledModel::ReceiveTimeAdvanceRequest(const TIME_T engineTime){

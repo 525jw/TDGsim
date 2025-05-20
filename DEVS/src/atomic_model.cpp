@@ -33,16 +33,21 @@ void AtomicModel::RemoveState(const std::string& state) {
 
 void AtomicModel::ReceiveExternalEvent(const Event& externalEvent,TIME_T engineTime){
     if(this->lastTime <= engineTime && engineTime <= this->nextTime){
+        // this->executedTime = engineTime - this->lastTime;
         ExtTransFn(externalEvent.getSenderPort(), externalEvent.getMessage());
         UpdateTime(engineTime);
+    }else{
+        // ERROR
     }
 }
 
 void AtomicModel::ReceiveTimeAdvanceRequest(const TIME_T engineTime){
-    if(engineTime >= this->nextTime){
+    if(engineTime >= this->nextTime){ // if t=tN then
         OutputFn();
         IntTransFn();
         UpdateTime(engineTime);
+    }else{
+        // ERROR
     }
 }
 const TIME_T AtomicModel::QueryNextTime() const{
