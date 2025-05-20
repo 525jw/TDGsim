@@ -1,16 +1,24 @@
 #include "event.hpp"
 
-Event::Event(const Model& senderModel, const std::string& senderPort, const std::any& message)
-    : senderModel(&senderModel), senderPort(senderPort), message(message) {}
+Event::Event(int senderModelID, const std::string& senderPort, const std::any& message)
+    : senderModelID(senderModelID), senderPort(senderPort), message(message) {}
 
-const Model* Event::getSenderModel() const {
-    return senderModel;
+const int Event::getSenderModelID() const {
+    return this->senderModelID;
 }
 
 const std::string& Event::getSenderPort() const {
-    return senderPort;
+    return this->senderPort;
 }
 
 const std::any& Event::getMessage() const {
-    return message;
+    return this->message;
+}
+
+void Event::SetSenderModelID(int senderModelID) {
+    this->senderModelID = senderModelID;
+}
+
+void Event::SetSenderPort(const std::string& senderPort) {
+    this->senderPort = senderPort;
 }

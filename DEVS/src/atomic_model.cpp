@@ -5,10 +5,10 @@
 #include <algorithm>
 
 AtomicModel::AtomicModel(int modelID, Engine* engine)
+    : Model(modelID, engine)
 {
-    SetModelID(modelID);
-    SetEngine(engine);
     this->engine->RegisterModelWithID(this);
+    // TODO : ID 중 하나를 atomic coupled의 flag bit로 사용하는 방법 고려
 }
 
 const std::vector<std::string>& AtomicModel::GetStates() const{
@@ -31,9 +31,9 @@ void AtomicModel::RemoveState(const std::string& state) {
 }
 
 
-void AtomicModel::ReceiveExternalEvent(const Event& externalEvent,TIME_T engineTime){
+void AtomicModel::ReceiveExternalEvent(Event& externalEvent,TIME_T engineTime){
     if(this->lastTime <= engineTime && engineTime <= this->nextTime){
-        // this->executedTime = engineTime - this->lastTime;
+        this->executedTime = engineTime - this->lastTime;
         ExtTransFn(externalEvent.getSenderPort(), externalEvent.getMessage());
         UpdateTime(engineTime);
     }else{
@@ -42,7 +42,7 @@ void AtomicModel::ReceiveExternalEvent(const Event& externalEvent,TIME_T engineT
 }
 
 void AtomicModel::ReceiveTimeAdvanceRequest(const TIME_T engineTime){
-    if(engineTime == this->nextTime){ // if t=tN then
+    if(engineTime == this->nextTime){
         OutputFn();
         IntTransFn();
         UpdateTime(engineTime);
@@ -61,6 +61,6 @@ void AtomicModel::UpdateTime(const TIME_T engineTime){
 }
 
 void AtomicModel::AddOutputEvent(const std::string& outputPort, std::any& message){
-    Event* event = new Event(*this, outputPort, message);
+    Event* event = new Event(this->GetModelID(), outputPort, message);
     this->engine->AddEvent(event);
 }

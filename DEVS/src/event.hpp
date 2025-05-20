@@ -2,18 +2,19 @@
 #include <string>
 #include <any>
 
-class Model;
-
 class Event{
 private:
-    const Model* senderModel;
+    int senderModelID;
     std::string senderPort;
-    std::any message;
+    const std::any message;
 
 public:
-    Event(const Model& senderModel, const std::string& senderPort, const std::any& message);
+    Event(int senderModelID, const std::string& senderPort, const std::any& message);
     
-    const Model* getSenderModel() const;
+    const int getSenderModelID() const;
     const std::string& getSenderPort() const;
     const std::any& getMessage() const;
+
+    void SetSenderModelID(int senderModelID);
+    void SetSenderPort(const std::string& senderPort);
 };

@@ -3,10 +3,10 @@
 #include "engine.hpp"
 
 CoupledModel::CoupledModel(int modelID, Engine* engine)
+    : Model(modelID, engine)
 {
-    SetModelID(modelID);
-    SetEngine(engine);
     this->engine->RegisterModelWithID(this);
+    // TODO : ID 중 하나를 atomic coupled의 flag bit로 사용하는 방법 고려
 }
 
 bool CoupledModel::AddCoupling(
@@ -34,13 +34,25 @@ bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort) {
     // TODO : RemoveCoupling Unimplemented
     return false;
 }
-
+void CoupledModel::Translate(Event& event, int srcModelID, std::string& srcPort){
+    event.SetSenderModelID(srcModelID);
+    event.SetSenderPort(srcPort);
+}
 //Handling EIC
-void CoupledModel::ReceiveExternalEvent(const Event& externalEvent, TIME_T engineTime){
+void CoupledModel::ReceiveExternalEvent(Event& externalEvent, TIME_T engineTime){
     if(this->lastTime <= engineTime && engineTime <= this->nextTime){
         for (auto& cp : couplings[EIC]) {
-            // TODO : port끼리만 검사?, sender model은 달라질 수 있음, coupling의 분류는 coupled model기준으로 모두 설정되어야 함
-            if (cp->getSrcModel()->GetModelID() == externalEvent.getSenderModel()->GetModelID() && cp->getSrcPort() == externalEvent.getSenderPort()){
+            if (cp->getSrcModel()->GetModelID() == externalEvent.getSenderModelID() && cp->getSrcPort() == externalEvent.getSenderPort()){
+                /*
+                    Event propagation via nested EICs — translation required at each coupled boundary:
+    
+                    A:red_soldier     , fire_out  -> C:blue_company , fire_in (EIC)
+                    C:blue_company    , fire_in   -> C:blue_squad   , fire_in (EIC)
+                    C:blue_squad      , fire_in   -> A:blue_soldier , fire_in (EIC)
+
+                    => delegate translation to its scope
+                */
+                this->Translate(externalEvent, cp->getDetModel(), cp->getDetPort());
                 cp->getDetModel()->ReceiveExternalEvent(externalEvent, engineTime); //Broadcasting
             }
         }

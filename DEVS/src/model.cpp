@@ -3,6 +3,13 @@
 #include "engine.hpp"
 #include <algorithm>
 
+Model::Model(int modelID, Engine* engine)
+    : modelID(modelID), engine(engine)
+{
+    if (engine != nullptr) {
+        engine->RegisterModelWithID(this);
+    }
+}
 void Model::SetModelID(int id){
     this->modelID=id;
 }
