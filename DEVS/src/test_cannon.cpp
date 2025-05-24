@@ -92,12 +92,12 @@ public:
         this->nextTime = engineTime + TimeAdvanceFn();
         logger<<"! ! ! "<<this->myName<<" : lastTIme, nextTime = ("<<this->lastTime<<","<<this->nextTime<<") \n";
     }
-    void ReceiveTimeAdvanceRequest(const TIME_T engineTime) override{
-        AtomicModel::ReceiveTimeAdvanceRequest(engineTime);
+    void ReceiveScheduleTime(const TIME_T engineTime) override{
+        AtomicModel::ReceiveScheduleTime(engineTime);
         logger<<"! ! ! "<<this->myName<<" received (*,"<<engineTime<<"), next TA updated to "<<this->nextTime<<"\n";
     }
-    void ReceiveExternalEvent(const Event& externalEvent,TIME_T engineTime) override{
-        AtomicModel::ReceiveExternalEvent(externalEvent, engineTime);
+    void ReceiveEvent(Event& externalEvent,TIME_T engineTime) override{
+        AtomicModel::ReceiveEvent(externalEvent, engineTime);
         logger<<"! ! ! "<<this->myName<<" received (x,"<<engineTime<<"), next TA updated to "<<this->nextTime<<"\n";
     }
     const TIME_T QueryNextTime() const override{

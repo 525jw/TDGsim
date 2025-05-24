@@ -21,9 +21,9 @@ public:
     void SetCurState(std::string state);
     const std::string& GetCurState() const;
 
-    void ReceiveExternalEvent(Event& externalEvent, TIME_T engineTime);
-    void ReceiveTimeAdvanceRequest(const TIME_T engineTime);
-    const TIME_T QueryNextTime() const;
+    void ReceiveEvent(Event& event, TIME_T currentTime);
+    void ReceiveScheduleTime(const TIME_T currentTime);
+    // const TIME_T QueryNextTime() const;
 
     void UpdateTime(const TIME_T engineTime);
     void AddOutputEvent(const std::string& outputPort, std::any& message);
@@ -32,4 +32,6 @@ public:
     virtual bool IntTransFn() {return false;}
     virtual bool OutputFn() {return false;}
     virtual TIME_T TimeAdvanceFn() {return -1;}
+
+    bool IsAtomic() const override { return true; }
 };

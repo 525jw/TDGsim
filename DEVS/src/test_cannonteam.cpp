@@ -8,16 +8,19 @@ class TestCannonTeam : public CoupledModel{
 private:
     std::string myName;
 public:
-    TestCannonTeam(int modelID, Engine* engine,std::string name)
-    : CoupledModel(modelID,engine)
+    TestCannonTeam(int modelID, Engine* engine, std::string name)
+    : CoupledModel(modelID, engine)
     {
         this->myName=name;
         logger <<"! ! "<<myName<<" created id:"<<this->GetModelID()<<"\n";
         int idNum = this->GetModelID()*10;
         
         TestCannon* firstCannon = new TestCannon(idNum+1, engine,this->myName + "first");
+        firstCannon->SetParentModel(this);
         TestCannon* secondCannon = new TestCannon(idNum+2, engine,this->myName + "second");
+        secondCannon->SetParentModel(this);
         TestCannon* thirdCannon = new TestCannon(idNum+3, engine,this->myName + "third");
+        thirdCannon->SetParentModel(this);
         
         this->RegisterModelWithID(firstCannon);
         this->RegisterModelWithID(secondCannon);
@@ -44,9 +47,9 @@ public:
         }
 
     }
-    void ReceiveTimeAdvanceRequest(const TIME_T engineTime) override{
+    void ReceiveScheduleTime(const TIME_T engineTime) override{
         logger <<"! ! "<<this->myName<<" request (*,"<<engineTime<<") \n";
-        CoupledModel::ReceiveTimeAdvanceRequest(engineTime);
+        CoupledModel::ReceiveScheduleTime(engineTime);
     }
     const TIME_T QueryNextTime() const override{
         logger <<"! ! "<<this->myName<<" query min TA"<<std::endl;

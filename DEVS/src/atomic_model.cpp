@@ -8,7 +8,6 @@ AtomicModel::AtomicModel(int modelID, Engine* engine)
     : Model(modelID, engine)
 {
     this->engine->RegisterModelWithID(this);
-    // TODO : ID 중 하나를 atomic coupled의 flag bit로 사용하는 방법 고려
 }
 
 const std::vector<std::string>& AtomicModel::GetStates() const{
@@ -31,28 +30,28 @@ void AtomicModel::RemoveState(const std::string& state) {
 }
 
 
-void AtomicModel::ReceiveExternalEvent(Event& externalEvent,TIME_T engineTime){
-    if(this->lastTime <= engineTime && engineTime <= this->nextTime){
-        this->executedTime = engineTime - this->lastTime;
-        ExtTransFn(externalEvent.getSenderPort(), externalEvent.getMessage());
-        UpdateTime(engineTime);
+void AtomicModel::ReceiveEvent(Event& event,TIME_T currentTime){
+    if(this->lastTime <= currentTime && currentTime <= this->nextTime){
+        this->executedTime = currentTime - this->lastTime;
+        ExtTransFn(event.getSenderPort(), event.getMessage());
+        UpdateTime(currentTime);
     }else{
-        // ERROR
+        // event는 free 되어야함 (invalid event)
     }
 }
 
-void AtomicModel::ReceiveTimeAdvanceRequest(const TIME_T engineTime){
-    if(engineTime == this->nextTime){
+void AtomicModel::ReceiveScheduleTime(const TIME_T currentTime){
+    if(currentTime == this->nextTime){
         OutputFn();
         IntTransFn();
-        UpdateTime(engineTime);
+        UpdateTime(currentTime);
     }else{
         // ERROR
     }
 }
-const TIME_T AtomicModel::QueryNextTime() const{
-    return this->nextTime;
-}
+// const TIME_T AtomicModel::QueryNextTime() const{
+//     return this->nextTime;
+// }
 
 // Ref. 4-3-8
 void AtomicModel::UpdateTime(const TIME_T engineTime){
@@ -60,7 +59,8 @@ void AtomicModel::UpdateTime(const TIME_T engineTime){
     this->nextTime = engineTime + TimeAdvanceFn();
 }
 
+// Only Called in OutputFn()
 void AtomicModel::AddOutputEvent(const std::string& outputPort, std::any& message){
     Event* event = new Event(this->GetModelID(), outputPort, message);
-    this->engine->AddEvent(event);
+    this->parentModel->ReceiveEvent(*event, this->nextTime);
 }

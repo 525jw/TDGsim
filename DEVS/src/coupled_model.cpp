@@ -6,7 +6,6 @@ CoupledModel::CoupledModel(int modelID, Engine* engine)
     : Model(modelID, engine)
 {
     this->engine->RegisterModelWithID(this);
-    // TODO : ID 중 하나를 atomic coupled의 flag bit로 사용하는 방법 고려
 }
 
 bool CoupledModel::AddCoupling(
@@ -17,6 +16,8 @@ bool CoupledModel::AddCoupling(
     CouplingType tp;
 
     if (type == IC || type == EOC || type == EIC) {
+        if(type == EIC && srcModel->GetModelID() != this->GetModelID())
+            std::cerr << "[AddCoupling] For EIC, the source model must be the coupled model itself.\n";
         tp = type;
     } else { 
         // TODO: automatic CouplingType inference
@@ -34,65 +35,99 @@ bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort) {
     // TODO : RemoveCoupling Unimplemented
     return false;
 }
+void CoupledModel::ReceiveEvent(Event& event, TIME_T currentTime){ // when receive (x,t)
+    if(this->lastTime <= currentTime && currentTime <= this->nextTime){
+        if (std::find(this->GetInputPorts().begin(), this->GetInputPorts().end(), event.getSenderPort()) != this->GetInputPorts().end()){
+            this->RouteEIC(event, currentTime);
+        }else{
+            this->RouteIC(event,currentTime);
+
+        }
+    }else{
+        // ERROR : event를 free 해야함
+    }
+}
+void CoupledModel::RouteEIC(Event& event, TIME_T currentTime){
+    std::vector<int> connected;
+    for (auto& cp : this->couplings[EIC]) { // Handling EIC
+        if (cp->getSrcModel()->GetModelID() == event.getSenderModelID() && cp->getSrcPort() == event.getSenderPort()){
+            connected.push_back(cp->getDetModel()->GetModelID());
+            // if (cp->getSrcModel()->IsCoupled())
+            //     this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
+            // cp->getDetModel()->ReceiveEvent(event, currentTime);
+        }
+    }
+    for (auto cid : connected) {
+        const auto& mid = modelsWithID[cid];
+        Event* routed = new Event(event);
+        routed->SetSenderModelID(this->GetModelID());
+        routed->SetSenderPort(cp->GetInPort());
+        cp->ReceiveEvent(*routed, currentTime);
+        pendingFree_.push_back(routed);
+    }
+    delete &event;
+    // update time
+    this->lastTime = currentTime;
+    for (auto& cid : connected)
+        this->nextTime = std::min(this->nextTime, modelsWithID[cid]->GetNextTime());
+}
+void CoupledModel::RouteEOC(Event& event, TIME_T currentTime){
+
+}
+void CoupledModel::RouteIC(Event& event, TIME_T currentTime){
+    for (auto& cp : this->couplings[IC]) { // Handling IC
+        if (cp->getSrcModel()->GetModelID() == event.getSenderModelID() && cp->getSrcPort() == event.getSenderPort()){
+            if (cp->getDetModel()->IsCoupled())
+                this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
+            cp->getDetModel()->ReceiveEvent(event, currentTime);
+        }
+    }
+}
+
+void CoupledModel::ReceiveScheduleTime(const TIME_T currentTime){ // when receive (*,t)
+    if(currentTime == this->nextTime){
+        for (auto& mid : modelsWithID){
+            if(mid.second->GetNextTime() == this->nextTime){
+                mid.second->ReceiveScheduleTime(currentTime);
+            }
+        }
+        this->lastTime = currentTime;
+    }else{
+        // ERROR
+    }
+}
+// - Upadate the Sender Info(ID, Port) of the Event
 void CoupledModel::Translate(Event& event, int srcModelID, std::string& srcPort){
     event.SetSenderModelID(srcModelID);
     event.SetSenderPort(srcPort);
 }
-//Handling EIC
-void CoupledModel::ReceiveExternalEvent(Event& externalEvent, TIME_T engineTime){
-    if(this->lastTime <= engineTime && engineTime <= this->nextTime){
-        for (auto& cp : couplings[EIC]) {
-            if (cp->getSrcModel()->GetModelID() == externalEvent.getSenderModelID() && cp->getSrcPort() == externalEvent.getSenderPort()){
-                /*
-                    Event propagation via nested EICs — translation required at each coupled boundary:
-    
-                    A:red_soldier     , fire_out  -> C:blue_company , fire_in (EIC)
-                    C:blue_company    , fire_in   -> C:blue_squad   , fire_in (EIC)
-                    C:blue_squad      , fire_in   -> A:blue_soldier , fire_in (EIC)
+// void CoupledModel::SendOutputEvent(Event& outputEvent){
+//     for (auto& cp : this->couplings[EOC]) {
+//         if (cp->getSrcModel()->GetModelID() == outputEvent.getSenderModelID() && cp->getSrcPort() == outputEvent.getSenderPort()){
+//             this->Translate(outputEvent, cp->getDetModel()->GetModelID(), cp->getDetPort());
+//             cp->getDetModel()->SendOutputEvent(&outputEvent);
+//             return;
+//         }
+//     }
+//     for (auto& cp : this->couplings[IC]) {
+//         if (cp->getSrcModel()->GetModelID() == outputEvent.getSenderModelID() && cp->getSrcPort() == outputEvent.getSenderPort()){
+//             this->Translate(outputEvent, cp->getDetModel()->GetModelID(), cp->getDetPort());
+//             cp->getDetModel()->SendOutputEvent(&outputEvent);
+//             return;
+//         }
+//     }
+//     this->engine->AddEvent(&outputEvent);
+// }
 
-                    => delegate translation to its scope
-                */
-                this->Translate(externalEvent, cp->getDetModel(), cp->getDetPort());
-                cp->getDetModel()->ReceiveExternalEvent(externalEvent, engineTime); //Broadcasting
-            }
-        }
-        // update time
-    }else{
-        // ERROR
-    }
-}
-void CoupledModel::ReceiveTimeAdvanceRequest(const TIME_T engineTime){
-    if(engineTime == this->nextTime){ // if t=tN then
-        for (auto& mid : modelsWithID){ // find component(s) with tN
-            if(this->nextTime == mid.second->nextTime){
-                
-            }
-        }
-        // for (auto& mid : modelsWithID){
-        //     mid.second->ReceiveTimeAdvanceRequest(engineTime);
-        // }
-        // lastTime = engineTime;
-        // nextTime = QueryNextTime();
-    }else{
-        // ERROR
-    }
-}
-const TIME_T CoupledModel::QueryNextTime() const{
-    TIME_T minTime,newTime;
-    minTime=newTime=TIME_INF;
-    for (auto& mid : modelsWithID){
-        newTime=mid.second->QueryNextTime();
-        minTime = newTime < minTime ? newTime : minTime;
-    }
-    return minTime;
-}
-
-const int CoupledModel::GetComponentSize() const{
-    return this->modelsWithID.size();
-}
+// const TIME_T CoupledModel::QueryNextTime() const{
+//     TIME_T minTime=TIME_INF;
+//     for (auto& mid : modelsWithID)
+//         minTime = std::min(minTime, mid.second->QueryNextTime());
+//     return minTime;
+// }
 
 bool CoupledModel::RegisterModelWithID(Model* model) {
-    // TODO : engine에서 등록할때 ID를 배정해줄지, ID 받을지 논의 후 결정, 현재는 id를 받음, engine과 코드 중복
+    // NOTE : engine의 RegisterMoelWithID와 코드 중복 (modelWithID 구조 동일)
     int id = model->GetModelID();
     modelsWithID[id] = model;
     return true;

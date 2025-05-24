@@ -28,9 +28,9 @@ public:
             logger << "sys has Model ID: " << key << std::endl;
         }
     }
-    void ReceiveTimeAdvanceRequest(const TIME_T engineTime) override{
+    void ReceiveScheduleTime(const TIME_T engineTime) override{
         logger<<"! "<<"cannon system request (*,"<<engineTime<<") \n";
-        CoupledModel::ReceiveTimeAdvanceRequest(engineTime);
+        CoupledModel::ReceiveScheduleTime(engineTime);
     }
     const TIME_T QueryNextTime() const override{
         logger<<"! "<<"cannon system query min TA"<<std::endl;
@@ -38,8 +38,8 @@ public:
         logger<<"! "<<"cannon system gets min TA : "<<minTime<<std::endl;
         return minTime;
     }
-    void ReceiveExternalEvent(const Event& externalEvent, TIME_T engineTime){
-        logger<<"! "<<"cannon sys recevied event "<<externalEvent.getSenderModel()->GetModelID()<<externalEvent.getSenderPort()<<std::endl;
-        CoupledModel::ReceiveExternalEvent(externalEvent, engineTime);
+    void ReceiveEvent(Event& externalEvent, TIME_T engineTime){
+        logger<<"! "<<"cannon sys recevied event "<<externalEvent.getSenderModelID()<<externalEvent.getSenderPort()<<std::endl;
+        CoupledModel::ReceiveEvent(externalEvent, engineTime);
     }
 };

@@ -16,7 +16,7 @@ void Engine::Run(){
         if(minTA > TIME_INF)
             return;
         this->engineTime = minTA;
-        this->rootModel->ReceiveTimeAdvanceRequest(this->engineTime);
+        this->rootModel->ReceiveScheduleTime(this->engineTime);
     }else{
         Event* currentEvent = nullptr;
         while(!this->eventQueue.empty()){
@@ -24,7 +24,7 @@ void Engine::Run(){
             // TODO : pointer 끼리 = 연산이라 검토 필요
             for (auto& sm : subModels){
                 if(sm == currentEvent->getSenderModel()){
-                    sm->ReceiveExternalEvent(*currentEvent, this->engineTime);
+                    sm->ReceiveEvent(*currentEvent, this->engineTime);
                 }
             }
         }

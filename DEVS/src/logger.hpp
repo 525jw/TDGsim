@@ -9,13 +9,8 @@ private:
     size_t maxLines = 20000; 
 
 public:
-    Logger(const std::string& filename) {
-        outFile.open(filename);
-    }
-
-    ~Logger() {
-        if (outFile.is_open()) outFile.close();
-    }
+    Logger(const std::string& filename);
+    ~Logger();
 
     template <typename T>
     Logger& operator<<(const T& data) {
@@ -24,17 +19,7 @@ public:
         return *this;
     }
 
-    Logger& operator<<(std::ostream& (*manip)(std::ostream&)) {
-        if (lineCount >= maxLines) return *this;
-        if (outFile.is_open()) {
-            if (manip == static_cast<std::ostream& (*)(std::ostream&)>(std::endl)) {
-                ++lineCount;
-            }
-            manip(outFile);
-            outFile.flush();
-        }
-        return *this;
-    }
+    Logger& operator<<(std::ostream& (*manip)(std::ostream&));
 
     void setMaxLines(size_t max) { maxLines = max; }
     size_t getLineCount() const { return lineCount; }

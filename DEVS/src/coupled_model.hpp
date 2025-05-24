@@ -4,6 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <algorithm>
 #include <iostream>
 
 enum CouplingType { EIC, EOC, IC };
@@ -16,18 +17,21 @@ public:
     std::unordered_map<int, Model*> modelsWithID;
     CoupledModel(int modelID, Engine* engine);
 
-    const int GetComponentSize() const;    
-    
     bool AddCoupling(Model* srcModel, std::string srcPort, Model* detModel, std::string detPort, CouplingType type);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort, Model* detModel, std::string* detPort);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort);
 
+    
+    void ReceiveEvent(Event& event, TIME_T currentTime);
+    void RouteEIC(Event& event, TIME_T currentTime);
+    void RouteEOC(Event& event, TIME_T currentTime);
+    void RouteIC(Event& event, TIME_T currentTime);
 
-    void CoupledModel::Translate(Event& event, int srcModelID, std::string& srcPort);
+    void ReceiveScheduleTime(const TIME_T engineTime);
 
-    void ReceiveExternalEvent(Event& externalEvent, TIME_T engineTime);
-    void ReceiveTimeAdvanceRequest(const TIME_T engineTime);
-    const TIME_T QueryNextTime() const; // TODO : 쿼리 올때마다 트리탐색은 과함, 그냥 engine에서 관리되는 atomic model에게만 query해도 무방한지 확인필요
+    void Translate(Event& event, int srcModelID, std::string& srcPort);
 
+    // const TIME_T QueryNextTime() const;
     bool RegisterModelWithID(Model* model);
+    bool IsCoupled() const override { return true; }
 };

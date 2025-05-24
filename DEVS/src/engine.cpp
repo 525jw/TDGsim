@@ -28,14 +28,16 @@ void Engine::Run(){
         logger<<"[Engine] current time = "<<this->engineTime<<" event queue size = "<<this->eventQueue.size()<<std::endl;
 
         if(this->eventQueue.empty()){
+            std::cout<<"[Engine] event queue is empty, query nextTime"<<std::endl;
             logger<<"[Engine] event queue is empty, query nextTime"<<std::endl;
             TIME_T minTA = this->rootModel->QueryNextTime();
             if(minTA > TIME_INF)
                 return;
             this->engineTime = minTA;
             logger<<"[Engine] received minTA = "<<minTA<<" , request (*,"<<this->engineTime<<")"<<std::endl;
-            this->rootModel->ReceiveTimeAdvanceRequest(this->engineTime);
+            this->rootModel->ReceiveScheduleTime(this->engineTime);
         }else{
+            std::cout<<"[Engine] starts broadcasting events"<<std::endl;
             logger<<"[Engine] starts broadcasting events"<<std::endl;
             Event* currentEvent = nullptr;
             Model* curModel = nullptr;
@@ -45,21 +47,21 @@ void Engine::Run(){
                     logger << "[ERROR] currentEvent is nullptr!"<<std::endl;
                     continue;
                 }
-                logger<<"current Event starts from "<<currentEvent->getSenderModel()->GetModelID()<<std::endl;
-                curModel = this->modelsWithID[currentEvent->getSenderModel()->GetModelID()];
+                logger<<"current Event starts from "<<this->modelsWithID[currentEvent->getSenderModelID()]->GetModelID()<<std::endl;
+                curModel = this->modelsWithID[currentEvent->getSenderModelID()];
                 if (curModel == nullptr) {
                     logger << "[ERROR] currentEvent->getSenderModel() is nullptr!"<<std::endl;
                     continue;
                 }
                 logger<<"[Engine] request (x,"<<this->engineTime<<")"<<std::endl;
-                rootModel->ReceiveExternalEvent(*currentEvent, this->engineTime); // !!!TODO!!! : 기존처럼 curModel이 받으면 안됨!!!!!!!!! 
+                curModel->ReceiveEvent(*currentEvent, this->engineTime);
             }
         }
     }
 }
 
 void Engine::AddEvent(Event* event){
-    logger<<"event in "<<event->getSenderModel()->GetModelID()<<std::endl;
+    logger<<"event in "<<modelsWithID[event->getSenderModelID()]->GetModelID()<<std::endl;
     this->eventQueue.push(event);
 }
 bool Engine::RegisterModelWithID(Model* model) {
