@@ -41,31 +41,23 @@ void CoupledModel::ReceiveEvent(Event& event, TIME_T currentTime){ // when recei
             this->RouteEIC(event, currentTime);
         }else{
             this->RouteIC(event,currentTime);
-
         }
     }else{
-        // ERROR : event를 free 해야함
+        // ERROR
+        // TODO : event를 free 해야함
     }
 }
 void CoupledModel::RouteEIC(Event& event, TIME_T currentTime){
     std::vector<int> connected;
     for (auto& cp : this->couplings[EIC]) { // Handling EIC
         if (cp->getSrcModel()->GetModelID() == event.getSenderModelID() && cp->getSrcPort() == event.getSenderPort()){
-            connected.push_back(cp->getDetModel()->GetModelID());
-            // if (cp->getSrcModel()->IsCoupled())
-            //     this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
-            // cp->getDetModel()->ReceiveEvent(event, currentTime);
+            connected.push_back(cp->getDetModel()->GetModelID());\
+            Event ev = event;
+            if (cp->getSrcModel()->IsCoupled())
+                ev = this->Translate(ev, cp->getDetModel()->GetModelID(), cp->getDetPort());
+            cp->getDetModel()->ReceiveEvent(ev, currentTime);
         }
     }
-    for (auto cid : connected) {
-        const auto& mid = modelsWithID[cid];
-        Event* routed = new Event(event);
-        routed->SetSenderModelID(this->GetModelID());
-        routed->SetSenderPort(cp->GetInPort());
-        cp->ReceiveEvent(*routed, currentTime);
-        pendingFree_.push_back(routed);
-    }
-    delete &event;
     // update time
     this->lastTime = currentTime;
     for (auto& cid : connected)
@@ -83,7 +75,13 @@ void CoupledModel::RouteIC(Event& event, TIME_T currentTime){
         }
     }
 }
-
+// Return a copy of the event with updated sender ID and port
+Event CoupledModel::Translate(const Event& in, int srcModelID, const std::string& srcPort){
+    Event out = in;
+    out.setSenderModelID(srcModelID);
+    out.setSenderPort(srcPort);
+    return out;
+}
 void CoupledModel::ReceiveScheduleTime(const TIME_T currentTime){ // when receive (*,t)
     if(currentTime == this->nextTime){
         for (auto& mid : modelsWithID){
@@ -95,11 +93,6 @@ void CoupledModel::ReceiveScheduleTime(const TIME_T currentTime){ // when receiv
     }else{
         // ERROR
     }
-}
-// - Upadate the Sender Info(ID, Port) of the Event
-void CoupledModel::Translate(Event& event, int srcModelID, std::string& srcPort){
-    event.SetSenderModelID(srcModelID);
-    event.SetSenderPort(srcPort);
 }
 // void CoupledModel::SendOutputEvent(Event& outputEvent){
 //     for (auto& cp : this->couplings[EOC]) {

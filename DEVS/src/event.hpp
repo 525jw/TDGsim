@@ -1,20 +1,31 @@
 #pragma once
 #include <string>
 #include <any>
+#include <memory>
 
 class Event{
 private:
-    int senderModelID;
+    // --- Header ---
+    int         senderModelID;
     std::string senderPort;
-    const std::any message;
+
+    // --- Payload ---
+    std::shared_ptr<const std::any> payload;
 
 public:
-    Event(int senderModelID, const std::string& senderPort, const std::any& message);
-    
-    const int getSenderModelID() const;
-    const std::string& getSenderPort() const;
-    const std::any& getMessage() const;
+    template <typename MsgT>
+    Event(int senderID, std::string port, MsgT&& msg)
+        : senderModelID(senderID),
+          senderPort(std::move(port)),
+          payload(std::make_shared<const std::any>(std::forward<MsgT>(msg))) {}
 
-    void SetSenderModelID(int senderModelID);
-    void SetSenderPort(const std::string& senderPort);
+    Event(const Event&)            = default;
+    Event& operator=(const Event&) = default;
+    
+    int                     getSenderModelID() const { return senderModelID; }
+    const std::string&      getSenderPort()   const { return senderPort; }
+    const std::any&         getMessage()      const { return *payload;   }
+
+    void setSenderModelID(int id)                { senderModelID = id; }
+    void setSenderPort(const std::string& port)  { senderPort    = port; }
 };
