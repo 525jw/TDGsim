@@ -23,7 +23,7 @@ public:
 
     void ReceiveEvent(Event& event, TIME_T currentTime);
     void ReceiveScheduleTime(const TIME_T currentTime);
-    // const TIME_T QueryNextTime() const;
+    const TIME_T QueryNextTime() const;
 
     void UpdateTime(const TIME_T engineTime);
     void AddOutputEvent(const std::string& outputPort, std::any& message);

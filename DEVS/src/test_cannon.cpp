@@ -25,7 +25,7 @@ public:
         } while (worldMap[y][x] != 0);
         myPosXY.first=x; myPosXY.second=y;
         worldMap[y][x]=1;
-        logger<<"! ! ! "<<myName<<" created id:"<<this->GetModelID()<<", pos(x,y) = ("<<myPosXY.first<<","<<myPosXY.second<<") \n";
+        logger<<"[Model : Init]" <<"! ! ! "<<myName<<" created id:"<<this->GetModelID()<<", pos(x,y) = ("<<myPosXY.first<<","<<myPosXY.second<<") \n";
 
         this->AddState("idle");
         this->AddState("engage");
@@ -41,7 +41,7 @@ public:
         if(inPort == "fire_in" && this->GetCurState() != "dead"){
             if(this->myPosXY.first == message.targetX && this->myPosXY.second == message.targetY){
                 health -= message.damage;
-                logger<<"[Model] "<<this->myName<<"hit ! health = "<<this->health<<std::endl;
+                logger<<"[Model : Ext] "<<this->myName<<"hit ! health = "<<this->health<<std::endl;
             }else
                 return true;
             if(health > 0){
@@ -62,6 +62,11 @@ public:
         return true;
     }
     bool OutputFn() {
+
+        logger << "[OutputFn] Model " << this->GetModelID() 
+           << " in state " << this->GetCurState()
+           << std::endl;
+
         if (this->GetCurState() == "engage") {
             std::string outPort = "fire_info";
 
@@ -87,21 +92,21 @@ public:
         }
         return -1;
     }    
-    void UpdateTime(const TIME_T engineTime){
-        this->lastTime = engineTime;
-        this->nextTime = engineTime + TimeAdvanceFn();
+    void UpdateTime(const TIME_T currentTime){
+        this->lastTime = currentTime;
+        this->nextTime = currentTime + TimeAdvanceFn();
         logger<<"! ! ! "<<this->myName<<" : lastTIme, nextTime = ("<<this->lastTime<<","<<this->nextTime<<") \n";
     }
-    void ReceiveScheduleTime(const TIME_T engineTime) override{
-        AtomicModel::ReceiveScheduleTime(engineTime);
-        logger<<"! ! ! "<<this->myName<<" received (*,"<<engineTime<<"), next TA updated to "<<this->nextTime<<"\n";
+    void ReceiveScheduleTime(const TIME_T currentTime) override{
+        AtomicModel::ReceiveScheduleTime(currentTime);
+        logger<<"[Model : (*,t)]" <<"! ! ! "<<this->myName<<" received (*,"<<currentTime<<"), next TA updated to "<<this->nextTime<<"\n";
     }
-    void ReceiveEvent(Event& externalEvent,TIME_T engineTime) override{
-        AtomicModel::ReceiveEvent(externalEvent, engineTime);
-        logger<<"! ! ! "<<this->myName<<" received (x,"<<engineTime<<"), next TA updated to "<<this->nextTime<<"\n";
+    void ReceiveEvent(Event& event,TIME_T currentTime) override{
+        AtomicModel::ReceiveEvent(event, currentTime);
+        logger<<"[Model : (x,t)]" <<"! ! ! "<<this->myName<<" received (x,"<<currentTime<<"), next TA updated to "<<this->nextTime<<"\n";
     }
     const TIME_T QueryNextTime() const override{
-        logger<<"! ! ! "<<this->myName<<" ("<<this->GetCurState()<<") "<<" sends TA : "<<this->nextTime<<std::endl;
+        logger<<"[Model : TQ]" <<"! ! ! "<<this->myName<<" ("<<this->GetCurState()<<") "<<" sends TA : "<<this->nextTime<<std::endl;
         return AtomicModel::QueryNextTime();
     }
 };

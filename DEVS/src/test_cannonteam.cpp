@@ -12,7 +12,7 @@ public:
     : CoupledModel(modelID, engine)
     {
         this->myName=name;
-        logger <<"! ! "<<myName<<" created id:"<<this->GetModelID()<<"\n";
+        logger <<"[Model : Init]" <<"! ! "<<myName<<" created id:"<<this->GetModelID()<<"\n";
         int idNum = this->GetModelID()*10;
         
         TestCannon* firstCannon = new TestCannon(idNum+1, engine,this->myName + "first");
@@ -47,14 +47,19 @@ public:
         }
 
     }
-    void ReceiveScheduleTime(const TIME_T engineTime) override{
-        logger <<"! ! "<<this->myName<<" request (*,"<<engineTime<<") \n";
-        CoupledModel::ReceiveScheduleTime(engineTime);
+    void ReceiveScheduleTime(const TIME_T currentTime) override{
+        logger <<"[Model : (*,t)]" <<"! ! "<<this->myName<<" request (*,"<<currentTime<<") \n";
+        CoupledModel::ReceiveScheduleTime(currentTime);
+    }
+    void ReceiveEvent(Event& event, TIME_T currentTime) override{
+        logger <<"[Model : (x,t)]" <<"! ! "<<this->myName<<" received (x,"<<currentTime<<") \n";
+        CoupledModel::ReceiveEvent(event, currentTime);
     }
     const TIME_T QueryNextTime() const override{
-        logger <<"! ! "<<this->myName<<" query min TA"<<std::endl;
+        logger <<"[Model : TQ]" <<"! ! "<<this->myName<<" query min TA"<<std::endl;
         TIME_T minTime=CoupledModel::QueryNextTime();
-        logger <<"! ! "<<this->myName<<" gets min TA : "<<minTime<<std::endl;
+        logger <<"[Model : TQ]" <<"! ! "<<this->myName<<" gets min TA : "<<minTime<<std::endl;
         return minTime;
     }
+    
 };

@@ -1,6 +1,7 @@
 #include "coupled_model.hpp"
 #include "event.hpp"
 #include "engine.hpp"
+#include "logger.hpp"
 
 CoupledModel::CoupledModel(int modelID, Engine* engine)
     : Model(modelID, engine)
@@ -36,47 +37,107 @@ bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort) {
     return false;
 }
 void CoupledModel::ReceiveEvent(Event& event, TIME_T currentTime){ // when receive (x,t)
+
+    logger << "[CoupledModel::ReceiveEvent]"<< std::endl;
+    
     if(this->lastTime <= currentTime && currentTime <= this->nextTime){
         if (std::find(this->GetInputPorts().begin(), this->GetInputPorts().end(), event.getSenderPort()) != this->GetInputPorts().end()){
             this->RouteEIC(event, currentTime);
         }else{
             this->RouteIC(event,currentTime);
+            this->RouteEOC(event,currentTime);
         }
+
+        //update time, NOTE : potential bottleneck in QueryNextTime
+        this->lastTime = currentTime;
+        this->nextTime = QueryNextTime();
     }else{
         // ERROR
         // TODO : event를 free 해야함
     }
 }
-void CoupledModel::RouteEIC(Event& event, TIME_T currentTime){
-    std::vector<int> connected;
-    for (auto& cp : this->couplings[EIC]) { // Handling EIC
+void CoupledModel::RouteEIC(Event& event, TIME_T currentTime){  // Handling EIC
+
+    logger << "[CoupledModel::RouteEIC] Starts"<< std::endl;
+
+    for (auto& cp : this->couplings[EIC]) {
         if (cp->getSrcModel()->GetModelID() == event.getSenderModelID() && cp->getSrcPort() == event.getSenderPort()){
-            connected.push_back(cp->getDetModel()->GetModelID());\
+
+            logger << "[CoupledModel::RouteEIC] Found Matching coupling: "
+                   << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
+                   << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
+                   << std::endl;
+
             Event ev = event;
-            if (cp->getSrcModel()->IsCoupled())
-                ev = this->Translate(ev, cp->getDetModel()->GetModelID(), cp->getDetPort());
+            if (cp->getSrcModel()->IsCoupled()){
+                ev = this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
+            
+                logger << "[CoupledModel::RouteEIC] Translated : "
+                   << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
+                   << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
+                   << std::endl;
+            
+            }
             cp->getDetModel()->ReceiveEvent(ev, currentTime);
         }
     }
-    // update time
-    this->lastTime = currentTime;
-    for (auto& cid : connected)
-        this->nextTime = std::min(this->nextTime, modelsWithID[cid]->GetNextTime());
 }
-void CoupledModel::RouteEOC(Event& event, TIME_T currentTime){
+void CoupledModel::RouteEOC(Event& event, TIME_T currentTime){  // Handling EOC
 
-}
-void CoupledModel::RouteIC(Event& event, TIME_T currentTime){
-    for (auto& cp : this->couplings[IC]) { // Handling IC
+    logger << "[CoupledModel::RouteEOC] Starts"<< std::endl;
+
+    for (auto& cp : this->couplings[EOC]) {
         if (cp->getSrcModel()->GetModelID() == event.getSenderModelID() && cp->getSrcPort() == event.getSenderPort()){
-            if (cp->getDetModel()->IsCoupled())
-                this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
-            cp->getDetModel()->ReceiveEvent(event, currentTime);
+
+            logger << "[CoupledModel::RouteEOC] Found Matching coupling: "
+            << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
+            << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
+            << std::endl;
+
+            Event ev = this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
+
+            logger << "[CoupledModel::RouteEOC] Translated : "
+                   << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
+                   << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
+                   << std::endl;
+
+            cp->getDetModel()->ReceiveEvent(ev, currentTime);
+        }
+    }
+}
+void CoupledModel::RouteIC(Event& event, TIME_T currentTime){  // Handling IC
+
+    logger << "[CoupledModel::RouteIC] Starts"<< std::endl;
+    
+    for (auto& cp : this->couplings[IC]) {
+        if (cp->getSrcModel()->GetModelID() == event.getSenderModelID() && cp->getSrcPort() == event.getSenderPort()){
+
+            logger << "[CoupledModel::RouteIC] Found Matching coupling: "
+                   << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
+                   << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
+                   << std::endl;
+
+            Event ev = event;
+            if (cp->getDetModel()->IsCoupled()){
+                ev = this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
+
+                logger << "[CoupledModel::RouteIC] Translated : "
+                   << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
+                   << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
+                   << std::endl;
+
+                this->engine->AddEvent(&ev);
+            }else{
+                cp->getDetModel()->ReceiveEvent(ev, currentTime);
+            }
         }
     }
 }
 // Return a copy of the event with updated sender ID and port
 Event CoupledModel::Translate(const Event& in, int srcModelID, const std::string& srcPort){
+
+    logger << "[CoupledModel::Translate]"<< std::endl;
+
     Event out = in;
     out.setSenderModelID(srcModelID);
     out.setSenderPort(srcPort);
@@ -89,35 +150,20 @@ void CoupledModel::ReceiveScheduleTime(const TIME_T currentTime){ // when receiv
                 mid.second->ReceiveScheduleTime(currentTime);
             }
         }
+        //update time, NOTE : potential bottleneck in QueryNextTime
         this->lastTime = currentTime;
+        this->nextTime = QueryNextTime();
     }else{
         // ERROR
     }
 }
-// void CoupledModel::SendOutputEvent(Event& outputEvent){
-//     for (auto& cp : this->couplings[EOC]) {
-//         if (cp->getSrcModel()->GetModelID() == outputEvent.getSenderModelID() && cp->getSrcPort() == outputEvent.getSenderPort()){
-//             this->Translate(outputEvent, cp->getDetModel()->GetModelID(), cp->getDetPort());
-//             cp->getDetModel()->SendOutputEvent(&outputEvent);
-//             return;
-//         }
-//     }
-//     for (auto& cp : this->couplings[IC]) {
-//         if (cp->getSrcModel()->GetModelID() == outputEvent.getSenderModelID() && cp->getSrcPort() == outputEvent.getSenderPort()){
-//             this->Translate(outputEvent, cp->getDetModel()->GetModelID(), cp->getDetPort());
-//             cp->getDetModel()->SendOutputEvent(&outputEvent);
-//             return;
-//         }
-//     }
-//     this->engine->AddEvent(&outputEvent);
-// }
 
-// const TIME_T CoupledModel::QueryNextTime() const{
-//     TIME_T minTime=TIME_INF;
-//     for (auto& mid : modelsWithID)
-//         minTime = std::min(minTime, mid.second->QueryNextTime());
-//     return minTime;
-// }
+const TIME_T CoupledModel::QueryNextTime() const{
+    TIME_T minTime=TIME_INF;
+    for (auto& mid : modelsWithID)
+        minTime = std::min(minTime, mid.second->QueryNextTime());
+    return minTime;
+}
 
 bool CoupledModel::RegisterModelWithID(Model* model) {
     // NOTE : engine의 RegisterMoelWithID와 코드 중복 (modelWithID 구조 동일)

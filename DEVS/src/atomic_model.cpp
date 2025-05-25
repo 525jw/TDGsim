@@ -2,6 +2,7 @@
 #include "atomic_model.hpp"
 #include "engine.hpp"
 #include "event.hpp"
+#include "logger.hpp"
 #include <algorithm>
 
 AtomicModel::AtomicModel(int modelID, Engine* engine)
@@ -49,9 +50,9 @@ void AtomicModel::ReceiveScheduleTime(const TIME_T currentTime){
         // ERROR
     }
 }
-// const TIME_T AtomicModel::QueryNextTime() const{
-//     return this->nextTime;
-// }
+const TIME_T AtomicModel::QueryNextTime() const{
+    return this->nextTime;
+}
 
 // Ref. 4-3-8
 void AtomicModel::UpdateTime(const TIME_T engineTime){
@@ -61,6 +62,13 @@ void AtomicModel::UpdateTime(const TIME_T engineTime){
 
 // Only Called in OutputFn()
 void AtomicModel::AddOutputEvent(const std::string& outputPort, std::any& message){
+
+
+    logger << "[AddOutputEvent] +++ From model " << this->GetModelID()
+           << " to port " << outputPort
+           << std::endl;
+
+
     Event* event = new Event(this->GetModelID(), outputPort, message);
-    this->parentModel->ReceiveEvent(*event, this->nextTime);
+    this->engine->AddEvent(event);
 }

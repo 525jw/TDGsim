@@ -54,14 +54,14 @@ void Engine::Run(){
                     continue;
                 }
                 logger<<"[Engine] request (x,"<<this->engineTime<<")"<<std::endl;
-                curModel->ReceiveEvent(*currentEvent, this->engineTime);
+                curModel->GetParentModel()->ReceiveEvent(*currentEvent, this->engineTime);
             }
         }
     }
 }
 
 void Engine::AddEvent(Event* event){
-    logger<<"event in "<<modelsWithID[event->getSenderModelID()]->GetModelID()<<std::endl;
+    logger<<"[Engine : ] "<<"event in "<<modelsWithID[event->getSenderModelID()]->GetModelID()<<std::endl;
     this->eventQueue.push(event);
 }
 bool Engine::RegisterModelWithID(Model* model) {

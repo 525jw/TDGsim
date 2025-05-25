@@ -32,7 +32,8 @@ public:
 
     void ReceiveScheduleTime(const TIME_T engineTime);
 
-    // const TIME_T QueryNextTime() const;
+    const TIME_T QueryNextTime() const;
+    
     bool RegisterModelWithID(Model* model);
     bool IsCoupled() const override { return true; }
 };

@@ -25,7 +25,7 @@ const int Model::GetModelID() const{
 const Engine* Model::GetEngine() const{
     return this->engine;
 }
-const Model* Model::GetParentModel() const{
+Model* Model::GetParentModel() const{
     return this->parentModel;
 }
 const TIME_T Model::GetNextTime() const{

@@ -30,7 +30,7 @@ public:
 
     const int GetModelID() const;
     const Engine* GetEngine() const;
-    const Model* GetParentModel() const;
+    Model* GetParentModel() const;
 
     const TIME_T GetNextTime() const;
 
@@ -44,7 +44,7 @@ public:
     virtual void ReceiveEvent(Event& event, TIME_T currentTime) = 0; // when receive (x,t) 
     virtual void ReceiveScheduleTime(const TIME_T currentTime) = 0; // when receive (*,t)
 
-    // virtual const TIME_T QueryNextTime() const = 0;
+    virtual const TIME_T QueryNextTime() const = 0; // Recursively returns earliest nextTime from child models
 
     virtual bool IsAtomic() const { return false; }
     virtual bool IsCoupled() const { return false; }

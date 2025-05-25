@@ -10,7 +10,7 @@ public:
     TestCannonSys(int modelID, Engine* engine) 
     : CoupledModel(modelID,engine)
     {
-        logger<<"! "<<"cannon system created id:"<<this->GetModelID()<<"\n";
+        logger<<"[Model : Init]" <<"! "<<"cannon system created id:"<<this->GetModelID()<<"\n";
         TestCannonTeam* blueteam = new TestCannonTeam(1, engine,"blue");
         TestCannonTeam* redteam = new TestCannonTeam(2, engine,"red");
 
@@ -25,21 +25,21 @@ public:
             keys.push_back(pair.first);
         }
         for (const auto& key : keys) {
-            logger << "sys has Model ID: " << key << std::endl;
+            logger <<"[Model : Init] "<<" sys has Model ID: " << key << std::endl;
         }
     }
-    void ReceiveScheduleTime(const TIME_T engineTime) override{
-        logger<<"! "<<"cannon system request (*,"<<engineTime<<") \n";
-        CoupledModel::ReceiveScheduleTime(engineTime);
+    void ReceiveScheduleTime(const TIME_T currentTime) override{
+        logger<<"[Model : (*,t)]" <<"! "<<"cannon system request (*,"<<currentTime<<") \n";
+        CoupledModel::ReceiveScheduleTime(currentTime);
     }
     const TIME_T QueryNextTime() const override{
-        logger<<"! "<<"cannon system query min TA"<<std::endl;
+        logger<<"[Model : TQ]" <<"! "<<"cannon system query min TA"<<std::endl;
         TIME_T minTime=CoupledModel::QueryNextTime();
-        logger<<"! "<<"cannon system gets min TA : "<<minTime<<std::endl;
+        logger<<"[Model : TQ]" <<"! "<<"cannon system gets min TA : "<<minTime<<std::endl;
         return minTime;
     }
-    void ReceiveEvent(Event& externalEvent, TIME_T engineTime){
-        logger<<"! "<<"cannon sys recevied event "<<externalEvent.getSenderModelID()<<externalEvent.getSenderPort()<<std::endl;
-        CoupledModel::ReceiveEvent(externalEvent, engineTime);
+    void ReceiveEvent(Event& externalEvent, TIME_T currentTime){
+        logger<<"[Model : (x,t)]" <<"! "<<"cannon sys recevied event "<<externalEvent.getSenderModelID()<<externalEvent.getSenderPort()<<std::endl;
+        CoupledModel::ReceiveEvent(externalEvent, currentTime);
     }
 };
