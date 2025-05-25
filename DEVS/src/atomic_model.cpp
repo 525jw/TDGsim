@@ -1,9 +1,4 @@
-#pragma once
 #include "atomic_model.hpp"
-#include "engine.hpp"
-#include "event.hpp"
-#include "logger.hpp"
-#include <algorithm>
 
 AtomicModel::AtomicModel(int modelID, Engine* engine)
     : Model(modelID, engine)
@@ -62,13 +57,6 @@ void AtomicModel::UpdateTime(const TIME_T engineTime){
 
 // Only Called in OutputFn()
 void AtomicModel::AddOutputEvent(const std::string& outputPort, std::any& message){
-
-
-    logger << "[AddOutputEvent] +++ From model " << this->GetModelID()
-           << " to port " << outputPort
-           << std::endl;
-
-
     Event* event = new Event(this->GetModelID(), outputPort, message);
     this->engine->AddEvent(event);
 }

@@ -1,7 +1,5 @@
-#pragma once
 #include "model.hpp"
 #include "engine.hpp"
-#include <algorithm>
 
 Model::Model(int modelID, Engine* engine)
     : modelID(modelID), engine(engine)

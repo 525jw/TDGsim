@@ -1,6 +1,5 @@
-#pragma once
 #include "engine.hpp"
-#include "test_cannonsys.cpp"
+#include "test_cansys.hpp"
 #include "test_world.hpp"
 #include "logger.hpp"
 #include <iostream>
@@ -10,11 +9,11 @@
 
 
 int main(){
+    std::cout<<"main"<<std::endl;
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
     Engine engine = Engine();
     TestCannonSys testCannonsys = TestCannonSys(0,&engine);
     engine.BuildDEVS(&testCannonsys);
-    logger<<"sim starts"<<std::endl;
     engine.Run();
     return 0;
 }

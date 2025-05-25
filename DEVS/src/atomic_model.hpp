@@ -1,6 +1,9 @@
 #pragma once
 #include "model.hpp"
 #include "event.hpp"
+#include "engine.hpp"
+#include "logger.hpp"
+#include <algorithm>
 #include <any>
 #include <string>
 

@@ -1,11 +1,12 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <algorithm>
 
 #define TIME_INF 1e30f
 using TIME_T = float;
-class Engine;
 class Event;
+class Engine;
 
 class Model{
 protected:

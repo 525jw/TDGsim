@@ -1,16 +1,18 @@
 #pragma once
 #include "coupled_model.hpp"
 #include "event.hpp"
+#include "logger.hpp"
 #include <queue>
 #include <vector>
 #include <unordered_map>
+#include <iostream>
 
 class Engine {
 private:
     Model* rootModel;
     std::unordered_map<int, Model*> modelsWithID; // NOTE : engine의 RegisterMoelWithID와 코드 중복 (modelWithID 구조 동일)
     std::queue<Event*> eventQueue;
-    TIME_T engineTime;
+    TIME_T currentTime;
 public:
     Engine();
 
