@@ -9,19 +9,19 @@
 
 
 int main() {
-    std::cerr << "[DEBUG] main 진입" << std::endl;
+    std::cerr << "[DEBUG] Entered main()" << std::endl;
 
     Engine engine;
-    std::cerr << "[DEBUG] Engine 생성 완료" << std::endl;
+    std::cerr << "[DEBUG] Engine creation completed" << std::endl;
 
     TestCannonSys sys(0, &engine);
-    std::cerr << "[DEBUG] TestCannonSys 생성 완료" << std::endl;
+    std::cerr << "[DEBUG] TestCannonSys creation completed" << std::endl;
 
     engine.BuildDEVS(&sys);
-    std::cerr << "[DEBUG] BuildDEVS 완료" << std::endl;
+    std::cerr << "[DEBUG] BuildDEVS completed" << std::endl;
 
     engine.Run();
-    std::cerr << "[DEBUG] Run() 종료" << std::endl;
+    std::cerr << "[DEBUG] Run() finished" << std::endl;
 
     return 0;
 }

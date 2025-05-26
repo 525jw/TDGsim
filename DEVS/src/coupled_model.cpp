@@ -10,21 +10,19 @@ CoupledModel::CoupledModel(int modelID, Engine* engine)
 }
 
 bool CoupledModel::AddCoupling(
-        Model* srcModel, std::string srcPort, 
-        Model* detModel, std::string detPort,
+        Model* srcModel, const std::string& srcPort, 
+        Model* detModel, const std::string& detPort,
         CouplingType type
 ) {
-    CouplingType tp;
-
-    if (type == IC || type == EOC || type == EIC) {
-        if(type == EIC && srcModel->GetModelID() != this->GetModelID())
-            // std::cerr << "[AddCoupling] For EIC, the source model must be the coupled model itself.\n";
-        tp = type;
-    } else { 
-        // TODO: automatic CouplingType inference and changes error message
-        // std::cerr << "[AddCoupling] Please explicitly provide one of the following types: EIC, EOC, IC.\n";
+    if (type != IC && type != EOC && type != EIC) {
+        std::cerr << "[AddCoupling] CouplingType must be IC/EOC/EIC.\n";
+        return false;
     }
-    couplings[tp].emplace_back(new Coupling(srcModel, srcPort, detModel, detPort));
+    if (type == EIC && srcModel != this) {
+        std::cerr << "[AddCoupling] For EIC, the source model must be the coupled model itself.\n";
+        return false;
+    }
+    couplings[type].emplace_back(std::make_unique<Coupling>(srcModel, srcPort, detModel, detPort));
     return true;
 }
 bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort,
@@ -55,7 +53,10 @@ void CoupledModel::ReceiveEvent(Event& event, TIME_T currentTime){ // when recei
 }
 void CoupledModel::RouteEIC(Event& event, TIME_T currentTime){  // Handling EIC
 
-    logger_system << "[CoupledModel::RouteEIC] Starts"<< std::endl;
+    logger_system   << "[CoupledModel::RouteEIC] Starts"
+                    << " SrcModel : " << event.getSenderModelID()
+                    << " SrcPort : " << event.getSenderPort()
+                    << std::endl;
 
     for (auto& cp : this->couplings[EIC]) {
         if (cp->getSrcModel()->GetModelID() == event.getSenderModelID() && cp->getSrcPort() == event.getSenderPort()){
@@ -81,7 +82,10 @@ void CoupledModel::RouteEIC(Event& event, TIME_T currentTime){  // Handling EIC
 }
 void CoupledModel::RouteEOC(Event& event, TIME_T currentTime){  // Handling EOC
 
-    logger_system << "[CoupledModel::RouteEOC] Starts"<< std::endl;
+    logger_system   << "[CoupledModel::RouteEOC] Starts"
+                    << " SrcModel : " << event.getSenderModelID()
+                    << " SrcPort : " << event.getSenderPort()
+                    << std::endl;
 
     for (auto& cp : this->couplings[EOC]) {
         if (cp->getSrcModel()->GetModelID() == event.getSenderModelID() && cp->getSrcPort() == event.getSenderPort()){
@@ -97,14 +101,18 @@ void CoupledModel::RouteEOC(Event& event, TIME_T currentTime){  // Handling EOC
                             << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
                             << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
                             << std::endl;
-
-            cp->getDetModel()->ReceiveEvent(ev, currentTime);
+            
+            if(this->GetParentModel() != nullptr)
+                this->GetParentModel()->ReceiveEvent(ev, currentTime);
         }
     }
 }
 void CoupledModel::RouteIC(Event& event, TIME_T currentTime){  // Handling IC
 
-    logger_system << "[CoupledModel::RouteIC] Starts"<< std::endl;
+    logger_system   << "[CoupledModel::RouteIC] Starts"
+                    << " SrcModel : " << event.getSenderModelID()
+                    << " SrcPort : " << event.getSenderPort()
+                    << std::endl;
     
     for (auto& cp : this->couplings[IC]) {
         if (cp->getSrcModel()->GetModelID() == event.getSenderModelID() && cp->getSrcPort() == event.getSenderPort()){

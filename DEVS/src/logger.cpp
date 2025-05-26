@@ -14,13 +14,13 @@ Logger::Logger(const std::string& filename, std::size_t maxLines)
         if (p.has_parent_path() && !p.parent_path().empty())
             fs::create_directories(p.parent_path());
     } catch (...) {
-        std::cerr << "[Logger] 경로 생성 실패, 계속 진행합니다.\n";
+        std::cerr << "[Logger] Failed to create directory, continuing anyway.\n";
     }
 
     outFile_.open(filename, std::ios::out | std::ios::trunc);
     if (!outFile_.is_open()) {
         std::cerr << "[Logger] '" << filename
-                  << "' 열기 실패 — 로그는 콘솔에만 남습니다.\n";
+                  << "' logs will be printed to console only.\n";
     }
 }
 

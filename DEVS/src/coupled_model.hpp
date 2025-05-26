@@ -6,18 +6,19 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include <memory>
 
 enum CouplingType { EIC, EOC, IC };
 
 class CoupledModel : public Model{
 private:
-    std::unordered_map<CouplingType, std::vector<Coupling*>> couplings;
+    std::unordered_map<CouplingType, std::vector<std::unique_ptr<Coupling>>> couplings;
     
 public:
     std::unordered_map<int, Model*> modelsWithID;
     CoupledModel(int modelID, Engine* engine);
 
-    bool AddCoupling(Model* srcModel, std::string srcPort, Model* detModel, std::string detPort, CouplingType type);
+    bool AddCoupling(Model* srcModel, const std::string& srcPort, Model* detModel, const std::string& detPort, CouplingType type);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort, Model* detModel, std::string* detPort);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort);
     
@@ -36,4 +37,10 @@ public:
     
     bool RegisterModelWithID(Model* model);
     bool IsCoupled() const override { return true; }
+
+    // for debugging
+    size_t CouplingCount(CouplingType t) const {
+        auto it = couplings.find(t);
+        return (it == couplings.end()) ? 0 : it->second.size();
+    }
 };

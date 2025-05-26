@@ -42,39 +42,41 @@ void Engine::Run(){
             this->currentTime = minTA;
 
             logger_system   << "[Engine::Run] Received minTA = "<<minTA
-                            << "Request (*,"<<this->currentTime<<")"<<std::endl;
+                            << " Request (*,"<<this->currentTime<<")"<<std::endl;
             this->rootModel->ReceiveScheduleTime(this->currentTime);
         }else{
-            logger_system << "[Engine::Run] Starts broadcasting events"<<std::endl;
+            logger_system   << "[Engine::Run] Starts broadcasting events "<<std::endl;
             
-            Event* currentEvent = nullptr;
+            Event* curEvent = nullptr;
             Model* curModel = nullptr;
             while(!this->eventQueue.empty()){
-                currentEvent = this->eventQueue.front(); this->eventQueue.pop();
+                curEvent = this->eventQueue.front(); this->eventQueue.pop();
 
-                if (currentEvent == nullptr) {
+                if (curEvent == nullptr) {
                     logger_system << "[ERROR] CurrentEvent is nullptr!"<<std::endl;
                     continue;
                 }
 
-                curModel = this->modelsWithID[currentEvent->getSenderModelID()];
+                curModel = this->modelsWithID[curEvent->getSenderModelID()];
                 if (curModel == nullptr) {
                     logger_system << "[ERROR] CurrentEvent->getSenderModel() is nullptr!"<<std::endl;
                     continue;
                 }
 
-                logger_system   << "[Engine::Run] Request (x,"<<this->currentTime<<")"<<std::endl;
-
-                curModel->GetParentModel()->ReceiveEvent(*currentEvent, this->currentTime);
+                logger_system   << "[Engine::Run] Request (x,"<<this->currentTime<<")"
+                                <<" SenderModel : " <<curEvent->getSenderModelID()
+                                <<" SenderPort : "  <<curEvent->getSenderPort()
+                                <<std::endl;
+                curModel->GetParentModel()->ReceiveEvent(*curEvent, this->currentTime);
             }
         }
     }
 }
 
 void Engine::AddEvent(Event* event){
-    logger_system   <<"[Engine::AddEvent]"<<" Event in, "
-                    <<"SenderModel : "<<event->getSenderModelID()
-                    <<"SenderPort : "<<event->getSenderPort()
+    logger_system   <<"[Engine::AddEvent]"<<" Event in,"
+                    <<" SenderModel : "<<event->getSenderModelID()
+                    <<" SenderPort : "<<event->getSenderPort()
                     <<std::endl;
 
     this->eventQueue.push(event);

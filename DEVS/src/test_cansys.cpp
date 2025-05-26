@@ -3,15 +3,6 @@
 TestCannonSys::TestCannonSys(int modelID, Engine* engine) 
 : CoupledModel(modelID,engine)
 {
-    this->myName = "Sys";
-    TestCannonTeam* blueteam = new TestCannonTeam(1, engine,"Blue");
-    TestCannonTeam* redteam = new TestCannonTeam(2, engine,"Red");
-
-    this->RegisterModelWithID(blueteam);
-    this->RegisterModelWithID(redteam);
-
-    this->AddCoupling(blueteam, "fire_out", redteam, "fire_in", IC);
-    this->AddCoupling(redteam, "fire_out", blueteam, "fire_in", IC);
 
     logger_world    << "["
                     << myName
@@ -24,6 +15,18 @@ TestCannonSys::TestCannonSys(int modelID, Engine* engine)
                     << ":Init]"
                     <<" Created, ID : "<<this->GetModelID()
                     <<std::endl;
+
+    this->myName = "Sys";
+    TestCannonTeam* blueteam = new TestCannonTeam(1, engine,"Blue");
+    blueteam->SetParentModel(this);
+    TestCannonTeam* redteam = new TestCannonTeam(2, engine,"Red");
+    redteam->SetParentModel(this);
+
+    this->RegisterModelWithID(blueteam);
+    this->RegisterModelWithID(redteam);
+
+    this->AddCoupling(blueteam, "fire_out", redteam, "fire_in", IC);
+    this->AddCoupling(redteam, "fire_out", blueteam, "fire_in", IC);
     
     std::vector<int> keys;
     for (const auto& pair : this->modelsWithID) {
@@ -35,6 +38,14 @@ TestCannonSys::TestCannonSys(int modelID, Engine* engine)
                         << ":Init]" 
                         <<" has Model ID: " << key << std::endl;
     }
+
+    logger_system
+        << "[TestCannonSys::" << myName << ":Init] "
+        << "CouplingCount  IC="  << this->CouplingCount(IC)
+        << ", EOC="             << this->CouplingCount(EOC)
+        << ", EIC="             << this->CouplingCount(EIC)
+        << std::endl;
+
 }
 void TestCannonSys::ReceiveScheduleTime(const TIME_T currentTime) {
     logger_system   << "[" << "TestCannonSys::"
