@@ -1,0 +1,541 @@
+[BlueFirst] Created, pos(x,y) = (1,2)
+[BlueSecond] Created, pos(x,y) = (4,0)
+[BlueThird] Created, pos(x,y) = (4,4)
+[Blue] Created
+[RedFirst] Created, pos(x,y) = (3,3)
+[RedSecond] Created, pos(x,y) = (2,4)
+[RedThird] Created, pos(x,y) = (0,0)
+[Red] Created
+[Sys] Created
+[Engine] Current Time is 0
+[Engine] Current Time is 0
+[RedThird] Fire , pos(x,y) = (2,1)
+[RedFirst] Fire , pos(x,y) = (2,3)
+[BlueThird] Fire , pos(x,y) = (1,1)
+[Engine] Current Time is 0.6
+[Engine] Current Time is 0.6
+[BlueFirst] Fire , pos(x,y) = (2,1)
+[Engine] Current Time is 0.7
+[Engine] Current Time is 0.7
+[BlueSecond] Fire , pos(x,y) = (4,2)
+[Engine] Current Time is 1
+[Engine] Current Time is 1
+[RedSecond] Fire , pos(x,y) = (0,4)
+[Engine] Current Time is 1.2
+[Engine] Current Time is 1.2
+[RedFirst] Fire , pos(x,y) = (2,3)
+[Engine] Current Time is 1.3
+[Engine] Current Time is 1.3
+[RedThird] Fire , pos(x,y) = (1,1)
+[Engine] Current Time is 1.5
+[Engine] Current Time is 1.5
+[BlueThird] Fire , pos(x,y) = (2,4)
+[Engine] Current Time is 1.6
+[Engine] Current Time is 1.6
+[RedSecond] Fire , pos(x,y) = (2,4)
+[Engine] Current Time is 1.8
+[Engine] Current Time is 1.8
+[BlueFirst] Fire , pos(x,y) = (4,3)
+[Engine] Current Time is 2
+[Engine] Current Time is 2
+[RedFirst] Fire , pos(x,y) = (0,2)
+[Engine] Current Time is 2.2
+[Engine] Current Time is 2.2
+[RedSecond] Fire , pos(x,y) = (0,2)
+[BlueSecond] Fire , pos(x,y) = (1,0)
+[Engine] Current Time is 2.4
+[Engine] Current Time is 2.4
+[RedThird] Fire , pos(x,y) = (0,0)
+[Engine] Current Time is 2.8
+[Engine] Current Time is 2.8
+[BlueThird] Fire , pos(x,y) = (3,3)
+[Engine] Current Time is 2.8
+[Engine] Current Time is 2.8
+[BlueFirst] Fire , pos(x,y) = (4,4)
+[Engine] Current Time is 3
+[Engine] Current Time is 3
+[RedFirst] Fire , pos(x,y) = (1,1)
+[Engine] Current Time is 3.3
+[Engine] Current Time is 3.3
+[RedThird] Fire , pos(x,y) = (4,4)
+[Engine] Current Time is 3.4
+[Engine] Current Time is 3.4
+[BlueFirst] Fire , pos(x,y) = (2,3)
+[Engine] Current Time is 3.5
+[Engine] Current Time is 3.5
+[BlueThird] Fire , pos(x,y) = (4,1)
+[Engine] Current Time is 3.6
+[Engine] Current Time is 3.6
+[RedSecond] Fire , pos(x,y) = (4,3)
+[Engine] Current Time is 3.7
+[Engine] Current Time is 3.7
+[BlueSecond] Fire , pos(x,y) = (2,1)
+[Engine] Current Time is 3.8
+[Engine] Current Time is 3.8
+[RedSecond] Fire , pos(x,y) = (1,0)
+[BlueFirst] Fire , pos(x,y) = (0,4)
+[Engine] Current Time is 4.2
+[Engine] Current Time is 4.2
+[RedThird] Fire , pos(x,y) = (2,2)
+[Engine] Current Time is 4.2
+[Engine] Current Time is 4.2
+[RedFirst] Fire , pos(x,y) = (1,1)
+[Engine] Current Time is 4.6
+[Engine] Current Time is 4.6
+[BlueThird] Fire , pos(x,y) = (0,4)
+[Engine] Current Time is 4.6
+[Engine] Current Time is 4.6
+[RedThird] Fire , pos(x,y) = (0,0)
+[Engine] Current Time is 4.7
+[Engine] Current Time is 4.7
+[RedSecond] Fire , pos(x,y) = (1,0)
+[Engine] Current Time is 4.9
+[Engine] Current Time is 4.9
+[BlueSecond] Fire , pos(x,y) = (2,2)
+[Engine] Current Time is 4.9
+[Engine] Current Time is 4.9
+[BlueFirst] Fire , pos(x,y) = (3,3)
+[Engine] Current Time is 5
+[Engine] Current Time is 5
+[BlueThird] Fire , pos(x,y) = (4,3)
+[Engine] Current Time is 5.3
+[Engine] Current Time is 5.3
+[RedSecond] Fire , pos(x,y) = (2,1)
+[Engine] Current Time is 5.5
+[Engine] Current Time is 5.5
+[RedThird] Fire , pos(x,y) = (3,3)
+[Engine] Current Time is 5.6
+[Engine] Current Time is 5.6
+[RedFirst] Fire , pos(x,y) = (2,0)
+[Engine] Current Time is 5.8
+[Engine] Current Time is 5.8
+[RedSecond] Fire , pos(x,y) = (4,2)
+[Engine] Current Time is 6
+[Engine] Current Time is 6
+[BlueSecond] Fire , pos(x,y) = (0,1)
+[Engine] Current Time is 6.1
+[Engine] Current Time is 6.1
+[RedThird] Fire , pos(x,y) = (1,1)
+[Engine] Current Time is 6.2
+[Engine] Current Time is 6.2
+[BlueFirst] Fire , pos(x,y) = (1,1)
+[Engine] Current Time is 6.4
+[Engine] Current Time is 6.4
+[BlueThird] Fire , pos(x,y) = (3,4)
+[BlueSecond] Fire , pos(x,y) = (3,4)
+[Engine] Current Time is 6.6
+[Engine] Current Time is 6.6
+[RedThird] Fire , pos(x,y) = (0,3)
+[Engine] Current Time is 6.7
+[Engine] Current Time is 6.7
+[RedSecond] Fire , pos(x,y) = (3,3)
+[Engine] Current Time is 6.8
+[Engine] Current Time is 6.8
+[RedFirst] Fire , pos(x,y) = (2,1)
+[Engine] Current Time is 7.2
+[Engine] Current Time is 7.2
+[BlueThird] Fire , pos(x,y) = (3,4)
+[Engine] Current Time is 7.5
+[Engine] Current Time is 7.5
+[RedSecond] Fire , pos(x,y) = (0,1)
+[Engine] Current Time is 7.6
+[Engine] Current Time is 7.6
+[BlueFirst] Fire , pos(x,y) = (4,1)
+[Engine] Current Time is 7.8
+[Engine] Current Time is 7.8
+[RedThird] Fire , pos(x,y) = (4,3)
+[BlueSecond] Fire , pos(x,y) = (4,2)
+[Engine] Current Time is 7.9
+[Engine] Current Time is 7.9
+[RedFirst] Fire , pos(x,y) = (3,3)
+[Engine] Current Time is 8.4
+[Engine] Current Time is 8.4
+[BlueThird] Fire , pos(x,y) = (4,3)
+[BlueFirst] Fire , pos(x,y) = (3,3)
+[Engine] Current Time is 8.6
+[Engine] Current Time is 8.6
+[BlueSecond] Fire , pos(x,y) = (3,1)
+[Engine] Current Time is 8.9
+[Engine] Current Time is 8.9
+[RedSecond] Fire , pos(x,y) = (4,2)
+[Engine] Current Time is 9
+[Engine] Current Time is 9
+[BlueThird] Fire , pos(x,y) = (3,2)
+[Engine] Current Time is 9.1
+[Engine] Current Time is 9.1
+[RedThird] Fire , pos(x,y) = (0,2)
+[Engine] Current Time is 9.3
+[Engine] Current Time is 9.3
+[RedFirst] Fire , pos(x,y) = (0,3)
+[Engine] Current Time is 9.6
+[Engine] Current Time is 9.6
+[RedSecond] Fire , pos(x,y) = (2,4)
+[Engine] Current Time is 9.7
+[Engine] Current Time is 9.7
+[BlueFirst] Fire , pos(x,y) = (3,1)
+[Engine] Current Time is 9.7
+[Engine] Current Time is 9.7
+[RedThird] Fire , pos(x,y) = (0,3)
+[Engine] Current Time is 9.9
+[Engine] Current Time is 9.9
+[RedFirst] Fire , pos(x,y) = (4,1)
+[Engine] Current Time is 10.2
+[Engine] Current Time is 10.2
+[BlueSecond] Fire , pos(x,y) = (2,1)
+[Engine] Current Time is 10.2
+[Engine] Current Time is 10.2
+[BlueThird] Fire , pos(x,y) = (2,1)
+[Engine] Current Time is 10.5
+[Engine] Current Time is 10.5
+[RedThird] Fire , pos(x,y) = (0,2)
+[Engine] Current Time is 10.6
+[Engine] Current Time is 10.6
+[RedSecond] Fire , pos(x,y) = (3,4)
+[Engine] Current Time is 10.7
+[Engine] Current Time is 10.7
+[BlueFirst] Fire , pos(x,y) = (1,4)
+[Engine] Current Time is 10.8
+[Engine] Current Time is 10.8
+[RedThird] Fire , pos(x,y) = (2,0)
+[Engine] Current Time is 11.1
+[Engine] Current Time is 11.1
+[RedFirst] Fire , pos(x,y) = (3,1)
+[Engine] Current Time is 11.5
+[Engine] Current Time is 11.5
+[BlueSecond] Fire , pos(x,y) = (2,2)
+[Engine] Current Time is 11.6
+[Engine] Current Time is 11.6
+[BlueFirst] Fire , pos(x,y) = (1,4)
+[Engine] Current Time is 11.6
+[Engine] Current Time is 11.6
+[BlueThird] Fire , pos(x,y) = (3,2)
+[Engine] Current Time is 11.9
+[Engine] Current Time is 11.9
+[RedSecond] Fire , pos(x,y) = (4,4)
+[Engine] Current Time is 12
+[Engine] Current Time is 12
+[RedThird] Fire , pos(x,y) = (0,0)
+[Engine] Current Time is 12.1
+[Engine] Current Time is 12.1
+[BlueSecond] Fire , pos(x,y) = (4,3)
+[Engine] Current Time is 12.5
+[Engine] Current Time is 12.5
+[RedSecond] Fire , pos(x,y) = (2,4)
+[RedFirst] Fire , pos(x,y) = (1,4)
+[Engine] Current Time is 12.7
+[Engine] Current Time is 12.7
+[BlueThird] Fire , pos(x,y) = (2,1)
+[Engine] Current Time is 12.9
+[Engine] Current Time is 12.9
+[RedThird] Fire , pos(x,y) = (3,2)
+[Engine] Current Time is 12.9
+[Engine] Current Time is 12.9
+[BlueFirst] Fire , pos(x,y) = (4,1)
+[Engine] Current Time is 13
+[Engine] Current Time is 13
+[BlueSecond] Fire , pos(x,y) = (1,3)
+[Engine] Current Time is 13.6
+[Engine] Current Time is 13.6
+[BlueFirst] Fire , pos(x,y) = (0,3)
+[Engine] Current Time is 13.6
+[Engine] Current Time is 13.6
+[RedFirst] Fire , pos(x,y) = (2,0)
+[Engine] Current Time is 13.7
+[Engine] Current Time is 13.7
+[RedThird] Fire , pos(x,y) = (1,3)
+[Engine] Current Time is 13.8
+[Engine] Current Time is 13.8
+[RedSecond] Fire , pos(x,y) = (1,4)
+[BlueThird] Fire , pos(x,y) = (4,1)
+[Engine] Current Time is 13.9
+[Engine] Current Time is 13.9
+[BlueThird] Fire , pos(x,y) = (3,1)
+[Engine] Current Time is 14.4
+[Engine] Current Time is 14.4
+[RedThird] Fire , pos(x,y) = (2,4)
+[Engine] Current Time is 14.5
+[Engine] Current Time is 14.5
+[RedSecond] Fire , pos(x,y) = (4,0)
+[Engine] Current Time is 14.6
+[Engine] Current Time is 14.6
+[BlueSecond] Fire , pos(x,y) = (1,3)
+[Engine] Current Time is 14.6
+[Engine] Current Time is 14.6
+[RedFirst] Fire , pos(x,y) = (3,3)
+[Engine] Current Time is 14.8
+[Engine] Current Time is 14.8
+[BlueFirst] Fire , pos(x,y) = (3,1)
+[Engine] Current Time is 14.9
+[Engine] Current Time is 14.9
+[BlueSecond] Fire , pos(x,y) = (2,4)
+[Engine] Current Time is 15.3
+[Engine] Current Time is 15.3
+[RedThird] Fire , pos(x,y) = (4,4)
+[Engine] Current Time is 15.4
+[Engine] Current Time is 15.4
+[BlueThird] Fire , pos(x,y) = (3,0)
+[Engine] Current Time is 15.8
+[Engine] Current Time is 15.8
+[RedFirst] Fire , pos(x,y) = (3,2)
+[Engine] Current Time is 15.8
+[Engine] Current Time is 15.8
+[BlueFirst] Fire , pos(x,y) = (3,3)
+[Engine] Current Time is 15.9
+[Engine] Current Time is 15.9
+[RedSecond] Fire , pos(x,y) = (2,0)
+[Engine] Current Time is 16
+[Engine] Current Time is 16
+[BlueSecond] Fire , pos(x,y) = (2,4)
+[Engine] Current Time is 16.2
+[Engine] Current Time is 16.2
+[RedFirst] Fire , pos(x,y) = (3,4)
+[Engine] Current Time is 16.3
+[Engine] Current Time is 16.3
+[RedThird] Fire , pos(x,y) = (1,1)
+[Engine] Current Time is 16.8
+[Engine] Current Time is 16.8
+[BlueFirst] Fire , pos(x,y) = (0,3)
+[Engine] Current Time is 16.9
+[Engine] Current Time is 16.9
+[RedFirst] Fire , pos(x,y) = (2,2)
+[BlueThird] Fire , pos(x,y) = (4,0)
+[Engine] Current Time is 17
+[Engine] Current Time is 17
+[RedSecond] Fire , pos(x,y) = (3,4)
+[BlueSecond] Fire , pos(x,y) = (0,3)
+[Engine] Current Time is 17.2
+[Engine] Current Time is 17.2
+[BlueThird] Fire , pos(x,y) = (1,2)
+[Engine] Current Time is 17.5
+[Engine] Current Time is 17.5
+[RedThird] Fire , pos(x,y) = (0,4)
+[BlueFirst] Fire , pos(x,y) = (4,0)
+[Engine] Current Time is 17.5
+[Engine] Current Time is 17.5
+[RedSecond] Fire , pos(x,y) = (3,2)
+[BlueSecond] Fire , pos(x,y) = (3,3)
+[Engine] Current Time is 17.7
+[Engine] Current Time is 17.7
+[BlueThird] Fire , pos(x,y) = (3,4)
+[Engine] Current Time is 18
+[Engine] Current Time is 18
+[RedFirst] Fire , pos(x,y) = (0,2)
+[Engine] Current Time is 18.1
+[Engine] Current Time is 18.1
+[RedThird] Fire , pos(x,y) = (0,2)
+[BlueFirst] Fire , pos(x,y) = (1,2)
+[Engine] Current Time is 18.4
+[Engine] Current Time is 18.4
+[BlueSecond] Fire , pos(x,y) = (4,4)
+[Engine] Current Time is 18.6
+[Engine] Current Time is 18.6
+[BlueThird] Fire , pos(x,y) = (0,2)
+[Engine] Current Time is 18.7
+[Engine] Current Time is 18.7
+[RedSecond] Fire , pos(x,y) = (0,2)
+[Engine] Current Time is 18.8
+[Engine] Current Time is 18.8
+[RedFirst] Fire , pos(x,y) = (3,0)
+[Engine] Current Time is 19.2
+[Engine] Current Time is 19.2
+[RedThird] Fire , pos(x,y) = (3,1)
+[Engine] Current Time is 19.4
+[Engine] Current Time is 19.4
+[BlueThird] Fire , pos(x,y) = (0,0)
+[Engine] Current Time is 19.6
+[Engine] Current Time is 19.6
+[BlueSecond] Fire , pos(x,y) = (2,1)
+[BlueFirst] Fire , pos(x,y) = (1,1)
+[Engine] Current Time is 19.7
+[Engine] Current Time is 19.7
+[RedFirst] Fire , pos(x,y) = (3,0)
+[Engine] Current Time is 19.9
+[Engine] Current Time is 19.9
+[RedThird] Fire , pos(x,y) = (3,3)
+[Engine] Current Time is 20
+[Engine] Current Time is 20
+[RedSecond] Fire , pos(x,y) = (2,4)
+[BlueThird] Fire , pos(x,y) = (3,3)
+[Engine] Current Time is 20.1
+[Engine] Current Time is 20.1
+[RedThird] Fire , pos(x,y) = (2,0)
+[Engine] Current Time is 20.6
+[Engine] Current Time is 20.6
+[RedFirst] Fire , pos(x,y) = (3,0)
+[BlueSecond] Fire , pos(x,y) = (2,3)
+[Engine] Current Time is 20.8
+[Engine] Current Time is 20.8
+[RedSecond] Fire , pos(x,y) = (1,0)
+[Engine] Current Time is 20.9
+[Engine] Current Time is 20.9
+[BlueFirst] Fire , pos(x,y) = (3,4)
+[Engine] Current Time is 20.9
+[Engine] Current Time is 20.9
+[BlueThird] Fire , pos(x,y) = (1,4)
+[Engine] Current Time is 21.3
+[Engine] Current Time is 21.3
+[BlueFirst] Fire , pos(x,y) = (2,0)
+[Engine] Current Time is 21.4
+[Engine] Current Time is 21.4
+[RedFirst] Fire , pos(x,y) = (1,1)
+[Engine] Current Time is 21.7
+[Engine] Current Time is 21.7
+[RedThird] Fire , pos(x,y) = (1,2)
+[BlueSecond] Fire , pos(x,y) = (4,1)
+[Engine] Current Time is 22
+[Engine] Current Time is 22
+[RedSecond] Fire , pos(x,y) = (2,2)
+[Engine] Current Time is 22.2
+[Engine] Current Time is 22.2
+[BlueThird] Fire , pos(x,y) = (0,1)
+[BlueFirst] Fire , pos(x,y) = (4,0)
+[Engine] Current Time is 22.4
+[Engine] Current Time is 22.4
+[RedThird] Fire , pos(x,y) = (1,0)
+[Engine] Current Time is 22.6
+[Engine] Current Time is 22.6
+[BlueSecond] Fire , pos(x,y) = (4,4)
+[Engine] Current Time is 22.7
+[Engine] Current Time is 22.7
+[RedFirst] Fire , pos(x,y) = (2,4)
+[Engine] Current Time is 22.9
+[Engine] Current Time is 22.9
+[BlueFirst] Fire , pos(x,y) = (2,3)
+[Engine] Current Time is 23.1
+[Engine] Current Time is 23.1
+[RedSecond] Fire , pos(x,y) = (2,3)
+[Engine] Current Time is 23.3
+[Engine] Current Time is 23.3
+[RedThird] Fire , pos(x,y) = (3,2)
+[Engine] Current Time is 23.3
+[Engine] Current Time is 23.3
+[BlueSecond] Fire , pos(x,y) = (1,0)
+[Engine] Current Time is 23.4
+[Engine] Current Time is 23.4
+[RedFirst] Fire , pos(x,y) = (1,0)
+[Engine] Current Time is 23.7
+[Engine] Current Time is 23.7
+[BlueThird] Fire , pos(x,y) = (0,3)
+[Engine] Current Time is 23.8
+[Engine] Current Time is 23.8
+[RedThird] Fire , pos(x,y) = (4,1)
+[Engine] Current Time is 23.9
+[Engine] Current Time is 23.9
+[BlueFirst] Fire , pos(x,y) = (2,4)
+[Engine] Current Time is 24.1
+[Engine] Current Time is 24.1
+[BlueSecond] Fire , pos(x,y) = (1,0)
+[Engine] Current Time is 24.4
+[Engine] Current Time is 24.4
+[RedSecond] Fire , pos(x,y) = (1,0)
+[Engine] Current Time is 24.6
+[Engine] Current Time is 24.6
+[RedFirst] Fire , pos(x,y) = (0,0)
+[Engine] Current Time is 24.6
+[Engine] Current Time is 24.6
+[RedThird] Fire , pos(x,y) = (1,2)
+[Engine] Current Time is 24.8
+[Engine] Current Time is 24.8
+[BlueFirst] Fire , pos(x,y) = (2,3)
+[Engine] Current Time is 24.9
+[Engine] Current Time is 24.9
+[BlueThird] Fire , pos(x,y) = (0,3)
+[Engine] Current Time is 25.1
+[Engine] Current Time is 25.1
+[RedSecond] Fire , pos(x,y) = (3,0)
+[Engine] Current Time is 25.2
+[Engine] Current Time is 25.2
+[RedFirst] Fire , pos(x,y) = (2,0)
+[Engine] Current Time is 25.3
+[Engine] Current Time is 25.3
+[BlueFirst] Fire , pos(x,y) = (0,3)
+[Engine] Current Time is 25.7
+[Engine] Current Time is 25.7
+[BlueSecond] Fire , pos(x,y) = (2,4)
+[Engine] Current Time is 25.7
+[Engine] Current Time is 25.7
+[BlueThird] Fire , pos(x,y) = (3,4)
+[Engine] Current Time is 25.8
+[Engine] Current Time is 25.8
+[RedSecond] Fire , pos(x,y) = (4,3)
+[Engine] Current Time is 25.9
+[Engine] Current Time is 25.9
+[RedFirst] Fire , pos(x,y) = (2,0)
+[Engine] Current Time is 25.9
+[Engine] Current Time is 25.9
+[RedThird] Fire , pos(x,y) = (3,4)
+[Engine] Current Time is 26.1
+[Engine] Current Time is 26.1
+[BlueFirst] Fire , pos(x,y) = (2,2)
+[Engine] Current Time is 26.2
+[Engine] Current Time is 26.2
+[BlueThird] Fire , pos(x,y) = (1,2)
+[Engine] Current Time is 26.3
+[Engine] Current Time is 26.3
+[RedFirst] Fire , pos(x,y) = (4,0)
+[Engine] Current Time is 26.5
+[Engine] Current Time is 26.5
+[BlueSecond] Fire , pos(x,y) = (1,2)
+[Engine] Current Time is 26.7
+[Engine] Current Time is 26.7
+[BlueThird] Fire , pos(x,y) = (3,2)
+[Engine] Current Time is 26.9
+[Engine] Current Time is 26.9
+[RedSecond] Fire , pos(x,y) = (2,4)
+[Engine] Current Time is 27.3
+[Engine] Current Time is 27.3
+[BlueFirst] Fire , pos(x,y) = (2,4)
+[Engine] Current Time is 27.3
+[Engine] Current Time is 27.3
+[RedThird] Fire , pos(x,y) = (3,0)
+[RedFirst] Fire , pos(x,y) = (4,3)
+[Engine] Current Time is 27.4
+[Engine] Current Time is 27.4
+[BlueThird] Fire , pos(x,y) = (1,3)
+[BlueSecond] Fire , pos(x,y) = (4,0)
+[Engine] Current Time is 27.5
+[Engine] Current Time is 27.5
+[BlueThird] Fire , pos(x,y) = (4,3)
+[Engine] Current Time is 28.1
+[Engine] Current Time is 28.1
+[RedFirst] Fire , pos(x,y) = (3,2)
+[Engine] Current Time is 28.2
+[Engine] Current Time is 28.2
+[BlueSecond] Fire , pos(x,y) = (0,4)
+[Engine] Current Time is 28.2
+[Engine] Current Time is 28.2
+[BlueFirst] Fire , pos(x,y) = (3,2)
+[Engine] Current Time is 28.4
+[Engine] Current Time is 28.4
+[RedSecond] Fire , pos(x,y) = (1,4)
+[Engine] Current Time is 28.6
+[Engine] Current Time is 28.6
+[RedThird] Fire , pos(x,y) = (0,2)
+[Engine] Current Time is 28.6
+[Engine] Current Time is 28.6
+[BlueSecond] Fire , pos(x,y) = (4,2)
+[Engine] Current Time is 28.9
+[Engine] Current Time is 28.9
+[BlueThird] Fire , pos(x,y) = (4,4)
+[Engine] Current Time is 29
+[Engine] Current Time is 29
+[RedFirst] Fire , pos(x,y) = (0,3)
+[Engine] Current Time is 29.2
+[Engine] Current Time is 29.2
+[BlueThird] Fire , pos(x,y) = (1,3)
+[Engine] Current Time is 29.5
+[Engine] Current Time is 29.5
+[RedSecond] Fire , pos(x,y) = (2,2)
+[Engine] Current Time is 29.6
+[Engine] Current Time is 29.6
+[RedFirst] Fire , pos(x,y) = (1,3)
+[BlueFirst] Fire , pos(x,y) = (0,4)
+[Engine] Current Time is 29.7
+[Engine] Current Time is 29.7
+[RedThird] Fire , pos(x,y) = (3,3)
+[Engine] Current Time is 29.9
+[Engine] Current Time is 29.9
+[BlueSecond] Fire , pos(x,y) = (3,2)
+[Engine] Current Time is 29.9
+[Engine] Current Time is 29.9
+[BlueThird] Fire , pos(x,y) = (4,1)

@@ -2,7 +2,7 @@
 #include "engine.hpp"
 
 Model::Model(int modelID, Engine* engine)
-    : modelID(modelID), engine(engine)
+    : engine(engine), modelID(modelID)
 {
     if (engine != nullptr) {
         engine->RegisterModelWithID(this);

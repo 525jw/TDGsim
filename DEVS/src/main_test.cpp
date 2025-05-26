@@ -8,15 +8,24 @@
 #include <ctime>
 
 
-int main(){
-    std::cout<<"main"<<std::endl;
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
-    Engine engine = Engine();
-    TestCannonSys testCannonsys = TestCannonSys(0,&engine);
-    engine.BuildDEVS(&testCannonsys);
+int main() {
+    std::cerr << "[DEBUG] main 진입" << std::endl;
+
+    Engine engine;
+    std::cerr << "[DEBUG] Engine 생성 완료" << std::endl;
+
+    TestCannonSys sys(0, &engine);
+    std::cerr << "[DEBUG] TestCannonSys 생성 완료" << std::endl;
+
+    engine.BuildDEVS(&sys);
+    std::cerr << "[DEBUG] BuildDEVS 완료" << std::endl;
+
     engine.Run();
+    std::cerr << "[DEBUG] Run() 종료" << std::endl;
+
     return 0;
 }
+
 /*
 note: test codes에서 id는 하드코딩 되어있음
 system 0

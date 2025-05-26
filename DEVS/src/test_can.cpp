@@ -37,10 +37,19 @@ TestCannon::TestCannon(int modelID, Engine* engine, std::string name)
                     <<std::endl;
 }
 
-bool TestCannon::ExtTransFn(const std::string& inPort, const FIREINFO& message) {
+bool TestCannon::ExtTransFn(const std::string& inPort, const std::any& message) {
+    FIREINFO msg;
+
+     try {
+        msg = std::any_cast<FIREINFO>(message);
+    } catch (const std::bad_any_cast&) {
+        logger_system << "[ERROR] Invalid message type!" << std::endl;
+        return false;
+    }
+
     if(inPort == "fire_in" && this->GetCurState() != "dead"){
-        if(this->myPosXY.first == message.targetX && this->myPosXY.second == message.targetY){
-            health -= message.damage;
+        if(this->myPosXY.first == msg.targetX && this->myPosXY.second == msg.targetY){
+            health -= msg.damage;
 
             logger_world    << "["
                             << myName

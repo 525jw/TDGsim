@@ -14,7 +14,7 @@ private:
     std::string myName;
 public:
     TestCannon(int modelID, Engine* engine, std::string name);
-    bool ExtTransFn(const std::string& inPort, const FIREINFO& message);
+    bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();
     bool OutputFn();
     TIME_T TimeAdvanceFn();

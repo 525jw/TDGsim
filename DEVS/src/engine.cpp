@@ -17,7 +17,7 @@ void Engine::Run(){
         logger_system << "[Engine::Run]"<< " Prepared Model ID : " << key << std::endl;
     }
 
-    while(this->currentTime<10.0){ //// TODO : needs while loop unitl the end time
+    while(this->currentTime<30.0){ //// TODO : needs while loop unitl the end time
         std::cout       << "[Engine::Run]"<< " >>> Engine running "
                         << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
                         << " <<< "
