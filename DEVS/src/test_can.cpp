@@ -120,6 +120,19 @@ bool TestCannon::ExtTransFn(const std::string& inPort, const std::any& message) 
     }
     return true;
 }
+
+/*
+NOTE : 내부천이로는 *체력50이하일 때 1초를 넘기면 죽음*이 구현되지 않는다
+    내부천이의 발생이 TA에 의존하고, TA는 오직 minTA를 건네준 모델에만 전달되기 때문(ref.교재 when receive (*,t))
+    따라서 *체력이 변화되는 시점 : ExtTransFn*에서 *위독함 State*로 전이 후
+    해당 State의 TimeAdvanceFn를 1초로 지정하는게 합당하다
+
+    아래 코드는 *체력이 50이하 && 1초가 경과일 때 내가 어떤 행동이든 수행하면 사망*에 가깝다 
+    
+    >> 행위는 TA에서 수행
+    >> 결과는 TransFn에서 관측
+    >> 모델이 언제 했다고 우기면 엔진이 빠른 순으로 반영해주는 개념에 가까움
+*/
 bool TestCannon::IntTransFn() {
     if(this->GetCurState()=="idle"){
         this->SetCurState("engage");
