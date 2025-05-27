@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 
-def parse_battle_report(path: str = "./test/val_input.txt") -> None:
+def parse_battle_report(path: str = "./src/logs/log_world.txt") -> None:
     fire_counts   = []
     damage_counts = []
     total_fire_turns = None
@@ -52,4 +52,4 @@ def parse_battle_report(path: str = "./test/val_input.txt") -> None:
     print(f"Expected Ratio When 5 x 5 map, 3 enemy = 3/25 = {3.0/25.0*100}%")
 
 if __name__ == "__main__":
-    parse_battle_report("./test/val_input.txt")
+    parse_battle_report("./src/logs/log_world.txt")

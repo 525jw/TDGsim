@@ -1,16 +1,3 @@
-"""
-battle_visualizer_step.py ─────────────────────────────────────────────
-SPACE BAR를 누를 때마다 **다음 로그 한 줄**을 재생한다.
-
-◎ 원 내부 : 1‧2‧3  (Blue/Red First·Second·Third 식별)  
-◎ 원 아래 : 현재 Health (초기 100 → Damage 로그에서만 갱신)  
-◎ 상단    : Turn 값  +  (라인번호) 원본 로그 줄
-
-Fire  → 팀 색(Blue/Red) 선  
-Damage → 노란 원 순간 표식 + Health 갱신  
-Died   → 원 색을 검정으로, Health 0
-──────────────────────────────────────────────────────────────────────
-"""
 import pygame, sys, re
 from collections import deque
 from pathlib import Path
