@@ -38,7 +38,7 @@ public:
     bool RegisterModelWithID(Model* model);
     bool IsCoupled() const override { return true; }
 
-    // for debugging
+    // DEBUG ONLY
     size_t CouplingCount(CouplingType t) const {
         auto it = couplings.find(t);
         return (it == couplings.end()) ? 0 : it->second.size();

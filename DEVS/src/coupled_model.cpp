@@ -130,11 +130,8 @@ void CoupledModel::RouteIC(Event& event, TIME_T currentTime){  // Handling IC
                                 << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
                                 << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
                                 << std::endl;
-
-                this->engine->AddEvent(&ev);
-            }else{
-                cp->getDetModel()->ReceiveEvent(ev, currentTime);
             }
+            cp->getDetModel()->ReceiveEvent(ev, currentTime);
         }
     }
 }

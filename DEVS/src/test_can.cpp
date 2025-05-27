@@ -4,7 +4,6 @@ TestCannon::TestCannon(int modelID, Engine* engine, std::string name)
     :  AtomicModel(modelID, engine)
 {
     this->myName=name;
-    std::pair<int,int> myPosXY;
     int x,y;
     do {
         x = std::rand() % 5;
@@ -38,32 +37,36 @@ TestCannon::TestCannon(int modelID, Engine* engine, std::string name)
 }
 
 bool TestCannon::ExtTransFn(const std::string& inPort, const std::any& message) {
-    FIREINFO msg;
-
-     try {
-        msg = std::any_cast<FIREINFO>(message);
-    } catch (const std::bad_any_cast&) {
-        logger_system << "[ERROR] Invalid message type!" << std::endl;
-        return false;
-    }
-
     if(inPort == "fire_in" && this->GetCurState() != "dead"){
+        FIREINFO msg;
+
+        try {
+            msg = std::any_cast<FIREINFO>(message);
+        } catch (const std::bad_any_cast&) {
+            logger_system << "[ERROR] Invalid message type!" << std::endl;
+            return false;
+        }
+
         if(this->myPosXY.first == msg.targetX && this->myPosXY.second == msg.targetY){
             health -= msg.damage;
 
             logger_world    << "["
                             << myName
                             << "]"
-                            << ""
+                            << " My location: ("<<myPosXY.first<<","<<myPosXY.second<<")"
+                            << " Impact location: ("<<msg.targetX<<","<<msg.targetY<<")"
                             << " Damaged , health = "<<this->health
+                            << " Sender : "<<msg.orgSenderModelID // DEBUG ONLY
                             <<std::endl;
 
 
             logger_system   << "[" << "TestCannon::"
                             << myName
                             << "::ExtTransFn]"
-                            << ""
-                            << " Damaged "
+                            << " My location: ("<<myPosXY.first<<","<<myPosXY.second<<")"
+                            << " Impact location: ("<<msg.targetX<<","<<msg.targetY<<")"
+                            << " Damaged , health = "<<this->health
+                            << " Sender : "<<msg.orgSenderModelID // DEBUG ONLY
                             <<std::endl;
         }else
             return true;
@@ -104,6 +107,7 @@ bool TestCannon::OutputFn() {
         info.targetX = targetX;
         info.targetY = targetY;
         info.damage = damage;
+        info.orgSenderModelID = this->GetModelID(); // DEBUG ONLY;
         std::any msg = info;
 
         logger_world    << "["

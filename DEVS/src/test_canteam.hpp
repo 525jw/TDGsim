@@ -5,9 +5,8 @@
 #include <string>
 
 class TestCannonTeam : public CoupledModel{
-private:
-    std::string myName;
 public:
+    std::string myName;
     TestCannonTeam(int modelID, Engine* engine, std::string name);
     void ReceiveScheduleTime(const TIME_T currentTime) override;
     void ReceiveEvent(Event& event, TIME_T currentTime) override;

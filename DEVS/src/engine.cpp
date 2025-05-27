@@ -9,6 +9,11 @@ void Engine::BuildDEVS(Model* rootModel){
 
 void Engine::Run(){
 
+    std::cout       << "[Engine::Run]"<< " >>> Engine starts "
+                    << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
+                    << " <<< "
+                    << std::endl;
+
     std::vector<int> keys;
     for (const auto& pair : modelsWithID) {
         keys.push_back(pair.first);
@@ -18,23 +23,22 @@ void Engine::Run(){
     }
 
     while(this->currentTime<30.0){ //// TODO : needs while loop unitl the end time
-        std::cout       << "[Engine::Run]"<< " >>> Engine running "
+        std::cout       << "[Engine::Run]"<< " Engine running " 
                         << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
-                        << " <<< "
                         << std::endl;
 
-        logger_system   << "[Engine::Run]"<< " >>> Engine running "
+        logger_system   << "[Engine::Run]"<< " Engine running \n"
+                        << "------------------------------------"
                         << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
-                        << " <<< "
-                        << std::endl;
-
-        logger_world    << "[Engine]"
-                        << " Current Time is " << this->currentTime
+                        << "------------------------------------"
                         << std::endl;
 
         if(this->eventQueue.empty()){
             logger_system   << "[Engine::Run] Event queue is empty, "
                             << "Query nextTime"<<std::endl;
+
+            logger_world    << "Fire Turn " << this->currentTime
+                            << std::endl;
             
             TIME_T minTA = this->rootModel->QueryNextTime();
             if(minTA > TIME_INF)
@@ -46,6 +50,9 @@ void Engine::Run(){
             this->rootModel->ReceiveScheduleTime(this->currentTime);
         }else{
             logger_system   << "[Engine::Run] Starts broadcasting events "<<std::endl;
+
+            logger_world    << "Damage Turn " << this->currentTime
+                            << std::endl;
             
             Event* curEvent = nullptr;
             Model* curModel = nullptr;
@@ -71,6 +78,10 @@ void Engine::Run(){
             }
         }
     }
+    std::cout       << "[Engine::Run]"<< " >>> Engine Ends "
+                    << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
+                    << " <<< "
+                    << std::endl;
 }
 
 void Engine::AddEvent(Event* event){

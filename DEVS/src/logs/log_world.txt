@@ -7,9 +7,290 @@
 [RedFirst] Created, pos(x,y) = (3,3)
 [RedSecond] Created, pos(x,y) = (2,4)
 [RedThird] Created, pos(x,y) = (0,0)
-[Engine] Current Time is 0
-[Engine] Current Time is 0
+Fire Turn 0
+Fire Turn 0
 [RedThird] Fire , pos(x,y) = (2,1)
 [RedFirst] Fire , pos(x,y) = (2,3)
 [BlueThird] Fire , pos(x,y) = (1,1)
-[Engine] Current Time is 0.6
+Damage Turn 0.6
+Fire Turn 0.6
+[BlueThird] Fire , pos(x,y) = (4,3)
+Damage Turn 1.3
+Fire Turn 1.3
+[BlueFirst] Fire , pos(x,y) = (1,1)
+Damage Turn 1.9
+Fire Turn 1.9
+[BlueThird] Fire , pos(x,y) = (2,2)
+[BlueSecond] Fire , pos(x,y) = (1,4)
+Damage Turn 2
+Fire Turn 2
+[RedThird] Fire , pos(x,y) = (2,4)
+Damage Turn 2.5
+Fire Turn 2.5
+[BlueSecond] Fire , pos(x,y) = (0,0)
+Damage Turn 3
+[RedThird] My location: (0,0) Impact location: (0,0) Damaged , health = 84 Sender : 12
+Fire Turn 3
+[BlueFirst] Fire , pos(x,y) = (3,4)
+Damage Turn 3.5
+Fire Turn 3.5
+[BlueSecond] Fire , pos(x,y) = (1,3)
+Damage Turn 3.6
+Fire Turn 3.6
+[BlueThird] Fire , pos(x,y) = (3,3)
+Damage Turn 3.9
+[RedFirst] My location: (3,3) Impact location: (3,3) Damaged , health = 88 Sender : 13
+Fire Turn 3.9
+[RedFirst] Fire , pos(x,y) = (4,3)
+Damage Turn 4.5
+Fire Turn 4.5
+[RedSecond] Fire , pos(x,y) = (1,1)
+Damage Turn 4.7
+Fire Turn 4.7
+[RedThird] Fire , pos(x,y) = (2,3)
+Damage Turn 4.9
+Fire Turn 4.9
+[RedFirst] Fire , pos(x,y) = (1,0)
+Damage Turn 5
+Fire Turn 5
+[RedThird] Fire , pos(x,y) = (0,0)
+[BlueSecond] Fire , pos(x,y) = (1,0)
+Damage Turn 5.6
+Fire Turn 5.6
+[RedThird] Fire , pos(x,y) = (0,4)
+[RedSecond] Fire , pos(x,y) = (1,3)
+Damage Turn 6.4
+Fire Turn 6.4
+[RedFirst] Fire , pos(x,y) = (2,0)
+Damage Turn 6.8
+Fire Turn 6.8
+[RedSecond] Fire , pos(x,y) = (3,0)
+Damage Turn 7.5
+Fire Turn 7.5
+[RedThird] Fire , pos(x,y) = (4,0)
+Damage Turn 7.7
+[BlueSecond] My location: (4,0) Impact location: (4,0) Damaged , health = 74 Sender : 23
+Fire Turn 7.7
+[RedSecond] Fire , pos(x,y) = (4,1)
+Damage Turn 8.2
+Fire Turn 8.2
+[RedFirst] Fire , pos(x,y) = (0,3)
+Damage Turn 8.2
+Fire Turn 8.2
+[RedThird] Fire , pos(x,y) = (3,2)
+Damage Turn 8.3
+Fire Turn 8.3
+[RedThird] Fire , pos(x,y) = (4,1)
+Damage Turn 8.8
+Fire Turn 8.8
+[RedSecond] Fire , pos(x,y) = (1,3)
+Damage Turn 9
+Fire Turn 9
+[RedThird] Fire , pos(x,y) = (4,2)
+[RedFirst] Fire , pos(x,y) = (3,3)
+Damage Turn 9.4
+Fire Turn 9.4
+[RedSecond] Fire , pos(x,y) = (0,1)
+Damage Turn 9.9
+Fire Turn 9.9
+[RedThird] Fire , pos(x,y) = (2,2)
+Damage Turn 10.4
+Fire Turn 10.4
+[RedSecond] Fire , pos(x,y) = (0,2)
+Damage Turn 10.5
+Fire Turn 10.5
+[RedFirst] Fire , pos(x,y) = (1,2)
+Damage Turn 10.6
+[BlueFirst] My location: (1,2) Impact location: (1,2) Damaged , health = 76 Sender : 21
+Fire Turn 10.6
+[RedSecond] Fire , pos(x,y) = (2,1)
+Damage Turn 11.1
+Fire Turn 11.1
+[RedFirst] Fire , pos(x,y) = (1,1)
+Damage Turn 11.3
+Fire Turn 11.3
+[RedThird] Fire , pos(x,y) = (2,1)
+Damage Turn 11.7
+Fire Turn 11.7
+[RedSecond] Fire , pos(x,y) = (0,3)
+Damage Turn 11.9
+Fire Turn 11.9
+[RedFirst] Fire , pos(x,y) = (0,3)
+Damage Turn 12
+Fire Turn 12
+[RedSecond] Fire , pos(x,y) = (1,2)
+Damage Turn 12.5
+[BlueFirst] My location: (1,2) Impact location: (1,2) Damaged , health = 49 Sender : 22
+Fire Turn 12.5
+[RedFirst] Fire , pos(x,y) = (1,4)
+Damage Turn 13
+Fire Turn 13
+[RedThird] Fire , pos(x,y) = (0,4)
+Damage Turn 13.1
+Fire Turn 13.1
+[RedSecond] Fire , pos(x,y) = (3,3)
+Damage Turn 13.2
+Fire Turn 13.2
+[RedThird] Fire , pos(x,y) = (4,4)
+Damage Turn 13.7
+[BlueThird] My location: (4,4) Impact location: (4,4) Damaged , health = 73 Sender : 23
+Fire Turn 13.7
+[RedSecond] Fire , pos(x,y) = (2,1)
+Damage Turn 14
+Fire Turn 14
+[RedFirst] Fire , pos(x,y) = (4,4)
+Damage Turn 14.4
+[BlueThird] My location: (4,4) Impact location: (4,4) Damaged , health = 62 Sender : 21
+Fire Turn 14.4
+[RedThird] Fire , pos(x,y) = (3,0)
+Damage Turn 14.8
+Fire Turn 14.8
+[RedSecond] Fire , pos(x,y) = (0,3)
+Damage Turn 15
+Fire Turn 15
+[RedFirst] Fire , pos(x,y) = (1,4)
+Damage Turn 15.5
+Fire Turn 15.5
+[RedThird] Fire , pos(x,y) = (0,3)
+[RedSecond] Fire , pos(x,y) = (4,2)
+Damage Turn 15.6
+Fire Turn 15.6
+[RedFirst] Fire , pos(x,y) = (3,4)
+Damage Turn 16.2
+Fire Turn 16.2
+[RedSecond] Fire , pos(x,y) = (3,1)
+Damage Turn 16.4
+Fire Turn 16.4
+[RedThird] Fire , pos(x,y) = (4,4)
+Damage Turn 16.5
+[BlueThird] My location: (4,4) Impact location: (4,4) Damaged , health = 38 Sender : 23
+Fire Turn 16.5
+[BlueThird] Fire , pos(x,y) = (2,2)
+Damage Turn 17
+Fire Turn 17
+[BlueSecond] Fire , pos(x,y) = (3,2)
+Damage Turn 17.3
+Fire Turn 17.3
+[RedFirst] Fire , pos(x,y) = (2,4)
+Damage Turn 17.8
+Fire Turn 17.8
+[RedSecond] Fire , pos(x,y) = (2,1)
+Damage Turn 18.1
+Fire Turn 18.1
+[RedThird] Fire , pos(x,y) = (0,1)
+Damage Turn 18.5
+Fire Turn 18.5
+[RedFirst] Fire , pos(x,y) = (0,2)
+Damage Turn 18.8
+Fire Turn 18.8
+[RedSecond] Fire , pos(x,y) = (0,3)
+Damage Turn 18.9
+Fire Turn 18.9
+[RedThird] Fire , pos(x,y) = (0,0)
+Damage Turn 19.2
+Fire Turn 19.2
+[RedSecond] Fire , pos(x,y) = (1,4)
+Damage Turn 19.4
+Fire Turn 19.4
+[RedFirst] Fire , pos(x,y) = (3,1)
+Damage Turn 19.6
+Fire Turn 19.6
+[RedSecond] Fire , pos(x,y) = (0,2)
+Damage Turn 20.1
+Fire Turn 20.1
+[RedThird] Fire , pos(x,y) = (0,1)
+Damage Turn 20.2
+Fire Turn 20.2
+[RedFirst] Fire , pos(x,y) = (2,1)
+Damage Turn 20.9
+Fire Turn 20.9
+[RedThird] Fire , pos(x,y) = (2,4)
+Damage Turn 21
+Fire Turn 21
+[RedSecond] Fire , pos(x,y) = (3,1)
+Damage Turn 21.2
+Fire Turn 21.2
+[RedThird] Fire , pos(x,y) = (0,2)
+[RedSecond] Fire , pos(x,y) = (1,1)
+Damage Turn 21.8
+Fire Turn 21.8
+[RedFirst] Fire , pos(x,y) = (3,0)
+Damage Turn 22.1
+Fire Turn 22.1
+[RedThird] Fire , pos(x,y) = (3,3)
+Damage Turn 22.3
+Fire Turn 22.3
+[RedSecond] Fire , pos(x,y) = (4,3)
+Damage Turn 22.4
+Fire Turn 22.4
+[RedFirst] Fire , pos(x,y) = (3,2)
+Damage Turn 22.8
+Fire Turn 22.8
+[RedFirst] Fire , pos(x,y) = (4,0)
+[BlueFirst] Fire , pos(x,y) = (4,0)
+Damage Turn 23.3
+[BlueSecond] My location: (4,0) Impact location: (4,0) Damaged , health = 64 Sender : 21
+Fire Turn 23.3
+[BlueFirst] Fire , pos(x,y) = (2,1)
+Damage Turn 23.8
+Fire Turn 23.8
+[BlueSecond] Fire , pos(x,y) = (1,2)
+Damage Turn 24.1
+Fire Turn 24.1
+[BlueThird] Fire , pos(x,y) = (1,3)
+Damage Turn 24.3
+Fire Turn 24.3
+[BlueSecond] Fire , pos(x,y) = (1,0)
+Damage Turn 24.8
+Fire Turn 24.8
+[BlueFirst] Fire , pos(x,y) = (2,2)
+Damage Turn 25
+Fire Turn 25
+[BlueSecond] Fire , pos(x,y) = (1,0)
+Damage Turn 25.5
+Fire Turn 25.5
+[BlueThird] Fire , pos(x,y) = (2,4)
+Damage Turn 25.7
+[RedSecond] My location: (2,4) Impact location: (2,4) Damaged , health = 79 Sender : 13
+Fire Turn 25.7
+[BlueFirst] Fire , pos(x,y) = (1,0)
+Damage Turn 25.7
+Fire Turn 25.7
+[RedThird] Fire , pos(x,y) = (3,4)
+Damage Turn 26.2
+Fire Turn 26.2
+[RedSecond] Fire , pos(x,y) = (1,3)
+Damage Turn 26.5
+Fire Turn 26.5
+[RedFirst] Fire , pos(x,y) = (0,3)
+Damage Turn 26.7
+Fire Turn 26.7
+[RedThird] Fire , pos(x,y) = (1,2)
+Damage Turn 27
+[BlueFirst] My location: (1,2) Impact location: (1,2) Damaged , health = 35 Sender : 23
+Fire Turn 27
+[RedSecond] Fire , pos(x,y) = (3,0)
+Damage Turn 27.5
+Fire Turn 27.5
+[RedFirst] Fire , pos(x,y) = (2,2)
+Damage Turn 27.7
+Fire Turn 27.7
+[BlueThird] Fire , pos(x,y) = (3,0)
+Damage Turn 28.2
+Fire Turn 28.2
+[BlueSecond] Fire , pos(x,y) = (3,4)
+Damage Turn 28.3
+Fire Turn 28.3
+[BlueSecond] Fire , pos(x,y) = (4,2)
+Damage Turn 28.8
+Fire Turn 28.8
+[BlueFirst] Fire , pos(x,y) = (0,3)
+Damage Turn 29.1
+Fire Turn 29.1
+[BlueThird] Fire , pos(x,y) = (2,2)
+Damage Turn 29.4
+Fire Turn 29.4
+[BlueSecond] Fire , pos(x,y) = (1,2)
+Damage Turn 29.7
+Fire Turn 29.7
+[BlueFirst] Fire , pos(x,y) = (1,2)

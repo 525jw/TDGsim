@@ -6,9 +6,8 @@
 class Engine;
 
 class TestCannonSys : public CoupledModel{
-private:
-    std::string myName;
 public:
+    std::string myName;
     TestCannonSys(int modelID, Engine* engine);
     void ReceiveScheduleTime(const TIME_T currentTime) override;
     const TIME_T QueryNextTime() const override;

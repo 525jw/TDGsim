@@ -8,11 +8,10 @@
 #include <string>
 
 class TestCannon : public AtomicModel{
-private:
-    std::pair<int, int> myPosXY;
-    int health = 100;
-    std::string myName;
 public:
+    int health = 100;
+    std::pair<int, int> myPosXY;
+    std::string myName;
     TestCannon(int modelID, Engine* engine, std::string name);
     bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();
