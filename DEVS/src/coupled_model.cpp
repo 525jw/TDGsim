@@ -25,14 +25,30 @@ bool CoupledModel::AddCoupling(
     couplings[type].emplace_back(std::make_unique<Coupling>(srcModel, srcPort, detModel, detPort));
     return true;
 }
+// NOTE : 아직 기능 검증되지 않음, 사용을 원한다면 sim 결과의 출력 방식을 변경 필요 (event 처리 방식 -> engine에서 직접 출력요청)
 bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort,
                                   Model* detModel, std::string* detPort) {
-    // TODO : RemoveCoupling Unimplemented
-    return false;
+    bool removed = false;
+    for (auto& [type, vec] : couplings) {
+        const auto oldSize = vec.size();
+
+        vec.erase(std::remove_if(vec.begin(), vec.end(),
+            [&](const std::unique_ptr<Coupling>& cp) {
+                if (srcModel && cp->getSrcModel() != srcModel)       return false;
+                if (srcPort  && cp->getSrcPort()  != *srcPort)       return false;
+                if (detModel && cp->getDetModel() != detModel)       return false;
+                if (detPort  && cp->getDetPort()  != *detPort)       return false;
+                return true;
+            }),
+            vec.end());
+
+        if (vec.size() != oldSize)
+            removed = true;
+    }
+    return removed;
 }
 bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort) {
-    // TODO : RemoveCoupling Unimplemented
-    return false;
+    return RemoveCoupling(srcModel, srcPort, nullptr, nullptr);
 }
 void CoupledModel::ReceiveEvent(Event& event, TIME_T currentTime){ // when receive (x,t)
     if(this->lastTime <= currentTime && currentTime <= this->nextTime){
