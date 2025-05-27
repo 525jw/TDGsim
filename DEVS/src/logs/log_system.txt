@@ -7220,10 +7220,10 @@
 [TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,24.3)
 [TestCannon::BlueThird::OutputFn] Fire , pos(x,y) = (1,3)
 [Engine::AddEvent] Event in, SenderModel : 13 SenderPort : fire_out
-[TestCannon::BlueThird::TimeAdvanceFn] TA calculated : 1.4
-[TestCannon::BlueThird::ReceiveScheduleTime] Received (*,24.3), next TA updated to 25.7
+[TestCannon::BlueThird::IntTransFn] Died, Elapsed Time = 1 Health = 38
+[TestCannon::BlueThird::ReceiveScheduleTime] Received (*,24.3), next TA updated to 1e+30
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
 [TestCannon::BlueSecond::QueryNextTime] sends TA : 24.8
 [TestCannon::BlueFirst::QueryNextTime] sends TA : 25
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 24.8
@@ -7234,7 +7234,7 @@
 [TestCannon::RedFirst::QueryNextTime] sends TA : 25.3
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 25.1
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
 [TestCannon::BlueSecond::QueryNextTime] sends TA : 24.8
 [TestCannon::BlueFirst::QueryNextTime] sends TA : 25
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 24.8
@@ -7259,38 +7259,38 @@
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (21, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (21, fire_in)
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1
-[TestCannon::RedFirst::ReceiveEvent] Received (x,24.3), next TA updated to 25.3
+[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1.4
+[TestCannon::RedFirst::ReceiveEvent] Received (x,24.3), next TA updated to 25.7
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (22, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (22, fire_in)
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1.4
-[TestCannon::RedSecond::ReceiveEvent] Received (x,24.3), next TA updated to 25.7
+[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1
+[TestCannon::RedSecond::ReceiveEvent] Received (x,24.3), next TA updated to 25.3
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (23, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (23, fire_in)
-[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 0.7
-[TestCannon::RedThird::ReceiveEvent] Received (x,24.3), next TA updated to 25
+[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 1.4
+[TestCannon::RedThird::ReceiveEvent] Received (x,24.3), next TA updated to 25.7
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 25
-[TestCannon::RedSecond::QueryNextTime] sends TA : 25.7
-[TestCannon::RedFirst::QueryNextTime] sends TA : 25.3
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 25
+[TestCannon::RedThird::QueryNextTime] sends TA : 25.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 25.3
+[TestCannon::RedFirst::QueryNextTime] sends TA : 25.7
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.3
 [CoupledModel::RouteEOC] Starts SrcModel : 1 SrcPort : fire_out
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 25
-[TestCannon::RedSecond::QueryNextTime] sends TA : 25.7
-[TestCannon::RedFirst::QueryNextTime] sends TA : 25.3
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 25
+[TestCannon::RedThird::QueryNextTime] sends TA : 25.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 25.3
+[TestCannon::RedFirst::QueryNextTime] sends TA : 25.7
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.3
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
 [TestCannon::BlueSecond::QueryNextTime] sends TA : 24.8
 [TestCannon::BlueFirst::QueryNextTime] sends TA : 25
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 24.8
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 24.8
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
 [TestCannon::BlueSecond::QueryNextTime] sends TA : 24.8
 [TestCannon::BlueFirst::QueryNextTime] sends TA : 25
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 24.8
@@ -7299,12 +7299,12 @@
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 25
-[TestCannon::RedSecond::QueryNextTime] sends TA : 25.7
-[TestCannon::RedFirst::QueryNextTime] sends TA : 25.3
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 25
+[TestCannon::RedThird::QueryNextTime] sends TA : 25.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 25.3
+[TestCannon::RedFirst::QueryNextTime] sends TA : 25.7
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.3
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
 [TestCannon::BlueSecond::QueryNextTime] sends TA : 24.8
 [TestCannon::BlueFirst::QueryNextTime] sends TA : 25
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 24.8
@@ -7312,24 +7312,24 @@
 [Engine::Run] Received minTA = 24.8 Request (*,24.8)
 [TestCannonSys::Sys::ReceiveScheduleTime] Received (*,24.8)
 [TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,24.8)
-[TestCannon::BlueSecond::OutputFn] Fire , pos(x,y) = (1,0)
+[TestCannon::BlueSecond::OutputFn] Fire , pos(x,y) = (2,1)
 [Engine::AddEvent] Event in, SenderModel : 12 SenderPort : fire_out
-[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.7
-[TestCannon::BlueSecond::ReceiveScheduleTime] Received (*,24.8), next TA updated to 25.5
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.8
+[TestCannon::BlueSecond::ReceiveScheduleTime] Received (*,24.8), next TA updated to 25.6
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.5
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.6
 [TestCannon::BlueFirst::QueryNextTime] sends TA : 25
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 25
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 25
-[TestCannon::RedSecond::QueryNextTime] sends TA : 25.7
-[TestCannon::RedFirst::QueryNextTime] sends TA : 25.3
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 25
+[TestCannon::RedThird::QueryNextTime] sends TA : 25.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 25.3
+[TestCannon::RedFirst::QueryNextTime] sends TA : 25.7
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.3
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.5
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.6
 [TestCannon::BlueFirst::QueryNextTime] sends TA : 25
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 25
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 25
@@ -7353,8 +7353,8 @@
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (21, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (21, fire_in)
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 0.9
-[TestCannon::RedFirst::ReceiveEvent] Received (x,24.8), next TA updated to 25.7
+[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 0.7
+[TestCannon::RedFirst::ReceiveEvent] Received (x,24.8), next TA updated to 25.5
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (22, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (22, fire_in)
@@ -7368,24 +7368,24 @@
 [TestCannonTeam::Red::QueryNextTime] query min TA
 [TestCannon::RedThird::QueryNextTime] sends TA : 25.7
 [TestCannon::RedSecond::QueryNextTime] sends TA : 25.7
-[TestCannon::RedFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 25.5
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.5
 [CoupledModel::RouteEOC] Starts SrcModel : 1 SrcPort : fire_out
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
 [TestCannon::RedThird::QueryNextTime] sends TA : 25.7
 [TestCannon::RedSecond::QueryNextTime] sends TA : 25.7
-[TestCannon::RedFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 25.5
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.5
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.5
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.6
 [TestCannon::BlueFirst::QueryNextTime] sends TA : 25
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 25
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 25
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.5
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.6
 [TestCannon::BlueFirst::QueryNextTime] sends TA : 25
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 25
 [Engine::Run] Engine running 
@@ -7395,37 +7395,37 @@
 [TestCannonTeam::Red::QueryNextTime] query min TA
 [TestCannon::RedThird::QueryNextTime] sends TA : 25.7
 [TestCannon::RedSecond::QueryNextTime] sends TA : 25.7
-[TestCannon::RedFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 25.5
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.5
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.5
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.6
 [TestCannon::BlueFirst::QueryNextTime] sends TA : 25
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 25
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 25
 [Engine::Run] Received minTA = 25 Request (*,25)
 [TestCannonSys::Sys::ReceiveScheduleTime] Received (*,25)
 [TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,25)
-[TestCannon::BlueFirst::OutputFn] Fire , pos(x,y) = (2,2)
+[TestCannon::BlueFirst::OutputFn] Fire , pos(x,y) = (4,2)
 [Engine::AddEvent] Event in, SenderModel : 11 SenderPort : fire_out
-[TestCannon::BlueFirst::TimeAdvanceFn] TA calculated : 0.7
-[TestCannon::BlueFirst::ReceiveScheduleTime] Received (*,25), next TA updated to 25.7
+[TestCannon::BlueFirst::IntTransFn] Died, Elapsed Time = 1.2 Health = 49
+[TestCannon::BlueFirst::ReceiveScheduleTime] Received (*,25), next TA updated to 1e+30
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.5
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.6
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
 [TestCannon::RedThird::QueryNextTime] sends TA : 25.7
 [TestCannon::RedSecond::QueryNextTime] sends TA : 25.7
-[TestCannon::RedFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 25.5
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.5
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.5
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.6
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 25.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 25, Event queue size : 1------------------------------------
@@ -7447,13 +7447,13 @@
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (21, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (21, fire_in)
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 0.8
-[TestCannon::RedFirst::ReceiveEvent] Received (x,25), next TA updated to 25.8
+[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1.4
+[TestCannon::RedFirst::ReceiveEvent] Received (x,25), next TA updated to 26.4
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (22, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (22, fire_in)
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1.2
-[TestCannon::RedSecond::ReceiveEvent] Received (x,25), next TA updated to 26.2
+[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 0.7
+[TestCannon::RedSecond::ReceiveEvent] Received (x,25), next TA updated to 25.7
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (23, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (23, fire_in)
@@ -7461,832 +7461,602 @@
 [TestCannon::RedThird::ReceiveEvent] Received (x,25), next TA updated to 25.8
 [TestCannonTeam::Red::QueryNextTime] query min TA
 [TestCannon::RedThird::QueryNextTime] sends TA : 25.8
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.2
-[TestCannon::RedFirst::QueryNextTime] sends TA : 25.8
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.8
+[TestCannon::RedSecond::QueryNextTime] sends TA : 25.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 26.4
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.7
 [CoupledModel::RouteEOC] Starts SrcModel : 1 SrcPort : fire_out
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
 [TestCannon::RedThird::QueryNextTime] sends TA : 25.8
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.2
-[TestCannon::RedFirst::QueryNextTime] sends TA : 25.8
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.8
+[TestCannon::RedSecond::QueryNextTime] sends TA : 25.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 26.4
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.7
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.5
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 25.5
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.6
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 25.6
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.5
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 25, Event queue size : 0------------------------------------
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
 [TestCannon::RedThird::QueryNextTime] sends TA : 25.8
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.2
-[TestCannon::RedFirst::QueryNextTime] sends TA : 25.8
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.8
+[TestCannon::RedSecond::QueryNextTime] sends TA : 25.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 26.4
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.7
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.5
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 25.5
-[Engine::Run] Received minTA = 25.5 Request (*,25.5)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,25.5)
-[TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,25.5)
-[TestCannon::BlueSecond::OutputFn] Fire , pos(x,y) = (1,0)
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 25.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.6
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 25.6
+[Engine::Run] Received minTA = 25.6 Request (*,25.6)
+[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,25.6)
+[TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,25.6)
+[TestCannon::BlueSecond::OutputFn] Fire , pos(x,y) = (2,3)
 [Engine::AddEvent] Event in, SenderModel : 12 SenderPort : fire_out
-[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1.3
-[TestCannon::BlueSecond::ReceiveScheduleTime] Received (*,25.5), next TA updated to 26.8
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1
+[TestCannon::BlueSecond::ReceiveScheduleTime] Received (*,25.6), next TA updated to 26.6
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.7
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 26.6
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
 [TestCannon::RedThird::QueryNextTime] sends TA : 25.8
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.2
-[TestCannon::RedFirst::QueryNextTime] sends TA : 25.8
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.8
+[TestCannon::RedSecond::QueryNextTime] sends TA : 25.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 26.4
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 25.7
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.7
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 26.6
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 25.7
 [Engine::Run] Engine running 
-------------------------------------CurTime : 25.5, Event queue size : 1------------------------------------
+------------------------------------CurTime : 25.6, Event queue size : 1------------------------------------
 [Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,25.5) SenderModel : 12 SenderPort : fire_out
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,25.5)
+[Engine::Run] Request (x,25.6) SenderModel : 12 SenderPort : fire_out
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,25.6)
 [CoupledModel::RouteIC] Starts SrcModel : 12 SrcPort : fire_out
 [CoupledModel::RouteEOC] Starts SrcModel : 12 SrcPort : fire_out
 [CoupledModel::RouteEOC] Found Matching coupling: from (12, fire_out) → to (1, fire_out)
 [CoupledModel::Translate]
 [CoupledModel::RouteEOC] Translated : from (12, fire_out) → to (1, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,25.5)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,25.6)
 [CoupledModel::RouteIC] Starts SrcModel : 1 SrcPort : fire_out
 [CoupledModel::RouteIC] Found Matching coupling: from (1, fire_out) → to (2, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteIC] Translated : from (1, fire_out) → to (2, fire_in)
-[TestCannonTeam::Red::ReceiveEvent] Received (x,25.5)
+[TestCannonTeam::Red::ReceiveEvent] Received (x,25.6)
 [CoupledModel::RouteEIC] Starts SrcModel : 2 SrcPort : fire_in
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (21, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (21, fire_in)
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1
-[TestCannon::RedFirst::ReceiveEvent] Received (x,25.5), next TA updated to 26.5
+[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1.2
+[TestCannon::RedFirst::ReceiveEvent] Received (x,25.6), next TA updated to 26.8
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (22, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (22, fire_in)
 [TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1.3
-[TestCannon::RedSecond::ReceiveEvent] Received (x,25.5), next TA updated to 26.8
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (23, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (23, fire_in)
-[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 0.8
-[TestCannon::RedThird::ReceiveEvent] Received (x,25.5), next TA updated to 26.3
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 26.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.5
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.3
-[CoupledModel::RouteEOC] Starts SrcModel : 1 SrcPort : fire_out
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 26.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.5
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.3
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.7
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.7
-[Engine::Run] Engine running 
-------------------------------------CurTime : 25.5, Event queue size : 0------------------------------------
-[Engine::Run] Event queue is empty, Query nextTime
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 26.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.5
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.3
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 25.7
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.7
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 25.7
-[Engine::Run] Received minTA = 25.7 Request (*,25.7)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,25.7)
-[TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,25.7)
-[TestCannon::BlueThird::OutputFn] Fire , pos(x,y) = (2,4)
-[Engine::AddEvent] Event in, SenderModel : 13 SenderPort : fire_out
-[TestCannon::BlueThird::TimeAdvanceFn] TA calculated : 0.6
-[TestCannon::BlueThird::ReceiveScheduleTime] Received (*,25.7), next TA updated to 26.3
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 26.3
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.7
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 26.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.5
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.3
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 26.3
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.7
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 25.7
-[Engine::Run] Engine running 
-------------------------------------CurTime : 25.7, Event queue size : 1------------------------------------
-[Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,25.7) SenderModel : 13 SenderPort : fire_out
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,25.7)
-[CoupledModel::RouteIC] Starts SrcModel : 13 SrcPort : fire_out
-[CoupledModel::RouteEOC] Starts SrcModel : 13 SrcPort : fire_out
-[CoupledModel::RouteEOC] Found Matching coupling: from (13, fire_out) → to (1, fire_out)
-[CoupledModel::Translate]
-[CoupledModel::RouteEOC] Translated : from (13, fire_out) → to (1, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,25.7)
-[CoupledModel::RouteIC] Starts SrcModel : 1 SrcPort : fire_out
-[CoupledModel::RouteIC] Found Matching coupling: from (1, fire_out) → to (2, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteIC] Translated : from (1, fire_out) → to (2, fire_in)
-[TestCannonTeam::Red::ReceiveEvent] Received (x,25.7)
-[CoupledModel::RouteEIC] Starts SrcModel : 2 SrcPort : fire_in
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (21, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (21, fire_in)
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1
-[TestCannon::RedFirst::ReceiveEvent] Received (x,25.7), next TA updated to 26.7
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (22, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (22, fire_in)
-[TestCannon::RedSecond::ExtTransFn] My location: (2,4) Impact location: (2,4) Damaged , health = 79 Sender : 13
-[TestCannon::RedSecond::ExtTransFn] CurState : engage Health = 79
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1.4
-[TestCannon::RedSecond::ReceiveEvent] Received (x,25.7), next TA updated to 27.1
+[TestCannon::RedSecond::ReceiveEvent] Received (x,25.6), next TA updated to 26.9
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (23, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (23, fire_in)
 [TestCannon::RedThird::TimeAdvanceFn] TA calculated : 1
-[TestCannon::RedThird::ReceiveEvent] Received (x,25.7), next TA updated to 26.7
+[TestCannon::RedThird::ReceiveEvent] Received (x,25.6), next TA updated to 26.6
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 26.7
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.1
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.7
+[TestCannon::RedThird::QueryNextTime] sends TA : 26.6
+[TestCannon::RedSecond::QueryNextTime] sends TA : 26.9
+[TestCannon::RedFirst::QueryNextTime] sends TA : 26.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.6
 [CoupledModel::RouteEOC] Starts SrcModel : 1 SrcPort : fire_out
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 26.7
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.1
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.7
+[TestCannon::RedThird::QueryNextTime] sends TA : 26.6
+[TestCannon::RedSecond::QueryNextTime] sends TA : 26.9
+[TestCannon::RedFirst::QueryNextTime] sends TA : 26.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.6
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 26.3
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.7
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 25.7
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 26.6
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.6
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 26.3
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.7
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 26.6
 [Engine::Run] Engine running 
-------------------------------------CurTime : 25.7, Event queue size : 0------------------------------------
+------------------------------------CurTime : 25.6, Event queue size : 0------------------------------------
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 26.7
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.1
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.7
+[TestCannon::RedThird::QueryNextTime] sends TA : 26.6
+[TestCannon::RedSecond::QueryNextTime] sends TA : 26.9
+[TestCannon::RedFirst::QueryNextTime] sends TA : 26.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.6
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 26.3
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 25.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.7
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 25.7
-[Engine::Run] Received minTA = 25.7 Request (*,25.7)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,25.7)
-[TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,25.7)
-[TestCannon::BlueFirst::OutputFn] Fire , pos(x,y) = (1,0)
-[Engine::AddEvent] Event in, SenderModel : 11 SenderPort : fire_out
-[TestCannon::BlueFirst::TimeAdvanceFn] TA calculated : 0.9
-[TestCannon::BlueFirst::ReceiveScheduleTime] Received (*,25.7), next TA updated to 26.6
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 26.6
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.6
+[Engine::Run] Received minTA = 26.6 Request (*,26.6)
+[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,26.6)
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,26.6)
+[TestCannon::RedThird::OutputFn] Fire , pos(x,y) = (3,3)
+[Engine::AddEvent] Event in, SenderModel : 23 SenderPort : fire_out
+[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 0.9
+[TestCannon::RedThird::ReceiveScheduleTime] Received (*,26.6), next TA updated to 27.5
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 26.9
+[TestCannon::RedFirst::QueryNextTime] sends TA : 26.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.8
+[TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,26.6)
+[TestCannon::BlueSecond::OutputFn] Fire , pos(x,y) = (1,1)
+[Engine::AddEvent] Event in, SenderModel : 12 SenderPort : fire_out
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1.4
+[TestCannon::BlueSecond::ReceiveScheduleTime] Received (*,26.6), next TA updated to 28
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 26.3
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 26.6
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 26.3
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 26.7
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.1
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.7
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 26.9
+[TestCannon::RedFirst::QueryNextTime] sends TA : 26.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.8
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 26.3
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 26.6
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 26.3
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.3
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.8
 [Engine::Run] Engine running 
-------------------------------------CurTime : 25.7, Event queue size : 1------------------------------------
+------------------------------------CurTime : 26.6, Event queue size : 2------------------------------------
 [Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,25.7) SenderModel : 11 SenderPort : fire_out
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,25.7)
-[CoupledModel::RouteIC] Starts SrcModel : 11 SrcPort : fire_out
-[CoupledModel::RouteEOC] Starts SrcModel : 11 SrcPort : fire_out
-[CoupledModel::RouteEOC] Found Matching coupling: from (11, fire_out) → to (1, fire_out)
+[Engine::Run] Request (x,26.6) SenderModel : 23 SenderPort : fire_out
+[TestCannonTeam::Red::ReceiveEvent] Received (x,26.6)
+[CoupledModel::RouteIC] Starts SrcModel : 23 SrcPort : fire_out
+[CoupledModel::RouteEOC] Starts SrcModel : 23 SrcPort : fire_out
+[CoupledModel::RouteEOC] Found Matching coupling: from (23, fire_out) → to (2, fire_out)
 [CoupledModel::Translate]
-[CoupledModel::RouteEOC] Translated : from (11, fire_out) → to (1, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,25.7)
+[CoupledModel::RouteEOC] Translated : from (23, fire_out) → to (2, fire_out)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,26.6)
+[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
+[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,26.6)
+[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,26.6), next TA updated to 1e+30
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,26.6), next TA updated to 27.6
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
+[TestCannon::BlueThird::ReceiveEvent] Received (x,26.6), next TA updated to 1e+30
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.6
+[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 26.9
+[TestCannon::RedFirst::QueryNextTime] sends TA : 26.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.8
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.6
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.8
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 26.9
+[TestCannon::RedFirst::QueryNextTime] sends TA : 26.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.8
+[Engine::Run] Request (x,26.6) SenderModel : 12 SenderPort : fire_out
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,26.6)
+[CoupledModel::RouteIC] Starts SrcModel : 12 SrcPort : fire_out
+[CoupledModel::RouteEOC] Starts SrcModel : 12 SrcPort : fire_out
+[CoupledModel::RouteEOC] Found Matching coupling: from (12, fire_out) → to (1, fire_out)
+[CoupledModel::Translate]
+[CoupledModel::RouteEOC] Translated : from (12, fire_out) → to (1, fire_out)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,26.6)
 [CoupledModel::RouteIC] Starts SrcModel : 1 SrcPort : fire_out
 [CoupledModel::RouteIC] Found Matching coupling: from (1, fire_out) → to (2, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteIC] Translated : from (1, fire_out) → to (2, fire_in)
-[TestCannonTeam::Red::ReceiveEvent] Received (x,25.7)
+[TestCannonTeam::Red::ReceiveEvent] Received (x,26.6)
 [CoupledModel::RouteEIC] Starts SrcModel : 2 SrcPort : fire_in
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (21, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (21, fire_in)
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1
-[TestCannon::RedFirst::ReceiveEvent] Received (x,25.7), next TA updated to 26.7
+[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 0.6
+[TestCannon::RedFirst::ReceiveEvent] Received (x,26.6), next TA updated to 27.2
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (22, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (22, fire_in)
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 0.8
-[TestCannon::RedSecond::ReceiveEvent] Received (x,25.7), next TA updated to 26.5
+[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 0.5
+[TestCannon::RedSecond::ReceiveEvent] Received (x,26.6), next TA updated to 27.1
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (23, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (23, fire_in)
-[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 0.5
-[TestCannon::RedThird::ReceiveEvent] Received (x,25.7), next TA updated to 26.2
+[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 1.1
+[TestCannon::RedThird::ReceiveEvent] Received (x,26.6), next TA updated to 27.7
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 26.2
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.2
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.1
+[TestCannon::RedFirst::QueryNextTime] sends TA : 27.2
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.1
 [CoupledModel::RouteEOC] Starts SrcModel : 1 SrcPort : fire_out
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 26.2
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.2
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.1
+[TestCannon::RedFirst::QueryNextTime] sends TA : 27.2
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.1
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 26.3
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 26.6
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 26.3
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.2
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.6
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.1
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 26.3
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 26.6
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 26.3
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.6
 [Engine::Run] Engine running 
-------------------------------------CurTime : 25.7, Event queue size : 0------------------------------------
+------------------------------------CurTime : 26.6, Event queue size : 0------------------------------------
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 26.2
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.2
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.1
+[TestCannon::RedFirst::QueryNextTime] sends TA : 27.2
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.1
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 26.3
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 26.6
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 26.3
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.2
-[Engine::Run] Received minTA = 26.2 Request (*,26.2)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,26.2)
-[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,26.2)
-[TestCannon::RedThird::OutputFn] Fire , pos(x,y) = (3,4)
-[Engine::AddEvent] Event in, SenderModel : 23 SenderPort : fire_out
-[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 0.8
-[TestCannon::RedThird::ReceiveScheduleTime] Received (*,26.2), next TA updated to 27
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.6
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.1
+[Engine::Run] Received minTA = 27.1 Request (*,27.1)
+[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,27.1)
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,27.1)
+[TestCannon::RedSecond::OutputFn] Fire , pos(x,y) = (4,0)
+[Engine::AddEvent] Event in, SenderModel : 22 SenderPort : fire_out
+[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 0.5
+[TestCannon::RedSecond::ReceiveScheduleTime] Received (*,27.1), next TA updated to 27.6
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.5
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 27.2
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.2
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.5
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 27.2
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.2
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 26.3
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 26.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 26.6
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 26.3
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.3
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.6
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.2
 [Engine::Run] Engine running 
-------------------------------------CurTime : 26.2, Event queue size : 1------------------------------------
+------------------------------------CurTime : 27.1, Event queue size : 1------------------------------------
 [Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,26.2) SenderModel : 23 SenderPort : fire_out
-[TestCannonTeam::Red::ReceiveEvent] Received (x,26.2)
-[CoupledModel::RouteIC] Starts SrcModel : 23 SrcPort : fire_out
-[CoupledModel::RouteEOC] Starts SrcModel : 23 SrcPort : fire_out
-[CoupledModel::RouteEOC] Found Matching coupling: from (23, fire_out) → to (2, fire_out)
+[Engine::Run] Request (x,27.1) SenderModel : 22 SenderPort : fire_out
+[TestCannonTeam::Red::ReceiveEvent] Received (x,27.1)
+[CoupledModel::RouteIC] Starts SrcModel : 22 SrcPort : fire_out
+[CoupledModel::RouteEOC] Starts SrcModel : 22 SrcPort : fire_out
+[CoupledModel::RouteEOC] Found Matching coupling: from (22, fire_out) → to (2, fire_out)
 [CoupledModel::Translate]
-[CoupledModel::RouteEOC] Translated : from (23, fire_out) → to (2, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,26.2)
+[CoupledModel::RouteEOC] Translated : from (22, fire_out) → to (2, fire_out)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,27.1)
 [CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
 [CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,26.2)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,27.1)
 [CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
 [CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
-[TestCannon::BlueFirst::TimeAdvanceFn] TA calculated : 0.9
-[TestCannon::BlueFirst::ReceiveEvent] Received (x,26.2), next TA updated to 27.1
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,27.1), next TA updated to 1e+30
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
+[TestCannon::BlueSecond::ExtTransFn] My location: (4,0) Impact location: (4,0) Damaged , health = 51 Sender : 22
+[TestCannon::BlueSecond::ExtTransFn] CurState : engage Health = 51
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1.3
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,27.1), next TA updated to 28.4
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
+[TestCannon::BlueThird::ReceiveEvent] Received (x,27.1), next TA updated to 1e+30
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.4
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.4
+[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 27.2
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.2
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.4
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.4
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.2
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 27.2
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.2
+[Engine::Run] Engine running 
+------------------------------------CurTime : 27.1, Event queue size : 0------------------------------------
+[Engine::Run] Event queue is empty, Query nextTime
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 27.2
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.2
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.4
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.4
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.2
+[Engine::Run] Received minTA = 27.2 Request (*,27.2)
+[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,27.2)
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,27.2)
+[TestCannon::RedFirst::OutputFn] Fire , pos(x,y) = (4,1)
+[Engine::AddEvent] Event in, SenderModel : 21 SenderPort : fire_out
+[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 0.9
+[TestCannon::RedFirst::ReceiveScheduleTime] Received (*,27.2), next TA updated to 28.1
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.6
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.6
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.4
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.4
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.6
+[Engine::Run] Engine running 
+------------------------------------CurTime : 27.2, Event queue size : 1------------------------------------
+[Engine::Run] Starts broadcasting events 
+[Engine::Run] Request (x,27.2) SenderModel : 21 SenderPort : fire_out
+[TestCannonTeam::Red::ReceiveEvent] Received (x,27.2)
+[CoupledModel::RouteIC] Starts SrcModel : 21 SrcPort : fire_out
+[CoupledModel::RouteEOC] Starts SrcModel : 21 SrcPort : fire_out
+[CoupledModel::RouteEOC] Found Matching coupling: from (21, fire_out) → to (2, fire_out)
+[CoupledModel::Translate]
+[CoupledModel::RouteEOC] Translated : from (21, fire_out) → to (2, fire_out)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,27.2)
+[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
+[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,27.2)
+[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,27.2), next TA updated to 1e+30
 [CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
 [TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1.2
-[TestCannon::BlueSecond::ReceiveEvent] Received (x,26.2), next TA updated to 27.4
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,27.2), next TA updated to 28.4
 [CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
-[TestCannon::BlueThird::TimeAdvanceFn] TA calculated : 0.9
-[TestCannon::BlueThird::ReceiveEvent] Received (x,26.2), next TA updated to 27.1
+[TestCannon::BlueThird::ReceiveEvent] Received (x,27.2), next TA updated to 1e+30
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 27.1
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.4
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.1
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.4
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.4
 [CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.5
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.6
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 27.1
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.4
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.1
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.5
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.4
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.4
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.6
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.5
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.6
 [Engine::Run] Engine running 
-------------------------------------CurTime : 26.2, Event queue size : 0------------------------------------
+------------------------------------CurTime : 27.2, Event queue size : 0------------------------------------
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 26.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.5
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 27.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.6
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 27.1
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.4
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.1
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.5
-[Engine::Run] Received minTA = 26.5 Request (*,26.5)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,26.5)
-[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,26.5)
-[TestCannon::RedSecond::OutputFn] Fire , pos(x,y) = (1,3)
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.4
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.4
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.6
+[Engine::Run] Received minTA = 27.6 Request (*,27.6)
+[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,27.6)
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,27.6)
+[TestCannon::RedSecond::OutputFn] Fire , pos(x,y) = (4,1)
 [Engine::AddEvent] Event in, SenderModel : 22 SenderPort : fire_out
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1
-[TestCannon::RedSecond::ReceiveScheduleTime] Received (*,26.5), next TA updated to 27.5
+[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1.1
+[TestCannon::RedSecond::ReceiveScheduleTime] Received (*,27.6), next TA updated to 28.7
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.7
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.7
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.7
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.7
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 27.1
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.4
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.1
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.7
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.4
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.4
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.7
 [Engine::Run] Engine running 
-------------------------------------CurTime : 26.5, Event queue size : 1------------------------------------
+------------------------------------CurTime : 27.6, Event queue size : 1------------------------------------
 [Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,26.5) SenderModel : 22 SenderPort : fire_out
-[TestCannonTeam::Red::ReceiveEvent] Received (x,26.5)
+[Engine::Run] Request (x,27.6) SenderModel : 22 SenderPort : fire_out
+[TestCannonTeam::Red::ReceiveEvent] Received (x,27.6)
 [CoupledModel::RouteIC] Starts SrcModel : 22 SrcPort : fire_out
 [CoupledModel::RouteEOC] Starts SrcModel : 22 SrcPort : fire_out
 [CoupledModel::RouteEOC] Found Matching coupling: from (22, fire_out) → to (2, fire_out)
 [CoupledModel::Translate]
 [CoupledModel::RouteEOC] Translated : from (22, fire_out) → to (2, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,26.5)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,27.6)
 [CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
 [CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,26.5)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,27.6)
 [CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
 [CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
-[TestCannon::BlueFirst::TimeAdvanceFn] TA calculated : 0.7
-[TestCannon::BlueFirst::ReceiveEvent] Received (x,26.5), next TA updated to 27.2
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,27.6), next TA updated to 1e+30
 [CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
-[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1.3
-[TestCannon::BlueSecond::ReceiveEvent] Received (x,26.5), next TA updated to 27.8
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,27.6), next TA updated to 28.6
 [CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
-[TestCannon::BlueThird::TimeAdvanceFn] TA calculated : 0.6
-[TestCannon::BlueThird::ReceiveEvent] Received (x,26.5), next TA updated to 27.1
+[TestCannon::BlueThird::ReceiveEvent] Received (x,27.6), next TA updated to 1e+30
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 27.1
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.2
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.1
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.6
 [CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.7
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.7
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 27.1
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.2
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.1
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.7
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.6
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.7
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.7
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.7
 [Engine::Run] Engine running 
-------------------------------------CurTime : 26.5, Event queue size : 0------------------------------------
+------------------------------------CurTime : 27.6, Event queue size : 0------------------------------------
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 26.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 26.7
+[TestCannon::RedThird::QueryNextTime] sends TA : 27.7
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.7
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 27.1
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.2
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.1
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 26.7
-[Engine::Run] Received minTA = 26.7 Request (*,26.7)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,26.7)
-[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,26.7)
-[TestCannon::RedFirst::OutputFn] Fire , pos(x,y) = (0,3)
-[Engine::AddEvent] Event in, SenderModel : 21 SenderPort : fire_out
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1
-[TestCannon::RedFirst::ReceiveScheduleTime] Received (*,26.7), next TA updated to 27.7
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 27.1
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.2
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.1
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 27
-[Engine::Run] Engine running 
-------------------------------------CurTime : 26.7, Event queue size : 1------------------------------------
-[Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,26.7) SenderModel : 21 SenderPort : fire_out
-[TestCannonTeam::Red::ReceiveEvent] Received (x,26.7)
-[CoupledModel::RouteIC] Starts SrcModel : 21 SrcPort : fire_out
-[CoupledModel::RouteEOC] Starts SrcModel : 21 SrcPort : fire_out
-[CoupledModel::RouteEOC] Found Matching coupling: from (21, fire_out) → to (2, fire_out)
-[CoupledModel::Translate]
-[CoupledModel::RouteEOC] Translated : from (21, fire_out) → to (2, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,26.7)
-[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
-[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,26.7)
-[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
-[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
-[TestCannon::BlueFirst::TimeAdvanceFn] TA calculated : 1
-[TestCannon::BlueFirst::ReceiveEvent] Received (x,26.7), next TA updated to 27.7
-[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
-[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.7
-[TestCannon::BlueSecond::ReceiveEvent] Received (x,26.7), next TA updated to 27.4
-[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
-[TestCannon::BlueThird::TimeAdvanceFn] TA calculated : 0.7
-[TestCannon::BlueThird::ReceiveEvent] Received (x,26.7), next TA updated to 27.4
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 27.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.4
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.4
-[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 27.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.4
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.4
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 27
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27
-[Engine::Run] Engine running 
-------------------------------------CurTime : 26.7, Event queue size : 0------------------------------------
-[Engine::Run] Event queue is empty, Query nextTime
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 27
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 27.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.4
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.4
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 27
-[Engine::Run] Received minTA = 27 Request (*,27)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,27)
-[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,27)
-[TestCannon::RedThird::OutputFn] Fire , pos(x,y) = (1,2)
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.6
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.7
+[Engine::Run] Received minTA = 27.7 Request (*,27.7)
+[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,27.7)
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,27.7)
+[TestCannon::RedThird::OutputFn] Fire , pos(x,y) = (2,3)
 [Engine::AddEvent] Event in, SenderModel : 23 SenderPort : fire_out
-[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 1.3
-[TestCannon::RedThird::ReceiveScheduleTime] Received (*,27), next TA updated to 28.3
+[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 0.5
+[TestCannon::RedThird::ReceiveScheduleTime] Received (*,27.7), next TA updated to 28.2
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.5
+[TestCannon::RedThird::QueryNextTime] sends TA : 28.2
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.1
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.5
+[TestCannon::RedThird::QueryNextTime] sends TA : 28.2
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.1
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 27.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.4
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.4
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.4
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.6
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.6
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 28.1
 [Engine::Run] Engine running 
-------------------------------------CurTime : 27, Event queue size : 1------------------------------------
+------------------------------------CurTime : 27.7, Event queue size : 1------------------------------------
 [Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,27) SenderModel : 23 SenderPort : fire_out
-[TestCannonTeam::Red::ReceiveEvent] Received (x,27)
+[Engine::Run] Request (x,27.7) SenderModel : 23 SenderPort : fire_out
+[TestCannonTeam::Red::ReceiveEvent] Received (x,27.7)
 [CoupledModel::RouteIC] Starts SrcModel : 23 SrcPort : fire_out
 [CoupledModel::RouteEOC] Starts SrcModel : 23 SrcPort : fire_out
 [CoupledModel::RouteEOC] Found Matching coupling: from (23, fire_out) → to (2, fire_out)
 [CoupledModel::Translate]
 [CoupledModel::RouteEOC] Translated : from (23, fire_out) → to (2, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,27)
-[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
-[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,27)
-[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
-[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
-[TestCannon::BlueFirst::ExtTransFn] My location: (1,2) Impact location: (1,2) Damaged , health = 35 Sender : 23
-[TestCannon::BlueFirst::ExtTransFn] CurState : engage Health = 35
-[TestCannon::BlueFirst::TimeAdvanceFn] TA calculated : 0.7
-[TestCannon::BlueFirst::ReceiveEvent] Received (x,27), next TA updated to 27.7
-[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
-[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.8
-[TestCannon::BlueSecond::ReceiveEvent] Received (x,27), next TA updated to 27.8
-[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
-[TestCannon::BlueThird::TimeAdvanceFn] TA calculated : 1.1
-[TestCannon::BlueThird::ReceiveEvent] Received (x,27), next TA updated to 28.1
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 28.1
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.7
-[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.5
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 28.1
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.7
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.5
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.5
-[Engine::Run] Engine running 
-------------------------------------CurTime : 27, Event queue size : 0------------------------------------
-[Engine::Run] Event queue is empty, Query nextTime
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 27.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.5
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 28.1
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.7
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.5
-[Engine::Run] Received minTA = 27.5 Request (*,27.5)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,27.5)
-[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,27.5)
-[TestCannon::RedSecond::OutputFn] Fire , pos(x,y) = (3,0)
-[Engine::AddEvent] Event in, SenderModel : 22 SenderPort : fire_out
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1
-[TestCannon::RedSecond::ReceiveScheduleTime] Received (*,27.5), next TA updated to 28.5
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.7
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.7
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 28.1
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 27.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 27.7
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.7
-[Engine::Run] Engine running 
-------------------------------------CurTime : 27.5, Event queue size : 1------------------------------------
-[Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,27.5) SenderModel : 22 SenderPort : fire_out
-[TestCannonTeam::Red::ReceiveEvent] Received (x,27.5)
-[CoupledModel::RouteIC] Starts SrcModel : 22 SrcPort : fire_out
-[CoupledModel::RouteEOC] Starts SrcModel : 22 SrcPort : fire_out
-[CoupledModel::RouteEOC] Found Matching coupling: from (22, fire_out) → to (2, fire_out)
-[CoupledModel::Translate]
-[CoupledModel::RouteEOC] Translated : from (22, fire_out) → to (2, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,27.5)
-[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
-[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,27.5)
-[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
-[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
-[TestCannon::BlueFirst::TimeAdvanceFn] TA calculated : 0.7
-[TestCannon::BlueFirst::ReceiveEvent] Received (x,27.5), next TA updated to 28.2
-[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
-[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1.3
-[TestCannon::BlueSecond::ReceiveEvent] Received (x,27.5), next TA updated to 28.8
-[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
-[TestCannon::BlueThird::TimeAdvanceFn] TA calculated : 0.5
-[TestCannon::BlueThird::ReceiveEvent] Received (x,27.5), next TA updated to 28
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 28
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 28.2
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28
-[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.7
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 28
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 28.2
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.7
-[Engine::Run] Engine running 
-------------------------------------CurTime : 27.5, Event queue size : 0------------------------------------
-[Engine::Run] Event queue is empty, Query nextTime
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 27.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 27.7
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 28
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 28.2
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 27.7
-[Engine::Run] Received minTA = 27.7 Request (*,27.7)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,27.7)
-[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,27.7)
-[TestCannon::RedFirst::OutputFn] Fire , pos(x,y) = (2,2)
-[Engine::AddEvent] Event in, SenderModel : 21 SenderPort : fire_out
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1
-[TestCannon::RedFirst::ReceiveScheduleTime] Received (*,27.7), next TA updated to 28.7
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 28.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.3
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 28.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.3
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 28
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 28.2
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 28
-[Engine::Run] Engine running 
-------------------------------------CurTime : 27.7, Event queue size : 1------------------------------------
-[Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,27.7) SenderModel : 21 SenderPort : fire_out
-[TestCannonTeam::Red::ReceiveEvent] Received (x,27.7)
-[CoupledModel::RouteIC] Starts SrcModel : 21 SrcPort : fire_out
-[CoupledModel::RouteEOC] Starts SrcModel : 21 SrcPort : fire_out
-[CoupledModel::RouteEOC] Found Matching coupling: from (21, fire_out) → to (2, fire_out)
-[CoupledModel::Translate]
-[CoupledModel::RouteEOC] Translated : from (21, fire_out) → to (2, fire_out)
 [TestCannonSys::Sys::ReceiveEvent] Received (x,27.7)
 [CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
 [CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
@@ -8297,644 +8067,816 @@
 [CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
-[TestCannon::BlueFirst::TimeAdvanceFn] TA calculated : 1.4
-[TestCannon::BlueFirst::ReceiveEvent] Received (x,27.7), next TA updated to 29.1
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,27.7), next TA updated to 1e+30
 [CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
-[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.6
-[TestCannon::BlueSecond::ReceiveEvent] Received (x,27.7), next TA updated to 28.3
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.8
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,27.7), next TA updated to 28.5
 [CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
-[TestCannon::BlueThird::TimeAdvanceFn] TA calculated : 0.5
-[TestCannon::BlueThird::ReceiveEvent] Received (x,27.7), next TA updated to 28.2
+[TestCannon::BlueThird::ReceiveEvent] Received (x,27.7), next TA updated to 1e+30
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 28.2
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.3
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.2
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.5
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.5
 [CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 28.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.3
+[TestCannon::RedThird::QueryNextTime] sends TA : 28.2
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.1
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 28.2
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.3
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.2
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 28.2
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.5
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.5
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 28.1
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 28.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.3
+[TestCannon::RedThird::QueryNextTime] sends TA : 28.2
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 27.7, Event queue size : 0------------------------------------
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 28.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.3
+[TestCannon::RedThird::QueryNextTime] sends TA : 28.2
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.1
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 28.2
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.3
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.2
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.5
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.5
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 28.1
+[Engine::Run] Received minTA = 28.1 Request (*,28.1)
+[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,28.1)
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,28.1)
+[TestCannon::RedFirst::OutputFn] Fire , pos(x,y) = (1,0)
+[Engine::AddEvent] Event in, SenderModel : 21 SenderPort : fire_out
+[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 0.7
+[TestCannon::RedFirst::ReceiveScheduleTime] Received (*,28.1), next TA updated to 28.8
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 28.2
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.2
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 28.2
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.2
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.5
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.5
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 28.2
+[Engine::Run] Engine running 
+------------------------------------CurTime : 28.1, Event queue size : 1------------------------------------
+[Engine::Run] Starts broadcasting events 
+[Engine::Run] Request (x,28.1) SenderModel : 21 SenderPort : fire_out
+[TestCannonTeam::Red::ReceiveEvent] Received (x,28.1)
+[CoupledModel::RouteIC] Starts SrcModel : 21 SrcPort : fire_out
+[CoupledModel::RouteEOC] Starts SrcModel : 21 SrcPort : fire_out
+[CoupledModel::RouteEOC] Found Matching coupling: from (21, fire_out) → to (2, fire_out)
+[CoupledModel::Translate]
+[CoupledModel::RouteEOC] Translated : from (21, fire_out) → to (2, fire_out)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,28.1)
+[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
+[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,28.1)
+[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,28.1), next TA updated to 1e+30
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.7
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,28.1), next TA updated to 28.8
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
+[TestCannon::BlueThird::ReceiveEvent] Received (x,28.1), next TA updated to 1e+30
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.8
+[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 28.2
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.2
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.8
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 28.2
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 28.2
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.2
+[Engine::Run] Engine running 
+------------------------------------CurTime : 28.1, Event queue size : 0------------------------------------
+[Engine::Run] Event queue is empty, Query nextTime
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 28.2
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.2
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.8
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 28.2
 [Engine::Run] Received minTA = 28.2 Request (*,28.2)
 [TestCannonSys::Sys::ReceiveScheduleTime] Received (*,28.2)
-[TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,28.2)
-[TestCannon::BlueThird::OutputFn] Fire , pos(x,y) = (3,0)
-[Engine::AddEvent] Event in, SenderModel : 13 SenderPort : fire_out
-[TestCannon::BlueThird::TimeAdvanceFn] TA calculated : 1.2
-[TestCannon::BlueThird::ReceiveScheduleTime] Received (*,28.2), next TA updated to 29.4
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.3
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.3
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,28.2)
+[TestCannon::RedThird::OutputFn] Fire , pos(x,y) = (1,2)
+[Engine::AddEvent] Event in, SenderModel : 23 SenderPort : fire_out
+[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 1.3
+[TestCannon::RedThird::ReceiveScheduleTime] Received (*,28.2), next TA updated to 29.5
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.7
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 28.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.5
-[TestCannon::RedFirst::QueryNextTime] sends TA : 28.7
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.3
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.7
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.3
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.3
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 28.3
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.8
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 28.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 28.2, Event queue size : 1------------------------------------
 [Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,28.2) SenderModel : 13 SenderPort : fire_out
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,28.2)
-[CoupledModel::RouteIC] Starts SrcModel : 13 SrcPort : fire_out
-[CoupledModel::RouteEOC] Starts SrcModel : 13 SrcPort : fire_out
-[CoupledModel::RouteEOC] Found Matching coupling: from (13, fire_out) → to (1, fire_out)
-[CoupledModel::Translate]
-[CoupledModel::RouteEOC] Translated : from (13, fire_out) → to (1, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,28.2)
-[CoupledModel::RouteIC] Starts SrcModel : 1 SrcPort : fire_out
-[CoupledModel::RouteIC] Found Matching coupling: from (1, fire_out) → to (2, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteIC] Translated : from (1, fire_out) → to (2, fire_in)
+[Engine::Run] Request (x,28.2) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,28.2)
-[CoupledModel::RouteEIC] Starts SrcModel : 2 SrcPort : fire_in
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (21, fire_in)
+[CoupledModel::RouteIC] Starts SrcModel : 23 SrcPort : fire_out
+[CoupledModel::RouteEOC] Starts SrcModel : 23 SrcPort : fire_out
+[CoupledModel::RouteEOC] Found Matching coupling: from (23, fire_out) → to (2, fire_out)
 [CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (21, fire_in)
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1.4
-[TestCannon::RedFirst::ReceiveEvent] Received (x,28.2), next TA updated to 29.6
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (22, fire_in)
+[CoupledModel::RouteEOC] Translated : from (23, fire_out) → to (2, fire_out)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,28.2)
+[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
+[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
 [CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (22, fire_in)
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 0.5
-[TestCannon::RedSecond::ReceiveEvent] Received (x,28.2), next TA updated to 28.7
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (23, fire_in)
+[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,28.2)
+[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
 [CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (23, fire_in)
-[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 1
-[TestCannon::RedThird::ReceiveEvent] Received (x,28.2), next TA updated to 29.2
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 29.2
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.6
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.7
-[CoupledModel::RouteEOC] Starts SrcModel : 1 SrcPort : fire_out
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,28.2), next TA updated to 1e+30
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.7
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,28.2), next TA updated to 28.9
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
+[TestCannon::BlueThird::ReceiveEvent] Received (x,28.2), next TA updated to 1e+30
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.9
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.9
+[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 29.2
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
 [TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 28.7
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.3
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.3
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 28.3
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.3
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.3
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.9
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.9
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 28.7
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 28.2, Event queue size : 0------------------------------------
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 29.2
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
 [TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 28.7
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.3
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.3
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 28.3
-[Engine::Run] Received minTA = 28.3 Request (*,28.3)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,28.3)
-[TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,28.3)
-[TestCannon::BlueSecond::OutputFn] Fire , pos(x,y) = (3,4)
-[Engine::AddEvent] Event in, SenderModel : 12 SenderPort : fire_out
-[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.5
-[TestCannon::BlueSecond::ReceiveScheduleTime] Received (*,28.3), next TA updated to 28.8
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.8
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 29.2
-[TestCannon::RedSecond::QueryNextTime] sends TA : 28.7
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.6
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.7
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.8
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.9
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.9
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 28.7
-[Engine::Run] Engine running 
-------------------------------------CurTime : 28.3, Event queue size : 1------------------------------------
-[Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,28.3) SenderModel : 12 SenderPort : fire_out
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,28.3)
-[CoupledModel::RouteIC] Starts SrcModel : 12 SrcPort : fire_out
-[CoupledModel::RouteEOC] Starts SrcModel : 12 SrcPort : fire_out
-[CoupledModel::RouteEOC] Found Matching coupling: from (12, fire_out) → to (1, fire_out)
-[CoupledModel::Translate]
-[CoupledModel::RouteEOC] Translated : from (12, fire_out) → to (1, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,28.3)
-[CoupledModel::RouteIC] Starts SrcModel : 1 SrcPort : fire_out
-[CoupledModel::RouteIC] Found Matching coupling: from (1, fire_out) → to (2, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteIC] Translated : from (1, fire_out) → to (2, fire_in)
-[TestCannonTeam::Red::ReceiveEvent] Received (x,28.3)
-[CoupledModel::RouteEIC] Starts SrcModel : 2 SrcPort : fire_in
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (21, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (21, fire_in)
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 0.9
-[TestCannon::RedFirst::ReceiveEvent] Received (x,28.3), next TA updated to 29.2
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (22, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (22, fire_in)
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1.3
-[TestCannon::RedSecond::ReceiveEvent] Received (x,28.3), next TA updated to 29.6
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (23, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (23, fire_in)
-[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 1
-[TestCannon::RedThird::ReceiveEvent] Received (x,28.3), next TA updated to 29.3
+[Engine::Run] Received minTA = 28.7 Request (*,28.7)
+[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,28.7)
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,28.7)
+[TestCannon::RedSecond::OutputFn] Fire , pos(x,y) = (3,1)
+[Engine::AddEvent] Event in, SenderModel : 22 SenderPort : fire_out
+[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 0.5
+[TestCannon::RedSecond::ReceiveScheduleTime] Received (*,28.7), next TA updated to 29.2
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 29.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 29.6
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.2
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.2
-[CoupledModel::RouteEOC] Starts SrcModel : 1 SrcPort : fire_out
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 29.2
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.8
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 29.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 29.6
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.2
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.2
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 29.2
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.8
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.8
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.9
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.9
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 28.8
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.8
 [Engine::Run] Engine running 
-------------------------------------CurTime : 28.3, Event queue size : 0------------------------------------
+------------------------------------CurTime : 28.7, Event queue size : 1------------------------------------
+[Engine::Run] Starts broadcasting events 
+[Engine::Run] Request (x,28.7) SenderModel : 22 SenderPort : fire_out
+[TestCannonTeam::Red::ReceiveEvent] Received (x,28.7)
+[CoupledModel::RouteIC] Starts SrcModel : 22 SrcPort : fire_out
+[CoupledModel::RouteEOC] Starts SrcModel : 22 SrcPort : fire_out
+[CoupledModel::RouteEOC] Found Matching coupling: from (22, fire_out) → to (2, fire_out)
+[CoupledModel::Translate]
+[CoupledModel::RouteEOC] Translated : from (22, fire_out) → to (2, fire_out)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,28.7)
+[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
+[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,28.7)
+[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,28.7), next TA updated to 1e+30
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.8
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,28.7), next TA updated to 29.5
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
+[TestCannon::BlueThird::ReceiveEvent] Received (x,28.7), next TA updated to 1e+30
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.5
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.5
+[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 29.2
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.8
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.5
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.5
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 29.2
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.8
+[Engine::Run] Engine running 
+------------------------------------CurTime : 28.7, Event queue size : 0------------------------------------
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 29.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 29.6
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.2
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.2
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 29.2
+[TestCannon::RedFirst::QueryNextTime] sends TA : 28.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 28.8
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 28.8
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.8
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.5
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.5
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 28.8
 [Engine::Run] Received minTA = 28.8 Request (*,28.8)
 [TestCannonSys::Sys::ReceiveScheduleTime] Received (*,28.8)
-[TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,28.8)
-[TestCannon::BlueSecond::OutputFn] Fire , pos(x,y) = (4,2)
-[Engine::AddEvent] Event in, SenderModel : 12 SenderPort : fire_out
-[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.9
-[TestCannon::BlueSecond::ReceiveScheduleTime] Received (*,28.8), next TA updated to 29.7
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.1
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,28.8)
+[TestCannon::RedFirst::OutputFn] Fire , pos(x,y) = (0,2)
+[Engine::AddEvent] Event in, SenderModel : 21 SenderPort : fire_out
+[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 0.5
+[TestCannon::RedFirst::ReceiveScheduleTime] Received (*,28.8), next TA updated to 29.3
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 29.2
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.3
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.2
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 29.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 29.6
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.2
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 29.2
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.3
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 29.2
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.1
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.1
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.5
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.5
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 28.8, Event queue size : 1------------------------------------
 [Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,28.8) SenderModel : 12 SenderPort : fire_out
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,28.8)
-[CoupledModel::RouteIC] Starts SrcModel : 12 SrcPort : fire_out
-[CoupledModel::RouteEOC] Starts SrcModel : 12 SrcPort : fire_out
-[CoupledModel::RouteEOC] Found Matching coupling: from (12, fire_out) → to (1, fire_out)
-[CoupledModel::Translate]
-[CoupledModel::RouteEOC] Translated : from (12, fire_out) → to (1, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,28.8)
-[CoupledModel::RouteIC] Starts SrcModel : 1 SrcPort : fire_out
-[CoupledModel::RouteIC] Found Matching coupling: from (1, fire_out) → to (2, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteIC] Translated : from (1, fire_out) → to (2, fire_in)
+[Engine::Run] Request (x,28.8) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,28.8)
-[CoupledModel::RouteEIC] Starts SrcModel : 2 SrcPort : fire_in
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (21, fire_in)
+[CoupledModel::RouteIC] Starts SrcModel : 21 SrcPort : fire_out
+[CoupledModel::RouteEOC] Starts SrcModel : 21 SrcPort : fire_out
+[CoupledModel::RouteEOC] Found Matching coupling: from (21, fire_out) → to (2, fire_out)
 [CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (21, fire_in)
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 0.6
-[TestCannon::RedFirst::ReceiveEvent] Received (x,28.8), next TA updated to 29.4
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (22, fire_in)
+[CoupledModel::RouteEOC] Translated : from (21, fire_out) → to (2, fire_out)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,28.8)
+[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
+[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
 [CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (22, fire_in)
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 0.8
-[TestCannon::RedSecond::ReceiveEvent] Received (x,28.8), next TA updated to 29.6
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (23, fire_in)
+[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,28.8)
+[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
 [CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (23, fire_in)
-[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 1.4
-[TestCannon::RedThird::ReceiveEvent] Received (x,28.8), next TA updated to 30.2
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 30.2
-[TestCannon::RedSecond::QueryNextTime] sends TA : 29.6
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.4
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.4
-[CoupledModel::RouteEOC] Starts SrcModel : 1 SrcPort : fire_out
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,28.8), next TA updated to 1e+30
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1.2
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,28.8), next TA updated to 30
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
+[TestCannon::BlueThird::ReceiveEvent] Received (x,28.8), next TA updated to 1e+30
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30
+[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 30.2
-[TestCannon::RedSecond::QueryNextTime] sends TA : 29.6
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.4
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.4
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 29.2
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.3
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.2
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.1
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.1
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.2
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 29.2
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.3
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 28.8, Event queue size : 0------------------------------------
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 30.2
-[TestCannon::RedSecond::QueryNextTime] sends TA : 29.6
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.4
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.4
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 29.2
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.3
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.2
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 29.1
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.1
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.1
-[Engine::Run] Received minTA = 29.1 Request (*,29.1)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,29.1)
-[TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,29.1)
-[TestCannon::BlueFirst::OutputFn] Fire , pos(x,y) = (0,3)
-[Engine::AddEvent] Event in, SenderModel : 11 SenderPort : fire_out
-[TestCannon::BlueFirst::TimeAdvanceFn] TA calculated : 1.2
-[TestCannon::BlueFirst::ReceiveScheduleTime] Received (*,29.1), next TA updated to 30.3
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.4
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.2
+[Engine::Run] Received minTA = 29.2 Request (*,29.2)
+[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,29.2)
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,29.2)
+[TestCannon::RedSecond::OutputFn] Fire , pos(x,y) = (2,2)
+[Engine::AddEvent] Event in, SenderModel : 22 SenderPort : fire_out
+[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1.4
+[TestCannon::RedSecond::ReceiveScheduleTime] Received (*,29.2), next TA updated to 30.6
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.3
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.3
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 30.2
-[TestCannon::RedSecond::QueryNextTime] sends TA : 29.6
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.4
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.4
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.3
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.3
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.4
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.4
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.3
 [Engine::Run] Engine running 
-------------------------------------CurTime : 29.1, Event queue size : 1------------------------------------
+------------------------------------CurTime : 29.2, Event queue size : 1------------------------------------
 [Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,29.1) SenderModel : 11 SenderPort : fire_out
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,29.1)
-[CoupledModel::RouteIC] Starts SrcModel : 11 SrcPort : fire_out
-[CoupledModel::RouteEOC] Starts SrcModel : 11 SrcPort : fire_out
-[CoupledModel::RouteEOC] Found Matching coupling: from (11, fire_out) → to (1, fire_out)
+[Engine::Run] Request (x,29.2) SenderModel : 22 SenderPort : fire_out
+[TestCannonTeam::Red::ReceiveEvent] Received (x,29.2)
+[CoupledModel::RouteIC] Starts SrcModel : 22 SrcPort : fire_out
+[CoupledModel::RouteEOC] Starts SrcModel : 22 SrcPort : fire_out
+[CoupledModel::RouteEOC] Found Matching coupling: from (22, fire_out) → to (2, fire_out)
 [CoupledModel::Translate]
-[CoupledModel::RouteEOC] Translated : from (11, fire_out) → to (1, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,29.1)
-[CoupledModel::RouteIC] Starts SrcModel : 1 SrcPort : fire_out
-[CoupledModel::RouteIC] Found Matching coupling: from (1, fire_out) → to (2, fire_in)
+[CoupledModel::RouteEOC] Translated : from (22, fire_out) → to (2, fire_out)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,29.2)
+[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
+[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
 [CoupledModel::Translate]
-[CoupledModel::RouteIC] Translated : from (1, fire_out) → to (2, fire_in)
-[TestCannonTeam::Red::ReceiveEvent] Received (x,29.1)
-[CoupledModel::RouteEIC] Starts SrcModel : 2 SrcPort : fire_in
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (21, fire_in)
+[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,29.2)
+[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
 [CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (21, fire_in)
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1.4
-[TestCannon::RedFirst::ReceiveEvent] Received (x,29.1), next TA updated to 30.5
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (22, fire_in)
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,29.2), next TA updated to 1e+30
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
 [CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (22, fire_in)
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1.1
-[TestCannon::RedSecond::ReceiveEvent] Received (x,29.1), next TA updated to 30.2
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (23, fire_in)
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.6
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,29.2), next TA updated to 29.8
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
 [CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (23, fire_in)
-[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 0.6
-[TestCannon::RedThird::ReceiveEvent] Received (x,29.1), next TA updated to 29.7
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 29.7
-[TestCannon::RedSecond::QueryNextTime] sends TA : 30.2
-[TestCannon::RedFirst::QueryNextTime] sends TA : 30.5
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.7
-[CoupledModel::RouteEOC] Starts SrcModel : 1 SrcPort : fire_out
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
+[TestCannon::BlueThird::ReceiveEvent] Received (x,29.2), next TA updated to 1e+30
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.8
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.8
+[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 29.7
-[TestCannon::RedSecond::QueryNextTime] sends TA : 30.2
-[TestCannon::RedFirst::QueryNextTime] sends TA : 30.5
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.7
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.3
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.3
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.4
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.4
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.4
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.8
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.8
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.3
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.3
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.3
 [Engine::Run] Engine running 
-------------------------------------CurTime : 29.1, Event queue size : 0------------------------------------
+------------------------------------CurTime : 29.2, Event queue size : 0------------------------------------
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 29.7
-[TestCannon::RedSecond::QueryNextTime] sends TA : 30.2
-[TestCannon::RedFirst::QueryNextTime] sends TA : 30.5
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.7
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.3
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.3
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 29.4
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.4
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.4
-[Engine::Run] Received minTA = 29.4 Request (*,29.4)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,29.4)
-[TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,29.4)
-[TestCannon::BlueThird::OutputFn] Fire , pos(x,y) = (2,2)
-[Engine::AddEvent] Event in, SenderModel : 13 SenderPort : fire_out
-[TestCannon::BlueThird::TimeAdvanceFn] TA calculated : 1.4
-[TestCannon::BlueThird::ReceiveScheduleTime] Received (*,29.4), next TA updated to 30.8
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 30.8
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.7
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 29.7
-[TestCannon::RedSecond::QueryNextTime] sends TA : 30.2
-[TestCannon::RedFirst::QueryNextTime] sends TA : 30.5
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.7
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 30.8
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.7
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.7
-[Engine::Run] Engine running 
-------------------------------------CurTime : 29.4, Event queue size : 1------------------------------------
-[Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,29.4) SenderModel : 13 SenderPort : fire_out
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,29.4)
-[CoupledModel::RouteIC] Starts SrcModel : 13 SrcPort : fire_out
-[CoupledModel::RouteEOC] Starts SrcModel : 13 SrcPort : fire_out
-[CoupledModel::RouteEOC] Found Matching coupling: from (13, fire_out) → to (1, fire_out)
-[CoupledModel::Translate]
-[CoupledModel::RouteEOC] Translated : from (13, fire_out) → to (1, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,29.4)
-[CoupledModel::RouteIC] Starts SrcModel : 1 SrcPort : fire_out
-[CoupledModel::RouteIC] Found Matching coupling: from (1, fire_out) → to (2, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteIC] Translated : from (1, fire_out) → to (2, fire_in)
-[TestCannonTeam::Red::ReceiveEvent] Received (x,29.4)
-[CoupledModel::RouteEIC] Starts SrcModel : 2 SrcPort : fire_in
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (21, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (21, fire_in)
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.8
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.8
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.3
+[Engine::Run] Received minTA = 29.3 Request (*,29.3)
+[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,29.3)
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,29.3)
+[TestCannon::RedFirst::OutputFn] Fire , pos(x,y) = (0,3)
+[Engine::AddEvent] Event in, SenderModel : 21 SenderPort : fire_out
 [TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 0.5
-[TestCannon::RedFirst::ReceiveEvent] Received (x,29.4), next TA updated to 29.9
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (22, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (22, fire_in)
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 0.8
-[TestCannon::RedSecond::ReceiveEvent] Received (x,29.4), next TA updated to 30.2
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (23, fire_in)
-[CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (23, fire_in)
-[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 0.9
-[TestCannon::RedThird::ReceiveEvent] Received (x,29.4), next TA updated to 30.3
+[TestCannon::RedFirst::ReceiveScheduleTime] Received (*,29.3), next TA updated to 29.8
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 30.2
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.9
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.9
-[CoupledModel::RouteEOC] Starts SrcModel : 1 SrcPort : fire_out
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.5
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 30.2
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.9
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.9
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.5
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 30.8
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.7
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.7
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 30.8
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.7
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.8
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.8
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.5
 [Engine::Run] Engine running 
-------------------------------------CurTime : 29.4, Event queue size : 0------------------------------------
-[Engine::Run] Event queue is empty, Query nextTime
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 30.2
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.9
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.9
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 30.8
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 29.7
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.7
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.7
-[Engine::Run] Received minTA = 29.7 Request (*,29.7)
-[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,29.7)
-[TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,29.7)
-[TestCannon::BlueSecond::OutputFn] Fire , pos(x,y) = (1,2)
-[Engine::AddEvent] Event in, SenderModel : 12 SenderPort : fire_out
-[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.8
-[TestCannon::BlueSecond::ReceiveScheduleTime] Received (*,29.7), next TA updated to 30.5
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 30.8
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.3
-[TestCannonSys::Sys::QueryNextTime] query min TA
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
-[TestCannon::RedSecond::QueryNextTime] sends TA : 30.2
-[TestCannon::RedFirst::QueryNextTime] sends TA : 29.9
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.9
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 30.8
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.3
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.9
-[Engine::Run] Engine running 
-------------------------------------CurTime : 29.7, Event queue size : 1------------------------------------
+------------------------------------CurTime : 29.3, Event queue size : 1------------------------------------
 [Engine::Run] Starts broadcasting events 
-[Engine::Run] Request (x,29.7) SenderModel : 12 SenderPort : fire_out
-[TestCannonTeam::Blue::ReceiveEvent] Received (x,29.7)
-[CoupledModel::RouteIC] Starts SrcModel : 12 SrcPort : fire_out
-[CoupledModel::RouteEOC] Starts SrcModel : 12 SrcPort : fire_out
-[CoupledModel::RouteEOC] Found Matching coupling: from (12, fire_out) → to (1, fire_out)
+[Engine::Run] Request (x,29.3) SenderModel : 21 SenderPort : fire_out
+[TestCannonTeam::Red::ReceiveEvent] Received (x,29.3)
+[CoupledModel::RouteIC] Starts SrcModel : 21 SrcPort : fire_out
+[CoupledModel::RouteEOC] Starts SrcModel : 21 SrcPort : fire_out
+[CoupledModel::RouteEOC] Found Matching coupling: from (21, fire_out) → to (2, fire_out)
 [CoupledModel::Translate]
-[CoupledModel::RouteEOC] Translated : from (12, fire_out) → to (1, fire_out)
-[TestCannonSys::Sys::ReceiveEvent] Received (x,29.7)
-[CoupledModel::RouteIC] Starts SrcModel : 1 SrcPort : fire_out
-[CoupledModel::RouteIC] Found Matching coupling: from (1, fire_out) → to (2, fire_in)
+[CoupledModel::RouteEOC] Translated : from (21, fire_out) → to (2, fire_out)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,29.3)
+[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
+[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
 [CoupledModel::Translate]
-[CoupledModel::RouteIC] Translated : from (1, fire_out) → to (2, fire_in)
-[TestCannonTeam::Red::ReceiveEvent] Received (x,29.7)
-[CoupledModel::RouteEIC] Starts SrcModel : 2 SrcPort : fire_in
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (21, fire_in)
+[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,29.3)
+[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
 [CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (21, fire_in)
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 0.8
-[TestCannon::RedFirst::ReceiveEvent] Received (x,29.7), next TA updated to 30.5
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (22, fire_in)
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,29.3), next TA updated to 1e+30
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
 [CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (22, fire_in)
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 0.7
-[TestCannon::RedSecond::ReceiveEvent] Received (x,29.7), next TA updated to 30.4
-[CoupledModel::RouteEIC] Found Matching coupling: from (2, fire_in) → to (23, fire_in)
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1.2
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,29.3), next TA updated to 30.5
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
 [CoupledModel::Translate]
-[CoupledModel::RouteEIC] Translated : from (2, fire_in) → to (23, fire_in)
-[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 0.9
-[TestCannon::RedThird::ReceiveEvent] Received (x,29.7), next TA updated to 30.6
-[TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 30.6
-[TestCannon::RedSecond::QueryNextTime] sends TA : 30.4
-[TestCannon::RedFirst::QueryNextTime] sends TA : 30.5
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 30.4
-[CoupledModel::RouteEOC] Starts SrcModel : 1 SrcPort : fire_out
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
+[TestCannon::BlueThird::ReceiveEvent] Received (x,29.3), next TA updated to 1e+30
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.5
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.5
+[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 30.6
-[TestCannon::RedSecond::QueryNextTime] sends TA : 30.4
-[TestCannon::RedFirst::QueryNextTime] sends TA : 30.5
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 30.4
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.5
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 30.8
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
 [TestCannon::BlueSecond::QueryNextTime] sends TA : 30.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.3
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 30.8
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.3
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.5
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.5
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.5
 [Engine::Run] Engine running 
-------------------------------------CurTime : 29.7, Event queue size : 0------------------------------------
+------------------------------------CurTime : 29.3, Event queue size : 0------------------------------------
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 30.6
-[TestCannon::RedSecond::QueryNextTime] sends TA : 30.4
-[TestCannon::RedFirst::QueryNextTime] sends TA : 30.5
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 30.4
+[TestCannon::RedThird::QueryNextTime] sends TA : 29.5
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.5
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 30.8
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
 [TestCannon::BlueSecond::QueryNextTime] sends TA : 30.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.3
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.3
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.5
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.5
+[Engine::Run] Received minTA = 29.5 Request (*,29.5)
+[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,29.5)
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,29.5)
+[TestCannon::RedThird::OutputFn] Fire , pos(x,y) = (4,0)
+[Engine::AddEvent] Event in, SenderModel : 23 SenderPort : fire_out
+[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 0.8
+[TestCannon::RedThird::ReceiveScheduleTime] Received (*,29.5), next TA updated to 30.3
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.8
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.8
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.5
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.5
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.8
+[Engine::Run] Engine running 
+------------------------------------CurTime : 29.5, Event queue size : 1------------------------------------
+[Engine::Run] Starts broadcasting events 
+[Engine::Run] Request (x,29.5) SenderModel : 23 SenderPort : fire_out
+[TestCannonTeam::Red::ReceiveEvent] Received (x,29.5)
+[CoupledModel::RouteIC] Starts SrcModel : 23 SrcPort : fire_out
+[CoupledModel::RouteEOC] Starts SrcModel : 23 SrcPort : fire_out
+[CoupledModel::RouteEOC] Found Matching coupling: from (23, fire_out) → to (2, fire_out)
+[CoupledModel::Translate]
+[CoupledModel::RouteEOC] Translated : from (23, fire_out) → to (2, fire_out)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,29.5)
+[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
+[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,29.5)
+[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,29.5), next TA updated to 1e+30
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
+[TestCannon::BlueSecond::ExtTransFn] My location: (4,0) Impact location: (4,0) Damaged , health = 36 Sender : 23
+[TestCannon::BlueSecond::ExtTransFn] CurState : engage Health = 36
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.9
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,29.5), next TA updated to 30.4
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
+[TestCannon::BlueThird::ReceiveEvent] Received (x,29.5), next TA updated to 1e+30
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.4
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.4
+[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.8
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.4
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.4
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.8
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.8
+[Engine::Run] Engine running 
+------------------------------------CurTime : 29.5, Event queue size : 0------------------------------------
+[Engine::Run] Event queue is empty, Query nextTime
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 29.8
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 29.8
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.4
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.4
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 29.8
+[Engine::Run] Received minTA = 29.8 Request (*,29.8)
+[TestCannonSys::Sys::ReceiveScheduleTime] Received (*,29.8)
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,29.8)
+[TestCannon::RedFirst::OutputFn] Fire , pos(x,y) = (1,0)
+[Engine::AddEvent] Event in, SenderModel : 21 SenderPort : fire_out
+[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1.3
+[TestCannon::RedFirst::ReceiveScheduleTime] Received (*,29.8), next TA updated to 31.1
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 31.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 30.3
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 31.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 30.3
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.4
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.4
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 30.3
+[Engine::Run] Engine running 
+------------------------------------CurTime : 29.8, Event queue size : 1------------------------------------
+[Engine::Run] Starts broadcasting events 
+[Engine::Run] Request (x,29.8) SenderModel : 21 SenderPort : fire_out
+[TestCannonTeam::Red::ReceiveEvent] Received (x,29.8)
+[CoupledModel::RouteIC] Starts SrcModel : 21 SrcPort : fire_out
+[CoupledModel::RouteEOC] Starts SrcModel : 21 SrcPort : fire_out
+[CoupledModel::RouteEOC] Found Matching coupling: from (21, fire_out) → to (2, fire_out)
+[CoupledModel::Translate]
+[CoupledModel::RouteEOC] Translated : from (21, fire_out) → to (2, fire_out)
+[TestCannonSys::Sys::ReceiveEvent] Received (x,29.8)
+[CoupledModel::RouteIC] Starts SrcModel : 2 SrcPort : fire_out
+[CoupledModel::RouteIC] Found Matching coupling: from (2, fire_out) → to (1, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteIC] Translated : from (2, fire_out) → to (1, fire_in)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,29.8)
+[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : fire_in
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (11, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (11, fire_in)
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,29.8), next TA updated to 1e+30
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (12, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (12, fire_in)
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,29.8), next TA updated to 30.8
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, fire_in) → to (13, fire_in)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, fire_in) → to (13, fire_in)
+[TestCannon::BlueThird::ReceiveEvent] Received (x,29.8), next TA updated to 1e+30
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.8
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.8
+[CoupledModel::RouteEOC] Starts SrcModel : 2 SrcPort : fire_out
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 31.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 30.3
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.8
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.8
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 30.3
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 31.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 30.3
+[Engine::Run] Engine running 
+------------------------------------CurTime : 29.8, Event queue size : 0------------------------------------
+[Engine::Run] Event queue is empty, Query nextTime
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 30.3
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 31.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 30.3
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.8
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.8
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 30.3
 [Engine::Run] Received minTA = 30.3 Request (*,30.3)
 [TestCannonSys::Sys::ReceiveScheduleTime] Received (*,30.3)
-[TestCannonTeam::Blue::ReceiveScheduleTime] Received (*,30.3)
-[TestCannon::BlueFirst::OutputFn] Fire , pos(x,y) = (1,2)
-[Engine::AddEvent] Event in, SenderModel : 11 SenderPort : fire_out
-[TestCannon::BlueFirst::TimeAdvanceFn] TA calculated : 0.5
-[TestCannon::BlueFirst::ReceiveScheduleTime] Received (*,30.3), next TA updated to 30.8
-[TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 30.8
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.8
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.5
+[TestCannonTeam::Red::ReceiveScheduleTime] Received (*,30.3)
+[TestCannon::RedThird::OutputFn] Fire , pos(x,y) = (4,2)
+[Engine::AddEvent] Event in, SenderModel : 23 SenderPort : fire_out
+[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 0.9
+[TestCannon::RedThird::ReceiveScheduleTime] Received (*,30.3), next TA updated to 31.2
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 31.2
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 31.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 30.6
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 30.6
-[TestCannon::RedSecond::QueryNextTime] sends TA : 30.4
-[TestCannon::RedFirst::QueryNextTime] sends TA : 30.5
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 30.4
+[TestCannon::RedThird::QueryNextTime] sends TA : 31.2
+[TestCannon::RedSecond::QueryNextTime] sends TA : 30.6
+[TestCannon::RedFirst::QueryNextTime] sends TA : 31.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 30.6
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 30.8
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 30.8
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.5
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 30.4
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.8
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.8
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 30.6
 [TestCannonSys::Sys::ReceiveEvent] Received (x,30.3)
 [CoupledModel::RouteEIC] Starts SrcModel : 0 SrcPort : log_ord
 [CoupledModel::RouteEIC] Found Matching coupling: from (0, log_ord) → to (1, log_ord)
@@ -8945,26 +8887,24 @@
 [CoupledModel::RouteEIC] Found Matching coupling: from (1, log_ord) → to (11, log_ord)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (1, log_ord) → to (11, log_ord)
-[TestCannon::BlueFirst::ExtTransFn] logging status CurState : engage Health = 35 Damage Count = 3 Fire Count = 8
-[TestCannon::BlueFirst::TimeAdvanceFn] TA calculated : 1.3
-[TestCannon::BlueFirst::ReceiveEvent] Received (x,30.3), next TA updated to 31.6
+[TestCannon::BlueFirst::ExtTransFn] logging status CurState : dead Health = 0 Damage Count = 2 Fire Count = 5
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,30.3), next TA updated to 1e+30
 [CoupledModel::RouteEIC] Found Matching coupling: from (1, log_ord) → to (12, log_ord)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (1, log_ord) → to (12, log_ord)
-[TestCannon::BlueSecond::ExtTransFn] logging status CurState : engage Health = 64 Damage Count = 2 Fire Count = 11
-[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1.2
-[TestCannon::BlueSecond::ReceiveEvent] Received (x,30.3), next TA updated to 31.5
+[TestCannon::BlueSecond::ExtTransFn] logging status CurState : engage Health = 36 Damage Count = 4 Fire Count = 9
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 0.6
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,30.3), next TA updated to 30.9
 [CoupledModel::RouteEIC] Found Matching coupling: from (1, log_ord) → to (13, log_ord)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (1, log_ord) → to (13, log_ord)
-[TestCannon::BlueThird::ExtTransFn] logging status CurState : engage Health = 38 Damage Count = 3 Fire Count = 9
-[TestCannon::BlueThird::TimeAdvanceFn] TA calculated : 0.9
-[TestCannon::BlueThird::ReceiveEvent] Received (x,30.3), next TA updated to 31.2
+[TestCannon::BlueThird::ExtTransFn] logging status CurState : dead Health = 0 Damage Count = 3 Fire Count = 6
+[TestCannon::BlueThird::ReceiveEvent] Received (x,30.3), next TA updated to 1e+30
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 31.2
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 31.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 31.6
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 31.2
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.9
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.9
 [CoupledModel::RouteEIC] Found Matching coupling: from (0, log_ord) → to (2, log_ord)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (0, log_ord) → to (2, log_ord)
@@ -8973,35 +8913,35 @@
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, log_ord) → to (21, log_ord)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, log_ord) → to (21, log_ord)
-[TestCannon::RedFirst::ExtTransFn] logging status CurState : engage Health = 88 Damage Count = 1 Fire Count = 22
-[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1
-[TestCannon::RedFirst::ReceiveEvent] Received (x,30.3), next TA updated to 31.3
+[TestCannon::RedFirst::ExtTransFn] logging status CurState : engage Health = 88 Damage Count = 1 Fire Count = 25
+[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 0.8
+[TestCannon::RedFirst::ReceiveEvent] Received (x,30.3), next TA updated to 31.1
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, log_ord) → to (22, log_ord)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, log_ord) → to (22, log_ord)
-[TestCannon::RedSecond::ExtTransFn] logging status CurState : engage Health = 79 Damage Count = 1 Fire Count = 24
-[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1.1
-[TestCannon::RedSecond::ReceiveEvent] Received (x,30.3), next TA updated to 31.4
+[TestCannon::RedSecond::ExtTransFn] logging status CurState : engage Health = 100 Damage Count = 0 Fire Count = 26
+[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1.4
+[TestCannon::RedSecond::ReceiveEvent] Received (x,30.3), next TA updated to 31.7
 [CoupledModel::RouteEIC] Found Matching coupling: from (2, log_ord) → to (23, log_ord)
 [CoupledModel::Translate]
 [CoupledModel::RouteEIC] Translated : from (2, log_ord) → to (23, log_ord)
-[TestCannon::RedThird::ExtTransFn] logging status CurState : engage Health = 84 Damage Count = 1 Fire Count = 24
-[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 1.3
-[TestCannon::RedThird::ReceiveEvent] Received (x,30.3), next TA updated to 31.6
+[TestCannon::RedThird::ExtTransFn] logging status CurState : engage Health = 84 Damage Count = 1 Fire Count = 27
+[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 1
+[TestCannon::RedThird::ReceiveEvent] Received (x,30.3), next TA updated to 31.3
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 31.6
-[TestCannon::RedSecond::QueryNextTime] sends TA : 31.4
-[TestCannon::RedFirst::QueryNextTime] sends TA : 31.3
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 31.3
+[TestCannon::RedThird::QueryNextTime] sends TA : 31.3
+[TestCannon::RedSecond::QueryNextTime] sends TA : 31.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 31.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 31.1
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
-[TestCannon::RedThird::QueryNextTime] sends TA : 31.6
-[TestCannon::RedSecond::QueryNextTime] sends TA : 31.4
-[TestCannon::RedFirst::QueryNextTime] sends TA : 31.3
-[TestCannonTeam::Red::QueryNextTime] gets min TA : 31.3
+[TestCannon::RedThird::QueryNextTime] sends TA : 31.3
+[TestCannon::RedSecond::QueryNextTime] sends TA : 31.7
+[TestCannon::RedFirst::QueryNextTime] sends TA : 31.1
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 31.1
 [TestCannonTeam::Blue::QueryNextTime] query min TA
-[TestCannon::BlueThird::QueryNextTime] sends TA : 31.2
-[TestCannon::BlueSecond::QueryNextTime] sends TA : 31.5
-[TestCannon::BlueFirst::QueryNextTime] sends TA : 31.6
-[TestCannonTeam::Blue::QueryNextTime] gets min TA : 31.2
-[TestCannonSys::Sys::QueryNextTime] gets min TA : 31.2
+[TestCannon::BlueThird::QueryNextTime] sends TA : 1e+30
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 30.9
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 1e+30
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.9
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 30.9

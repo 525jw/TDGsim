@@ -73,6 +73,7 @@ bool TestCannon::ExtTransFn(const std::string& inPort, const std::any& message) 
                             <<std::endl;
         }else
             return true;
+            
         if(health > 0){
             this->SetCurState("engage");
         }else{
@@ -110,7 +111,8 @@ bool TestCannon::ExtTransFn(const std::string& inPort, const std::any& message) 
         logger_world    << "["
                         << myName
                         << "]"
-                        << " My location: ("<<myPosXY.first<<","<<myPosXY.second<<")"
+                        << " State : "<<this->GetCurState()
+                        << " location: ("<<myPosXY.first<<","<<myPosXY.second<<")"
                         << " Health = "<<this->health
                         << " Damage Count = "<<this->damageCount
                         << " Fire Count = "<<this->fireCount
@@ -122,7 +124,24 @@ bool TestCannon::IntTransFn() {
     if(this->GetCurState()=="idle"){
         this->SetCurState("engage");
     }else if(this->GetCurState()=="engage"){
-        // TODO : transition engage -> dead when health is low
+        if(this->health <= 50 && (this->nextTime - this->lastTime) >= 1.0){
+            this->SetCurState("dead");
+            logger_world    << "["
+                            << myName
+                            << "]"
+                            << " Died from heavy bleeding"
+                            <<std::endl;
+
+            logger_system   << "[" << "TestCannon::"
+                            << myName
+                            << "::IntTransFn]"
+                            << " Died, Elapsed Time = "<<this->nextTime - this->lastTime
+                            << " Health = "<<this->health
+                            <<std::endl;
+            this->health = 0;
+            this->nextTime = TIME_INF;
+            this->lastTime = TIME_INF;
+        }
     }
     return true;
 }
@@ -172,6 +191,8 @@ TIME_T TestCannon::TimeAdvanceFn() {
                         <<std::endl;
 
         return ret;
+    }else if(this->GetCurState()=="dead"){
+        return TIME_INF;
     }
     return -1;
 }    

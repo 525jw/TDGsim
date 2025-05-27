@@ -31,7 +31,7 @@ public:
     Event Translate(const Event& in, int srcModelID, const std::string& srcPort);
     // ---------------
 
-    void ReceiveScheduleTime(const TIME_T engineTime);
+    void ReceiveScheduleTime(const TIME_T currentTime);
 
     const TIME_T QueryNextTime() const;
     

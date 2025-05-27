@@ -37,6 +37,11 @@ void Engine::Run(){
                         << "------------------------------------"
                         << std::endl;
 
+        if(lastTime > currentTime){
+            // ERROR
+            exit(1);
+        }
+
         if(this->eventQueue.empty()){
             logger_system   << "[Engine::Run] Event queue is empty, "
                             << "Query nextTime"<<std::endl;
@@ -47,6 +52,7 @@ void Engine::Run(){
             TIME_T minTA = this->rootModel->QueryNextTime();
             if(minTA > TIME_INF)
                 return;
+            this->lastTime = this->currentTime;
             this->currentTime = minTA;
 
             logger_system   << "[Engine::Run] Received minTA = "<<minTA

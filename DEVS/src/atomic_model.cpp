@@ -50,9 +50,9 @@ const TIME_T AtomicModel::QueryNextTime() const{
 }
 
 // Ref. 4-3-8
-void AtomicModel::UpdateTime(const TIME_T engineTime){
-    this->lastTime = engineTime;
-    this->nextTime = engineTime + TimeAdvanceFn();
+void AtomicModel::UpdateTime(const TIME_T currentTime){
+    this->lastTime = currentTime;
+    this->nextTime = currentTime + TimeAdvanceFn();
 }
 
 // Only Called in OutputFn()

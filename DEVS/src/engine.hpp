@@ -14,6 +14,7 @@ private:
     std::unordered_map<int, Model*> modelsWithID; // NOTE : engine의 RegisterMoelWithID와 코드 중복 (modelWithID 구조 동일)
     std::queue<Event*> eventQueue;
     TIME_T currentTime;
+    TIME_T lastTime;
 public:
     Engine();
 

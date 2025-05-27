@@ -49,6 +49,7 @@ def parse_battle_report(path: str = "input.txt") -> None:
     print(f"Total Damage Count (Valid Hits) : {damage_count_sum}")
     print()
     print(f"Effective Fire Ratio (Damage / Fire) : {eff_fire_ratio:.2%}")
+    print(f"Expected Ratio When 5 x 5 map, 3 enemy = 3/25 = {3.0/25.0*100}%")
 
 if __name__ == "__main__":
     parse_battle_report("input.txt")
