@@ -31,15 +31,19 @@ TestCannonTeam::TestCannonTeam(int modelID, Engine* engine, std::string name)
 
     this->AddInputPort("fire_in");
     this->AddOutputPort("fire_out");
+    this->AddInputPort("log_ord");
 
     this->AddCoupling(firstCannon,"fire_out",this,"fire_out",EOC);
     this->AddCoupling(this,"fire_in",firstCannon,"fire_in",EIC);
+    this->AddCoupling(this,"log_ord",firstCannon,"log_ord",EIC);
 
     this->AddCoupling(secondCannon,"fire_out",this,"fire_out",EOC);
     this->AddCoupling(this,"fire_in",secondCannon,"fire_in",EIC);
+    this->AddCoupling(this,"log_ord",secondCannon,"log_ord",EIC);
 
     this->AddCoupling(thirdCannon,"fire_out",this,"fire_out",EOC);
     this->AddCoupling(this,"fire_in",thirdCannon,"fire_in",EIC);
+    this->AddCoupling(this,"log_ord",thirdCannon,"log_ord",EIC);
 
     std::vector<int> keys;
     for (const auto& pair : this->modelsWithID) {

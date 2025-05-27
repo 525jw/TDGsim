@@ -9,6 +9,10 @@ void Engine::BuildDEVS(Model* rootModel){
 
 void Engine::Run(){
 
+    // DEBUG ONLY -----------
+    int countFire = 0;
+    // ----------------------
+
     std::cout       << "[Engine::Run]"<< " >>> Engine starts "
                     << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
                     << " <<< "
@@ -74,10 +78,18 @@ void Engine::Run(){
                                 <<" SenderModel : " <<curEvent->getSenderModelID()
                                 <<" SenderPort : "  <<curEvent->getSenderPort()
                                 <<std::endl;
+                                
+                countFire ++; // DEBUG ONLY
                 curModel->GetParentModel()->ReceiveEvent(*curEvent, this->currentTime);
             }
         }
     }
+
+    // Print Result
+    this->RequestLogAllStatus();
+
+    logger_world << "Total Fire Turns : "<< countFire << std::endl; // DEBUG ONLY
+
     std::cout       << "[Engine::Run]"<< " >>> Engine Ends "
                     << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
                     << " <<< "
@@ -97,4 +109,12 @@ bool Engine::RegisterModelWithID(Model* model) {
     int id = model->GetModelID();
     modelsWithID[id] = model;
     return true;
+}
+
+void Engine::RequestLogAllStatus(){
+    LOG_ORD ord;
+    ord.ack_msg = "hello";
+    std::any msg = ord;
+    Event* event = new Event(this->rootModel->GetModelID(), "log_ord", msg);
+    this->rootModel->ReceiveEvent(*event,this->currentTime);
 }

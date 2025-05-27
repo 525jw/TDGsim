@@ -6,6 +6,7 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 
 
 int main() {
@@ -22,6 +23,28 @@ int main() {
 
     engine.Run();
     std::cerr << "[DEBUG] Run() finished" << std::endl;
+
+
+    logger_world << "===== World Map =====" << std::endl;
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            logger_world << std::setw(2) << worldMap[i][j] << " ";
+        }
+        logger_world << std::endl;
+    }
+
+    logger_world << "\n===== Hit Count =====" << std::endl;
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            hitCountMap[i][j]/=3;
+        }
+    }
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            logger_world << std::setw(2) << hitCountMap[i][j] << " ";
+        }
+        logger_world << std::endl;
+    }
 
     return 0;
 }

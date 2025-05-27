@@ -1,7 +1,7 @@
 #pragma once
 #include "atomic_model.hpp"
 #include "test_world.hpp"
-#include "message.cpp"
+#include "message.hpp"
 #include "logger.hpp"
 #include <utility>
 #include <iostream>
@@ -10,6 +10,8 @@
 class TestCannon : public AtomicModel{
 public:
     int health = 100;
+    int damageCount = 0;
+    int fireCount = 0;
     std::pair<int, int> myPosXY;
     std::string myName;
     TestCannon(int modelID, Engine* engine, std::string name);

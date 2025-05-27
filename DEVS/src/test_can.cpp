@@ -38,17 +38,20 @@ TestCannon::TestCannon(int modelID, Engine* engine, std::string name)
 
 bool TestCannon::ExtTransFn(const std::string& inPort, const std::any& message) {
     if(inPort == "fire_in" && this->GetCurState() != "dead"){
-        FIREINFO msg;
+        FIRE_INFO msg;
 
         try {
-            msg = std::any_cast<FIREINFO>(message);
+            msg = std::any_cast<FIRE_INFO>(message);
         } catch (const std::bad_any_cast&) {
             logger_system << "[ERROR] Invalid message type!" << std::endl;
             return false;
         }
 
+        hitCountMap[msg.targetX][msg.targetY]++;
+
         if(this->myPosXY.first == msg.targetX && this->myPosXY.second == msg.targetY){
             health -= msg.damage;
+            damageCount ++;
 
             logger_world    << "["
                             << myName
@@ -84,6 +87,34 @@ bool TestCannon::ExtTransFn(const std::string& inPort, const std::any& message) 
                         << " Health = "<<this->health
                         <<std::endl;
 
+    }else if(inPort == "log_ord"){
+        LOG_ORD msg;
+
+        try {
+            msg = std::any_cast<LOG_ORD>(message);
+        } catch (const std::bad_any_cast&) {
+            logger_system << "[ERROR] Invalid message type!" << std::endl;
+            return false;
+        }
+
+        logger_system   << "[" << "TestCannon::"
+                        << myName
+                        << "::ExtTransFn]"
+                        << " logging status"
+                        << " CurState : "<<this->GetCurState()
+                        << " Health = "<<this->health
+                        << " Damage Count = "<<this->damageCount
+                        << " Fire Count = "<<this->fireCount
+                        <<std::endl;
+
+        logger_world    << "["
+                        << myName
+                        << "]"
+                        << " My location: ("<<myPosXY.first<<","<<myPosXY.second<<")"
+                        << " Health = "<<this->health
+                        << " Damage Count = "<<this->damageCount
+                        << " Fire Count = "<<this->fireCount
+                        <<std::endl;
     }
     return true;
 }
@@ -103,7 +134,8 @@ bool TestCannon::OutputFn() {
         int targetX = std::rand() % 5;
         int targetY = std::rand() % 5;
         int damage = (std::rand() % 20) + 10; // 10 ~ 29 사이의 피해량
-        FIREINFO info;
+        
+        FIRE_INFO info;
         info.targetX = targetX;
         info.targetY = targetY;
         info.damage = damage;
@@ -123,6 +155,7 @@ bool TestCannon::OutputFn() {
                         <<std::endl;
 
         this->AddOutputEvent("fire_out",msg);
+        fireCount ++;
     }
     return true;
 }

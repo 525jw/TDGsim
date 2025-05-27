@@ -6,7 +6,7 @@
 [TestCannonTeam::Blue:Init] has Model ID: 13
 [TestCannonTeam::Blue:Init] has Model ID: 12
 [TestCannonTeam::Blue:Init] has Model ID: 11
-[TestCannonTeam::Blue:Init] CouplingCount  IC=0, EOC=3, EIC=3
+[TestCannonTeam::Blue:Init] CouplingCount  IC=0, EOC=3, EIC=6
 [TestCannonTeam::Red:Init] Created, ID : 2
 [TestCannon::RedFirst:Init] Created, ID : 21, pos(x,y) = (3,3), current State : idle
 [TestCannon::RedSecond:Init] Created, ID : 22, pos(x,y) = (2,4), current State : idle
@@ -14,10 +14,10 @@
 [TestCannonTeam::Red:Init] has Model ID: 23
 [TestCannonTeam::Red:Init] has Model ID: 22
 [TestCannonTeam::Red:Init] has Model ID: 21
-[TestCannonTeam::Red:Init] CouplingCount  IC=0, EOC=3, EIC=3
+[TestCannonTeam::Red:Init] CouplingCount  IC=0, EOC=3, EIC=6
 [TestCannonSys::Sys:Init] has Model ID: 2
 [TestCannonSys::Sys:Init] has Model ID: 1
-[TestCannonSys::Sys:Init] CouplingCount  IC=2, EOC=0, EIC=0
+[TestCannonSys::Sys:Init] CouplingCount  IC=2, EOC=0, EIC=2
 [Engine::Run] Prepared Model ID : 23
 [Engine::Run] Prepared Model ID : 22
 [Engine::Run] Prepared Model ID : 21
@@ -29,7 +29,6 @@
 [Engine::Run] Prepared Model ID : 0
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 0, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -83,7 +82,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 0.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 0, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -137,7 +135,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 0.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 0.6, Event queue size : 3------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,0.6) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,0.6)
@@ -297,7 +294,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 1.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 0.6, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -337,7 +333,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 1.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 1.3, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,1.3) SenderModel : 13 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,1.3)
@@ -393,7 +388,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 1.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 1.3, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -433,7 +427,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 1.9, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,1.9) SenderModel : 11 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,1.9)
@@ -489,7 +482,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 1.9, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -533,7 +525,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 2.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 2, Event queue size : 2------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,2) SenderModel : 13 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,2)
@@ -641,7 +632,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 2.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 2, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -681,7 +671,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 2.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 2.5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,2.5) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,2.5)
@@ -737,7 +726,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 3.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 2.5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -777,7 +765,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 3.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 3, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,3) SenderModel : 12 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,3)
@@ -835,7 +822,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 3.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 3, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -875,7 +861,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 3.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 3.5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,3.5) SenderModel : 11 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,3.5)
@@ -931,7 +916,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 3.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 3.5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -971,7 +955,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 3.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 3.6, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,3.6) SenderModel : 12 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,3.6)
@@ -1027,7 +1010,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 3.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 3.6, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -1067,7 +1049,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 4.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 3.9, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,3.9) SenderModel : 13 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,3.9)
@@ -1125,7 +1106,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 4.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 3.9, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -1165,7 +1145,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 4.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 4.5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,4.5) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,4.5)
@@ -1221,7 +1200,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 4.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 4.5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -1261,7 +1239,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 4.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 4.7, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,4.7) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,4.7)
@@ -1317,7 +1294,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 4.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 4.7, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -1357,7 +1333,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 4.9, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,4.9) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,4.9)
@@ -1413,7 +1388,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 4.9, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -1453,7 +1427,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 5.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,5) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,5)
@@ -1509,7 +1482,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 5.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -1559,7 +1531,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 5.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 5.6, Event queue size : 2------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,5.6) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,5.6)
@@ -1667,7 +1638,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 6.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 5.6, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -1711,7 +1681,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 6.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 6.4, Event queue size : 2------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,6.4) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,6.4)
@@ -1819,7 +1788,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 6.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 6.4, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -1859,7 +1827,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 6.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 6.8, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,6.8) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,6.8)
@@ -1915,7 +1882,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 7.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 6.8, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -1955,7 +1921,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 7.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 7.5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,7.5) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,7.5)
@@ -2011,7 +1976,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 7.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 7.5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -2051,7 +2015,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 7.7, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,7.7) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,7.7)
@@ -2109,7 +2072,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 8.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 7.7, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -2149,7 +2111,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 8.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 8.2, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,8.2) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,8.2)
@@ -2205,7 +2166,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 8.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 8.2, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -2245,7 +2205,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 8.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 8.2, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,8.2) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,8.2)
@@ -2301,7 +2260,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 8.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 8.2, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -2341,7 +2299,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 8.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 8.3, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,8.3) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,8.3)
@@ -2397,7 +2354,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 8.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 8.3, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -2437,7 +2393,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 8.8, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,8.8) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,8.8)
@@ -2493,7 +2448,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 8.8, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -2533,7 +2487,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 9.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 9, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,9) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,9)
@@ -2589,7 +2542,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 9.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 9, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -2633,7 +2585,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 9.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 9.4, Event queue size : 2------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,9.4) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,9.4)
@@ -2741,7 +2692,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 9.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 9.4, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -2781,7 +2731,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 9.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 9.9, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,9.9) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,9.9)
@@ -2837,7 +2786,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 10.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 9.9, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -2877,7 +2825,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 10.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 10.4, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,10.4) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,10.4)
@@ -2933,7 +2880,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 10.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 10.4, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -2973,7 +2919,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 10.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 10.5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,10.5) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,10.5)
@@ -3029,7 +2974,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 10.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 10.5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -3069,7 +3013,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 11.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 10.6, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,10.6) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,10.6)
@@ -3127,7 +3070,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 11.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 10.6, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -3167,7 +3109,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 11.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 11.1, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,11.1) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,11.1)
@@ -3223,7 +3164,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 11.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 11.1, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -3263,7 +3203,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 11.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 11.3, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,11.3) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,11.3)
@@ -3319,7 +3258,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 11.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 11.3, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -3359,7 +3297,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 11.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 11.7, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,11.7) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,11.7)
@@ -3415,7 +3352,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 11.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 11.7, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -3455,7 +3391,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 12
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 11.9, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,11.9) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,11.9)
@@ -3511,7 +3446,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 12
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 11.9, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -3551,7 +3485,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 12.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 12, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,12) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,12)
@@ -3607,7 +3540,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 12.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 12, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -3647,7 +3579,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 12.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 12.5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,12.5) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,12.5)
@@ -3705,7 +3636,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 13
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 12.5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -3745,7 +3675,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 13.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 13, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,13) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,13)
@@ -3801,7 +3730,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 13.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 13, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -3841,7 +3769,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 13.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 13.1, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,13.1) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,13.1)
@@ -3897,7 +3824,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 13.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 13.1, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -3937,7 +3863,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 13.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 13.2, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,13.2) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,13.2)
@@ -3993,7 +3918,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 13.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 13.2, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -4033,7 +3957,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 14
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 13.7, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,13.7) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,13.7)
@@ -4091,7 +4014,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 14
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 13.7, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -4131,7 +4053,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 14.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 14, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,14) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,14)
@@ -4187,7 +4108,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 14.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 14, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -4227,7 +4147,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 14.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 14.4, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,14.4) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,14.4)
@@ -4285,7 +4204,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 14.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 14.4, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -4325,7 +4243,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 15
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 14.8, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,14.8) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,14.8)
@@ -4381,7 +4298,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 15
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 14.8, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -4421,7 +4337,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 15.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 15, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,15) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,15)
@@ -4477,7 +4392,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 15.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 15, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -4517,7 +4431,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 15.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 15.5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,15.5) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,15.5)
@@ -4573,7 +4486,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 15.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 15.5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -4617,7 +4529,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 16.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 15.6, Event queue size : 2------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,15.6) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,15.6)
@@ -4725,7 +4636,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 16.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 15.6, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -4765,7 +4675,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 16.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 16.2, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,16.2) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,16.2)
@@ -4821,7 +4730,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 16.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 16.2, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -4861,7 +4769,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 16.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 16.4, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,16.4) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,16.4)
@@ -4917,7 +4824,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 16.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 16.4, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -4957,7 +4863,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 17.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 16.5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,16.5) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,16.5)
@@ -5015,7 +4920,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 17.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 16.5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -5055,7 +4959,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 17.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 17, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,17) SenderModel : 13 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,17)
@@ -5111,7 +5014,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 17.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 17, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -5151,7 +5053,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 17.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 17.3, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,17.3) SenderModel : 12 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,17.3)
@@ -5207,7 +5108,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 17.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 17.3, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -5247,7 +5147,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 17.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 17.8, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,17.8) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,17.8)
@@ -5303,7 +5202,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 18.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 17.8, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -5343,7 +5241,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 18.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 18.1, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,18.1) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,18.1)
@@ -5399,7 +5296,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 18.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 18.1, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -5439,7 +5335,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 18.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 18.5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,18.5) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,18.5)
@@ -5495,7 +5390,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 18.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 18.5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -5535,7 +5429,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 18.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 18.8, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,18.8) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,18.8)
@@ -5591,7 +5484,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 18.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 18.8, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -5631,7 +5523,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 19.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 18.9, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,18.9) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,18.9)
@@ -5687,7 +5578,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 19.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 18.9, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -5727,7 +5617,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 19.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 19.2, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,19.2) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,19.2)
@@ -5783,7 +5672,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 19.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 19.2, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -5823,7 +5711,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 19.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 19.4, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,19.4) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,19.4)
@@ -5879,7 +5766,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 19.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 19.4, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -5919,7 +5805,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 20
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 19.6, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,19.6) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,19.6)
@@ -5975,7 +5860,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 20.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 19.6, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -6015,7 +5899,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 20.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 20.1, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,20.1) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,20.1)
@@ -6071,7 +5954,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 20.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 20.1, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -6111,7 +5993,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 20.6
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 20.2, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,20.2) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,20.2)
@@ -6167,7 +6048,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 20.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 20.2, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -6207,7 +6087,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 21
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 20.9, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,20.9) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,20.9)
@@ -6263,7 +6142,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 21
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 20.9, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -6303,7 +6181,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 21.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 21, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,21) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,21)
@@ -6359,7 +6236,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 21.2
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 21, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -6399,7 +6275,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 21.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 21.2, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,21.2) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,21.2)
@@ -6455,7 +6330,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 21.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 21.2, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -6499,7 +6373,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 22.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 21.8, Event queue size : 2------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,21.8) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,21.8)
@@ -6607,7 +6480,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 22.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 21.8, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -6647,7 +6519,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 22.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 22.1, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,22.1) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,22.1)
@@ -6703,7 +6574,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 22.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 22.1, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -6743,7 +6613,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 22.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 22.3, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,22.3) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,22.3)
@@ -6799,7 +6668,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 22.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 22.3, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -6839,7 +6707,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 22.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 22.4, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,22.4) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,22.4)
@@ -6895,7 +6762,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 22.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 22.4, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -6935,7 +6801,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 23.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 22.8, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,22.8) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,22.8)
@@ -6991,7 +6856,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 23.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 22.8, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -7041,7 +6905,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 23.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 23.3, Event queue size : 2------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,23.3) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,23.3)
@@ -7151,7 +7014,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 23.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 23.3, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -7191,7 +7053,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 24.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 23.8, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,23.8) SenderModel : 11 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,23.8)
@@ -7247,7 +7108,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 24.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 23.8, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -7287,7 +7147,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 24.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 24.1, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,24.1) SenderModel : 12 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,24.1)
@@ -7343,7 +7202,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 24.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 24.1, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -7383,7 +7241,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 24.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 24.3, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,24.3) SenderModel : 13 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,24.3)
@@ -7439,7 +7296,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 24.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 24.3, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -7479,7 +7335,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 25
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 24.8, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,24.8) SenderModel : 12 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,24.8)
@@ -7535,7 +7390,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 25
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 24.8, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -7575,7 +7429,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 25.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 25, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,25) SenderModel : 11 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,25)
@@ -7631,7 +7484,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 25, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -7671,7 +7523,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 25.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 25.5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,25.5) SenderModel : 12 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,25.5)
@@ -7727,7 +7578,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 25.5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -7767,7 +7617,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 25.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 25.7, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,25.7) SenderModel : 13 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,25.7)
@@ -7825,7 +7674,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 25.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 25.7, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -7865,7 +7713,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 26.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 25.7, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,25.7) SenderModel : 11 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,25.7)
@@ -7921,7 +7768,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 26.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 25.7, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -7961,7 +7807,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 26.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 26.2, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,26.2) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,26.2)
@@ -8017,7 +7862,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 26.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 26.2, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -8057,7 +7901,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 26.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 26.5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,26.5) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,26.5)
@@ -8113,7 +7956,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 26.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 26.5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -8153,7 +7995,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 27
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 26.7, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,26.7) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,26.7)
@@ -8209,7 +8050,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 27
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 26.7, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -8249,7 +8089,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 27.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 27, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,27) SenderModel : 23 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,27)
@@ -8307,7 +8146,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 27.5
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 27, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -8347,7 +8185,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 27.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 27.5, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,27.5) SenderModel : 22 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,27.5)
@@ -8403,7 +8240,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 27.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 27.5, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -8443,7 +8279,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 28
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 27.7, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,27.7) SenderModel : 21 SenderPort : fire_out
 [TestCannonTeam::Red::ReceiveEvent] Received (x,27.7)
@@ -8499,7 +8334,6 @@
 [TestCannonTeam::Red::QueryNextTime] gets min TA : 28.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 27.7, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -8539,7 +8373,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 28.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 28.2, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,28.2) SenderModel : 13 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,28.2)
@@ -8595,7 +8428,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 28.2, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -8635,7 +8467,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 28.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 28.3, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,28.3) SenderModel : 12 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,28.3)
@@ -8691,7 +8522,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 28.8
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 28.3, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -8731,7 +8561,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 29.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 28.8, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,28.8) SenderModel : 12 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,28.8)
@@ -8787,7 +8616,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.1
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 28.8, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -8827,7 +8655,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 29.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 29.1, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,29.1) SenderModel : 11 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,29.1)
@@ -8883,7 +8710,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.4
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 29.1, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -8923,7 +8749,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 29.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 29.4, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,29.4) SenderModel : 13 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,29.4)
@@ -8979,7 +8804,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 29.7
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 29.4, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -9019,7 +8843,6 @@
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 29.9
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 29.7, Event queue size : 1------------------------------------
-
 [Engine::Run] Starts broadcasting events 
 [Engine::Run] Request (x,29.7) SenderModel : 12 SenderPort : fire_out
 [TestCannonTeam::Blue::ReceiveEvent] Received (x,29.7)
@@ -9075,7 +8898,6 @@
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.3
 [Engine::Run] Engine running 
 ------------------------------------CurTime : 29.7, Event queue size : 0------------------------------------
-
 [Engine::Run] Event queue is empty, Query nextTime
 [TestCannonSys::Sys::QueryNextTime] query min TA
 [TestCannonTeam::Red::QueryNextTime] query min TA
@@ -9113,3 +8935,73 @@
 [TestCannon::BlueFirst::QueryNextTime] sends TA : 30.8
 [TestCannonTeam::Blue::QueryNextTime] gets min TA : 30.5
 [TestCannonSys::Sys::QueryNextTime] gets min TA : 30.4
+[TestCannonSys::Sys::ReceiveEvent] Received (x,30.3)
+[CoupledModel::RouteEIC] Starts SrcModel : 0 SrcPort : log_ord
+[CoupledModel::RouteEIC] Found Matching coupling: from (0, log_ord) → to (1, log_ord)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (0, log_ord) → to (1, log_ord)
+[TestCannonTeam::Blue::ReceiveEvent] Received (x,30.3)
+[CoupledModel::RouteEIC] Starts SrcModel : 1 SrcPort : log_ord
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, log_ord) → to (11, log_ord)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, log_ord) → to (11, log_ord)
+[TestCannon::BlueFirst::ExtTransFn] logging status CurState : engage Health = 35 Damage Count = 3 Fire Count = 8
+[TestCannon::BlueFirst::TimeAdvanceFn] TA calculated : 1.3
+[TestCannon::BlueFirst::ReceiveEvent] Received (x,30.3), next TA updated to 31.6
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, log_ord) → to (12, log_ord)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, log_ord) → to (12, log_ord)
+[TestCannon::BlueSecond::ExtTransFn] logging status CurState : engage Health = 64 Damage Count = 2 Fire Count = 11
+[TestCannon::BlueSecond::TimeAdvanceFn] TA calculated : 1.2
+[TestCannon::BlueSecond::ReceiveEvent] Received (x,30.3), next TA updated to 31.5
+[CoupledModel::RouteEIC] Found Matching coupling: from (1, log_ord) → to (13, log_ord)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (1, log_ord) → to (13, log_ord)
+[TestCannon::BlueThird::ExtTransFn] logging status CurState : engage Health = 38 Damage Count = 3 Fire Count = 9
+[TestCannon::BlueThird::TimeAdvanceFn] TA calculated : 0.9
+[TestCannon::BlueThird::ReceiveEvent] Received (x,30.3), next TA updated to 31.2
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 31.2
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 31.5
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 31.6
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 31.2
+[CoupledModel::RouteEIC] Found Matching coupling: from (0, log_ord) → to (2, log_ord)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (0, log_ord) → to (2, log_ord)
+[TestCannonTeam::Red::ReceiveEvent] Received (x,30.3)
+[CoupledModel::RouteEIC] Starts SrcModel : 2 SrcPort : log_ord
+[CoupledModel::RouteEIC] Found Matching coupling: from (2, log_ord) → to (21, log_ord)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (2, log_ord) → to (21, log_ord)
+[TestCannon::RedFirst::ExtTransFn] logging status CurState : engage Health = 88 Damage Count = 1 Fire Count = 22
+[TestCannon::RedFirst::TimeAdvanceFn] TA calculated : 1
+[TestCannon::RedFirst::ReceiveEvent] Received (x,30.3), next TA updated to 31.3
+[CoupledModel::RouteEIC] Found Matching coupling: from (2, log_ord) → to (22, log_ord)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (2, log_ord) → to (22, log_ord)
+[TestCannon::RedSecond::ExtTransFn] logging status CurState : engage Health = 79 Damage Count = 1 Fire Count = 24
+[TestCannon::RedSecond::TimeAdvanceFn] TA calculated : 1.1
+[TestCannon::RedSecond::ReceiveEvent] Received (x,30.3), next TA updated to 31.4
+[CoupledModel::RouteEIC] Found Matching coupling: from (2, log_ord) → to (23, log_ord)
+[CoupledModel::Translate]
+[CoupledModel::RouteEIC] Translated : from (2, log_ord) → to (23, log_ord)
+[TestCannon::RedThird::ExtTransFn] logging status CurState : engage Health = 84 Damage Count = 1 Fire Count = 24
+[TestCannon::RedThird::TimeAdvanceFn] TA calculated : 1.3
+[TestCannon::RedThird::ReceiveEvent] Received (x,30.3), next TA updated to 31.6
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 31.6
+[TestCannon::RedSecond::QueryNextTime] sends TA : 31.4
+[TestCannon::RedFirst::QueryNextTime] sends TA : 31.3
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 31.3
+[TestCannonSys::Sys::QueryNextTime] query min TA
+[TestCannonTeam::Red::QueryNextTime] query min TA
+[TestCannon::RedThird::QueryNextTime] sends TA : 31.6
+[TestCannon::RedSecond::QueryNextTime] sends TA : 31.4
+[TestCannon::RedFirst::QueryNextTime] sends TA : 31.3
+[TestCannonTeam::Red::QueryNextTime] gets min TA : 31.3
+[TestCannonTeam::Blue::QueryNextTime] query min TA
+[TestCannon::BlueThird::QueryNextTime] sends TA : 31.2
+[TestCannon::BlueSecond::QueryNextTime] sends TA : 31.5
+[TestCannon::BlueFirst::QueryNextTime] sends TA : 31.6
+[TestCannonTeam::Blue::QueryNextTime] gets min TA : 31.2
+[TestCannonSys::Sys::QueryNextTime] gets min TA : 31.2

@@ -25,6 +25,11 @@ TestCannonSys::TestCannonSys(int modelID, Engine* engine)
     this->RegisterModelWithID(blueteam);
     this->RegisterModelWithID(redteam);
 
+    this->AddInputPort("log_ord");
+
+    this->AddCoupling(this, "log_ord", blueteam, "log_ord", EIC);
+    this->AddCoupling(this, "log_ord", redteam, "log_ord", EIC);
+
     this->AddCoupling(blueteam, "fire_out", redteam, "fire_in", IC);
     this->AddCoupling(redteam, "fire_out", blueteam, "fire_in", IC);
     
