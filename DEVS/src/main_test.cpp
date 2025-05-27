@@ -11,7 +11,7 @@
 
 int main() {
     std::cerr << "[DEBUG] Entered main()" << std::endl;
-
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
     Engine engine;
     std::cerr << "[DEBUG] Engine creation completed" << std::endl;
 
