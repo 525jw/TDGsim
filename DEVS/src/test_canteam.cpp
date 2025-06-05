@@ -24,10 +24,13 @@ TestCannonTeam::TestCannonTeam(int modelID, Engine* engine, std::string name)
     secondCannon->SetParentModel(this);
     TestCannon* thirdCannon = new TestCannon(idNum+3, engine,this->myName + "Third");
     thirdCannon->SetParentModel(this);
+    TestCannon* fourthCannon = new TestCannon(idNum+4, engine,this->myName + "Fourth");
+    fourthCannon->SetParentModel(this);
     
     this->RegisterModelWithID(firstCannon);
     this->RegisterModelWithID(secondCannon);
     this->RegisterModelWithID(thirdCannon);
+    this->RegisterModelWithID(fourthCannon);
 
     this->AddInputPort("fire_in");
     this->AddOutputPort("fire_out");
@@ -44,6 +47,10 @@ TestCannonTeam::TestCannonTeam(int modelID, Engine* engine, std::string name)
     this->AddCoupling(thirdCannon,"fire_out",this,"fire_out",EOC);
     this->AddCoupling(this,"fire_in",thirdCannon,"fire_in",EIC);
     this->AddCoupling(this,"log_ord",thirdCannon,"log_ord",EIC);
+
+    this->AddCoupling(fourthCannon,"fire_out",this,"fire_out",EOC);
+    this->AddCoupling(this,"fire_in",fourthCannon,"fire_in",EIC);
+    this->AddCoupling(this,"log_ord",fourthCannon,"log_ord",EIC);
 
     std::vector<int> keys;
     for (const auto& pair : this->modelsWithID) {
