@@ -1,44 +1,54 @@
 #pragma once
 #include <fstream>
 #include <iostream>
+#include <mutex>
+#include <string>
 
-class Logger {
-private:
-    std::ofstream outFile;
-    size_t lineCount = 0;
-    size_t maxLines = 20000; 
-
+/* ───────────── Logger 본체 ───────────── */
+class Logger final {
 public:
-    Logger(const std::string& filename) {
-        outFile.open(filename);
-    }
+    explicit Logger(const std::string& filename,
+                    std::size_t maxLines = 20'000);
+    ~Logger();
 
-    ~Logger() {
-        if (outFile.is_open()) outFile.close();
-    }
+    Logger(const Logger&)            = delete;
+    Logger& operator=(const Logger&) = delete;
+    Logger(Logger&&)                 = delete;
+    Logger& operator=(Logger&&)      = delete;
 
+    /* 일반 출력 */
     template <typename T>
     Logger& operator<<(const T& data) {
-        if (lineCount >= maxLines) return *this;
-        if (outFile.is_open()) outFile << data;
+        std::lock_guard<std::mutex> lock(mtx_);
+        if (limitReached()) return *this;
+        if (outFile_.is_open()) outFile_ << data;
         return *this;
     }
 
-    Logger& operator<<(std::ostream& (*manip)(std::ostream&)) {
-        if (lineCount >= maxLines) return *this;
-        if (outFile.is_open()) {
-            if (manip == static_cast<std::ostream& (*)(std::ostream&)>(std::endl)) {
-                ++lineCount;
-            }
-            manip(outFile);
-            outFile.flush();
-        }
-        return *this;
-    }
+    /* 조작자(endl 등) */
+    Logger& operator<<(std::ostream& (*manip)(std::ostream&));
 
-    void setMaxLines(size_t max) { maxLines = max; }
-    size_t getLineCount() const { return lineCount; }
-    bool isLimitReached() const { return lineCount >= maxLines; }
+    /* 부가 기능 */
+    void        setMaxLines(std::size_t max);
+    std::size_t lineCount()    const;
+    bool        limitReached() const;
+
+private:
+    std::ofstream outFile_;
+    std::size_t   lineCount_ = 0;
+    std::size_t   maxLines_  = 0;
+    std::mutex    mtx_;
 };
 
-extern Logger logger;
+/* ───────────── 전역 로거 선언 ───────────── */
+#ifndef DISABLE_LOG
+extern Logger logger_system;   // 시스템 로그
+extern Logger logger_world;    // 게임/시뮬레이션 로그
+#else
+struct DummyLogger {
+    template <typename T> DummyLogger& operator<<(const T&) { return *this; }
+    DummyLogger& operator<<(std::ostream& (*)(std::ostream&)) { return *this; }
+};
+extern DummyLogger logger_system;
+extern DummyLogger logger_world;
+#endif

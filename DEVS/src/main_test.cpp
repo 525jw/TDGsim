@@ -1,23 +1,54 @@
-#pragma once
 #include "engine.hpp"
-#include "test_cannonsys.cpp"
+#include "test_cansys.hpp"
 #include "test_world.hpp"
 #include "logger.hpp"
 #include <iostream>
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 
 
-int main(){
+int main() {
+    std::cerr << "[DEBUG] Entered main()" << std::endl;
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
-    Engine engine = Engine();
-    TestCannonSys testCannonsys = TestCannonSys(0,&engine);
-    engine.BuildDEVS(&testCannonsys);
-    logger<<"sim starts"<<std::endl;
+    Engine engine;
+    std::cerr << "[DEBUG] Engine creation completed" << std::endl;
+
+    TestCannonSys sys(0, &engine);
+    std::cerr << "[DEBUG] TestCannonSys creation completed" << std::endl;
+
+    engine.BuildDEVS(&sys);
+    std::cerr << "[DEBUG] BuildDEVS completed" << std::endl;
+
     engine.Run();
+    std::cerr << "[DEBUG] Run() finished" << std::endl;
+
+
+    logger_world << "===== World Map =====" << std::endl;
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            logger_world << std::setw(2) << worldMap[i][j] << " ";
+        }
+        logger_world << std::endl;
+    }
+
+    logger_world << "\n===== Hit Count =====" << std::endl;
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            hitCountMap[i][j]/=3;
+        }
+    }
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            logger_world << std::setw(2) << hitCountMap[i][j] << " ";
+        }
+        logger_world << std::endl;
+    }
+
     return 0;
 }
+
 /*
 note: test codes에서 id는 하드코딩 되어있음
 system 0

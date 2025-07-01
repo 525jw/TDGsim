@@ -1,19 +1,33 @@
-#pragma once
 #include "model.hpp"
 #include "engine.hpp"
-#include <algorithm>
 
+Model::Model(int modelID, Engine* engine)
+    : engine(engine), modelID(modelID)
+{
+    if (engine != nullptr) {
+        engine->RegisterModelWithID(this);
+    }
+}
 void Model::SetModelID(int id){
     this->modelID=id;
 }
 void Model::SetEngine(Engine* engine) { 
     this->engine = engine; 
 }
+void Model::SetParentModel(Model* parentModel){
+    this->parentModel = parentModel;
+}
 const int Model::GetModelID() const{
     return this->modelID;
 }
 const Engine* Model::GetEngine() const{
     return this->engine;
+}
+Model* Model::GetParentModel() const{
+    return this->parentModel;
+}
+const TIME_T Model::GetNextTime() const{
+    return this->nextTime;
 }
 
 void Model::AddInputPort(const std::string& inputPort){

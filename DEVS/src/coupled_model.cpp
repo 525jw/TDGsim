@@ -1,83 +1,190 @@
 #include "coupled_model.hpp"
 #include "event.hpp"
 #include "engine.hpp"
+#include "logger.hpp"
 
 CoupledModel::CoupledModel(int modelID, Engine* engine)
+    : Model(modelID, engine)
 {
-    SetModelID(modelID);
-    SetEngine(engine);
     this->engine->RegisterModelWithID(this);
 }
 
 bool CoupledModel::AddCoupling(
-        Model* srcModel, std::string srcPort, 
-        Model* detModel, std::string detPort,
+        Model* srcModel, const std::string& srcPort, 
+        Model* detModel, const std::string& detPort,
         CouplingType type
 ) {
-    CouplingType tp;
-
-    if (type == IC || type == EOC || type == EIC) {
-        tp = type;
-    } else { 
-        // TODO: automatic CouplingType inference
-        std::cerr << "[AddCoupling] Please explicitly provide one of the following types: EIC, EOC, IC.\n";
+    if (type != IC && type != EOC && type != EIC) {
+        std::cerr << "[AddCoupling] CouplingType must be IC/EOC/EIC.\n";
+        return false;
     }
-    couplings[tp].emplace_back(new Coupling(srcModel, srcPort, detModel, detPort));
+    if (type == EIC && srcModel != this) {
+        std::cerr << "[AddCoupling] For EIC, the source model must be the coupled model itself.\n";
+        return false;
+    }
+    couplings[type].emplace_back(std::make_unique<Coupling>(srcModel, srcPort, detModel, detPort));
     return true;
 }
+// NOTE : 아직 기능 검증되지 않음, 사용을 원한다면 sim 결과의 출력 방식을 변경 필요 (event 처리 방식 -> engine에서 직접 출력요청)
 bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort,
                                   Model* detModel, std::string* detPort) {
-    // TODO : RemoveCoupling Unimplemented
-    return false;
+    bool removed = false;
+    for (auto& [type, vec] : couplings) {
+        const auto oldSize = vec.size();
+
+        vec.erase(std::remove_if(vec.begin(), vec.end(),
+            [&](const std::unique_ptr<Coupling>& cp) {
+                if (srcModel && cp->getSrcModel() != srcModel)       return false;
+                if (srcPort  && cp->getSrcPort()  != *srcPort)       return false;
+                if (detModel && cp->getDetModel() != detModel)       return false;
+                if (detPort  && cp->getDetPort()  != *detPort)       return false;
+                return true;
+            }),
+            vec.end());
+
+        if (vec.size() != oldSize)
+            removed = true;
+    }
+    return removed;
 }
 bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort) {
-    // TODO : RemoveCoupling Unimplemented
-    return false;
+    return RemoveCoupling(srcModel, srcPort, nullptr, nullptr);
 }
+void CoupledModel::ReceiveEvent(Event& event, TIME_T currentTime){ // when receive (x,t)
+    if(this->lastTime <= currentTime && currentTime <= this->nextTime){
+        if (std::find(this->GetInputPorts().begin(), this->GetInputPorts().end(), event.getSenderPort()) != this->GetInputPorts().end()){
+            this->RouteEIC(event, currentTime);
+        }else{
+            this->RouteIC(event,currentTime);
+            this->RouteEOC(event,currentTime);
+        }
 
-//Handling EIC
-void CoupledModel::ReceiveExternalEvent(const Event& externalEvent, TIME_T engineTime){
-    if(this->lastTime <= engineTime && engineTime <= this->nextTime){
-        TIME_T minTime,newTime;
-        minTime=newTime=TIME_INF;
-        for (CouplingType type : {EIC, IC, EOC}) {
-            for (auto& cp : couplings[type]) {
-                if (cp->getSrcModel()->GetModelID() == externalEvent.getSenderModel()->GetModelID() && cp->getSrcPort() == externalEvent.getSenderPort()){
-                    cp->getDetModel()->ReceiveExternalEvent(externalEvent, engineTime); //Broadcasting
-                    newTime = cp->getDetModel()->QueryNextTime();
-                    minTime =  newTime < minTime ? newTime : minTime;
-                }
+        //update time, NOTE : potential bottleneck in QueryNextTime
+        this->lastTime = currentTime;
+        this->nextTime = QueryNextTime();
+    }else{
+        // ERROR
+        // TODO : event를 free 해야함
+    }
+}
+void CoupledModel::RouteEIC(Event& event, TIME_T currentTime){  // Handling EIC
+
+    logger_system   << "[CoupledModel::RouteEIC] Starts"
+                    << " SrcModel : " << event.getSenderModelID()
+                    << " SrcPort : " << event.getSenderPort()
+                    << std::endl;
+
+    for (auto& cp : this->couplings[EIC]) {
+        if (cp->getSrcModel()->GetModelID() == event.getSenderModelID() && cp->getSrcPort() == event.getSenderPort()){
+
+            logger_system   << "[CoupledModel::RouteEIC] Found Matching coupling: "
+                            << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
+                            << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
+                            << std::endl;
+
+            Event ev = event;
+            if (cp->getSrcModel()->IsCoupled()){
+                ev = this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
+            
+                logger_system   << "[CoupledModel::RouteEIC] Translated : "
+                                << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
+                                << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
+                                << std::endl;
+            
+            }
+            cp->getDetModel()->ReceiveEvent(ev, currentTime);
+        }
+    }
+}
+void CoupledModel::RouteEOC(Event& event, TIME_T currentTime){  // Handling EOC
+
+    logger_system   << "[CoupledModel::RouteEOC] Starts"
+                    << " SrcModel : " << event.getSenderModelID()
+                    << " SrcPort : " << event.getSenderPort()
+                    << std::endl;
+
+    for (auto& cp : this->couplings[EOC]) {
+        if (cp->getSrcModel()->GetModelID() == event.getSenderModelID() && cp->getSrcPort() == event.getSenderPort()){
+
+            logger_system   << "[CoupledModel::RouteEOC] Found Matching coupling: "
+                            << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
+                            << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
+                            << std::endl;
+
+            Event ev = this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
+
+            logger_system   << "[CoupledModel::RouteEOC] Translated : "
+                            << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
+                            << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
+                            << std::endl;
+            
+            if(this->GetParentModel() != nullptr)
+                this->GetParentModel()->ReceiveEvent(ev, currentTime);
+        }
+    }
+}
+void CoupledModel::RouteIC(Event& event, TIME_T currentTime){  // Handling IC
+
+    logger_system   << "[CoupledModel::RouteIC] Starts"
+                    << " SrcModel : " << event.getSenderModelID()
+                    << " SrcPort : " << event.getSenderPort()
+                    << std::endl;
+    
+    for (auto& cp : this->couplings[IC]) {
+        if (cp->getSrcModel()->GetModelID() == event.getSenderModelID() && cp->getSrcPort() == event.getSenderPort()){
+
+            logger_system   << "[CoupledModel::RouteIC] Found Matching coupling: "
+                            << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
+                            << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
+                            << std::endl;
+
+            Event ev = event;
+            if (cp->getDetModel()->IsCoupled()){
+                ev = this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
+
+                logger_system   << "[CoupledModel::RouteIC] Translated : "
+                                << "from (" << cp->getSrcModel()->GetModelID() << ", " << cp->getSrcPort() << ") → "
+                                << "to (" << cp->getDetModel()->GetModelID() << ", " << cp->getDetPort() << ")"
+                                << std::endl;
+            }
+            cp->getDetModel()->ReceiveEvent(ev, currentTime);
+        }
+    }
+}
+// Return a copy of the event with updated sender ID and port
+Event CoupledModel::Translate(const Event& in, int srcModelID, const std::string& srcPort){
+
+    logger_system << "[CoupledModel::Translate]"<< std::endl;
+
+    Event out = in;
+    out.setSenderModelID(srcModelID);
+    out.setSenderPort(srcPort);
+    return out;
+}
+void CoupledModel::ReceiveScheduleTime(const TIME_T currentTime){ // when receive (*,t)
+    if(currentTime == this->nextTime){
+        for (auto& mid : modelsWithID){
+            if(mid.second->GetNextTime() == this->nextTime){
+                mid.second->ReceiveScheduleTime(currentTime);
             }
         }
-        lastTime = engineTime;
-        nextTime = minTime; // TODO : QueryNextTime과 중복코드 여지 존재
+        //update time, NOTE : potential bottleneck in QueryNextTime
+        this->lastTime = currentTime;
+        this->nextTime = QueryNextTime();
+    }else{
+        // ERROR
     }
 }
-void CoupledModel::ReceiveTimeAdvanceRequest(const TIME_T engineTime){
-    if(engineTime >= this->nextTime){
-        for (auto& mid : modelsWithID){
-            mid.second->ReceiveTimeAdvanceRequest(engineTime);
-        }
-        lastTime = engineTime;
-        nextTime = QueryNextTime();
-    }
-}
+
 const TIME_T CoupledModel::QueryNextTime() const{
-    TIME_T minTime,newTime;
-    minTime=newTime=TIME_INF;
-    for (auto& mid : modelsWithID){
-        newTime=mid.second->QueryNextTime();
-        minTime = newTime < minTime ? newTime : minTime;
-    }
+    TIME_T minTime=TIME_INF;
+    for (auto& mid : modelsWithID)
+        minTime = std::min(minTime, mid.second->QueryNextTime());
     return minTime;
 }
 
-const int CoupledModel::GetComponentSize() const{
-    return this->modelsWithID.size();
-}
-
 bool CoupledModel::RegisterModelWithID(Model* model) {
-    // TODO : engine에서 등록할때 ID를 배정해줄지, ID 받을지 논의 후 결정, 현재는 id를 받음, engine과 코드 중복
+    // NOTE : engine의 RegisterMoelWithID와 코드 중복 (modelWithID 구조 동일)
     int id = model->GetModelID();
     modelsWithID[id] = model;
     return true;

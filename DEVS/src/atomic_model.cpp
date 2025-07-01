@@ -1,13 +1,8 @@
-#pragma once
 #include "atomic_model.hpp"
-#include "engine.hpp"
-#include "event.hpp"
-#include <algorithm>
 
 AtomicModel::AtomicModel(int modelID, Engine* engine)
+    : Model(modelID, engine)
 {
-    SetModelID(modelID);
-    SetEngine(engine);
     this->engine->RegisterModelWithID(this);
 }
 
@@ -31,18 +26,23 @@ void AtomicModel::RemoveState(const std::string& state) {
 }
 
 
-void AtomicModel::ReceiveExternalEvent(const Event& externalEvent,TIME_T engineTime){
-    if(this->lastTime <= engineTime && engineTime <= this->nextTime){
-        ExtTransFn(externalEvent.getSenderPort(), externalEvent.getMessage());
-        UpdateTime(engineTime);
+void AtomicModel::ReceiveEvent(Event& event,TIME_T currentTime){
+    if(this->lastTime <= currentTime && currentTime <= this->nextTime){
+        this->executedTime = currentTime - this->lastTime;
+        ExtTransFn(event.getSenderPort(), event.getMessage());
+        UpdateTime(currentTime);
+    }else{
+        // event는 free 되어야함 (invalid event)
     }
 }
 
-void AtomicModel::ReceiveTimeAdvanceRequest(const TIME_T engineTime){
-    if(engineTime >= this->nextTime){
+void AtomicModel::ReceiveScheduleTime(const TIME_T currentTime){
+    if(currentTime == this->nextTime){
         OutputFn();
         IntTransFn();
-        UpdateTime(engineTime);
+        UpdateTime(currentTime);
+    }else{
+        // ERROR
     }
 }
 const TIME_T AtomicModel::QueryNextTime() const{
@@ -50,12 +50,13 @@ const TIME_T AtomicModel::QueryNextTime() const{
 }
 
 // Ref. 4-3-8
-void AtomicModel::UpdateTime(const TIME_T engineTime){
-    this->lastTime = engineTime;
-    this->nextTime = engineTime + TimeAdvanceFn();
+void AtomicModel::UpdateTime(const TIME_T currentTime){
+    this->lastTime = currentTime;
+    this->nextTime = currentTime + TimeAdvanceFn();
 }
 
+// Only Called in OutputFn()
 void AtomicModel::AddOutputEvent(const std::string& outputPort, std::any& message){
-    Event* event = new Event(*this, outputPort, message);
+    Event* event = new Event(this->GetModelID(), outputPort, message);
     this->engine->AddEvent(event);
 }
