@@ -27,8 +27,6 @@ public:
     bool IntTransFn();
     bool OutputFn();
 
-    // --- 이동 관련 함수 ---
-
 
     TIME_T TimeAdvanceFn();
     void UpdateTime(const TIME_T currentTime);

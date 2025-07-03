@@ -48,7 +48,7 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& message) {
             return false;
         }
 
-        // Process the valid message
+        // 이동 상태로 처리
         this->SetCurState("move");
         detPos = msg.detPos; // 목적지 좌표 설정
         direction = (detPos.first > myPosXY.first) ? 1 : 0; // 방향 설정, 매우 단순한 방법
@@ -56,5 +56,106 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& message) {
         
     }
 
+    if (inPort == "stop_in") {
+        M_FLAG msg;
+
+        try
+        {
+            msg = std::any_cast<M_FLAG>(message);
+        }
+        catch(const std::bad_any_cast&)
+        {
+            logger_system << "[ERROR] Invalid message type!" << std::endl;
+            return false;
+        }
+
+        // 이동 중지
+        isMoving = false;
+        this->SetCurState("wait");
+        
+        logger_world << "[" << myName << "]" 
+                     << " Stopped at position (" << myPosXY.first << "," << myPosXY.second << ")"
+                     << std::endl;
+
+        logger_system << "[" << "Maneuver::" 
+                      << myName 
+                      << "::ExtTransFn]"
+                      << " Stopped, Current Position: (" << myPosXY.first << "," << myPosXY.second << ")"
+                      << std::endl;
+    }
+
     return true;
+}
+
+bool Maneuver::IntTransFn() {
+    if (this->GetCurState() == "move") {
+        // 이동 중인 상태에서 위치 업데이트
+        if (isMoving) {
+            if (direction == 1) {
+                myPosXY.first += moveSpeed; // x좌표 증가
+            } else {
+                myPosXY.first -= moveSpeed; // x좌표 감소
+            }
+        }
+    }
+    return true;
+}
+bool Maneuver::OutputFn() {
+    if (this->GetCurState() == "move") {
+        // 이동 중인 상태에서 현재 위치를 출력
+        std::any msg = myPosXY; // 현재 위치 정보를 메시지로 변환
+
+        logger_world << "[" << myName << "]"
+                     << " Moving to position (" << myPosXY.first << "," << myPosXY.second << ")"
+                     << std::endl;
+
+        logger_system << "[" << "Maneuver::"
+                      << myName
+                      << "::OutputFn]"
+                      << " Moving, Current Position: (" << myPosXY.first << "," << myPosXY.second << ")"
+                      << std::endl;
+
+        this->AddOutputEvent("m_out", msg); // 위치 정보를 m_out 포트로 전송
+}
+
+TIME_T Maneuver::TimeAdvanceFn() {
+    if (isMoving) {
+        return 1.0f;
+    }
+    return TIME_INF;
+}
+
+void Maneuver::UpdateTime(const TIME_T currentTime){
+    this->lastTime = currentTime;
+    this->nextTime = currentTime + TimeAdvanceFn();
+    logger_system   << "[" << "Maneuver::"
+                    << myName
+                    << "::UpdateTime]"
+                    << " LastTime, NextTime = ("<<this->lastTime<<","<<this->nextTime<<")"
+                    << std::endl;
+}
+
+void Maneuver::ReceiveScheduleTime(const TIME_T currentTime){
+    Atomic_Model::ReceiveScheduleTime(currentTime);
+    logger_system   << "[" << "Maneuver::"
+                    << myName
+                    << "::ReceiveScheduleTime]"
+                    <<" Received (*,"<<currentTime<<"), next TA updated to "<<this->nextTime
+                    <<std::endl;
+}
+void Maneuver::ReceiveEvent(Event& event,TIME_T currentTime){
+    AtomicModel::ReceiveEvent(event, currentTime);
+    logger_system   << "[" << "Maneuver::"
+                    << myName
+                    << "::ReceiveEvent]"
+                    <<" Received (x,"<<currentTime<<"), next TA updated to "<<this->nextTime
+                    << std::endl;
+}
+const TIME_T Maneuver::QueryNextTime() const {
+    logger_system   << "[" << "Maneuver::"
+                    << myName
+                    << "::QueryNextTime]"
+                    <<" sends TA : "<<this->nextTime
+                    << std::endl;
+    return AtomicModel::QueryNextTime();
 }
