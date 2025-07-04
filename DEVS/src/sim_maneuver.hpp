@@ -9,17 +9,14 @@
 
 class Maneuver : public AtomicModel{
 public:
-    int health = 100;
-    int damageCount = 0;
-    int fireCount = 0;
-    std::pair<int, int> myPosXY;
     std::string myName;
 
     // --- 이동 관련 변수 ---
+    std::pair<int, int> curPos; // 현재 위치 좌표
     std::pair<int, int> detPos; // 목적지 좌표
-    double moveSpeed = 1.0;        // 이동 속도 (초당 몇 칸 등)
-    int direction = 0; // x좌표가 움직임(= 가로 방향), 0이면 -, 1이면 +
-    bool isMoving = false;         // 이동 중 여부
+    double moveSpeed = 1.0;     // 이동 속도 (초당 몇 칸 등)
+    int direction = 0;          // x좌표가 움직임(= 가로 방향), 0이면 -, 1이면 +
+    bool isMoving = false;      // 이동 중 여부
 
 
     Maneuver(int modelID, Engine* engine, std::string name);
@@ -33,6 +30,4 @@ public:
     void ReceiveScheduleTime(const TIME_T currentTime) override;
     void ReceiveEvent(Event& event,TIME_T currentTime) override;
     const TIME_T QueryNextTime() const override;
-
-    
 };
