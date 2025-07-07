@@ -10,10 +10,11 @@ Maneuver::Maneuver(int modelID, Engine* engine, std::string name)
 
     this->SetCurState("wait");
 
-    this->AddInputPort("m_in"); // m_in or m_ord, Packet: det_pos
-    this->AddInputPort("stop_in"); // 정지! Packet: M_FLAG
-    this->AddOutputPort("m_out"); // m_out or pos_out, Packet: myPosXY
-    this->AddOutputPort("m_rep"); // DM으로 보내는 포트
+    this->AddInputPort("m_in"); // ?MOVE_POS_INFO
+    this->AddInputPort("stop_in"); // ?M_FLAG
+    this->AddOutputPort("m_out"); // !CUR_POS
+    this->AddOutputPort("m_rep"); // !CUR_POS
+    
 }
 
 bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& message) 
@@ -101,10 +102,12 @@ bool Maneuver::OutputFn()
     {
         // 이동 중인 상태에서 현재 위치를 출력
         CUR_POS pos;
-        pos = curPos; // 현재 위치 정보를 메시지로 변환
+        pos.pos = curPos;
 
-        this->AddOutputEvent("m_out", pos); // 위치 정보를 m_out 포트로 전송
-        this->AddOutputEvent("m_rep", pos); // 위치 정보를 m_rep 포트로 전송
+        std::any msg = pos;
+
+        this->AddOutputEvent("m_out", msg); // 위치 정보를 m_out 포트로 전송
+        this->AddOutputEvent("m_rep", msg); // 위치 정보를 m_rep 포트로 전송
         return true;
     }
     return false; // 대기 상태에서는 출력하지 않음
