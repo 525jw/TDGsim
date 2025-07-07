@@ -41,6 +41,7 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& message)
             detPos = msg.detPos; // 목적지 좌표 설정
             direction = (detPos.first > curPos.first) ? 1 : 0; // 방향 설정, 매우 단순한 방법
             isMoving = true; // 이동 중으로 설정
+            return true;
         }
     }
     else if (inPort == "stop_in")
@@ -59,9 +60,10 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& message)
         {   
         isMoving = false;
         this->SetCurState("wait");
+        return true; // 이동 중지
         }
     }
-    else return false; // 잘못된 포트 이름
+    else return false;
 }
 
 bool Maneuver::IntTransFn() 
@@ -98,10 +100,11 @@ bool Maneuver::OutputFn()
     if (this->GetCurState() == "move") 
     {
         // 이동 중인 상태에서 현재 위치를 출력
-        std::any msg = curPos; // 현재 위치 정보를 메시지로 변환
+        CUR_POS pos;
+        pos = curPos; // 현재 위치 정보를 메시지로 변환
 
-        this->AddOutputEvent("m_out", msg); // 위치 정보를 m_out 포트로 전송
-        this->AddOutputEvent("m_rep", msg); // 위치 정보를 m_rep 포트로 전송
+        this->AddOutputEvent("m_out", pos); // 위치 정보를 m_out 포트로 전송
+        this->AddOutputEvent("m_rep", pos); // 위치 정보를 m_rep 포트로 전송
         return true;
     }
     return false; // 대기 상태에서는 출력하지 않음
@@ -109,11 +112,15 @@ bool Maneuver::OutputFn()
 
 TIME_T Maneuver::TimeAdvanceFn() 
 {
-    if (isMoving) 
+    if (this->GetCurState() == "wait") 
     {
-        return 1.0f;
+        return TIME_INF; // 대기 상태에서는 무한 대기
     }
-    return TIME_INF;
+    else if (this->GetCurState() == "move") 
+    {
+        return 1.0f; // 이동 중인 상태에서는 1초 후에 다음 이벤트 발생
+    }
+    return TIME_INF; // 그 외의 경우 무한 대기
 }
 
 void Maneuver::UpdateTime(const TIME_T currentTime)
