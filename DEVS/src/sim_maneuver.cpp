@@ -19,60 +19,57 @@ Maneuver::Maneuver(int modelID, Engine* engine, std::string name)
 bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& message) 
 {
 
-    switch (inPort) {
-        case "m_in":
-            MOVE_POS_INFO msg;
-            try
-            {
-                msg = std::any_cast<MOVE_POS_INFO>(message);
-            }
-            catch(const std::bad_any_cast&)
-            {
-                logger_system << "[ERROR] Invalid message type!" << std::endl;
-                return false;
-            }
+    if (inPort == "m_in")
+    {
+        MOVE_POS_INFO msg;
+        try
+        {
+            msg = std::any_cast<MOVE_POS_INFO>(message);
+        }
+        catch(const std::bad_any_cast&)
+        {
+            logger_system << "[ERROR] Invalid message type!" << std::endl;
+            return false;
+        }
 
-            if (this->GetCurState() == "wait") 
-            {
-                // 대기 상태에서 이동 명령을 받았을 때
-                this->SetCurState("move");
-                // 나중에 경로탐색 이쪽을 함수로 빼서 로직을 추가하건 해야할듯
-                curPos = msg.curPos; // 현재 위치 좌표 설정
-                detPos = msg.detPos; // 목적지 좌표 설정
-                direction = (detPos.first > curPos.first) ? 1 : 0; // 방향 설정, 매우 단순한 방법
-                isMoving = true; // 이동 중으로 설정
-            }
-            break;
-
-        case "stop_in":
-            M_FLAG msg;
-            try
-            {
-                msg = std::any_cast<M_FLAG>(message);
-            }
-            catch(const std::bad_any_cast&)
-            {
-                logger_system << "[ERROR] Invalid message type!" << std::endl;
-                return false;
-            }
-            if (msg.isStop) 
-            {   
-            isMoving = false;
-            this->SetCurState("wait");
-            }
-            break;
-            default:
-                return false; // 잘못된 포트 이름
+        if (this->GetCurState() == "wait") 
+        {
+            // 대기 상태에서 이동 명령을 받았을 때
+            this->SetCurState("move");
+            // 나중에 경로탐색 이쪽을 함수로 빼서 로직을 추가하건 해야할듯
+            curPos = msg.curPos; // 현재 위치 좌표 설정
+            detPos = msg.detPos; // 목적지 좌표 설정
+            direction = (detPos.first > curPos.first) ? 1 : 0; // 방향 설정, 매우 단순한 방법
+            isMoving = true; // 이동 중으로 설정
+        }
     }
-    return true;
+    else if (inPort == "stop_in")
+    {
+        M_FLAG msg;
+        try
+        {
+            msg = std::any_cast<M_FLAG>(message);
+        }
+        catch(const std::bad_any_cast&)
+        {
+            logger_system << "[ERROR] Invalid message type!" << std::endl;
+            return false;
+        }
+        if (msg.isStop) 
+        {   
+        isMoving = false;
+        this->SetCurState("wait");
+        }
+    }
+    else return false; // 잘못된 포트 이름
 }
 
 bool Maneuver::IntTransFn() 
 {
-    if (this->GetCurState() == "move") 
+    if (this->GetCurState() == "move" && isMoving) 
     {
         // 이동 중인 상태에서 위치 업데이트
-        if (isMoving) 
+        if (curPos != detPos)
         {
             switch (direction)
             {
@@ -101,12 +98,13 @@ bool Maneuver::OutputFn()
     if (this->GetCurState() == "move") 
     {
         // 이동 중인 상태에서 현재 위치를 출력
-        std::any msg = myPosXY; // 현재 위치 정보를 메시지로 변환
+        std::any msg = curPos; // 현재 위치 정보를 메시지로 변환
 
         this->AddOutputEvent("m_out", msg); // 위치 정보를 m_out 포트로 전송
         this->AddOutputEvent("m_rep", msg); // 위치 정보를 m_rep 포트로 전송
         return true;
     }
+    return false; // 대기 상태에서는 출력하지 않음
 }
 
 TIME_T Maneuver::TimeAdvanceFn() 
@@ -126,7 +124,7 @@ void Maneuver::UpdateTime(const TIME_T currentTime)
 
 void Maneuver::ReceiveScheduleTime(const TIME_T currentTime)
 {
-    Atomic_Model::ReceiveScheduleTime(currentTime);
+    AtomicModel::ReceiveScheduleTime(currentTime);
 }
 
 void Maneuver::ReceiveEvent(Event& event,TIME_T currentTime)
