@@ -7,14 +7,10 @@
 #include <iostream>
 #include <string>
 
-class TestCannon : public AtomicModel{
+class Fire : public AtomicModel{
 public:
-    int health = 100;
-    int damageCount = 0;
-    int fireCount = 0;
-    std::pair<int, int> myPosXY;
     std::string myName;
-    TestCannon(int modelID, Engine* engine, std::string name);
+    Fire(int modelID, Engine* engine, std::string name);
     bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();
     bool OutputFn();

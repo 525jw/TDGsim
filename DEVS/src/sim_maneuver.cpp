@@ -41,7 +41,7 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& message)
             curPos = msg.curPos; // 현재 위치 좌표 설정
             detPos = msg.detPos; // 목적지 좌표 설정
             direction = (detPos.first > curPos.first) ? 1 : 0; // 방향 설정, 매우 단순한 방법
-            isMoving = true; // 이동 중으로 설정
+            isMoving = true; // 이동 중으로 설정 AJW : 이 플래그가 필요한 이유?, state와 역할 같은거 아닌가
             return true;
         }
     }
@@ -57,7 +57,7 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& message)
             logger_system << "[ERROR] Invalid message type!" << std::endl;
             return false;
         }
-        if (msg.isStop) 
+        if (msg.isStop) // AJW : ext Trans는 가급적 cur state x input event -> new state 형태로 정의, 현재는 불필요하긴함
         {   
         isMoving = false;
         this->SetCurState("wait");
