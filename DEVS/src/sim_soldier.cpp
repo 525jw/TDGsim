@@ -1,4 +1,6 @@
 #include "sim_soldier.hpp"
+#include "sim_decisionmaker.hpp"
+#include "sim_maneuver.hpp"
 
 Soldier::Soldier(int modelID, Engine* engine, std::string name)
 : CoupledModel(modelID, engine)
@@ -12,11 +14,26 @@ Soldier::Soldier(int modelID, Engine* engine, std::string name)
                 <<" Created"
                 <<std::endl;
 
-    logger_system   << "[" << "TestCannonTeam::"
+    logger_system   << "[" << "Soldier::"
                     << myName
                     << ":Init]"
                     <<" Created, ID : "<<this->GetModelID()
                     <<std::endl;
+
+    DecisionMaker* dm = new DecisionMaker(idNum+1, engine, this->myName + " DM");
+    dm->SetParentModel(this);
+    
+    Maneuver* maneuver = new Maneuver(idNum+2, engine,this->myName + " Maneuver");
+    maneuver->SetParentModel(this);
+    
+    this->RegisterModelWithID(dm);
+    this->RegisterModelWithID(maneuver);
+
+    this->AddCoupling(dm, "m_out", maneuver, "m_in", IC); // DM → Maneuver
+    this->AddCoupling(dm, "stop_out", maneuver, "stop_in", IC); // DM → Maneuver
+    this->AddCoupling(maneuver, "m_rep", dm, "m_rep", IC); // Maneuver → DM
+    this->AddCoupling(maneuver, "m_out", dm, "m_in", IC); // Maneuver → DM
+
     /*
     TestCannon* firstCannon = new TestCannon(idNum+1, engine,this->myName + "First");
     firstCannon->SetParentModel(this);

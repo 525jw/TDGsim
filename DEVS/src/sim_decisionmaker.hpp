@@ -7,19 +7,18 @@
 #include <iostream>
 #include <string>
 
-class Maneuver : public AtomicModel{
-public:
+class DecisionMaker : public AtomicModel{
+    private:
+    // --- 표적 리스트 ---
+    std::vector<std::pair<int, int>> targetList;
+    public:
     std::string myName;
 
-    // --- 이동 관련 변수 ---
-    std::pair<int, int> curPos; // 현재 위치 좌표
-    std::pair<int, int> detPos; // 목적지 좌표
-    double moveSpeed = 1.0;     // 이동 속도 (초당 몇 칸 등)
-    int direction = 0;          // x좌표가 움직임(= 가로 방향), 0이면 -, 1이면 +
-    bool isMoving = false;      // 이동 중 여부
+    std::pair<int, int> curPos; // 현재 위치
+    std::pair<int, int> detPos; // 목표 지점 (이동이건 표적이건)
 
 
-    Maneuver(int modelID, Engine* engine, std::string name);
+    DecisionMaker(int modelID, Engine* engine, std::string name);
     bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();
     bool OutputFn();

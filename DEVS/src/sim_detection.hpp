@@ -8,6 +8,14 @@
 #include <string>
 
 class Detection : public AtomicModel{
+private:
+    std::pair<int, int> curPos; // 현재 위치 좌표
+    std::pair<int, int> tgtPos; // 표적 위치 좌표
+    int viewRange = 2; // 시야 범위 (맨해튼 거리 2)
+    int actualRange = 0; // 실제 탐지 범위 (맨해튼 거리)
+    bool isDectected = false; // 탐지 여부
+    bool isDetecting = false; // 탐지 중 여부
+
 public:
     std::string myName;
     Detection(int modelID, Engine* engine, std::string name);
