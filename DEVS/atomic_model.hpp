@@ -21,7 +21,6 @@ public:
     void AddState(const std::string& state);
     void RemoveState(const std::string& state);
     const std::vector<std::string>& GetStates() const;
-     // DISCUSS : State Transition 진입 시 처리되는 과정이 많다면(ex: *->dead) setter 구현만만으로는 부족, stateTransitionFn() 구현논의 
     void SetCurState(std::string state);
     const std::string& GetCurState() const;
 
@@ -38,4 +37,5 @@ public:
     virtual TIME_T TimeAdvanceFn() {return -1;}
 
     bool IsAtomic() const override { return true; }
+
 };

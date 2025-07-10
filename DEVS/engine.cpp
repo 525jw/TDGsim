@@ -91,9 +91,6 @@ void Engine::Run(){
         }
     }
 
-    // Print Result
-    this->RequestLogAllStatus();
-
     logger_world << "Total Fire Turns : "<< countFire << std::endl; // DEBUG ONLY
 
     std::cout       << "[Engine::Run]"<< " >>> Engine Ends "
@@ -115,12 +112,4 @@ bool Engine::RegisterModelWithID(Model* model) {
     int id = model->GetModelID();
     modelsWithID[id] = model;
     return true;
-}
-
-void Engine::RequestLogAllStatus(){
-    LOG_ORD ord;
-    ord.ack_msg = "hello";
-    std::any msg = ord;
-    Event* event = new Event(this->rootModel->GetModelID(), "log_ord", msg);
-    this->rootModel->ReceiveEvent(*event,this->currentTime);
 }
