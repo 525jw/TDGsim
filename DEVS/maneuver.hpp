@@ -1,15 +1,15 @@
 #pragma once
-#include "DEVS/atomic_model.hpp"
+#include "atomic_model.hpp"
 #include "message.hpp"
-#include "DEVS/logger.hpp"
+#include "logger.hpp"
 #include <utility>
 #include <iostream>
 #include <string>
 
-class DataCollector : public AtomicModel{
+class Maneuver : public AtomicModel{
 public:
     std::string myName;
-    DataCollector(int modelID, Engine* engine, std::string name);
+    Maneuver(int modelID, Engine* engine, std::string name);
     bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();
     bool OutputFn();

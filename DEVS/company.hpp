@@ -1,15 +1,16 @@
 #pragma once
 #include "coupled_model.hpp"
-#include "test_canteam.hpp"
 #include "logger.hpp"
 
-class Engine;
 
-class TestCannonSys : public CoupledModel{
+
+#include <string>
+
+class Company : public CoupledModel{
 public:
     std::string myName;
-    TestCannonSys(int modelID, Engine* engine);
+    Company(int modelID, Engine* engine, std::string name);
     void ReceiveScheduleTime(const TIME_T currentTime) override;
+    void ReceiveEvent(Event& event, TIME_T currentTime) override;
     const TIME_T QueryNextTime() const override;
-    void ReceiveEvent(Event& externalEvent, TIME_T currentTime);
 };

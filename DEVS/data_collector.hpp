@@ -1,20 +1,15 @@
 #pragma once
 #include "atomic_model.hpp"
-#include "test_world.hpp"
 #include "message.hpp"
 #include "logger.hpp"
 #include <utility>
 #include <iostream>
 #include <string>
 
-class TestCannon : public AtomicModel{
+class DataCollector : public AtomicModel{
 public:
-    int health = 100;
-    int damageCount = 0;
-    int fireCount = 0;
-    std::pair<int, int> myPosXY;
     std::string myName;
-    TestCannon(int modelID, Engine* engine, std::string name);
+    DataCollector(int modelID, Engine* engine, std::string name);
     bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();
     bool OutputFn();
