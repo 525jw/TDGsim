@@ -9,10 +9,11 @@
 
 class Environment : public AtomicModel{
 private:
-    std::unordered_map<std::string, std::pair<int, int>> redteam;    // key : objectID, value : (x,y)
-    std::unordered_map<std::string, std::pair<int, int>> blueteam;
+    std::unordered_map<std::string, std::pair<int, int>> redTeam;    // key : objectID, value : (x,y)
+    std::unordered_map<std::string, std::pair<int, int>> blueTeam;
 
-    std::vector<std::vector<int>> grid_map;
+    std::vector<std::vector<int>> elevationMap;
+    std::unordered_map<std::string, std::pair<int,int>> obstacles;
 public:
     Environment(int modelID, Engine* engine, std::string name);
     bool ExtTransFn(const std::string& inPort, const std::any& message);
