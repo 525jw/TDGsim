@@ -1,7 +1,7 @@
 #pragma once
-#include "atomic_model.hpp"
-#include "../message.hpp"
-#include "../DEVS/logger.hpp"
+#include "DEVS/atomic_model.hpp"
+#include "message.hpp"
+#include "DEVS/logger.hpp"
 #include <utility>
 #include <iostream>
 #include <vector>
@@ -11,7 +11,7 @@ class Detection : public AtomicModel{
 private:
     int objectID;
 
-    std::pair<int,int> cur_pos={-1.0f, -1.0f}; // (x,y)
+    std::pair<int,int> cur_pos={-1, -1}; // (x,y)
     std::unordered_map<int, std::pair<int,int>> enemy_pos;   // key: Enemy objectID, value: enemy_pos (x,y)
     int vision = 10;
 

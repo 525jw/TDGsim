@@ -111,8 +111,8 @@ bool Detection::IntTransFn(){
 bool Detection::OutputFn(){
     DetResult msg_raw;
     msg_raw.enemy_pos = this->enemy_pos;
-    if (this->GetCurState() == "DETECT") msg_raw.IsDetect = true;
-    else msg_raw.IsDetect = false;
+    if (this->GetCurState() == "DETECT") msg_raw.enemyInRange = true;
+    else msg_raw.enemyInRange = false;
     std::any msg_final = msg_raw;
     this->AddOutputEvent("det_result", msg_final);
     return true;

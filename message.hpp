@@ -2,6 +2,7 @@
 #include <utility>
 #include <vector>
 
+enum class Team { RED, BLUE };
 class MnvOrd{
 public:
     float speed; // m per s
@@ -21,7 +22,7 @@ public:
 
 class DetResult{
 public:
-    bool IsDetect;
+    bool enemyInRange;
     std::unordered_map<int, std::pair<int,int>> enemy_pos; // key: objectID, value:(x,y)
 };
 

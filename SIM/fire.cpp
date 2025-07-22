@@ -10,7 +10,7 @@ Fire::Fire(int modelID, Engine* engine, int objectID)
     this->AddState("FIRE");
     this->SetCurState("WAIT");
 
-    this->AddInputPort("fire_in");
+    this->AddInputPort("fire_ord");
     this->AddInputPort("dead_in");
     this->AddOutputPort("fire_result");
 }
@@ -20,17 +20,23 @@ TIME_T Fire::fireEquation(){
 }
 
 bool Fire::ExtTransFn(const std::string& inPort, const std::any& message){
-    if (inPort == "fire_in"){
+    if (inPort == "fire_ord"){
         try{
             const FireIn msg = std::any_cast<FireIn>(message);
 
             this->targetID = msg.targetID;
 
-            this->t_fire = fireEquation();
+            const Capability& weapon = this->capability[0];
+            std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
-            this->SetCurState("FIRE");
+            float random_val = static_cast<float>(std::rand()) / RAND_MAX;
+
+            if (random_val <= weapon.hit_ratio) this->SetCurState("FIRE");
+
+            this->t_fire = weapon.reload_time; // this->t_fire = fireEquation();
+
         }catch (const std::bad_any_cast&){
-            logger_system << "[ERROR] Invalid message! port name : fire_in\n";
+            logger_system << "[ERROR] Invalid message! port name : fire_ord\n";
             return false;
         }
     }else if (inPort == "dead_in"){

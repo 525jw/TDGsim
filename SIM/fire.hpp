@@ -1,26 +1,26 @@
 #pragma once
-#include "atomic_model.hpp"
-#include "../message.hpp"
-#include "../DEVS/logger.hpp"
+#include "DEVS/atomic_model.hpp"
+#include "message.hpp"
+#include "DEVS/logger.hpp"
 #include <utility>
 #include <iostream>
 
-typedef struct capability {
+struct Capability {
     std::string weapon_name;
     int weapon_range;
     float hit_ratio;
     float reload_time;
 
-    capability(const std::string& name, int range, float ratio, float reload_time)
+    Capability(const std::string& name, int range, float ratio, float reload_time)
         : weapon_name(name), weapon_range(range), hit_ratio(ratio), reload_time(reload_time){}
-} Cap;
+};
 
 class Fire : public AtomicModel{
 private:
     int objectID;
 
     int targetID;
-    std::vector<Cap> capability = { Cap{"rifle", 9, 0.7f, 2.0f} };
+    std::vector<Capability> capability = { Capability{"rifle", 9, 0.7f, 2.0f} };
 
     TIME_T t_fire = -1.0f;
     TIME_T fireEquation();

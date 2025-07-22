@@ -1,7 +1,7 @@
 #pragma once
-#include "atomic_model.hpp"
-#include "../message.hpp"
-#include "../DEVS/logger.hpp"
+#include "DEVS/atomic_model.hpp"
+#include "message.hpp"
+#include "DEVS/logger.hpp"
 #include <utility>
 #include <iostream>
 

@@ -1,7 +1,7 @@
 #pragma once
-#include "atomic_model.hpp"
-#include "../message.hpp"
-#include "../DEVS/logger.hpp"
+#include "DEVS/atomic_model.hpp"
+#include "message.hpp"
+#include "DEVS/logger.hpp"
 #include <utility>
 #include <iostream>
 
@@ -9,7 +9,7 @@ class Maneuver : public AtomicModel{
 private:
     int objectID;
 
-    std::pair<int,int> cur_pos={-1.0f, -1.0f}; // (x,y)
+    std::pair<int,int> cur_pos={-1, -1}; // (x,y)
     float cur_speed = -1.0f;
 
     TIME_T t_mnv = -1.0f;
