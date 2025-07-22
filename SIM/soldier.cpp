@@ -1,6 +1,6 @@
-#include "company.hpp"
+#include "soldier.hpp"
 
-Company::Company(int modelID, Engine* engine, std::string name)
+Soldier::Soldier(int modelID, Engine* engine, std::string name)
 : CoupledModel(modelID, engine)
 {
     this->myName=name;
@@ -12,19 +12,16 @@ Company::Company(int modelID, Engine* engine, std::string name)
                 <<" Created"
                 <<std::endl;
 
-    logger_system   << "[" << "Company::"
+    logger_system   << "[" << "Soldier::"
                     << myName
                     << ":Init]"
                     <<" Created, ID : "<<this->GetModelID()
                     <<std::endl;
     
-    Generator* generator = new Generator(1, engine, "Generator");
-    generator->SetParentModel(this);
-    DataCollector* data_collector = new DataCollector(2, engine, "DataCollector");
-    data_collector->SetParentModel(this);
-    
-    this->RegisterModelWithID(generator);
-    this->RegisterModelWithID(data_collector);
+    Maneuver* maneuver = new Maneuver(123456789, engine, "Maneuver");
+    maneuver->SetParentModel(this);
+
+    this->RegisterModelWithID(maneuver);
 
     this->AddInputPort("result");
     this->AddOutputPort("start");
@@ -38,44 +35,44 @@ Company::Company(int modelID, Engine* engine, std::string name)
         keys.push_back(pair.first);
     }
     for (const auto& key : keys) {
-        logger_system   << "[" << "Company::"
+        logger_system   << "[" << "Soldier::"
                         << myName
                         << ":Init]" 
                         <<" has Model ID: " << key << std::endl;
     }
 
     logger_system
-        << "[Company::" << myName << ":Init] "
+        << "[Soldier::" << myName << ":Init] "
         << "CouplingCount  IC="  << this->CouplingCount(IC)
         << ", EOC="             << this->CouplingCount(EOC)
         << ", EIC="             << this->CouplingCount(EIC)
         << std::endl;
 
 }
-void Company::ReceiveScheduleTime(const TIME_T currentTime) {
-    logger_system   << "[" << "Company::"
+void Soldier::ReceiveScheduleTime(const TIME_T currentTime) {
+    logger_system   << "[" << "Soldier::"
                     << myName
                     << "::ReceiveScheduleTime]"
                     <<" Received (*,"<<currentTime<<")"
                     <<std::endl;
     CoupledModel::ReceiveScheduleTime(currentTime);
 }
-void Company::ReceiveEvent(Event& event, TIME_T currentTime) {
-    logger_system   << "[" << "Company::"
+void Soldier::ReceiveEvent(Event& event, TIME_T currentTime) {
+    logger_system   << "[" << "Soldier::"
                     << myName
                     << "::ReceiveEvent]"
                     <<" Received (x,"<<currentTime<<")"
                     << std::endl;
     CoupledModel::ReceiveEvent(event, currentTime);
 }
-const TIME_T Company::QueryNextTime() const {
-    logger_system   << "[" << "Company::"
+const TIME_T Soldier::QueryNextTime() const {
+    logger_system   << "[" << "Soldier::"
                     << myName
                     << "::QueryNextTime]"
                     <<" query min TA"
                     <<std::endl;
     TIME_T minTime=CoupledModel::QueryNextTime();
-    logger_system   << "[" << "Company::"
+    logger_system   << "[" << "Soldier::"
                     << myName
                     << "::QueryNextTime]"
                     <<" gets min TA : "<<minTime
