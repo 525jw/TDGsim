@@ -1,8 +1,8 @@
 #include "model.hpp"
 #include "engine.hpp"
 
-Model::Model(int modelID, Engine* engine)
-    : engine(engine), modelID(modelID)
+Model::Model(Engine* engine)
+    : engine(engine)
 {
     if (engine != nullptr) {
         engine->RegisterModelWithID(this);

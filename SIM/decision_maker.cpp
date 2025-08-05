@@ -1,112 +1,90 @@
 #include "decision_maker.hpp"
 
-DecisionMaker::DecisionMaker(int modelID, Engine* engine, std::string name)
-    :  AtomicModel(modelID, engine)
+DecisionMaker::DecisionMaker(Engine* engine, int objectID)
+    : AtomicModel(engine)
 {
-    this->myName=name;
+    this->objectID = objectID;
 
-    this->AddState("Wait");
-    this->AddState("Decision");
+    this->AddState("WAIT");
+    this->AddState("APPROACH");
+    this->AddState("FIRE");
+    this->AddState("DECIDE");
 
-    this->AddState("Fire");
-    this->AddState("Move");
+    this->SetCurState("WAIT");
 
-    this->AddState("Dead");
-
-    this->SetCurState("Wait");
-    
-    this->AddInputPort("dead_in"); // DEAD_INFO
-    this->AddInputPort("ord_in"); // ORD_INFO
-    this->AddInputPort("mnv_in"); // MNV_INFO
-    this->AddInputPort("fire_in"); // FIRE_INFO
-    this->AddInputPort("det_in"); // DET_INFO
-
-    this->AddOutputPort("mnv_out"); // MNV_INFO
-    this->AddOutputPort("fire_out"); // FIRE_INFO
-    this->AddOutputPort("ord_out"); // ORD_FIFO
-
-    logger_world    << "["
-                    << myName
-                    << "]"
-                    <<" Created"
-                    <<std::endl;
-    
-    logger_system   << "[" << "DecisionMaker::"
-                    << myName
-                    << ":Init]"
-                    <<" Created, ID : "<<this->GetModelID()
-                    <<", current State : "<<this->GetCurState()
-                    <<std::endl;
+    this->AddInputPort ("mnvRes");
+    this->AddOutputPort("detRes");
+    this->AddInputPort ("deadInfo");
 }
 
-bool DecisionMaker::ExtTransFn(const std::string& inPort, const std::any& message) {
-    if(inPort == "dead_in"){
-        this->SetCurState("Dead");
-    }else if( (this->GetCurState()=="Move" && (inPort == "mnv_in" || inPort=="det_in" || inPort=="ord_in" || inPort=="fire_in")) || 
-              (this->GetCurState()=="Fire" && (inPort == "det_in" || inPort == "ord_in")) ||
-              (this->GetCurState()=="Wait" && inPort == "ord_in") ){
-        this->SetCurState("Decision");
+bool DecisionMaker::ExtTransFn(const std::string& inPort, const std::any& anyMessage){
+    if(this->GetCurState()=="APPROACH"){
+        if(inPort=="mnvRes"){
+            MnvRes message;
+            if(!TryCastMessage(anyMessage, message, "")) return false;
+            this->curPos= message.curPos;
+            if(this->detPos == this->curPos) // 천이조건검사
+                this->SetCurState("DECIDE");
+
+        }else if(inPort=="detRes"){
+            DetRes message;
+            if(!TryCastMessage(anyMessage,message,"")) return false;
+            if(message.enemyDetected){ // 천이조건검사
+                this->enemyPos=message.enemyPos;
+                this->SetCurState("DECIDE");
+            }
+        }else if(inPort=="deadInfo"){
+            DeadInfo message;
+            if(!TryCastMessage(anyMessage,message,"")) return false;
+            this->SetCurState("WAIT");
+        }
+    }
+    if (inPort=="mnvRes" && this->GetCurState()=="APPROACH") {
+        EnvInfo message;
+        if(!TryCastMessage(anyMessage,message,"")) return false;
+
+        this->RebuildEnemyDistance(message);
+    } else if (inPort=="mnvRes") {
+        MnvRes message;
+        if(!TryCastMessage(anyMessage,message,"")) return false;
+
+        this->curPos=message.curPos;
+    } else if (inPort=="deadInfo") {
+        this->SetCurState("WAIT");
+        enemyPos.clear();
+        return true;
+    }
+    if (!enemyPos.empty()) this->SetCurState("DETECT");
+    else this->SetCurState("WAIT");
+    return true;
+}
+
+
+bool DecisionMaker::IntTransFn(){
+    if (this->GetCurState() == "APPROACH") {
+
+    }else if(this->GetCurState()=="FIRE"){
+
     }
     return true;
 }
 
-bool DecisionMaker::IntTransFn() {
-    if( this->GetCurState()=="Decision"){
-        // 결정 flow chart 
+bool DecisionMaker::OutputFn(){
+    if(this->GetCurState()=="DETECT"){
+        DetRes message;
+        // if(EnemyIsVisible())
+            message.enemyDetected = true;
+        // else
+            // message.enemyDetected = false;
+        message.enemyPos = this->enemyPos;
+        std::any anyMessage = message;
+        this->AddOutputEvent("detRes",anyMessage);
     }
     return true;
 }
-bool DecisionMaker::OutputFn() {
-    if (this->GetCurState() == "Restart") {
-        START_MSG start_msg;
-        // RESTART_MSG restart_msg
-        // payload 다르다면 message 새로 추가 ex) 같은 맵 다른 시드 실행
-        // sim에 전달할 값 생성/저장
-        // ex) 시드값, 시나리오 매개변수(맵, 병력구성 등)
-        std::any msg = start_msg;
 
-        this->AddOutputEvent("restart",msg);
-    }
-    return true;
-}
-TIME_T DecisionMaker::TimeAdvanceFn() {
-    if (this->GetCurState() == "Restart") {
-        return 0.0f;
-    }else if(this->GetCurState()=="Wait"){
-        return TIME_INF;
-    }
-    return -1;
-}    
-void DecisionMaker::UpdateTime(const TIME_T currentTime){
-    this->lastTime = currentTime;
-    this->nextTime = currentTime + TimeAdvanceFn();
-    logger_system   << "[" << "DecisionMaker::"
-                    << myName
-                    << "::UpdateTime]"
-                    << " LastTIme, NextTime = ("<<this->lastTime<<","<<this->nextTime<<")"
-                    << std::endl;
-}
-void DecisionMaker::ReceiveScheduleTime(const TIME_T currentTime) {
-    AtomicModel::ReceiveScheduleTime(currentTime);
-    logger_system   << "[" << "DecisionMaker::"
-                    << myName
-                    << "::ReceiveScheduleTime]"
-                    <<" Received (*,"<<currentTime<<"), next TA updated to "<<this->nextTime
-                    <<std::endl;
-}
-void DecisionMaker::ReceiveEvent(Event& event,TIME_T currentTime) {
-    AtomicModel::ReceiveEvent(event, currentTime);
-    logger_system   << "[" << "DecisionMaker::"
-                    << myName
-                    << "::ReceiveEvent]"
-                    <<" Received (x,"<<currentTime<<"), next TA updated to "<<this->nextTime
-                    << std::endl;
-}
-const TIME_T DecisionMaker::QueryNextTime() const {
-    logger_system   << "[" << "DecisionMaker::"
-                    << myName
-                    << "::QueryNextTime]"
-                    <<" sends TA : "<<this->nextTime
-                    << std::endl;
-    return AtomicModel::QueryNextTime();
+TIME_T DecisionMaker::TimeAdvanceFn(){
+    if (this->GetCurState() == "WAIT")   return TIME_INF;
+    if (this->GetCurState() == "DETECT") return t_dc;
+    return -1;   // 오류
 }

@@ -7,10 +7,12 @@
 #include <string>
 
 class Generator : public AtomicModel{
+private:
+    unsigned int seed = 0;
+    unsigned int GenerateSeed();
 public:
-    std::string myName;
-    Generator(int modelID, Engine* engine, std::string name);
-    bool ExtTransFn(const std::string& inPort, const std::any& message);
+    Generator(Engine* engine);
+    bool ExtTransFn(const std::string& inPort, const std::any& anyMessage);
     bool IntTransFn();
     bool OutputFn();
     TIME_T TimeAdvanceFn();

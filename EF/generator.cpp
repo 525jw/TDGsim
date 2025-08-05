@@ -1,110 +1,94 @@
 #include "generator.hpp"
+#include <ctime>
 
-Generator::Generator(int modelID, Engine* engine, std::string name)
-    :  AtomicModel(modelID, engine)
+Generator::Generator(Engine* engine)
+    :  AtomicModel(engine)
 {
-    this->myName=name;
+    this->AddState("START");
+    this->AddState("WAIT");
 
-    this->AddState("Start");
-    this->AddState("Wait");
-
-    this->SetCurState("Start");
+    this->SetCurState("START");
     
     this->AddInputPort("restart");
-    this->AddOutputPort("start");
+    this->AddOutputPort("scenInfo");
 
-    logger_world    << "["
-                    << myName
-                    << "]"
-                    <<" Created"
-                    <<std::endl;
-
-    logger_system   << "[" << "Generator::"
-                    << myName
-                    << ":Init]"
-                    <<" Created, ID : "<<this->GetModelID()
-                    <<", current State : "<<this->GetCurState()
-                    <<std::endl;
+    this->seed = GenerateSeed();
 }
 
-bool Generator::ExtTransFn(const std::string& inPort, const std::any& message) {
-    if(inPort == "restart" && this->GetCurState() != "Wait"){
-        START_MSG msg;
+unsigned int Generator::GenerateSeed() {
+    return static_cast<unsigned int>(time(nullptr));
+}
 
-        try {
-            msg = std::any_cast<START_MSG>(message);
-        } catch (const std::bad_any_cast&) {
-            logger_system << "[ERROR] Invalid message type!" << std::endl;
-            return false;
-        }
-
-        this->SetCurState("START");
-
-        logger_system   << "[" << "Generator::"
-                        << myName
-                        << "::ExtTransFn]"
-                        << " CurState : "<<this->GetCurState()
-                        <<std::endl;
+bool Generator::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
+    if(inPort == "restart" && this->GetCurState() == "WAIT"){
+        // RestartMsg message;
+        // if(!TryCastMessage(anyMessage, message, "Generator::ExtTransFn::restart")) return false;
+        // this->SetCurState("START");
     }
     return true;
 }
 
 bool Generator::IntTransFn() {
-    if(this->GetCurState()=="Start"){
-        this->SetCurState("dead");
+    if(this->GetCurState()=="START"){
+        this->SetCurState("WAIT");
     }
     return true;
 }
 
 bool Generator::OutputFn() {
-    if (this->GetCurState() == "Start") {
-        START_MSG start_msg;
-        // sim에 전달할 초기값 생성/저장
-        // ex) 시드값, 시나리오 매개변수(맵, 병력구성 등)
-        std::any msg = start_msg;
+    if (this->GetCurState() == "START") {
+        ScenInfo message;
+        message.seed = this->seed;
+        /*
+        ----------------------------------------------------------------------
+        100 x 100 사이즈 4분면에 5명씩
+        ----------------------------------------------------------------------
+        */
+        int unitsPerQuadrant = 5;
+        int spacing = 2;
 
-        this->AddOutputEvent("start",msg);
+        auto generate = [&](int idStart, int xMin, int xMax, int yMin, int yMax, auto& teamMap) {
+            std::uniform_int_distribution<int> distX(xMin, xMax);
+            std::uniform_int_distribution<int> distY(yMin, yMax);
+
+            int count = 0;
+            while (count < unitsPerQuadrant) {
+                int x = distX(this->seed);
+                int y = distY(this->seed);
+
+                // 중앙 횡방향 금지구역 (y in [48, 52])
+                if (y >= 48 && y <= 52) continue;
+
+                teamMap[idStart + count] = {x, y};
+                count++;
+            }
+        };
+
+        // RedTeam 1사분면 (x:0~49, y:0~49)
+        generate(1001, 5, 45, 5, 45, message.redTeam);
+
+        // RedTeam 2사분면 (x:50~99, y:0~49)
+        generate(1006, 55, 95, 5, 45, message.redTeam);
+
+        // BlueTeam 3사분면 (x:0~49, y:50~99)
+        generate(2001, 5, 45, 55, 95, message.blueTeam);
+
+        // BlueTeam 4사분면 (x:50~99, y:50~99)
+        generate(2006, 55, 95, 55, 95, message.blueTeam);
+
+        /*
+        ----------------------------------------------------------------------
+        */
+        std::any anyMessage = message;
+        this->AddOutputEvent("scenInfo",anyMessage);
     }
     return true;
 }
 TIME_T Generator::TimeAdvanceFn() {
-    if (this->GetCurState() == "Start") {
+    if (this->GetCurState() == "START") {
         return 0.0f;
-    }else if(this->GetCurState()=="Wait"){
+    }else if(this->GetCurState()=="WAIT"){
         return TIME_INF;
     }
     return -1;
-}    
-void Generator::UpdateTime(const TIME_T currentTime){
-    this->lastTime = currentTime;
-    this->nextTime = currentTime + TimeAdvanceFn();
-    logger_system   << "[" << "Generator::"
-                    << myName
-                    << "::UpdateTime]"
-                    << " LastTIme, NextTime = ("<<this->lastTime<<","<<this->nextTime<<")"
-                    << std::endl;
-}
-void Generator::ReceiveScheduleTime(const TIME_T currentTime) {
-    AtomicModel::ReceiveScheduleTime(currentTime);
-    logger_system   << "[" << "Generator::"
-                    << myName
-                    << "::ReceiveScheduleTime]"
-                    <<" Received (*,"<<currentTime<<"), next TA updated to "<<this->nextTime
-                    <<std::endl;
-}
-void Generator::ReceiveEvent(Event& event,TIME_T currentTime) {
-    AtomicModel::ReceiveEvent(event, currentTime);
-    logger_system   << "[" << "Generator::"
-                    << myName
-                    << "::ReceiveEvent]"
-                    <<" Received (x,"<<currentTime<<"), next TA updated to "<<this->nextTime
-                    << std::endl;
-}
-const TIME_T Generator::QueryNextTime() const {
-    logger_system   << "[" << "Generator::"
-                    << myName
-                    << "::QueryNextTime]"
-                    <<" sends TA : "<<this->nextTime
-                    << std::endl;
-    return AtomicModel::QueryNextTime();
 }

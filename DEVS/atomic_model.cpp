@@ -1,7 +1,7 @@
 #include "atomic_model.hpp"
 
-AtomicModel::AtomicModel(int modelID, Engine* engine)
-    : Model(modelID, engine)
+AtomicModel::AtomicModel(Engine* engine)
+    : Model(engine)
 {
     this->engine->RegisterModelWithID(this);
 }

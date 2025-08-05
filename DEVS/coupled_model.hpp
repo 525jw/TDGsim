@@ -13,24 +13,19 @@ enum CouplingType { EIC, EOC, IC };
 class CoupledModel : public Model{
 private:
     std::unordered_map<CouplingType, std::vector<std::unique_ptr<Coupling>>> couplings;
-    
+    void RouteEIC(Event& event, TIME_T currentTime); 
+    void RouteEOC(Event& event, TIME_T currentTime);
+    void RouteIC(Event& event, TIME_T currentTime);
+    Event Translate(const Event& in, int srcModelID, const std::string& srcPort);
 public:
     std::unordered_map<int, Model*> modelsWithID;
-    CoupledModel(int modelID, Engine* engine);
+    CoupledModel(Engine* engine);
 
     bool AddCoupling(Model* srcModel, const std::string& srcPort, Model* detModel, const std::string& detPort, CouplingType type);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort, Model* detModel, std::string* detPort);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort);
     
     void ReceiveEvent(Event& event, TIME_T currentTime);
-
-    // --- private ---
-    void RouteEIC(Event& event, TIME_T currentTime); 
-    void RouteEOC(Event& event, TIME_T currentTime);
-    void RouteIC(Event& event, TIME_T currentTime);
-    Event Translate(const Event& in, int srcModelID, const std::string& srcPort);
-    // ---------------
-
     void ReceiveScheduleTime(const TIME_T currentTime);
 
     const TIME_T QueryNextTime() const;

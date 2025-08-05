@@ -1,27 +1,23 @@
-//WIP
 #pragma once
-#include "atomic_model.hpp"
-#include "../message.hpp"
-#include "../DEVS/logger.hpp"
+#include "DEVS/atomic_model.hpp"
+#include "message.hpp"
+#include "DEVS/logger.hpp"
 #include <utility>
 #include <iostream>
-#include <string>
+#include <vector>
 
 class Environment : public AtomicModel{
 private:
-    std::unordered_map<std::string, std::pair<int, int>> redTeam;    // key : objectID, value : (x,y)
-    std::unordered_map<std::string, std::pair<int, int>> blueTeam;
+    std::unordered_map<int, std::pair<int, int>> blueTeam;
+    std::unordered_map<int, std::pair<int, int>> redTeam;
 
-    std::vector<std::vector<int>> elevationMap;
-    std::unordered_map<std::string, std::pair<int,int>> obstacles;
+    // std::vector<std::vector<TerrainType>> TerrainMap;
+    // std::vector<std::pair<int,int>> obstacles;
 public:
-    Environment(int modelID, Engine* engine, std::string name);
+    Environment(Engine* engine);
+
     bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();
     bool OutputFn();
     TIME_T TimeAdvanceFn();
-    void UpdateTime(const TIME_T currentTime);
-    void ReceiveScheduleTime(const TIME_T currentTime) override;
-    void ReceiveEvent(Event& event,TIME_T currentTime) override;
-    const TIME_T QueryNextTime() const override;
 };

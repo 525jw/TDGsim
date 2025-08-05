@@ -12,11 +12,21 @@ class Engine;
 class AtomicModel : public Model{
 protected:
     TIME_T executedTime; // NOTE : Currently unused; specified in the textbook;
+    template<typename T>
+    static bool TryCastMessage(const std::any& raw, T& typed, const std::string& context = "") {
+        try {
+            typed = std::any_cast<T>(raw);
+            return true;
+        } catch (const std::bad_any_cast&) {
+            std::cerr << "[ERROR] Invalid message type in " << context << std::endl;
+            return false;
+        }
+    }
 private:
     std::vector<std::string> states;
     std::string currentState;
 public:
-    AtomicModel(int modelID, Engine* engine);
+    AtomicModel(Engine* engine);
 
     void AddState(const std::string& state);
     void RemoveState(const std::string& state);
@@ -31,7 +41,7 @@ public:
     void UpdateTime(const TIME_T currentTime);
     void AddOutputEvent(const std::string& outputPort, std::any& message);
 
-    virtual bool ExtTransFn(const std::string& inPort, const std::any& message) {return false;}
+    virtual bool ExtTransFn(const std::string& inPort, const std::any& anyMessage) {return false;}
     virtual bool IntTransFn() {return false;}
     virtual bool OutputFn() {return false;}
     virtual TIME_T TimeAdvanceFn() {return -1;}

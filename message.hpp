@@ -3,27 +3,41 @@
 #include <vector>
 
 enum class Team { RED, BLUE };
-class MnvOrd{
+enum class TerrainType { PLAIN, MOUNTAIN, RIVER };
+
+class ScenInfo{
 public:
-    float speed; // m per s
-    std::pair<int,int> next_pos; // (x,y)
+    unsigned int seed;
+    unsigned int mapSize;
+    std::unordered_map<int, std::pair<int, int>> blueTeam;
+    std::unordered_map<int, std::pair<int, int>> redTeam;
 };
-class MnvResult{
-public:
-    int objectID;
-    std::pair<int,int> cur_pos; // (x,y)
-};
+// class RestartMsg{
+// public:
+// };
 
 class EnvInfo{
 public:
-    std::unordered_map<int, std::pair<int,int>> red_pos; // key: objectID, value:(x,y)
-    std::unordered_map<int, std::pair<int,int>> blue_pos; // key: objectID, value:(x,y)
+    std::unordered_map<int, std::pair<int, int>> blueTeam;
+    std::unordered_map<int, std::pair<int, int>> redTeam;
 };
 
-class DetResult{
+class MnvOrd{
 public:
-    bool enemyInRange;
-    std::unordered_map<int, std::pair<int,int>> enemy_pos; // key: objectID, value:(x,y)
+    float speed; // m per s
+    std::pair<int,int> nextPos; // (x,y)
+};
+class MnvRes{
+public:
+    int objectID;
+    std::pair<int,int> curPos; // (x,y)
+    Team team;
+};
+
+class DetRes{
+public:
+    bool enemyDetected;
+    std::unordered_map<int, std::pair<int,int>> enemyPos; // key: objectID, value:(x,y)
 };
 
 class FireIn{ // CapabilityInfo
@@ -37,6 +51,8 @@ public:
     int targetID;
 };
 
-class DeadMsg{
+class DeadInfo{
 public:
+    int objectID;
+    Team team;
 };

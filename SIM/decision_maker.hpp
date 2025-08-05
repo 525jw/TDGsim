@@ -4,20 +4,23 @@
 #include "DEVS/logger.hpp"
 #include <utility>
 #include <iostream>
-#include <string>
+#include <vector>
+#include <any>
 
 class DecisionMaker : public AtomicModel{
 private:
-    TIME_T ta_dc = 0.1;
+    int objectID;
+
+    std::pair<int,int> curPos={-1,-1};
+    std::pair<int,int> detPos={-1,-1};
+    std::unordered_map<int, std::pair<int,int>> enemyPos;
+
+    TIME_T t_dc = TIME_INF;
 public:
-    std::string myName;
-    DecisionMaker(int modelID, Engine* engine, std::string name);
-    bool ExtTransFn(const std::string& inPort, const std::any& message);
+    DecisionMaker(Engine* engine, int objectID);
+
+    bool ExtTransFn(const std::string& inPort, const std::any& anyMessage);
     bool IntTransFn();
     bool OutputFn();
     TIME_T TimeAdvanceFn();
-    void UpdateTime(const TIME_T currentTime);
-    void ReceiveScheduleTime(const TIME_T currentTime) override;
-    void ReceiveEvent(Event& event,TIME_T currentTime) override;
-    const TIME_T QueryNextTime() const override;
 };

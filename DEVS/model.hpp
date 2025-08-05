@@ -18,13 +18,13 @@ protected:
     Model* parentModel = nullptr;
 
 private:
-    int modelID;
+    int modelID = -1;
     // input and output event sets
     std::vector<std::string> inputPorts;
     std::vector<std::string> outputPorts;
     
 public: 
-    Model(int modelID, Engine* engine);
+    Model(Engine* engine);
     void SetModelID(int id);
     void SetEngine(Engine* engine);
     void SetParentModel(Model* parentModel);

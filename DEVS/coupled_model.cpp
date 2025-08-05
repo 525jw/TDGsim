@@ -3,8 +3,8 @@
 #include "engine.hpp"
 #include "logger.hpp"
 
-CoupledModel::CoupledModel(int modelID, Engine* engine)
-    : Model(modelID, engine)
+CoupledModel::CoupledModel(Engine* engine)
+    : Model(engine)
 {
     this->engine->RegisterModelWithID(this);
 }
