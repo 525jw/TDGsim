@@ -4,16 +4,15 @@
 Maneuver::Maneuver(Engine* engine, int objectID)
     : AtomicModel(engine)
 {
-    this->objectID = objectID;
+    this->entityID = objectID;
 
     this->AddState("WAIT");
     this->AddState("MOVE");
 
     this->SetCurState("WAIT");
 
-    this->AddInputPort("mnvOrd");
-    this->AddInputPort("deadIn");
-    this->AddOutputPort("mnvRes");
+    this->AddInputPort("PlatoonOrd");
+    this->AddOutputPort("BluePosINF");
 }
 
 TIME_T mnvEquation(float speed) {
@@ -21,37 +20,31 @@ TIME_T mnvEquation(float speed) {
 }
 
 bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
-    if (inPort == "mnvOrd" && this->GetCurState()=="WAIT") {
-        MnvOrd message;
+    if (inPort == "PlatoonOrd" && this->GetCurState()=="WAIT") {
+        PlatoonOrd message;
         if(!TryCastMessage(anyMessage,message,"")) return false;
 
-        if (message.speed > 0.0f)
-            this->SetCurState("MOVE");
-
-        this->objectID = this->objectID;
-        this->curPos = message.nextPos;
-        this->curSpeed = message.speed;
-    } else if (inPort == "deadIn") {
-        this->SetCurState("WAIT");
+        this->entityID = this->entityID;
+        this->curPos = message.detPos;
+        this->curSpeed = 1.0f; // 현재 지형 읽고 값 적용
     }
     return true;
 }
 
 bool Maneuver::IntTransFn() {
     if (this->GetCurState() == "MOVE") {
-        this->t_mnv = mnvEquation(this->curSpeed);
-        // this->SetCurState("MOVE"); 이론적
+        this->t_mnv = mnvEquation(this->curSpeed); // ?? 내부 상태변수 바꾸는게 IntFn or OutFn
     }
     return true;
 }
 
 bool Maneuver::OutputFn() {
     if (this->GetCurState() == "MOVE") {
-        MnvRes message;
-        message.objectID = this->objectID;
+        BluePosINF message;
+        message.entityID = this->entityID;
         message.curPos = this->curPos;
         std::any anyMessage = message;
-        this->AddOutputEvent("mnvRes", anyMessage);
+        this->AddOutputEvent("BluePosINF", anyMessage);
     }
     return true;
 }

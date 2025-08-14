@@ -7,7 +7,7 @@
 
 class Maneuver : public AtomicModel{
 private:
-    int objectID;
+    int entityID;
 
     std::pair<int,int> curPos={-1, -1}; // (x,y)
     float curSpeed = -1.0f;
