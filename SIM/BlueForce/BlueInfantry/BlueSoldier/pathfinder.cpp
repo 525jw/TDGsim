@@ -1,9 +1,11 @@
 // A* Pathfinding Algorithm
+#include "environment.hpp"
 #include <vector>
 #include <queue>
 #include <unordered_set>
 #include <cmath>
 #include <algorithm>
+
 
 struct Node {
     int x, y;

@@ -2,8 +2,10 @@
 #include <utility>
 #include <vector>
 
+enum class Team { BLUE, RED };
 enum class TerrainType { PLAIN, RIVER, ROAD, FOREST, HILL};
 enum class ForceType { RED_INF, BLUE_INF, RED_ARM, BLUE_ARM, BLUE_ };
+typedef struct { int x,y; } Point;
 
 class ScenInfo{
 public:
@@ -19,58 +21,36 @@ public:
     // ENV is currently declared as a global instance
 };
 
-class BluePosINF{
+class MnvRes{
 public:
-    int entityID;
-    std::pair<int,int> curPos;
+    int senderId;
+    Point curPos;
 };
-// class MnvOrd{
-// public:
-//     float speed; // m per s
-//     std::pair<int,int> nextPos; // (x,y)
-// };
-// class MnvRes{
-// public:
-//     int entityID;
-//     std::pair<int,int> curPos; // (x,y)
-// };
-
-// class DetRes{
-// public:
-//     bool enemyDetected;
-//     std::unordered_map<int, std::pair<int,int>> enemyPos; // key: objectID, value:(x,y)
-// };
-
-// class FireIn{ // CapabilityInfo
-// public:
-//     // capability details
-//     int targetID;
-// };
-// class FireResult{
-// public:
-//     // damage details
-//     int targetID;
-// };
-
-// class DeadInfo{
-// public:
-//     int entityID;
-// };
-
+class FireRes{
+public:
+    int senderId;
+    int receiverId;
+    bool hit;
+};
+class DmgRes{
+public:
+    int senderId;
+    bool dead;
+};
 /*
 === ORDER ===
-std::pair<int,int> detPos 
+destination
 - 보병,기갑 : 기동지점
 - 포병 : 사격지점
 */
-struct CompanyOrdType{ std::pair<int,int> detPos; TIME_T deadline; };
+struct CompanyOrdType{ Point detPos; TIME_T deadline; };
 class CompanyOrd{
 public:
-    std::unordered_map<int, CompanyOrdType> orders; // key : entityID, value : detPos, deadline
+    std::unordered_map<int, CompanyOrdType> orders; // key : receiver Id , value : detPos , deadline
 };
 class PlatoonOrd{
 public:
-    std::pair<int,int> detPos;
+    Point detPos;
 };
 
 // === REPORT ===
@@ -81,12 +61,13 @@ public:
 
 class PlatoonRep{
 public:
-    int entityID;
+    int entityId;
     bool succeed;
 };
 
-class SoldierRep{
+class SoldierRep{ // = Detection Result
 public:
-    int entityID;
+    int senderId;
     bool enemyDetected;
+    std::vector<int>* enemyIds;
 };

@@ -2,9 +2,6 @@
 #include "DEVS/atomic_model.hpp"
 #include "DEVS/logger.hpp"
 #include "message.hpp"
-#include <utility>
-#include <iostream>
-#include <string>
 
 class Generator : public AtomicModel{
 private:

@@ -2,10 +2,11 @@
 #include "pathfinder.cpp"
 #include <cmath>
 
-PlatoonLeader::PlatoonLeader(Engine* engine, int entityID)
+PlatoonLeader::PlatoonLeader(Engine* engine, int entityId, std::string name)
     : AtomicModel(engine)
 {
-    this->entityID = entityID;
+    this->entityId = entityId;
+    this->name = name;
 
     this->AddState("WAIT");
     this->AddState("DECIDE");
@@ -24,11 +25,10 @@ bool PlatoonLeader::ExtTransFn(const std::string& inPort, const std::any& anyMes
         CompanyOrd message;
         if (!TryCastMessage(anyMessage, message, "")) return false;
 
-        const int id = this->entityID; // 본인에게 온 명령인지 탐색
+        const int id = this->entityId; // 본인에게 온 명령인지 탐색
         auto it = message.orders.find(id);
         if (it != message.orders.end()) { // 본인에게 온 명령이면
             this->detPos   = it->second.detPos;
-            this->deadline = it->second.deadline;
             // 경로탐색 결과 vector에 담기
             // this->path = Astar();
             if(this->GetCurState()=="WAIT"){

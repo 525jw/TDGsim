@@ -9,21 +9,21 @@
 
 class PlatoonLeader : public AtomicModel{
 private:
-    int entityID;
+    int entityId;
+    std::string name;
 
     // Mission
-    std::pair<int,int> detPos={-1, -1};
-    std::vector<std::pair<int,int>> path;
-    TIME_T deadline;
+    Point detPos={-1, -1};
+    std::vector<Point> path;
     bool succeed = false;
 
-    std::pair<int,int> curPos={-1, -1};
+    Point curPos={-1, -1};
     bool enemyDetected = false;
     bool mounted = true;
 
     TIME_T t_dec = 0.0f;
 public:
-    PlatoonLeader(Engine* engine, int entityID);
+    PlatoonLeader(Engine* engine, int entityId, std::string name);
 
     bool ExtTransFn(const std::string& inPort, const std::any& anyMessage);
     bool IntTransFn();

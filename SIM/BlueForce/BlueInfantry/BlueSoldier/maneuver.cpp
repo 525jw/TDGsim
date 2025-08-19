@@ -1,10 +1,10 @@
 #include "maneuver.hpp"
 #include <cmath>
 
-Maneuver::Maneuver(Engine* engine, int objectID)
+Maneuver::Maneuver(Engine* engine, int entityId)
     : AtomicModel(engine)
 {
-    this->entityID = objectID;
+    this->entityId = entityId;
 
     this->AddState("WAIT");
     this->AddState("MOVE");
@@ -12,7 +12,7 @@ Maneuver::Maneuver(Engine* engine, int objectID)
     this->SetCurState("WAIT");
 
     this->AddInputPort("PlatoonOrd");
-    this->AddOutputPort("BluePosINF");
+    this->AddOutputPort("MnvRes");
 }
 
 TIME_T mnvEquation(float speed) {
@@ -24,7 +24,7 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
         PlatoonOrd message;
         if(!TryCastMessage(anyMessage,message,"")) return false;
 
-        this->entityID = this->entityID;
+        this->entityId = this->entityId;
         this->curPos = message.detPos;
         this->curSpeed = 1.0f; // 현재 지형 읽고 값 적용
     }
@@ -40,11 +40,11 @@ bool Maneuver::IntTransFn() {
 
 bool Maneuver::OutputFn() {
     if (this->GetCurState() == "MOVE") {
-        BluePosINF message;
-        message.entityID = this->entityID;
+        MnvRes message;
+        message.senderId = this->entityId;
         message.curPos = this->curPos;
         std::any anyMessage = message;
-        this->AddOutputEvent("BluePosINF", anyMessage);
+        this->AddOutputEvent("MnvRes", anyMessage);
     }
     return true;
 }

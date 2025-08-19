@@ -2,7 +2,7 @@
 #include "DEVS/coupled_model.hpp"
 #include "DEVS/logger.hpp"
 #include "generator.hpp"
-// #include "data_collector.hpp"
+#include "data_collector.hpp"
 
 class ExperimentFrame : public CoupledModel{
 public:
@@ -13,15 +13,15 @@ public:
         this->RegisterModelWithID(generator);
         generator->SetParentModel(this);
 
-        // DataCollector* dataCollector = new DataCollector(engine);
-        // this->RegisterModelWithID(dataCollector);
-        // dataCollector->SetParentModel(this);
+        DataCollector* dataCollector = new DataCollector(engine);
+        this->RegisterModelWithID(dataCollector);
+        dataCollector->SetParentModel(this);
         
-        this->AddInputPort("result");
-        this->AddOutputPort("start");
+        this->AddInputPort("result_");
+        this->AddOutputPort("start_");
 
-        this->AddCoupling(generator,"start",this,"start",EOC);
-        // this->AddCoupling(this,"result",dataCollector,"result",EIC);
-        // this->AddCoupling(dataCollector,"restart",generator,"restart",IC);
+        this->AddCoupling(generator,"start",this,"start_",EOC);
+        this->AddCoupling(this,"result_",dataCollector,"result",EIC);
+        this->AddCoupling(dataCollector,"restart",generator,"restart",IC);
     }
 };

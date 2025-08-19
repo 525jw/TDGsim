@@ -22,14 +22,16 @@ namespace EnvGlobal {
 #define ENV      EnvGlobal::ptr          // 포인터: ENV->GetTerrainAt(...)
 #define ENV_REF (*EnvGlobal::Get())      // 레퍼런스: ENV_REF.GetTerrainAt(...)
 
-struct Entity { int x, y; ForceType forceType; std::string name; };
+struct Entity { Team team; Point location; ForceType forceType; std::string name; };
+
 
 class Environment : public AtomicModel{
 private:
     unsigned int seed;
-    std::vector<std::vector<TerrainType>> terrainMap; // location -> TerrainType
-    std::vector<std::vector<int>> entityMap; // location -> entity ID
-    std::unordered_map<int, Entity> entities; // entity ID -> location, ForceType, name
+    std::vector<std::vector<TerrainType>> terrainTypeMap; // location -> TerrainType
+    std::vector<std::vector<int>> entityIdMap; // location -> entity Id
+    std::unordered_map<int, Entity> entities; // entity Id -> team, location, ForceType, name
+    int nextEntityId = 1;
 
 public:
     Environment(Engine* engine);
@@ -39,39 +41,37 @@ public:
     bool OutputFn();
     TIME_T TimeAdvanceFn();
 
+    // interface
     unsigned int GetSeed() const noexcept { return seed; }
-    const std::vector<std::vector<TerrainType>>& GetTerrainMap() const noexcept { return terrainMap; }
-    const std::unordered_map<int, Entity>&       GetEntities()   const noexcept { return entities;  }
-    const std::vector<std::vector<int>>&         GetEntityMap()  const noexcept { return entityMap; }
-    int GetWidth()  const noexcept { return terrainMap.empty() ? 0 : static_cast<int>(terrainMap.front().size()); }
-    int GetHeight() const noexcept { return static_cast<int>(terrainMap.size()); }
+    const std::vector<std::vector<TerrainType>>& GetTerrainMap() const noexcept { return terrainTypeMap; }
+    const std::vector<std::vector<int>>&         GetEntityMap()  const noexcept { return entityIdMap; }
+    int GetWidth()  const noexcept { return terrainTypeMap.empty() ? 0 : static_cast<int>(terrainTypeMap.front().size()); }
+    int GetHeight() const noexcept { return static_cast<int>(terrainTypeMap.size()); }
 
-    bool InBounds(int x, int y) const noexcept { return (x >= 0 && y >= 0 && y < GetHeight() && x < GetWidth()); }
+    bool InBounds(Point p) const noexcept { return (p.x >= 0 && p.y >= 0 && p.y < GetHeight() && p.x < GetWidth()); }
 
-    const TerrainType& GetTerrainAt(int x, int y) const { 
-        assert(InBounds(x,y));
-        return terrainMap[y][x];
+    const TerrainType& GetTerrainAt(Point p) const { 
+        assert(InBounds(p));
+        return terrainTypeMap[p.y][p.x];
     }
-
-    int GetEntityIdAt(int x, int y) const {
-        assert(InBounds(x,y));
-        return entityMap[y][x];
+    int GetEntityIdAt(Point p) const {
+        assert(InBounds(p));
+        return entityIdMap[p.y][p.x];
     }
-
-    const Entity* GetEntity(int id) const {
+    // 탐색 실패 시 return nullptr, 성공 시 Point*
+    const Entity* SearchEntityById(int id) const noexcept { 
         auto it = entities.find(id);
         return (it == entities.end()) ? nullptr : &it->second;
     }
+    // 탐색 실패 시 return false, 성공 시 out에 결과 넣음
+    bool SearchEntityById(int id, const Entity*& out) const noexcept { 
+        out = SearchEntityById(id);
+        return (out != nullptr);
+    }
 
-    bool HasEntity(int id) const { return entities.find(id) != entities.end(); }
-
-
-    void InitMap(int w, int h);
-    void PaintRect(int x0,int y0,int x1,int y1, TerrainType t);
-    void PaintEllipse(int cx,int cy,int rx,int ry, TerrainType t);
-    void PaintRoadVertical(int x, int y0, int y1, int width=8);
-    void PaintRiverBand(int yCenter, int thickness=60);
-    void PaintBridge(int x, int y0, int y1, int width=8);
-    bool SpawnEntity(int id, int x, int y, ForceType ft);
-    void InitScenario_BlueRiver();
+    // --- 엔티티 스폰/등록 ---
+    // 명시 ID로 스폰
+    bool SpawnEntity(int id, Point pos, Team team, ForceType ft, std::string_view name);
+    // ID 자동 발급 + 등록
+    int RegisterEntity(Point pos, Team team, ForceType ft, std::string_view name);
 };
