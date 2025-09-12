@@ -1,18 +1,18 @@
 #include "detection.hpp"
 
-Detection::Detection(Engine* engine, int entityId, Team team)
+Detection::Detection(Engine* engine, int entityId, Entity* info)
     : AtomicModel(engine)
 {
     this->entityId = entityId;
-    this->team = team;
+    this->info = info;
 
     this->AddState("WAIT");
     this->AddState("DETECT");
 
     this->SetCurState("WAIT");
 
-    this->AddInputPort ("MnvRes");
-    this->AddOutputPort ("DetRes");
+    this->AddInputPort ("PositionIn");
+    this->AddOutputPort ("SoldierRep");
 
     enemyIds.clear();
 }
@@ -23,6 +23,7 @@ TIME_T Detection::detEquation() const{
 
 void Detection::RebuildEnemyPosList() {
     enemyIds.clear();
+    Point curPos = this->info->position;
     if (!EnvGlobal::Ready() || !ENV_REF.InBounds(curPos)) return;
     const int H = ENV_REF.GetHeight();
     const int W = ENV_REF.GetWidth();
@@ -46,9 +47,9 @@ void Detection::RebuildEnemyPosList() {
             int id = ENV_REF.GetEntityIdAt(Point{x,y});
             if (id < 0 || id == this->entityId) continue;
 
-            const Entity* e = ENV_REF.SearchEntityById(id);
+            const Entity* e = ENV_REF.QueryEntityById(id);
             if (!e) continue;
-            if (e->team == team) continue;
+            if (e->team == this->info->team) continue;
 
             enemyIds.push_back(id);
         }
@@ -56,11 +57,11 @@ void Detection::RebuildEnemyPosList() {
 }
 
 bool Detection::ExtTransFn(const std::string& inPort, const std::any& anyMessage){
-    if (inPort=="MnvRes") {
-        MnvRes message;
+    if (inPort=="PositionIn") {
+        PositionMsg message;
         if(!TryCastMessage(anyMessage,message,"")) return false;
 
-        this->curPos=message.curPos; // 내 위치 갱신 : Maneuver가 끝나면 항상 update
+        // 내 위치 갱신 : Maneuver가 끝나면 항상 update => 현재는 공유됨
     }
     this->RebuildEnemyPosList();
     if (!enemyIds.empty()) this->SetCurState("DETECT");
@@ -68,23 +69,24 @@ bool Detection::ExtTransFn(const std::string& inPort, const std::any& anyMessage
     return true;
 }
 
-
-bool Detection::IntTransFn(){
-    if (this->GetCurState() == "DETECT") {
-        this->t_det = detEquation();
-    }
-    return true;
-}
-
 bool Detection::OutputFn(){
     if(this->GetCurState()=="DETECT"){
+        this->t_det = detEquation();
+
         SoldierRep message;
+        message.entityId = this->entityId;
         message.enemyDetected = true;
-        message.senderId = this->entityId;
         message.enemyIds = &this->enemyIds;
         std::any anyMessage = message;
         this->AddOutputEvent("detRes",anyMessage);
 
+    }
+    return true;
+}
+
+bool Detection::IntTransFn(){
+    if (this->GetCurState() == "DETECT") {
+        this->SetCurState("WAIT");
     }
     return true;
 }

@@ -2,28 +2,25 @@
 #include "DEVS/atomic_model.hpp"
 #include "message.hpp"
 #include "DEVS/logger.hpp"
-#include "SIM/environment.hpp"
+#include "SIM/Environment/environment.hpp"
+#include "platoonAstar.hpp"
+
 #include <utility>
 #include <iostream>
 #include <string>
+#include <vector>
 
 class PlatoonLeader : public AtomicModel{
 private:
     int entityId;
-    std::string name;
-
-    // Mission
-    Point detPos={-1, -1};
+    std::vector<int> *membersId;
     std::vector<Point> path;
-    bool succeed = false;
-
-    Point curPos={-1, -1};
     bool enemyDetected = false;
-    bool mounted = true;
+    bool mounted = false;
 
     TIME_T t_dec = 0.0f;
 public:
-    PlatoonLeader(Engine* engine, int entityId, std::string name);
+    PlatoonLeader(Engine* engine, int entityId, std::vector<int> *membersId);
 
     bool ExtTransFn(const std::string& inPort, const std::any& anyMessage);
     bool IntTransFn();

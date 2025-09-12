@@ -1,9 +1,9 @@
 #pragma once
 #include "DEVS/coupled_model.hpp"
 #include "DEVS/logger.hpp"
-#include "environment.hpp"
+#include "SIM/Environment/environment.hpp"
 #include "BlueForce/blue_force.hpp"
-// #include "RedForce/red_force.hpp"
+#include "RedForce/red_force.hpp"
 
 class Simulation : public CoupledModel{
 public:
@@ -11,16 +11,26 @@ public:
     : CoupledModel(engine)
     {
         Environment* environment = new Environment(engine);
-        this->RegisterModelWithID(environment);
-        environment->SetParentModel(this);
-
         BlueForce* blueForce = new BlueForce(engine);
-        this->RegisterModelWithID(blueForce);
+        RedForce* redForce = new RedForce(engine);
+        this->engine->RegisterModelInEngine(environment);
+        this->engine->RegisterModelInEngine(blueForce);
+        this->engine->RegisterModelInEngine(redForce);
+        this->RegisterSubModel(environment);
+        this->RegisterSubModel(blueForce);
+        this->RegisterSubModel(redForce);
+        environment->SetParentModel(this);
         blueForce->SetParentModel(this);
-        
-        this->AddInputPort("start_");
-        this->AddOutputPort("result_");
+        redForce->SetParentModel(this);
 
-        this->AddCoupling(this,"start_",environment,"ScenInfo",EIC);
+        this->AddInputPort("Start");
+        this->AddOutputPort("Result");
+
+        this->AddCoupling(this,"Start",environment,"Start",EIC);
+        this->AddCoupling(this,"Start",blueForce,"Start",EIC);
+        this->AddCoupling(blueForce,"BluePosition",redForce,"BluePosition",IC);
+        this->AddCoupling(redForce,"RedPosition",blueForce,"RedPosition",IC);
+        this->AddCoupling(blueForce,"BlueFire",redForce,"BlueFire",IC);
+        this->AddCoupling(redForce,"RedFire",blueForce,"RedFire",IC);
     }
 };

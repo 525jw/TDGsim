@@ -18,7 +18,7 @@ private:
     void RouteIC(Event& event, TIME_T currentTime);
     Event Translate(const Event& in, int srcModelID, const std::string& srcPort);
 public:
-    std::unordered_map<int, Model*> modelsWithID;
+    std::unordered_map<int, Model*> subModelsWithID;
     CoupledModel(Engine* engine);
 
     bool AddCoupling(Model* srcModel, const std::string& srcPort, Model* detModel, const std::string& detPort, CouplingType type);
@@ -30,7 +30,7 @@ public:
 
     const TIME_T QueryNextTime() const;
     
-    bool RegisterModelWithID(Model* model);
+    bool RegisterSubModel(Model* model);
     bool IsCoupled() const override { return true; }
 
     // DEBUG ONLY

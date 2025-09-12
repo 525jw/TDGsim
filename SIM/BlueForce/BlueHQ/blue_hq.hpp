@@ -1,22 +1,20 @@
 #pragma once
 #include "DEVS/atomic_model.hpp"
-#include "DEVS/logger.hpp"
 #include "message.hpp"
-
+#include "DEVS/logger.hpp"
 #include "SIM/Environment/environment.hpp"
-#include "SIM/BlueForce/blue_force.hpp"
+#include <utility>
+#include <iostream>
+#include <string>
 
-
-class Generator : public AtomicModel{
+class BlueHQ : public AtomicModel{
 private:
-    unsigned int seed = 0;
-    unsigned int GenerateSeed();
+    TIME_T t_dec=0.0f;
 public:
-    Generator(Engine* engine);
+    BlueHQ(Engine* engine);
+
     bool ExtTransFn(const std::string& inPort, const std::any& anyMessage);
     bool IntTransFn();
     bool OutputFn();
     TIME_T TimeAdvanceFn();
-    
-    void SetOutSimulationModels();
 };

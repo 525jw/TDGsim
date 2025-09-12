@@ -9,15 +9,18 @@ public:
     Root(Engine* engine)
     : CoupledModel(engine)
     {
-        ExperimentFrame* experimentFrame = new ExperimentFrame(engine);
-        this->RegisterModelWithID(experimentFrame);
-        experimentFrame->SetParentModel(this);
+        ExperimentFrame* ef = new ExperimentFrame(engine);
+        Simulation* sim = new Simulation(engine);
 
-        Simulation* simulation = new Simulation(engine);
-        this->RegisterModelWithID(simulation);
-        simulation->SetParentModel(this);
+        this->engine->RegisterModelInEngine(sim);
+        this->engine->RegisterModelInEngine(ef);
+        
+        ef->SetParentModel(this);
+        sim->SetParentModel(this);
+        this->RegisterSubModel(ef);
+        this->RegisterSubModel(sim);
 
-        this->AddCoupling(experimentFrame,"start_",simulation,"start_",IC);
-        this->AddCoupling(simulation,"result_",experimentFrame,"result_",IC);
+        this->AddCoupling(ef,"Start",sim,"Start",IC);
+        this->AddCoupling(sim,"Result",ef,"Result",IC);
     }
 };

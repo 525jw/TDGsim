@@ -5,7 +5,7 @@ Model::Model(Engine* engine)
     : engine(engine)
 {
     if (engine != nullptr) {
-        engine->RegisterModelWithID(this);
+        engine->RegisterModelInEngine(this);
     }
 }
 void Model::SetModelID(int id){

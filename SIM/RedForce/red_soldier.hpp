@@ -2,40 +2,45 @@
 #include "DEVS/atomic_model.hpp"
 #include "message.hpp"
 #include "DEVS/logger.hpp"
-#include "SIM/environment.hpp"
+#include "SIM/Environment/environment.hpp"
+#include <utility>
+#include <iostream>
 #include <random>
 
 class RedSoldier : public AtomicModel{
 private:
     int entityId;
-    std::string name;
+    Entity info;
 
-    Point curPos={-1, -1};
-    std::vector<int> enemyIds;   // key: Enemy entityId, value: enemy pos (x,y)
-    int vision = 10;
-    Team team = Team::RED;
+    std::vector<int> enemyIds;
+    int vision = 13;
 
-    bool enemyDetected = false;
-
-    // TIME_T fireFreq = 0.01f;
-    // int ammo = 30;
-    TIME_T reloadTime = 1.0f;
-    float accuracy = 0.7f;
+    TIME_T fireFreq = 1.0f;
+    float accuracy = 0.3f;
     int targetId = -1;
+
+    // TIME_T t_det = TIME_INF;
+    // TIME_T detEquation() const;
+
+    TIME_T t_fire = -1.0f;
+    TIME_T fireEquation();
 
     // RNG
     std::mt19937 rng;
     bool rngInit = false;
-
-    TIME_T t_fire = -1.0f;
-    TIME_T fireEquation();
+    inline void ensureRng() {
+        if (!rngInit) {
+            rng.seed(ENV_REF.GetSeed() + entityId);
+            rngInit = true;
+        }
+    }
 public:
-    RedSoldier(Engine* engine, int entityId, std::string name);
+    RedSoldier(Engine* engine, int entityId, Entity info);
 
-    bool ExtTransFn(const std::string& inPort, const std::any& anyMessage);
+    bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();
     bool OutputFn();
     TIME_T TimeAdvanceFn();
-    
+
     void RebuildEnemyPosList();
 };

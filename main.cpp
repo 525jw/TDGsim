@@ -1,10 +1,10 @@
 #include "DEVS/engine.hpp"
-#include "root.hpp";
+#include "root.hpp"
 
 int main(){
     Engine engine;
     Root root(&engine);
-    engine.RegisterModelWithID(&root);
+    engine.RegisterModelInEngine(&root);
     engine.Run();
     return 0;
 }

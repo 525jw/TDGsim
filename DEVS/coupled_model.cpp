@@ -6,7 +6,7 @@
 CoupledModel::CoupledModel(Engine* engine)
     : Model(engine)
 {
-    this->engine->RegisterModelWithID(this);
+    this->engine->RegisterModelInEngine(this);
 }
 
 bool CoupledModel::AddCoupling(
@@ -163,7 +163,7 @@ Event CoupledModel::Translate(const Event& in, int srcModelID, const std::string
 }
 void CoupledModel::ReceiveScheduleTime(const TIME_T currentTime){ // when receive (*,t)
     if(currentTime == this->nextTime){
-        for (auto& mid : modelsWithID){
+        for (auto& mid : subModelsWithID){
             if(mid.second->GetNextTime() == this->nextTime){
                 mid.second->ReceiveScheduleTime(currentTime);
             }
@@ -178,14 +178,13 @@ void CoupledModel::ReceiveScheduleTime(const TIME_T currentTime){ // when receiv
 
 const TIME_T CoupledModel::QueryNextTime() const{
     TIME_T minTime=TIME_INF;
-    for (auto& mid : modelsWithID)
+    for (auto& mid : subModelsWithID)
         minTime = std::min(minTime, mid.second->QueryNextTime());
     return minTime;
 }
 
-bool CoupledModel::RegisterModelWithID(Model* model) {
-    // NOTE : engine의 RegisterMoelWithID와 코드 중복 (modelWithID 구조 동일)
+bool CoupledModel::RegisterSubModel(Model* model) {
     int id = model->GetModelID();
-    modelsWithID[id] = model;
+    subModelsWithID[id] = model;
     return true;
 }

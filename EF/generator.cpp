@@ -10,7 +10,7 @@ Generator::Generator(Engine* engine)
     this->SetCurState("START");
     
     this->AddInputPort("Restart");
-    this->AddOutputPort("ScenInfo");
+    this->AddOutputPort("Start");
 
     this->seed = GenerateSeed();
 }
@@ -37,10 +37,10 @@ bool Generator::IntTransFn() {
 
 bool Generator::OutputFn() {
     if (this->GetCurState() == "START") {
-        ScenInfo message;
-        message.seed = this->seed;
+        Start message;
+        message.seed = this->seed;     
         std::any anyMessage = message;
-        this->AddOutputEvent("ScenInfo",anyMessage);
+        this->AddOutputEvent("Start",anyMessage);
     }
     return true;
 }

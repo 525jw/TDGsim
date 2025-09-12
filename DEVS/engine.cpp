@@ -102,7 +102,7 @@ void Engine::AddEvent(Event* event){
 
     this->eventQueue.push(event);
 }
- int Engine::RegisterModelWithID(Model* model) {
+int Engine::RegisterModelInEngine(Model* model) {
     if(!model) return -1;
 
     int id = model->GetModelID();

@@ -3,7 +3,7 @@
 AtomicModel::AtomicModel(Engine* engine)
     : Model(engine)
 {
-    this->engine->RegisterModelWithID(this);
+    this->engine->RegisterModelInEngine(this);
 }
 
 const std::vector<std::string>& AtomicModel::GetStates() const{
