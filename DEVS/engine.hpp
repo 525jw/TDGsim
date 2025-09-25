@@ -20,6 +20,8 @@ private:
 public:
     Engine();
 
+    TIME_T GetCurrentTime() { return currentTime; };
+    void SetRootModel(Model* model){ this->rootModel = model; };
     void Run();
     void AddEvent(Event* event); // NOTE : The only method accessible from external classes (e.g., AtomicModel) + Run would be public too, used in main.cpp
     int RegisterModelInEngine(Model* model); // returns registered modelID, or -1 on error

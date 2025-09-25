@@ -1,22 +1,24 @@
 #pragma once
 #include "DEVS/atomic_model.hpp"
 #include "DEVS/logger.hpp"
-#include "message.hpp"
-
+#include "common.hpp"
 #include "SIM/Environment/environment.hpp"
-#include "SIM/BlueForce/blue_force.hpp"
-
+#include "SIM/simulation.hpp"
 
 class Generator : public AtomicModel{
 private:
-    unsigned int seed = 0;
-    unsigned int GenerateSeed();
+    unsigned int randomSeed_;
+    std::string scenarioPath_;
+    Scenario    scenario_;
+
+    unsigned int GenerateRandomSeed();
+    bool LoadScenarioFromJson(const std::string& path, Scenario& out); // nlohmann::json 사용
+
 public:
     Generator(Engine* engine);
-    bool ExtTransFn(const std::string& inPort, const std::any& anyMessage);
-    bool IntTransFn();
-    bool OutputFn();
-    TIME_T TimeAdvanceFn();
-    
-    void SetOutSimulationModels();
+
+    bool ExtTransFn(const std::string& inPort, const std::any& anyMessage) override;
+    bool IntTransFn() override;
+    bool OutputFn() override;
+    TIME_T TimeAdvanceFn() override;
 };

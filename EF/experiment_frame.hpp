@@ -12,21 +12,23 @@ public:
         // 생성
         Generator* generator = new Generator(engine);
         // DataCollector* dataCollector = new DataCollector(engine);
-        // engine에 등록
-        this->engine->RegisterModelInEngine(generator);
-        // this->engine->RegisterModelInEngine(dataCollector);
+
         // 자식모델 목록에 등록
         this->RegisterSubModel(generator);
         // this->RegisterSubModel(dataCollector);
+
         // 부모를 this로 설정
         generator->SetParentModel(this);
         // dataCollector->SetParentModel(this);
+
         // IO port 설정
         this->AddInputPort("Result");
         this->AddOutputPort("Start");
+        
         // Coupling
         this->AddCoupling(generator,"Start",this,"Start",EOC);
         // this->AddCoupling(this,"Result",dataCollector,"Result",EIC);
         // this->AddCoupling(dataCollector,"Restart",generator,"Restart",IC);
+        this->LogMyBirth();
     }
 };

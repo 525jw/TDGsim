@@ -4,10 +4,7 @@
 #include "logger.hpp"
 
 CoupledModel::CoupledModel(Engine* engine)
-    : Model(engine)
-{
-    this->engine->RegisterModelInEngine(this);
-}
+    : Model(engine) {}
 
 bool CoupledModel::AddCoupling(
         Model* srcModel, const std::string& srcPort, 
@@ -51,6 +48,10 @@ bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort) {
     return RemoveCoupling(srcModel, srcPort, nullptr, nullptr);
 }
 void CoupledModel::ReceiveEvent(Event& event, TIME_T currentTime){ // when receive (x,t)
+    logger_system   << "[CoupledModel::ReceiveEvent] "
+                    << this->GetModelID()
+                    << " received Event"
+                    << std::endl;
     if(this->lastTime <= currentTime && currentTime <= this->nextTime){
         if (std::find(this->GetInputPorts().begin(), this->GetInputPorts().end(), event.getSenderPort()) != this->GetInputPorts().end()){
             this->RouteEIC(event, currentTime);
@@ -180,6 +181,8 @@ const TIME_T CoupledModel::QueryNextTime() const{
     TIME_T minTime=TIME_INF;
     for (auto& mid : subModelsWithID)
         minTime = std::min(minTime, mid.second->QueryNextTime());
+    logger_system << "[MinTA] " << this->GetModelID()
+                  << " : next time -> " << this->GetNextTime() << std::endl;
     return minTime;
 }
 

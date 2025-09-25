@@ -1,7 +1,27 @@
 #pragma once
 #include <utility>
+#include <iostream>
 #include <vector>
+#include <unordered_map>
+#include <unordered_set>
+#include <optional>
+#include <algorithm>
+#include <cassert>
+#include <string>
+#include <random>
+#include <fstream>
+#include <limits>
+#include <ctime>
+#include <cmath>
+#include <cctype>
+#include <cstdint>
+#include <functional>
+#include "json.hpp"
+using json = nlohmann::json;
 
+// ============================ Types ============================
+
+// coordinate def
 typedef struct { int x,y; } Point;
 inline bool operator==(const Point& a, const Point& b) {
     return a.x == b.x && a.y == b.y;
@@ -9,26 +29,45 @@ inline bool operator==(const Point& a, const Point& b) {
 inline bool operator!=(const Point& a, const Point& b) {
     return !(a == b);
 }
-enum class Team { BLUE, RED };
+
+// terrain def
 enum class TerrainType { PLAIN, RIVER };
-enum class ForceType { RIFLE, ARTILLERY };
+struct TerrainRect {
+    TerrainType kind;   //
+    int x1, y1, x2, y2; // 범위
+};
+
+// entity def
+enum class Side { BLUE, RED };
+enum class ForceType { RIFLE, ARTILLERY, TANK };
 struct Entity { 
-    Team team; 
+    std::string name; // -> entity Id 
+    Side side; 
     ForceType forceType; 
     Point position; 
-    std::string name; 
 };
-// ====== Environment ======
-class EnvMsg{
-public:
-    // ENV is currently declared as a global instance
+
+// scenario def
+struct Scenario {
+    int width  = 0;                         // 맵 가로
+    int height = 0;                         // 맵 세로
+    unsigned int seed = 0;                  // RNG 시드 (0이면 Generator가 생성)
+
+    std::vector<TerrainRect> terrainRects;
+    std::vector<Entity> entities;
 };
+
+// order def
+enum class TaskType { MOVE, BOMBARD };
+typedef struct {
+    TaskType task; // task
+    Point to; // to
+} Order;
+
 enum class EnvMoveResponse {
     Accepted,
-    NoOp,            // 같은 자리
     NotFound,        // id 없음
     OutOfBounds,     // 지도 밖
-    OccupiedOther,   // 타 엔티티 점유
     InvalidTerrain  // 이동 불가 지형
 };
 enum class EnvKillResponse {
@@ -36,11 +75,12 @@ enum class EnvKillResponse {
     NotFound        // id 없음
 };
 
+// ============================ Messages ============================
 
-// ====== EF ======
+// EF
 class Start{
 public:
-    unsigned int seed;
+    Scenario* scen;
 };
 class Restart{
 public:
@@ -51,14 +91,6 @@ public:
     // not implemented
 };
 
-
-
-// ====== Order ======
-enum class TaskType { MOVE, BOMBARD };
-typedef struct {
-    TaskType task; // task
-    Point to; // to
-} Order;
 class CompanyOrd{
 public:
     std::unordered_map<int,Order> orders;

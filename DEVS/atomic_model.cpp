@@ -1,11 +1,8 @@
 #include "atomic_model.hpp"
 
 AtomicModel::AtomicModel(Engine* engine)
-    : Model(engine)
-{
-    this->engine->RegisterModelInEngine(this);
-}
-
+    : Model(engine) {}
+    
 const std::vector<std::string>& AtomicModel::GetStates() const{
     return this->states;
 }
@@ -46,6 +43,8 @@ void AtomicModel::ReceiveScheduleTime(const TIME_T currentTime){
     }
 }
 const TIME_T AtomicModel::QueryNextTime() const{
+    logger_system << "[MinTA] " << this->GetModelID()
+                  << " : next time -> " << this->GetNextTime() << std::endl;
     return this->nextTime;
 }
 

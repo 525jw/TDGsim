@@ -4,17 +4,14 @@
 #include "EF/experiment_frame.hpp"
 #include "SIM/simulation.hpp"
 
-class Root : public CoupledModel{
+class TdgSim : public CoupledModel{
 public:
-    Root(Engine* engine)
+    TdgSim(Engine* engine)
     : CoupledModel(engine)
     {
         ExperimentFrame* ef = new ExperimentFrame(engine);
         Simulation* sim = new Simulation(engine);
 
-        this->engine->RegisterModelInEngine(sim);
-        this->engine->RegisterModelInEngine(ef);
-        
         ef->SetParentModel(this);
         sim->SetParentModel(this);
         this->RegisterSubModel(ef);
@@ -22,5 +19,6 @@ public:
 
         this->AddCoupling(ef,"Start",sim,"Start",IC);
         this->AddCoupling(sim,"Result",ef,"Result",IC);
+        this->LogMyBirth();
     }
 };

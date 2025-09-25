@@ -49,7 +49,7 @@ void Detection::RebuildEnemyPosList() {
 
             const Entity* e = ENV_REF.QueryEntityById(id);
             if (!e) continue;
-            if (e->team == this->info->team) continue;
+            if (e->side == this->info->side) continue;
 
             enemyIds.push_back(id);
         }

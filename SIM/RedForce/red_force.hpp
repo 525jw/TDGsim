@@ -1,9 +1,9 @@
 #pragma once
 #include "DEVS/coupled_model.hpp"
-#include "message.hpp"
+#include "common.hpp"
 #include "DEVS/logger.hpp"
 #include "SIM/Environment/environment.hpp"
-#include "red_soldier.hpp"
+#include "red_cgf.hpp"
 
 class RedForce : public CoupledModel{
 public:
@@ -11,28 +11,97 @@ public:
     : CoupledModel(engine)
     {
         // 생성
-        std::vector<int> soldiersId_PL1 = {1,2,3};
-        std::vector<RedSoldier*> soldiers_PL1;
-        int numOfPl1 = soldiersId_PL1.size();
-        soldiers_PL1.reserve(numOfPl1);
-        soldiers_PL1[0] = new RedSoldier(engine,101,Entity{Team::RED, ForceType::RIFLE, Point{9, 10}, "RED-PL1-SOL1"});
-        soldiers_PL1[1] = new RedSoldier(engine,102,Entity{Team::RED, ForceType::RIFLE, Point{23, 3}, "RED-PL1-SOL2"});
-        soldiers_PL1[2] = new RedSoldier(engine,103,Entity{Team::RED, ForceType::RIFLE, Point{24, 2}, "RED-PL1-SOL3"});
+        std::vector<RedCgf*> plt1;
+        int numOfPl1 = 25;
+        plt1.reserve(numOfPl1);
+
+        std::vector<RedCgf*> plt2;
+        int numOfPl2 = 25;
+        plt1.reserve(numOfPl2);
+
+        // === RED PLT1 ===
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL01"), Entity{"RED-PLT1-SOL01", Side::RED, ForceType::RIFLE, {85,31}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL02"), Entity{"RED-PLT1-SOL02", Side::RED, ForceType::RIFLE, {84,30}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL03"), Entity{"RED-PLT1-SOL03", Side::RED, ForceType::RIFLE, {84,31}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL04"), Entity{"RED-PLT1-SOL04", Side::RED, ForceType::RIFLE, {84,32}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL05"), Entity{"RED-PLT1-SOL05", Side::RED, ForceType::RIFLE, {85,30}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL06"), Entity{"RED-PLT1-SOL06", Side::RED, ForceType::RIFLE, {85,32}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL07"), Entity{"RED-PLT1-SOL07", Side::RED, ForceType::RIFLE, {86,30}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL08"), Entity{"RED-PLT1-SOL08", Side::RED, ForceType::RIFLE, {86,31}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL09"), Entity{"RED-PLT1-SOL09", Side::RED, ForceType::RIFLE, {86,32}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL10"), Entity{"RED-PLT1-SOL10", Side::RED, ForceType::RIFLE, {83,29}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL11"), Entity{"RED-PLT1-SOL11", Side::RED, ForceType::RIFLE, {83,30}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL12"), Entity{"RED-PLT1-SOL12", Side::RED, ForceType::RIFLE, {83,31}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL13"), Entity{"RED-PLT1-SOL13", Side::RED, ForceType::RIFLE, {84,29}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL14"), Entity{"RED-PLT1-SOL14", Side::RED, ForceType::RIFLE, {85,29}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL15"), Entity{"RED-PLT1-SOL15", Side::RED, ForceType::RIFLE, {83,32}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL16"), Entity{"RED-PLT1-SOL16", Side::RED, ForceType::RIFLE, {83,33}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL17"), Entity{"RED-PLT1-SOL17", Side::RED, ForceType::RIFLE, {84,33}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL18"), Entity{"RED-PLT1-SOL18", Side::RED, ForceType::RIFLE, {85,33}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL19"), Entity{"RED-PLT1-SOL19", Side::RED, ForceType::RIFLE, {86,29}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL20"), Entity{"RED-PLT1-SOL20", Side::RED, ForceType::RIFLE, {87,29}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL21"), Entity{"RED-PLT1-SOL21", Side::RED, ForceType::RIFLE, {87,30}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL22"), Entity{"RED-PLT1-SOL22", Side::RED, ForceType::RIFLE, {87,31}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL23"), Entity{"RED-PLT1-SOL23", Side::RED, ForceType::RIFLE, {87,32}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL24"), Entity{"RED-PLT1-SOL24", Side::RED, ForceType::RIFLE, {87,33}}));
+        plt1.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT1-SOL25"), Entity{"RED-PLT1-SOL25", Side::RED, ForceType::RIFLE, {88,30}}));
+
+        // === RED PLT2 ===
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL01"), Entity{"RED-PLT2-SOL01", Side::RED, ForceType::RIFLE, {76,55}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL02"), Entity{"RED-PLT2-SOL02", Side::RED, ForceType::RIFLE, {75,54}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL03"), Entity{"RED-PLT2-SOL03", Side::RED, ForceType::RIFLE, {75,55}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL04"), Entity{"RED-PLT2-SOL04", Side::RED, ForceType::RIFLE, {75,56}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL05"), Entity{"RED-PLT2-SOL05", Side::RED, ForceType::RIFLE, {76,54}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL06"), Entity{"RED-PLT2-SOL06", Side::RED, ForceType::RIFLE, {76,56}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL07"), Entity{"RED-PLT2-SOL07", Side::RED, ForceType::RIFLE, {77,54}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL08"), Entity{"RED-PLT2-SOL08", Side::RED, ForceType::RIFLE, {77,55}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL09"), Entity{"RED-PLT2-SOL09", Side::RED, ForceType::RIFLE, {77,56}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL10"), Entity{"RED-PLT2-SOL10", Side::RED, ForceType::RIFLE, {74,53}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL11"), Entity{"RED-PLT2-SOL11", Side::RED, ForceType::RIFLE, {74,54}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL12"), Entity{"RED-PLT2-SOL12", Side::RED, ForceType::RIFLE, {74,55}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL13"), Entity{"RED-PLT2-SOL13", Side::RED, ForceType::RIFLE, {75,53}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL14"), Entity{"RED-PLT2-SOL14", Side::RED, ForceType::RIFLE, {76,53}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL15"), Entity{"RED-PLT2-SOL15", Side::RED, ForceType::RIFLE, {74,56}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL16"), Entity{"RED-PLT2-SOL16", Side::RED, ForceType::RIFLE, {74,57}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL17"), Entity{"RED-PLT2-SOL17", Side::RED, ForceType::RIFLE, {75,57}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL18"), Entity{"RED-PLT2-SOL18", Side::RED, ForceType::RIFLE, {76,57}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL19"), Entity{"RED-PLT2-SOL19", Side::RED, ForceType::RIFLE, {77,53}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL20"), Entity{"RED-PLT2-SOL20", Side::RED, ForceType::RIFLE, {77,57}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL21"), Entity{"RED-PLT2-SOL21", Side::RED, ForceType::RIFLE, {78,53}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL22"), Entity{"RED-PLT2-SOL22", Side::RED, ForceType::RIFLE, {78,54}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL23"), Entity{"RED-PLT2-SOL23", Side::RED, ForceType::RIFLE, {78,55}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL24"), Entity{"RED-PLT2-SOL24", Side::RED, ForceType::RIFLE, {78,56}}));
+        plt2.push_back(new RedCgf(engine, env->RegisterEntityIdByName("RED-PLT2-SOL25"), Entity{"RED-PLT2-SOL25", Side::RED, ForceType::RIFLE, {78,57}}));
+
         for(int i=0;i<numOfPl1;i++){
-            this->engine->RegisterModelInEngine(soldiers_PL1[i]);   // engine에 등록
-            this->RegisterSubModel(soldiers_PL1[i]);                // 자식모델 목록에 등록
-            soldiers_PL1[i]->SetParentModel(this);                  // 부모를 this로 설정
+            this->RegisterSubModel(plt1[i]);                // 자식모델 목록에 등록
+            plt1[i]->SetParentModel(this);                  // 부모를 this로 설정
+        }
+        for(int i=0;i<numOfPl2;i++){
+            this->RegisterSubModel(plt2[i]);                // 자식모델 목록에 등록
+            plt2[i]->SetParentModel(this);                  // 부모를 this로 설정
         }
         // IO port 설정
-        this->AddInputPort("BluePosition");
+        this->AddInputPort("Start");
         this->AddInputPort("BlueFire");
-        this->AddOutputPort("RedPosition");
         this->AddOutputPort("RedFire");
+        // this->AddInputPort("BluePosition");
+        // this->AddOutputPort("RedPosition");
+        
         for(int i=0;i<numOfPl1;i++){
-            this->AddCoupling(this,"BluePosition",soldiers_PL1[i],"PositionIn",EIC);
-            this->AddCoupling(this,"BlueFire",soldiers_PL1[i],"FireIn",EIC);
-            this->AddCoupling(soldiers_PL1[i],"PositionOut",this,"RedPosition",EOC);
-            this->AddCoupling(soldiers_PL1[i],"FireOut",this,"RedFire",EOC);
+            this->AddCoupling(this, "Start", plt1[i], "Start", EIC);
+            this->AddCoupling(this,"BlueFire",plt1[i],"FireIn",EIC);
+            this->AddCoupling(plt1[i],"FireOut",this,"RedFire",EOC);
+            // this->AddCoupling(this,"BluePosition",plt1[i],"PositionIn",EIC);
+            // this->AddCoupling(plt1[i],"PositionOut",this,"RedPosition",EOC);
         }
+        for(int i=0;i<numOfPl2;i++){
+            this->AddCoupling(this, "Start", plt2[i], "Start", EIC);
+            this->AddCoupling(this,"BlueFire",plt2[i],"FireIn",EIC);
+            this->AddCoupling(plt2[i],"FireOut",this,"RedFire",EOC);
+            // this->AddCoupling(plt2[i],"PositionOut",this,"RedPosition",EOC);
+            // this->AddCoupling(this,"BluePosition",plt2[i],"PositionIn",EIC);
+        }
+        this->LogMyBirth();
     }
 };

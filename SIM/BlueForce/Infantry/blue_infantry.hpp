@@ -17,9 +17,9 @@ public:
         std::vector<BlueSoldier*> soldiers_PL1;
         int numOfPl1 = soldiersId_PL1.size();
         soldiers_PL1.reserve(numOfPl1);
-        soldiers_PL1[0] = new BlueSoldier(engine,1,Entity{Team::BLUE, ForceType::RIFLE, Point{3, 14}, "BLUE-PL1-SOL1"});
-        soldiers_PL1[1] = new BlueSoldier(engine,2,Entity{Team::BLUE, ForceType::RIFLE, Point{5, 15}, "BLUE-PL1-SOL2"});
-        soldiers_PL1[2] = new BlueSoldier(engine,3,Entity{Team::BLUE, ForceType::RIFLE, Point{4, 13}, "BLUE-PL1-SOL3"});
+        soldiers_PL1[0] = new BlueSoldier(engine,1,Entity{Side::BLUE, ForceType::RIFLE, Point{3, 14}, "BLUE-PL1-SOL1"});
+        soldiers_PL1[1] = new BlueSoldier(engine,2,Entity{Side::BLUE, ForceType::RIFLE, Point{5, 15}, "BLUE-PL1-SOL2"});
+        soldiers_PL1[2] = new BlueSoldier(engine,3,Entity{Side::BLUE, ForceType::RIFLE, Point{4, 13}, "BLUE-PL1-SOL3"});
         for(int i=0;i<numOfPl1;i++){
             this->engine->RegisterModelInEngine(soldiers_PL1[i]);
             this->RegisterSubModel(soldiers_PL1[i]);

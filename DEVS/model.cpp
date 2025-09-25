@@ -48,4 +48,8 @@ const std::vector<std::string>& Model::GetInputPorts() const{
 const std::vector<std::string>& Model::GetOutputPorts() const{
     return this->outputPorts;
 }
+void Model::LogMyBirth() const {
+    logger_system << "[Init] " << ClassName()
+                  << " generated, model id : " << this->GetModelID() << std::endl;
+}
 Model::~Model() = default;

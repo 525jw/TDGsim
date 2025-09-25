@@ -26,11 +26,11 @@ void Engine::Run(){
         //                 << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
         //                 << std::endl;
 
-        // logger_system   << "[Engine::Run]"<< " Engine running \n"
-        //                 << "------------------------------------"
-        //                 << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
-        //                 << "------------------------------------"
-        //                 << std::endl;
+        logger_system   << "[Engine::Run]"<< " Engine running "
+                        << "--"
+                        << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
+                        << "------------------------------------"
+                        << std::endl;
 
         if(lastTime > currentTime){
             // ERROR
@@ -79,8 +79,6 @@ void Engine::Run(){
                 //                 <<" SenderModel : " <<curEvent->getSenderModelID()
                 //                 <<" SenderPort : "  <<curEvent->getSenderPort()
                 //                 <<std::endl;
-                                
-                countFire ++; // DEBUG ONLY
                 curModel->GetParentModel()->ReceiveEvent(*curEvent, this->currentTime);
             }
         }
@@ -106,11 +104,10 @@ int Engine::RegisterModelInEngine(Model* model) {
     if(!model) return -1;
 
     int id = model->GetModelID();
-    if(id <= 0){
+    if(id <= 0 || modelsWithID.count(id)){
         id = this->nextModelID++;
-    }else if(modelsWithID.count(id)){
-        std::cerr << "[ERROR] duplicate Model ID:"<<id<<'\n';
-        return -1;       
+    }else if(modelsWithID[id] == model){
+        return id;       
     }
     modelsWithID[id] = model;
     model->SetModelID(id);

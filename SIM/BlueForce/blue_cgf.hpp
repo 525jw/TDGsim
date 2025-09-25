@@ -1,19 +1,17 @@
 #pragma once
 #include "DEVS/atomic_model.hpp"
-#include "message.hpp"
+#include "common.hpp"
 #include "DEVS/logger.hpp"
 #include "SIM/Environment/environment.hpp"
-#include <utility>
-#include <iostream>
-#include <random>
 
-class RedSoldier : public AtomicModel{
+
+class BlueCgf : public AtomicModel{
 private:
     int entityId;
     Entity info;
 
     std::vector<int> enemyIds;
-    int vision = 13;
+    int vision = 20;
 
     TIME_T fireFreq = 1.0f;
     float accuracy = 0.3f;
@@ -30,12 +28,12 @@ private:
     bool rngInit = false;
     inline void ensureRng() {
         if (!rngInit) {
-            rng.seed(ENV_REF.GetSeed() + entityId);
+            rng.seed(env->GetSeed() + entityId);
             rngInit = true;
         }
     }
 public:
-    RedSoldier(Engine* engine, int entityId, Entity info);
+    BlueCgf(Engine* engine, int entityId, Entity info);
 
     bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();

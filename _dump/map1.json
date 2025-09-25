@@ -1,0 +1,17 @@
+{
+  "w": 20,
+  "h": 12,
+  "patches": [
+    { "kind": "water",  "x1": 0,  "y1": 5, "x2": 19, "y2": 5 },
+    { "kind": "forest", "x1": 3,  "y1": 2, "x2": 6,  "y2": 4 },
+    { "kind": "urban",  "x1": 12, "y1": 2, "x2": 15, "y2": 4 },
+    { "kind": "rough",  "x1": 8,  "y1": 7, "x2": 11, "y2": 9 },
+    { "kind": "bridge", "x1": 9,  "y1": 5, "x2": 11, "y2": 5 }
+  ],
+  "units": [
+    { "uid": "BLUE-PLT1", "side": "BLUE", "type": "rifle", "x": 2, "y": 10, "strength": 20 },
+    { "uid": "BLUE-TNK",  "side": "BLUE", "type": "tank",  "x": 1, "y": 11, "strength": 5 },
+    { "uid": "RED-PLT1",  "side": "RED",  "type": "rifle", "x": 15, "y": 3, "strength": 25 },
+    { "uid": "RED-TNK",   "side": "RED",  "type": "tank",  "x": 18, "y": 8, "strength": 6 }
+  ]
+}

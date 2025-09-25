@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <typeinfo>
 
 #define TIME_INF 1e30f
 using TIME_T = float;
@@ -49,6 +50,9 @@ public:
 
     virtual bool IsAtomic() const { return false; }
     virtual bool IsCoupled() const { return false; }
+
+    void LogMyBirth() const;
+    virtual const char* ClassName() const {return typeid(*this).name();}
 
     virtual ~Model();
 };

@@ -1,11 +1,8 @@
 #pragma once
 #include "DEVS/atomic_model.hpp"
-#include "message.hpp"
+#include "common.hpp"
 #include "DEVS/logger.hpp"
 #include "SIM/Environment/environment.hpp"
-#include <utility>
-#include <iostream>
-#include <string>
 
 class BlueHQ : public AtomicModel{
 private:

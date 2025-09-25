@@ -1,0 +1,5 @@
+g++ -std=gnu++17 -O2 -I. \
+  main.cpp EF/*.cpp DEVS/*.cpp \
+  SIM/*/*.cpp \
+  -static-libstdc++ -static-libgcc \
+  -o tdg.exe && ./tdg.exe; echo "exit=$?"

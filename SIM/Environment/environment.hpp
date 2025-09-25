@@ -1,38 +1,21 @@
 #pragma once
 #include "DEVS/atomic_model.hpp"
-#include "message.hpp"
+#include "common.hpp"
 #include "DEVS/logger.hpp"
-#include <utility>
-#include <iostream>
-#include <vector>
-#include <unordered_map>
-#include <optional>
-#include <algorithm>
-#include <cassert>
-#include <string>
- 
-// === Global Environment Access ===
-//   - ENV      : pointer access  (ENV->foo(...))
-//   - ENV_REF  : reference access (ENV_REF.foo(...))
-class Environment;
-namespace EnvGlobal {
-    inline Environment* ptr = nullptr;
 
-    inline Environment*       Get()  noexcept { return ptr; }
-    inline const Environment* CGet() noexcept { return ptr; }
-    inline bool Ready() noexcept { return ptr != nullptr; }
-}
-#define ENV      EnvGlobal::ptr
-#define ENV_REF (*EnvGlobal::Get())
+class Environment; 
+extern Environment* env;
+inline bool EnvReady() noexcept { return env != nullptr; }
 
 class Environment : public AtomicModel{
 private:
     unsigned int seed;
     int width,height;
-    std::vector<std::vector<TerrainType>> terrainTypeMap; // location -> TerrainType
+    std::vector<std::vector<TerrainType>> terrainMap; // location -> TerrainType
     std::unordered_map<int, Entity> entities; // entity Id -> entity instance
-    std::vector<std::vector<int>> entityIdMap; // location -> entity Id
-
+    std::unordered_map<std::string, int> nameToId; // name -> id
+    int nextId = 1;
+    
 public:
     Environment(Engine* engine);
 
@@ -46,18 +29,13 @@ public:
     int GetWidth()  const noexcept { return this->width; }
     int GetHeight() const noexcept { return this->height; }
 
-    const std::vector<std::vector<TerrainType>>& GetTerrainMap() const noexcept { return terrainTypeMap; }
-    const std::vector<std::vector<int>>&         GetEntityMap()  const noexcept { return entityIdMap; }
+    const std::vector<std::vector<TerrainType>>& GetTerrainMap() const noexcept { return terrainMap; }
 
     bool InBounds(Point p) const noexcept { return (p.x >= 0 && p.y >= 0 && p.y < GetHeight() && p.x < GetWidth()); }
 
     const TerrainType& GetTerrainAt(Point p) const { 
         assert(InBounds(p));
-        return terrainTypeMap[p.y][p.x];
-    }
-    int GetEntityIdAt(Point p) const {
-        assert(InBounds(p));
-        return entityIdMap[p.y][p.x];
+        return terrainMap[p.y][p.x];
     }
     // 탐색 실패 : return nullptr, 성공 : return Entity*
     const Entity* QueryEntityById(int id) const noexcept { 
@@ -70,11 +48,25 @@ public:
         if (it == entities.end()) return {-1,-1};
         return it->second.position;
     }
-
+    // O(# of entities)
+    std::vector<int> QueryEntityIdsAt(Point p) const {
+        std::vector<int> result;
+        if (!InBounds(p)) return result;
+        for (const auto& kv : entities) {
+            if (kv.second.position == p) {
+                result.push_back(kv.first);
+            }
+        }
+        return result;
+    }
+    int QueryEntityIdByName(const std::string& name) const {
+        auto it = nameToId.find(name);
+        return (it != nameToId.end()) ? it->second : -1;
+    }
+    
+    int RegisterEntityIdByName(const std::string& name);
     EnvMoveResponse RequestMoveEntity(int id, Point p);
     EnvKillResponse RequestKillEntity(int id);
-
-    void TempMapGen();
 
     virtual ~Environment();
 };
