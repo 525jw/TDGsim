@@ -5,8 +5,8 @@
       "who": { "unit": "BLUE-PLT1", "side": "BLUE", "role": "INF", "echelon": "PLT" },
       "what": { "task": "MOVE", "task_params": { "speed_mode": "NORMAL" } },
       "where": {
-        "point": [10.0, 12.0],
-        "route": [[10.0, 12.0]]
+        "point": [80.0, 68.0],
+        "route": [[20.0, 68.0], [40.0, 68.0], [60.0, 68.0], [78.0, 68.0]]
       },
       "priority": 50,
       "constraints": {},
@@ -14,123 +14,14 @@
     },
     {
       "who": { "unit": "BLUE-PLT2", "side": "BLUE", "role": "INF", "echelon": "PLT" },
-      "what": { "task": "MOVE", "task_params": { "speed_mode": "NORMAL" } },
+      "what": { "task": "HOLD", "task_params": { "speed_mode": "NORMAL" } },
       "where": {
-        "point": [9.0, 12.0],
-        "route": [[9.0, 12.0]]
+        "point": [80.0, 68.0],
+        "route": [[20.0, 68.0], [40.0, 68.0], [60.0, 68.0], [78.0, 68.0]]
       },
       "priority": 50,
       "constraints": {},
       "when_sim": { "dur": 180 }
-    },
-    {
-      "who": { "unit": "BLUE-PLT3", "side": "BLUE", "role": "INF", "echelon": "PLT" },
-      "what": { "task": "MOVE", "task_params": { "speed_mode": "NORMAL" } },
-      "where": {
-        "point": [8.0, 11.0],
-        "route": [[8.0, 11.0]]
-      },
-      "priority": 50,
-      "constraints": {},
-      "when_sim": { "dur": 180 }
-    },
-    {
-      "who": { "unit": "BLUE-MG", "side": "BLUE", "role": "MG" },
-      "what": { "task": "MOVE", "task_params": { "speed_mode": "NORMAL" } },
-      "where": {
-        "point": [7.0, 13.0],
-        "route": [[7.0, 13.0]]
-      },
-      "priority": 50,
-      "constraints": {},
-      "when_sim": { "dur": 180 }
-    },
-    {
-      "who": { "unit": "BLUE-TNK", "side": "BLUE", "role": "TNK" },
-      "what": { "task": "MOVE", "task_params": { "speed_mode": "NORMAL" } },
-      "where": {
-        "point": [6.0, 11.0],
-        "route": [[6.0, 11.0]]
-      },
-      "priority": 50,
-      "constraints": {},
-      "when_sim": { "dur": 180 }
-    },
-    {
-      "who": { "unit": "BLUE-ART", "side": "BLUE", "role": "ART" },
-      "what": {
-        "task": "BOMBARD",
-        "task_params": {
-          "ammo": "HE",
-          "method": "TIME",
-          "volume": { "duration": 180, "rate": "SUSTAINED" },
-          "point": [22.0, 5.0]
-        }
-      },
-      "where": {},
-      "priority": 50,
-      "constraints": {},
-      "when_sim": { "dur": 3 }
-    },
-    {
-      "who": { "unit": "RED-PLT1", "side": "RED", "role": "INF", "echelon": "PLT" },
-      "what": { "task": "MOVE", "task_params": { "speed_mode": "NORMAL" } },
-      "where": {
-        "point": [9.0, 10.0],
-        "route": [[9.0, 10.0]]
-      },
-      "priority": 50,
-      "constraints": {},
-      "when_sim": { "dur": 180 }
-    },
-    {
-      "who": { "unit": "RED-APC", "side": "RED", "role": "APC" },
-      "what": { "task": "MOVE", "task_params": { "speed_mode": "NORMAL" } },
-      "where": {
-        "point": [20.0, 6.0],
-        "route": [[20.0, 6.0]]
-      },
-      "priority": 50,
-      "constraints": {},
-      "when_sim": { "dur": 180 }
-    },
-    {
-      "who": { "unit": "RED-MG", "side": "RED", "role": "MG" },
-      "what": { "task": "MOVE", "task_params": { "speed_mode": "NORMAL" } },
-      "where": {
-        "point": [19.0, 5.0],
-        "route": [[19.0, 5.0]]
-      },
-      "priority": 50,
-      "constraints": {},
-      "when_sim": { "dur": 180 }
-    },
-    {
-      "who": { "unit": "RED-TNK", "side": "RED", "role": "TNK" },
-      "what": { "task": "MOVE", "task_params": { "speed_mode": "NORMAL" } },
-      "where": {
-        "point": [10.0, 7.0],
-        "route": [[10.0, 7.0]]
-      },
-      "priority": 50,
-      "constraints": {},
-      "when_sim": { "dur": 180 }
-    },
-    {
-      "who": { "unit": "RED-ART", "side": "RED", "role": "ART" },
-      "what": {
-        "task": "BOMBARD",
-        "task_params": {
-          "ammo": "HE",
-          "method": "TIME",
-          "volume": { "duration": 180, "rate": "SUSTAINED" },
-          "point": [8.0, 12.0]
-        }
-      },
-      "where": {},
-      "priority": 50,
-      "constraints": {},
-      "when_sim": { "dur": 40 }
     }
   ]
 }

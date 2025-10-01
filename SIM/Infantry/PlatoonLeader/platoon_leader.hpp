@@ -1,22 +1,18 @@
 #pragma once
 #include "DEVS/atomic_model.hpp"
-#include "message.hpp"
+#include "common.hpp"
 #include "DEVS/logger.hpp"
 #include "SIM/Environment/environment.hpp"
 #include "platoonAstar.hpp"
 
-#include <utility>
-#include <iostream>
-#include <string>
-#include <vector>
-
 class PlatoonLeader : public AtomicModel{
 private:
-    int entityId;
-    std::vector<int> *membersId;
-    std::vector<Point> path;
+    int entityId; // 상부 명령 reply 용도
+    std::vector<int> *memberIds;
     bool enemyDetected = false;
     bool mounted = false;
+
+    PlatoonManeuverPlan plan;
 
     TIME_T t_dec = 0.0f;
 public:

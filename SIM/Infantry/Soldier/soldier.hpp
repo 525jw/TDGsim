@@ -7,12 +7,12 @@
 
 class Engine;
 
-class BlueSoldier : public CoupledModel {
+class Soldier : public CoupledModel {
 private:
     int entityId;
     Entity info;
 public:
-    BlueSoldier(Engine* engine, int entityId, Entity info)
+    Soldier(Engine* engine, int entityId, Entity info)
         : CoupledModel(engine)
     {
         this->entityId=entityId;
@@ -22,24 +22,18 @@ public:
         Maneuver* mnv = new Maneuver(engine, this->entityId, &this->info);
         Detection* det = new Detection(engine, this->entityId, &this->info);
         Fire* fire = new Fire(engine, this->entityId, &this->info);
-        // engine에 등록
-        this->engine->RegisterModelInEngine(mnv);
-        this->engine->RegisterModelInEngine(det);
-        this->engine->RegisterModelInEngine(fire);
-        // 자식모델 목록에 등록
-        this->RegisterSubModel(mnv);
-        this->RegisterSubModel(det);
-        this->RegisterSubModel(fire);
-        // 부모를 this로 설정
-        mnv->SetParentModel(this);
-        det->SetParentModel(this);
-        fire->SetParentModel(this);
-        this->AddInputPort("PlatoonOrd");
-        this->AddInputPort("PositionIn");
-        this->AddInputPort("FireIn");
-        this->AddOutputPort("SoldierRep");
-        this->AddOutputPort("PositionOut");
-        this->AddOutputPort("FireOut");
+
+        // 부모/자식모델 연결
+        this->RegisterSubModel(mnv); mnv->SetParentModel(this);
+        this->RegisterSubModel(det); det->SetParentModel(this);
+        this->RegisterSubModel(fire); fire->SetParentModel(this);
+
+        this->AddInputPort("PlatoonOrd"); // mnv in
+        this->AddInputPort("PositionIn"); // det in
+        this->AddInputPort("FireIn"); // fire in
+        this->AddOutputPort("PositionOut"); // mnv out
+        this->AddOutputPort("SoldierRep"); // det out
+        this->AddOutputPort("FireOut"); // fire out
 
         this->AddCoupling(this,"PlatoonOrd",mnv,"PlatoonOrd",EIC);
         this->AddCoupling(this,"PositionIn",det,"PositionIn",EIC);

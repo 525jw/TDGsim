@@ -1,5 +1,4 @@
 #include "fire.hpp"
-#include <cmath>
 
 Fire::Fire(Engine* engine, int entityId, Entity* info)
     : AtomicModel(engine)
@@ -30,6 +29,7 @@ bool Fire::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
             targetId = (*message.enemyIds)[dist(rng)];
 
             this->SetCurState("FIRE");
+            this->t_fire = this->fireEquation();
         }else{
             targetId = -1;
             this->SetCurState("WAIT");
@@ -40,12 +40,11 @@ bool Fire::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
 
 bool Fire::OutputFn(){
     if (this->GetCurState() == "FIRE"){
-        this->t_fire = this->fireEquation();
-
         ensureRng();
         std::uniform_real_distribution<float> dist(0.0f, 1.0f);
         float roll = dist(rng);
         if (roll<=this->accuracy){
+            // 맞췄다면 event enque
             FireMsg message;
             message.senderId = this->entityId;
             message.senderType = this->info->forceType;

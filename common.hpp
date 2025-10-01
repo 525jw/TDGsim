@@ -58,7 +58,7 @@ struct Scenario {
 };
 
 // order def
-enum class TaskType { MOVE, BOMBARD };
+enum class TaskType { MOVE, BOMBARD, HOLD };
 typedef struct {
     TaskType task; // task
     Point to; // to
@@ -105,6 +105,8 @@ class PlatoonRep{
 public:
     int entityId; // sender
     bool succeed;
+    // current Platoon Position
+    // # of dead men
 };
 class SoldierRep{
 public:

@@ -1,15 +1,13 @@
 #pragma once
 #include "DEVS/coupled_model.hpp"
 #include "DEVS/logger.hpp"
+#include "common.hpp"
 #include "PlatoonLeader/platoon_leader.hpp"
-#include "BlueSoldier/blue_soldier.hpp"
+#include "Soldier/soldier.hpp"
 
-#include <string>
-#include <vector>
-
-class BlueInfantry : public CoupledModel{
+class Infantry : public CoupledModel{
 public:
-    BlueInfantry(Engine* engine)
+    Infantry(Engine* engine)
     : CoupledModel(engine)
     {
         // Soldiers

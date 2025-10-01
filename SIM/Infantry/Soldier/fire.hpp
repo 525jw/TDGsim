@@ -4,22 +4,18 @@
 #include "DEVS/logger.hpp"
 #include "SIM/Environment/environment.hpp"
 
-
-class BlueCgf : public AtomicModel{
+class Fire : public AtomicModel{
 private:
+    // default
     int entityId;
-    Entity info;
+    Entity* info;
 
-    std::vector<int> enemyIds;
-    int vision = 20;
-
+    // attribute
     TIME_T fireFreq = 1.0f;
-    float accuracy = 0.3f;
+    float accuracy = 0.7f;
     int targetId = -1;
 
-    // TIME_T t_det = TIME_INF;
-    // TIME_T detEquation() const;
-
+    // DEVS
     TIME_T t_fire = -1.0f;
     TIME_T fireEquation();
 
@@ -33,12 +29,10 @@ private:
         }
     }
 public:
-    BlueCgf(Engine* engine, int entityId, Entity info);
+    Fire(Engine* engine, int entityId, Entity* info);
 
     bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();
     bool OutputFn();
     TIME_T TimeAdvanceFn();
-
-    void RebuildEnemyPosList();
 };

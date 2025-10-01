@@ -1,38 +1,45 @@
 #pragma once
 #include "DEVS/atomic_model.hpp"
-#include "message.hpp"
+#include "common.hpp"
 #include "DEVS/logger.hpp"
 #include "SIM/Environment/environment.hpp"
-#include <utility>
-#include <iostream>
-#include <random>
 
-class Fire : public AtomicModel{
+
+class BlueCgf : public AtomicModel{
 private:
     int entityId;
-    Entity* info;
+    Entity info;
+
+    std::vector<int> enemyIds;
+    int vision = 20;
 
     TIME_T fireFreq = 1.0f;
-    float accuracy = 0.7f;
+    TIME_T detFreq = 0.5f;
+    float accuracy = 0.3f;
     int targetId = -1;
 
+
+    TIME_T t_det = TIME_INF;
     TIME_T t_fire = -1.0f;
     TIME_T fireEquation();
+    TIME_T detEquation() const;
 
     // RNG
     std::mt19937 rng;
     bool rngInit = false;
     inline void ensureRng() {
         if (!rngInit) {
-            rng.seed(ENV_REF.GetSeed() + entityId);
+            rng.seed(env->GetSeed() + entityId);
             rngInit = true;
         }
     }
 public:
-    Fire(Engine* engine, int entityId, Entity* info);
+    BlueCgf(Engine* engine, int entityId, Entity info);
 
     bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();
     bool OutputFn();
     TIME_T TimeAdvanceFn();
+
+    void RebuildEnemyPosList();
 };

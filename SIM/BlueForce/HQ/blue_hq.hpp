@@ -6,9 +6,11 @@
 
 class BlueHQ : public AtomicModel{
 private:
+    std::vector<int> *memberIds;
+
     TIME_T t_dec=0.0f;
 public:
-    BlueHQ(Engine* engine);
+    BlueHQ(Engine* engine, std::vector<int> *membersId);
 
     bool ExtTransFn(const std::string& inPort, const std::any& anyMessage);
     bool IntTransFn();

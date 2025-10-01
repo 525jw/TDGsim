@@ -6,12 +6,12 @@ BlueCgf::BlueCgf(Engine* engine, int entityId, Entity info)
     this->entityId = entityId;
     this->info = info;
 
-    this->AddState("WAIT");
+    this->AddState("IDLE");
     this->AddState("DETECT");
     this->AddState("FIRE");
     this->AddState("DEAD");
 
-    this->SetCurState("WAIT");
+    this->SetCurState("IDLE");
 
     this->AddInputPort("FireIn");
     this->AddInputPort("Start");
@@ -70,16 +70,11 @@ void BlueCgf::RebuildEnemyPosList() {
 }
 
 bool BlueCgf::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
-    if (inPort == "Start") {
+    if (inPort == "Start" && this->GetCurState() == "IDLE") {
         Start message;
         if(!TryCastMessage(anyMessage,message,"")) return false;
 
-        this->RebuildEnemyPosList();
-        if (!enemyIds.empty()) {
-            this->SetCurState("DETECT");
-            logger_world << "["<<this->info.name<<"] "<< "detected something"<<" when Time : "<<this->engine->GetCurrentTime()<<std::endl;
-        }
-        else this->SetCurState("WAIT");
+        this->SetCurState("DETECT");
     }else if(inPort == "FireIn"){
         FireMsg message;
         if(!TryCastMessage(anyMessage,message,"")) return false;
@@ -101,6 +96,7 @@ bool BlueCgf::OutputFn(){
         std::uniform_real_distribution<float> dist(0.0f, 1.0f);
         float roll = dist(rng);
         if (roll<=this->accuracy){
+            // 맞았다면 event enque
             FireMsg message;
             message.senderId = this->entityId;
             message.senderType = this->info.forceType;
@@ -113,10 +109,14 @@ bool BlueCgf::OutputFn(){
             // 빗나가면 메시지 전송 X, 추후 FireMsg.hit=false 방식 도입
         }
     }else if(this->GetCurState()=="DETECT"){
+        this->RebuildEnemyPosList();
+        if (!enemyIds.empty()) {
+            logger_world << "["<<this->info.name<<"] "<< "detected something"<<" when Time : "<<this->engine->GetCurrentTime()<<std::endl;
+            ensureRng();
+            std::uniform_int_distribution<size_t> dist(0, this->enemyIds.size() - 1);
+            targetId = (this->enemyIds)[dist(rng)];
+        }
         // this->t_det = detEquation();
-        ensureRng();
-        std::uniform_int_distribution<size_t> dist(0, this->enemyIds.size() - 1);
-        targetId = (this->enemyIds)[dist(rng)];
     }
     return true;
 }
@@ -130,7 +130,7 @@ bool BlueCgf::IntTransFn(){
 }
 
 TIME_T BlueCgf::TimeAdvanceFn(){
-    if (this->GetCurState() == "WAIT") return TIME_INF;
+    if (this->GetCurState() == "IDLE") return TIME_INF;
     if (this->GetCurState() == "DETECT") return 0.0f;
     if (this->GetCurState() == "FIRE") return this->t_fire;
     if (this->GetCurState() == "DEAD") return TIME_INF;
