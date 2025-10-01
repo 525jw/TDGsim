@@ -100,8 +100,8 @@ public:
         this->AddInputPort("Start");
         this->AddInputPort("RedFire");
         this->AddOutputPort("BlueFire");
-        // this->AddInputPort("RedPosition");
-        // this->AddOutputPort("BluePosition");
+        this->AddInputPort("RedPosition");
+        this->AddOutputPort("BluePosition");
         
 
         // === 커플링 ===
