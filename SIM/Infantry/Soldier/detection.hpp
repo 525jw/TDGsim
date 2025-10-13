@@ -7,18 +7,19 @@
 class Detection : public AtomicModel{
 private:
     // default
-    int entityId;
     Entity *info;
 
     // attribute
-    std::vector<int> enemyIds;   // key: Enemy entityId, value: enemy pos (x,y)
+    std::vector<int> enemyIds;   // tracked enemy ids inside vision
     int vision = 10;
 
     // DEVS
-    TIME_T t_det = TIME_INF;
+    TIME_T t_det = 0.0f;
+    TIME_T scanInterval = 1.0f;
+
     TIME_T detEquation() const;
 public:
-    Detection(Engine* engine, int entityId, Entity* info);
+    Detection(Engine* engine, Entity* info);
 
     bool ExtTransFn(const std::string& inPort, const std::any& anyMessage);
     bool IntTransFn();
