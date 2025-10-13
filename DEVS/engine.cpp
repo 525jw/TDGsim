@@ -21,7 +21,7 @@ void Engine::Run(){
     //     logger_system << "[Engine::Run]"<< " Prepared Model ID : " << key << std::endl;
     // }
 
-    while(this->currentTime<30.0){ //// TODO : needs while loop unitl the end time
+    while(this->currentTime<200.0){ //// TODO : needs while loop unitl the end time
         // std::cout       << "[Engine::Run]"<< " Engine running " 
         //                 << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
         //                 << std::endl;
@@ -33,31 +33,33 @@ void Engine::Run(){
                         << std::endl;
 
         if(lastTime > currentTime){
-            // ERROR
+            logger_system << "[Engine::Run][ERROR] time regression "
+                          << "last=" << lastTime << " current=" << currentTime
+                          << std::endl;
+            for (const auto& pair : modelsWithID) {
+                if (pair.second == nullptr) continue;
+                logger_system << "  model " << pair.first
+                              << " next=" << pair.second->GetNextTime()
+                              << std::endl;
+            }
             exit(1);
         }
 
         if(this->eventQueue.empty()){
-            // logger_system   << "[Engine::Run] Event queue is empty, "
-            //                 << "Query nextTime"<<std::endl;
+            logger_system   << "[Engine::Run] Event queue is empty, "
+                            << "Query nextTime"<<std::endl;
 
-            // logger_world    << "Fire Turn " << this->currentTime
-            //                 << std::endl;
-            
             TIME_T minTA = this->rootModel->QueryNextTime();
             if(minTA > TIME_INF)
                 return;
             this->lastTime = this->currentTime;
             this->currentTime = minTA;
 
-            // logger_system   << "[Engine::Run] Received minTA = "<<minTA
-            //                 << " Request (*,"<<this->currentTime<<")"<<std::endl;
+            logger_system   << "[Engine::Run] Received minTA = "<<minTA
+                            << " Request (*,"<<this->currentTime<<")"<<std::endl;
             this->rootModel->ReceiveScheduleTime(this->currentTime);
         }else{
             // logger_system   << "[Engine::Run] Starts broadcasting events "<<std::endl;
-
-            // logger_world    << "Damage Turn " << this->currentTime
-            //                 << std::endl;
             
             Event* curEvent = nullptr;
             Model* curModel = nullptr;
@@ -75,10 +77,10 @@ void Engine::Run(){
                     continue;
                 }
 
-                // logger_system   << "[Engine::Run] Request (x,"<<this->currentTime<<")"
-                //                 <<" SenderModel : " <<curEvent->getSenderModelID()
-                //                 <<" SenderPort : "  <<curEvent->getSenderPort()
-                //                 <<std::endl;
+                logger_system   << "[Engine::Run] Request (x,"<<this->currentTime<<")"
+                                <<" SenderModel : " <<curEvent->getSenderModelID()
+                                <<" SenderPort : "  <<curEvent->getSenderPort()
+                                <<std::endl;
                 curModel->GetParentModel()->ReceiveEvent(*curEvent, this->currentTime);
             }
         }
@@ -93,10 +95,10 @@ void Engine::Run(){
 }
 
 void Engine::AddEvent(Event* event){
-    // logger_system   <<"[Engine::AddEvent]"<<" Event in,"
-    //                 <<" SenderModel : "<<event->getSenderModelID()
-    //                 <<" SenderPort : "<<event->getSenderPort()
-    //                 <<std::endl;
+    logger_system   <<"[Engine::AddEvent]"<<" Event in,"
+                    <<" SenderModel : "<<event->getSenderModelID()
+                    <<" SenderPort : "<<event->getSenderPort()
+                    <<std::endl;
 
     this->eventQueue.push(event);
 }

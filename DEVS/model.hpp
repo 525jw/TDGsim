@@ -13,7 +13,7 @@ class Model{
 protected:
     // Timing Variables
     TIME_T lastTime = 0.0;
-    TIME_T nextTime = 0.0;
+    mutable TIME_T nextTime = TIME_INF;
 
     Engine* engine = nullptr;
     Model* parentModel = nullptr;

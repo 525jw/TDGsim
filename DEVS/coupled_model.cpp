@@ -178,11 +178,15 @@ void CoupledModel::ReceiveScheduleTime(const TIME_T currentTime){ // when receiv
 }
 
 const TIME_T CoupledModel::QueryNextTime() const{
-    TIME_T minTime=TIME_INF;
-    for (auto& mid : subModelsWithID)
+    TIME_T minTime = TIME_INF;
+    for (auto& mid : subModelsWithID) {
         minTime = std::min(minTime, mid.second->QueryNextTime());
-    logger_system << "[MinTA] " << this->GetModelID()
-                  << " : next time -> " << this->GetNextTime() << std::endl;
+    }
+    this->nextTime = minTime;
+    if (minTime <= 100000.0f) {
+        logger_system << "[MinTA] " << this->GetModelID()
+                      << " : next time -> " << minTime << std::endl;
+    }
     return minTime;
 }
 

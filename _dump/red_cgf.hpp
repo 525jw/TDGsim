@@ -7,7 +7,6 @@
 
 class RedCgf : public AtomicModel{
 private:
-    int entityId;
     Entity info;
 
     std::vector<int> enemyIds;
@@ -28,12 +27,12 @@ private:
     bool rngInit = false;
     inline void ensureRng() {
         if (!rngInit) {
-            rng.seed(env->GetSeed() + entityId);
+            rng.seed(env->GetSeed() + info.id);
             rngInit = true;
         }
     }
 public:
-    RedCgf(Engine* engine, int entityId, Entity info);
+    RedCgf(Engine* engine, Entity info);
 
     bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();

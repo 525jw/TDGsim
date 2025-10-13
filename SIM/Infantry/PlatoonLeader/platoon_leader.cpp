@@ -45,7 +45,7 @@ bool PlatoonLeader::ExtTransFn(const std::string& inPort, const std::any& anyMes
                                  << "x" << environment.GetHeight() << " members "
                                  << memberIds.size() << std::endl;
                 }
-                this->plan = BuildPlatoonManeuverPlan(memberIds, ord.to);
+                this->plan = BuildPlatoonManeuverPlan(memberIds, ord.to, ord.route);
             } catch (const std::bad_alloc&) {
                 logger_world << "[ERROR]" << " Maneuver plan allocation failed for platoon " << this->entityId
                              << " at time " << this->engine->GetCurrentTime() << std::endl;
@@ -53,6 +53,11 @@ bool PlatoonLeader::ExtTransFn(const std::string& inPort, const std::any& anyMes
             }
             logger_world << "[TMP] " <<this->entityId<< " built maneuver plan "<<" when Time : "<<this->engine->GetCurrentTime()<<std::endl;
             missionInProgress = plan.success;
+            if (!plan.success) {
+                logger_world << "[ERROR]" << " Maneuver plan build failed for platoon "
+                             << this->entityId << " reason: " << plan.failureReason
+                             << " when Time : " << this->engine->GetCurrentTime() << std::endl;
+            }
         } else if (ord.task == TaskType::HOLD) {
             PlatoonManeuverPlan holdPlan;
             holdPlan.success = true;
@@ -73,6 +78,9 @@ bool PlatoonLeader::ExtTransFn(const std::string& inPort, const std::any& anyMes
                 };
                 holdPlan.referenceStart = ref;
                 holdPlan.goal = ref; // use the centroid as the hold position
+                holdPlan.currentGoal = ref;
+                holdPlan.waypointGoals = {ref};
+                holdPlan.activeWaypoint = 0;
             }
             this->plan = std::move(holdPlan);
             missionInProgress = false;
@@ -129,8 +137,42 @@ bool PlatoonLeader::OutputFn() {
                 missionInProgress = false;
                 return true;
             }
-            order.orders.reserve(plan.orderedMemberIds.size());
             Environment& environment = *env;
+
+            auto allMembersAt = [&](Point target) {
+                for (int memberId : plan.orderedMemberIds) {
+                    if (environment.QueryEntityPosById(memberId) != target) {
+                        return false;
+                    }
+                }
+                return true;
+            };
+
+            if (!plan.waypointGoals.empty()) {
+                while (plan.activeWaypoint + 1 < plan.waypointGoals.size() &&
+                       allMembersAt(plan.currentGoal)) {
+                    std::size_t nextIndex = plan.activeWaypoint + 1;
+                    logger_world << "[TMP] " << this->entityId << " advancing waypoint to "
+                                 << "(" << plan.waypointGoals[nextIndex].x << ", "
+                                 << plan.waypointGoals[nextIndex].y << ")"
+                                 << " when Time : " << this->engine->GetCurrentTime() << std::endl;
+                    if (!RebuildPlatoonWaypointPlan(plan, nextIndex)) {
+                        logger_world << "[ERROR]" << " Failed to rebuild waypoint grid for platoon "
+                                     << this->entityId << " : " << plan.failureReason << std::endl;
+                        missionInProgress = false;
+                        return true;
+                    }
+                }
+            } else {
+                plan.currentGoal = plan.goal;
+            }
+
+            Point stageGoal = plan.currentGoal;
+            bool allMembersAtStageGoal = true;
+            const bool finalWaypoint = plan.waypointGoals.empty() ||
+                                       (plan.activeWaypoint + 1 == plan.waypointGoals.size());
+            order.orders.reserve(plan.orderedMemberIds.size());
+
             auto nextStepFor = [&](Point p) -> Point {
                 if (plan.gridWidth <= 0 || plan.gridHeight <= 0) return Point{-1, -1};
                 if (p.x < 0 || p.y < 0) return Point{-1, -1};
@@ -148,7 +190,7 @@ bool PlatoonLeader::OutputFn() {
                 memberOrder.task = TaskType::HOLD;
                 memberOrder.to = currentPos;
 
-                if (currentPos != plan.goal) {
+                if (currentPos != stageGoal) {
                     Point nextTarget = nextStepFor(currentPos);
                     if (nextTarget.x != -1 && nextTarget.y != -1 && nextTarget != currentPos) {
                         memberOrder.task = TaskType::MOVE;
@@ -158,13 +200,18 @@ bool PlatoonLeader::OutputFn() {
 
                 if (memberOrder.task == TaskType::MOVE) {
                     needFollowup = true;
-                    allMembersAtGoal = false;
-                } else if (currentPos != plan.goal) {
+                    allMembersAtStageGoal = false;
+                } else if (currentPos != stageGoal) {
                     needFollowup = true;
-                    allMembersAtGoal = false;
+                    allMembersAtStageGoal = false;
                 }
                 order.orders.emplace(memberId, memberOrder);
             }
+
+            if (!finalWaypoint || !allMembersAtStageGoal) {
+                needFollowup = true;
+            }
+            allMembersAtGoal = finalWaypoint && allMembersAtStageGoal;
         }
         std::any anyOrder = order;
         this->AddOutputEvent("PlatoonOrd", anyOrder);

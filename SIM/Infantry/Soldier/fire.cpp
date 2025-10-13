@@ -1,9 +1,8 @@
 #include "fire.hpp"
 
-Fire::Fire(Engine* engine, int entityId, Entity* info)
+Fire::Fire(Engine* engine, Entity* info)
     : AtomicModel(engine)
 {
-    this->entityId = entityId;
     this->info = info;
 
     this->AddState("WAIT");
@@ -13,6 +12,8 @@ Fire::Fire(Engine* engine, int entityId, Entity* info)
 
     this->AddInputPort("SoldierRep");
     this->AddOutputPort("FireOut");
+
+    this->LogMyBirth();
 }
 
 TIME_T Fire::fireEquation(){
@@ -23,7 +24,7 @@ bool Fire::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
     if (inPort == "SoldierRep" && this->GetCurState()=="WAIT") {
         SoldierRep message;
         if(!TryCastMessage(anyMessage,message,"")) return false;
-        if(message.enemyDetected && !message.enemyIds){
+        if (message.enemyDetected && message.enemyIds && !message.enemyIds->empty()) {
             ensureRng();
             std::uniform_int_distribution<size_t> dist(0, message.enemyIds->size() - 1);
             targetId = (*message.enemyIds)[dist(rng)];
@@ -39,22 +40,36 @@ bool Fire::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
 }
 
 bool Fire::OutputFn(){
-    if (this->GetCurState() == "FIRE"){
-        ensureRng();
-        std::uniform_real_distribution<float> dist(0.0f, 1.0f);
-        float roll = dist(rng);
-        if (roll<=this->accuracy){
-            // 맞췄다면 event enque
-            FireMsg message;
-            message.senderId = this->entityId;
-            message.senderType = this->info->forceType;
-            message.targetId = this->targetId;
-            std::any anyMessage = message;
-            this->AddOutputEvent("detRes",anyMessage);
+    if (this->GetCurState() != "FIRE") {
+        return true;
+    }
+
+    ensureRng();
+    std::uniform_real_distribution<float> dist(0.0f, 1.0f);
+    float roll = dist(rng);
+    if (roll <= this->accuracy) {
+        FireMsg message;
+        message.senderId = this->info->id;
+        message.senderType = this->info->forceType;
+        message.targetId = this->targetId;
+
+        const Entity* targetEntity = env->QueryEntityById(targetId);
+        if (!targetEntity) {
+            logger_world << "[" << this->info->name << "] "
+                         << "shoot at missing target (" << targetId << ")"
+                         << " when Time : " << this->engine->GetCurrentTime()
+                         << std::endl;
+            return true;
         }
-        else{
-            // 빗나가면 메시지 전송 X, 추후 FireMsg.hit=false 방식 도입
-        }
+
+        std::any anyMessage = message;
+        logger_world << "[" << this->info->name << "] "
+                     << "shoot " << targetEntity->name
+                     << " when Time : " << this->engine->GetCurrentTime()
+                     << std::endl;
+        this->AddOutputEvent("FireOut", anyMessage);
+    } else {
+        // miss: no event emitted
     }
     return true;
 }

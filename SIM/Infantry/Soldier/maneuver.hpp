@@ -7,7 +7,6 @@
 class Maneuver : public AtomicModel{
 private:
     // default
-    int entityId;
     Entity* info;
 
     // attribute
@@ -18,7 +17,7 @@ private:
     TIME_T t_mnv = -1.0f;
     TIME_T mnvEquation(float speed);
 public:
-    Maneuver(Engine* engine, int entityId, Entity* info);
+    Maneuver(Engine* engine, Entity* info);
 
     bool ExtTransFn(const std::string& inPort, const std::any& anyMessage);
     bool OutputFn();

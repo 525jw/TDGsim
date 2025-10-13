@@ -41,6 +41,7 @@ struct TerrainRect {
 enum class Side { BLUE, RED };
 enum class ForceType { RIFLE, ARTILLERY, TANK };
 struct Entity { 
+    int id;
     std::string name; // -> entity Id 
     Side side; 
     ForceType forceType; 
@@ -62,6 +63,7 @@ enum class TaskType { MOVE, BOMBARD, HOLD };
 typedef struct {
     TaskType task; // task
     Point to; // to
+    std::vector<Point> route; // optional waypoint sequence
 } Order;
 
 enum class EnvMoveResponse {

@@ -4,13 +4,17 @@
 #include "DEVS/logger.hpp"
 #include "SIM/Environment/environment.hpp"
 
-class BlueHQ : public AtomicModel{
+class HQ : public AtomicModel{
 private:
-    std::vector<int> *memberIds;
-
-    TIME_T t_dec=0.0f;
+    std::unordered_set<int> controlledEntityIds;
+    Side hqSide;
+    std::string ordersFilePath;
+    TIME_T t_dec = 0.0f;
 public:
-    BlueHQ(Engine* engine, std::vector<int> *membersId);
+    HQ(Engine* engine,
+       std::vector<int>* membersId,
+       Side side = Side::BLUE,
+       std::string ordersFile = "output.json");
 
     bool ExtTransFn(const std::string& inPort, const std::any& anyMessage);
     bool IntTransFn();

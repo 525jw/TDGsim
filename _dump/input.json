@@ -1,0 +1,23 @@
+{
+  "orders": [
+    { "unit": "RED-PLT1", "task": "HOLD", "at": [85,31] },
+    { "unit": "RED-PLT2", "task": "HOLD", "at": [76,55] },
+
+    { "unit": "BLUE-ART", "task": "BOMBARD", "point": [85,31], "duration": 3 },
+    { "unit": "BLUE-ART", "task": "BOMBARD", "point": [76,55], "duration": 3 },
+
+    { "unit": "BLUE-TNK", "task": "MOVE", "to": [12,60] },
+    { "unit": "BLUE-TNK", "task": "MOVE", "to": [22,50] },
+
+    { "unit": "BLUE-PLT1", "task": "MOVE", "to": [18,66] },
+    { "unit": "BLUE-PLT1", "task": "MOVE", "to": [20,52] },
+    { "unit": "BLUE-PLT1", "task": "MOVE", "to": [20,46] },
+    { "unit": "BLUE-PLT1", "task": "MOVE", "to": [26,42] },
+
+    { "unit": "BLUE-PLT2", "task": "MOVE", "to": [78,66] },
+    { "unit": "BLUE-PLT2", "task": "MOVE", "to": [70,60] },
+    { "unit": "BLUE-PLT2", "task": "MOVE", "to": [69,52] },
+
+    { "unit": "BLUE-TNK", "task": "MOVE", "to": [24,46] }
+  ]
+}

@@ -7,7 +7,6 @@
 class Fire : public AtomicModel{
 private:
     // default
-    int entityId;
     Entity* info;
 
     // attribute
@@ -24,12 +23,12 @@ private:
     bool rngInit = false;
     inline void ensureRng() {
         if (!rngInit) {
-            rng.seed(env->GetSeed() + entityId);
+            rng.seed(env->GetSeed() + this->info->id);
             rngInit = true;
         }
     }
 public:
-    Fire(Engine* engine, int entityId, Entity* info);
+    Fire(Engine* engine, Entity* info);
 
     bool ExtTransFn(const std::string& inPort, const std::any& message);
     bool IntTransFn();

@@ -14,6 +14,7 @@ Generator::Generator(Engine* engine)
     randomSeed_ = GenerateRandomSeed();
     scenarioPath_ = "map.json";
     this->LogMyBirth();
+    this->UpdateTime(0.0f);
 }
 
 unsigned int Generator::GenerateRandomSeed() {

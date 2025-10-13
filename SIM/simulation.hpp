@@ -2,8 +2,8 @@
 #include "DEVS/coupled_model.hpp"
 #include "DEVS/logger.hpp"
 #include "SIM/Environment/environment.hpp"
-#include "BlueForce/blue_force.hpp"
-#include "RedForce/red_force.hpp"
+#include "blue_force.hpp"
+#include "red_force.hpp"
 
 class Simulation : public CoupledModel{
 public:
@@ -29,8 +29,8 @@ public:
         this->AddCoupling(this,"Start",redForce,"Start",EIC);
         this->AddCoupling(blueForce,"BlueFire",redForce,"BlueFire",IC);
         this->AddCoupling(redForce,"RedFire",blueForce,"RedFire",IC);
-        // this->AddCoupling(blueForce,"BluePosition",redForce,"BluePosition",IC);
-        // this->AddCoupling(redForce,"RedPosition",blueForce,"RedPosition",IC);
+        this->AddCoupling(blueForce,"BluePosition",redForce,"BluePosition",IC);
+        this->AddCoupling(redForce,"RedPosition",blueForce,"RedPosition",IC);
         this->LogMyBirth();
     }
 };

@@ -2,7 +2,7 @@
 #include "tdg_sim.hpp"
 
 int main(){
-    std::puts("[TDG] starts");
+    std::puts("TDG starts");
 
     Engine engine;
 
@@ -10,6 +10,6 @@ int main(){
     engine.SetRootModel(&tdgSim);
     engine.Run();
     
-    std::puts("[TDG] done");
+    std::puts("TDG done");
     return 0;
 }

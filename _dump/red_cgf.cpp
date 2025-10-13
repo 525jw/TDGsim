@@ -1,9 +1,8 @@
 #include "red_cgf.hpp"
 
-RedCgf::RedCgf(Engine* engine, int entityId, Entity info)
+RedCgf::RedCgf(Engine* engine, Entity info)
     : AtomicModel(engine)
 {
-    this->entityId = entityId;
     this->info = info;
 
     this->AddState("WAIT");
@@ -55,7 +54,7 @@ void RedCgf::RebuildEnemyPosList() {
             if (ids.empty()) continue;
 
             for (int id : ids) {
-                if (id == this->entityId) continue;
+                if (id == this->info.id) continue;
 
                 const Entity* e = env->QueryEntityById(id);
                 if (!e) continue;
@@ -83,12 +82,12 @@ bool RedCgf::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
     }else if(inPort == "FireIn"){
         FireMsg message;
         if(!TryCastMessage(anyMessage,message,"")) return false;
-        logger_world << "["<<this->info.name<<"] "<<"got message, targetId : "<<env->QueryEntityById(message.targetId)->name<<" and my Id is : "<<env->QueryEntityById(this->entityId)->name<<std::endl;
+        logger_world << "["<<this->info.name<<"] "<<"got message, targetId : "<<env->QueryEntityById(message.targetId)->name<<" and my Id is : "<<env->QueryEntityById(this->info.id)->name<<std::endl;
 
         // 본인에게 온 사격인지 탐색
         if( (message.senderType == ForceType::ARTILLERY && message.targetPoint == this->info.position) ||
-            (message.senderType == ForceType::RIFLE && message.targetId == this->entityId) ){
-                env->RequestKillEntity(this->entityId);
+            (message.senderType == ForceType::RIFLE && message.targetId == this->info.id) ){
+                env->RequestKillEntity(this->info.id);
                 this->SetCurState("DEAD");
                 logger_world << "["<<this->info.name<<"] "<< "is dead"<<" when Time : "<<this->engine->GetCurrentTime()<<std::endl;
         }
@@ -103,7 +102,7 @@ bool RedCgf::OutputFn(){
         float roll = dist(rng);
         if (roll<=this->accuracy){
             FireMsg message;
-            message.senderId = this->entityId;
+            message.senderId = this->info.id;
             message.senderType = this->info.forceType;
             message.targetId = this->targetId;
             std::any anyMessage = message;

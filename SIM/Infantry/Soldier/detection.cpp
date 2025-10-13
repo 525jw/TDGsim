@@ -8,7 +8,7 @@ Detection::Detection(Engine* engine, Entity* info)
     this->AddState("WAIT");
     this->AddState("DETECT");
 
-    this->SetCurState("DETECT");
+    this->SetCurState("WAIT");
     this->t_det = 0.0f;
 
     this->AddInputPort("MyPosition");
@@ -103,12 +103,9 @@ bool Detection::OutputFn(){
 
 bool Detection::IntTransFn(){
     if (this->GetCurState() == "DETECT") {
-        this->t_det = std::max(scanInterval, 0.0f);
-        this->SetCurState("DETECT");
-    } else if (this->GetCurState() == "WAIT") {
-        this->SetCurState("DETECT");
-        this->t_det = 0.0f;
+        this->SetCurState("WAIT");
     }
+    this->t_det = scanInterval;
     return true;
 }
 
