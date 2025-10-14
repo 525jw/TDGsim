@@ -157,32 +157,9 @@ CompanyOrd LoadOrderFromFile(const std::string& path,
                 }
             }
         }
-
-        std::vector<Point> routePoints;
-        if (whereIt != entry.end() && whereIt->is_object()) {
-            auto routeIt = whereIt->find("route");
-            if (routeIt != whereIt->end() && routeIt->is_array()) {
-                for (const auto& node : *routeIt) {
-                    routePoints.push_back(ParsePoint(node));
-                }
-            }
-        }
-        if (routePoints.empty() && whatIt != entry.end() && whatIt->is_object()) {
-            auto paramsIt = whatIt->find("task_params");
-            if (paramsIt != whatIt->end() && paramsIt->is_object()) {
-                auto routeIt = paramsIt->find("route");
-                if (routeIt != paramsIt->end() && routeIt->is_array()) {
-                    for (const auto& node : *routeIt) {
-                        routePoints.push_back(ParsePoint(node));
-                    }
-                }
-            }
-        }
-
         Order order{};
         order.task = task;
-        order.to   = destination;
-        order.route = std::move(routePoints);
+        order.to = destination;
         companyOrder.orders.emplace(entityId, order);
     }
 

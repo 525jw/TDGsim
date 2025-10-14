@@ -29,9 +29,9 @@ struct PlatoonManeuverPlan {
 PlatoonManeuverPlan BuildPlatoonManeuverPlan(
     const std::vector<int>& memberIds,
     Point desiredGoal,
-    const std::vector<Point>& route,
     int max_expand = 200000);
 
 bool RebuildPlatoonWaypointPlan(
     PlatoonManeuverPlan& plan,
     std::size_t waypointIndex);
+

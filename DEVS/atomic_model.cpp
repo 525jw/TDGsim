@@ -43,15 +43,15 @@ void AtomicModel::ReceiveScheduleTime(const TIME_T currentTime){
     }
 }
 const TIME_T AtomicModel::QueryNextTime() const{
-    if (this->GetNextTime() <= 100000.0f) {
+    // if (this->GetNextTime() <= 100000.0f) {
         logger_system << "[MinTA] " << this->GetModelID()
                         << " state : "<<this->GetCurState()
                         << " : next time -> " << this->GetNextTime() << std::endl;
-    }
+    // }
     return this->nextTime;
 }
 
-// Ref. 4-3-8
+// Ref. 4-3-8d
 void AtomicModel::UpdateTime(const TIME_T currentTime){
     this->lastTime = currentTime;
     this->nextTime = currentTime + TimeAdvanceFn();

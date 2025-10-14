@@ -63,7 +63,6 @@ enum class TaskType { MOVE, BOMBARD, HOLD };
 typedef struct {
     TaskType task; // task
     Point to; // to
-    std::vector<Point> route; // optional waypoint sequence
 } Order;
 
 enum class EnvMoveResponse {

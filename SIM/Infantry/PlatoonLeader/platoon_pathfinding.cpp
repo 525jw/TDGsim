@@ -162,7 +162,6 @@ namespace {
 PlatoonManeuverPlan BuildPlatoonManeuverPlan(
     const std::vector<int>& memberIds,
     Point desiredGoal,
-    const std::vector<Point>& route,
     int max_expand) {
     PlatoonManeuverPlan plan;
     plan.orderedMemberIds = memberIds;
@@ -181,24 +180,14 @@ PlatoonManeuverPlan BuildPlatoonManeuverPlan(
         return plan;
     }
 
-    std::vector<Point> routeSequence = route;
-    if (routeSequence.empty()) {
-        routeSequence.push_back(desiredGoal);
-    } else if (routeSequence.back() != desiredGoal) {
-        routeSequence.push_back(desiredGoal);
-    }
-
     plan.waypointGoals.clear();
-    plan.waypointGoals.reserve(routeSequence.size());
-    for (const Point& rawTarget : routeSequence) {
-        Point sanitized = FindNearestPassable(environment, rawTarget, max_expand);
-        if (!environment.InBounds(sanitized) || !TerrainPassable(environment, sanitized)) {
-            plan.failureReason = "Unable to resolve waypoint in bounds.";
-            plan.waypointGoals.clear();
-            return plan;
-        }
-        plan.waypointGoals.push_back(sanitized);
+    plan.waypointGoals.reserve(1);
+    Point sanitizedGoal = FindNearestPassable(environment, desiredGoal, max_expand);
+    if (!environment.InBounds(sanitizedGoal) || !TerrainPassable(environment, sanitizedGoal)) {
+        plan.failureReason = "Unable to resolve waypoint in bounds.";
+        return plan;
     }
+    plan.waypointGoals.push_back(sanitizedGoal);
 
     plan.goal = plan.waypointGoals.back();
     plan.currentGoal = plan.waypointGoals.front();

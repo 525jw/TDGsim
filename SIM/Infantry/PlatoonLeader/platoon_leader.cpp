@@ -45,13 +45,14 @@ bool PlatoonLeader::ExtTransFn(const std::string& inPort, const std::any& anyMes
                                  << "x" << environment.GetHeight() << " members "
                                  << memberIds.size() << std::endl;
                 }
-                this->plan = BuildPlatoonManeuverPlan(memberIds, ord.to, ord.route);
+                this->plan = BuildPlatoonManeuverPlan(memberIds, ord.to);
             } catch (const std::bad_alloc&) {
                 logger_world << "[ERROR]" << " Maneuver plan allocation failed for platoon " << this->entityId
                              << " at time " << this->engine->GetCurrentTime() << std::endl;
                 throw;
             }
             logger_world << "[TMP] " <<this->entityId<< " built maneuver plan "<<" when Time : "<<this->engine->GetCurrentTime()<<std::endl;
+            logger_world << "[DEBUG] " << this->entityId << " plan goal (" << plan.goal.x << ", " << plan.goal.y << ") current (" << plan.currentGoal.x << ", " << plan.currentGoal.y << ")" << " when Time : " << this->engine->GetCurrentTime() << std::endl;
             missionInProgress = plan.success;
             if (!plan.success) {
                 logger_world << "[ERROR]" << " Maneuver plan build failed for platoon "
@@ -168,6 +169,8 @@ bool PlatoonLeader::OutputFn() {
             }
 
             Point stageGoal = plan.currentGoal;
+            logger_world << "[DEBUG] " << this->entityId << " stage goal (" << stageGoal.x << ", " << stageGoal.y << ")"
+                         << " when Time : " << this->engine->GetCurrentTime() << std::endl;
             bool allMembersAtStageGoal = true;
             const bool finalWaypoint = plan.waypointGoals.empty() ||
                                        (plan.activeWaypoint + 1 == plan.waypointGoals.size());
@@ -192,7 +195,22 @@ bool PlatoonLeader::OutputFn() {
 
                 if (currentPos != stageGoal) {
                     Point nextTarget = nextStepFor(currentPos);
-                    if (nextTarget.x != -1 && nextTarget.y != -1 && nextTarget != currentPos) {
+                    if (nextTarget.x == -1 || nextTarget.y == -1) {
+                        logger_world << "[DEBUG] " << this->entityId << " member " << memberId
+                                     << " no route from (" << currentPos.x << ", " << currentPos.y << ")"
+                                     << " to stage goal (" << stageGoal.x << ", " << stageGoal.y << ")"
+                                     << " when Time : " << this->engine->GetCurrentTime() << std::endl;
+                    } else if (nextTarget == currentPos) {
+                        logger_world << "[DEBUG] " << this->entityId << " member " << memberId
+                                     << " next step equals current at (" << currentPos.x << ", " << currentPos.y << ")"
+                                     << " stage goal (" << stageGoal.x << ", " << stageGoal.y << ")"
+                                     << " when Time : " << this->engine->GetCurrentTime() << std::endl;
+                    } else {
+                        logger_world << "[DEBUG] " << this->entityId << " member " << memberId
+                                     << " moving from (" << currentPos.x << ", " << currentPos.y << ")"
+                                     << " to (" << nextTarget.x << ", " << nextTarget.y << ")"
+                                     << " stage goal (" << stageGoal.x << ", " << stageGoal.y << ")"
+                                     << " when Time : " << this->engine->GetCurrentTime() << std::endl;
                         memberOrder.task = TaskType::MOVE;
                         memberOrder.to = nextTarget;
                     }
@@ -229,6 +247,9 @@ bool PlatoonLeader::OutputFn() {
         }
 
         missionInProgress = needFollowup;
+        logger_world << "[DEBUG] " << this->entityId << " missionInProgress=" << missionInProgress
+                     << " needFollowup=" << needFollowup
+                     << " when Time : " << this->engine->GetCurrentTime() << std::endl;
     }
     return true;
 }
@@ -242,6 +263,9 @@ bool PlatoonLeader::IntTransFn() {
             this->SetCurState("WAIT");
             this->t_dec = 0.0f;
         }
+        logger_world << "[DEBUG] " << this->entityId << " IntTrans missionInProgress=" << missionInProgress
+                     << " set t_dec=" << this->t_dec
+                     << " when Time : " << this->engine->GetCurrentTime() << std::endl;
     }
     return true;
 }
