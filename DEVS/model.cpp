@@ -1,8 +1,9 @@
 #include "model.hpp"
 #include "engine.hpp"
+#include <utility>
 
-Model::Model(Engine* engine)
-    : engine(engine)
+Model::Model(Engine* engine, std::optional<std::string> name)
+    : engine(engine), name(std::move(name))
 {
     if (engine != nullptr) {
         engine->RegisterModelInEngine(this);
@@ -10,6 +11,9 @@ Model::Model(Engine* engine)
 }
 void Model::SetModelID(int id){
     this->modelID=id;
+}
+void Model::SetModelName(std::optional<std::string> name){
+    this->name = std::move(name);
 }
 void Model::SetEngine(Engine* engine) { 
     this->engine = engine; 
@@ -19,6 +23,9 @@ void Model::SetParentModel(Model* parentModel){
 }
 const int Model::GetModelID() const{
     return this->modelID;
+}
+const std::optional<std::string>& Model::GetModelName() const{
+    return this->name;
 }
 const Engine* Model::GetEngine() const{
     return this->engine;
@@ -47,9 +54,5 @@ const std::vector<std::string>& Model::GetInputPorts() const{
 }
 const std::vector<std::string>& Model::GetOutputPorts() const{
     return this->outputPorts;
-}
-void Model::LogMyBirth() const {
-    logger_system << "[Init] " << ClassName()
-                  << " generated, model id : " << this->GetModelID() << std::endl;
 }
 Model::~Model() = default;

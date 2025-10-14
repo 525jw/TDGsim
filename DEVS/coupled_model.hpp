@@ -19,7 +19,7 @@ private:
     Event Translate(const Event& in, int srcModelID, const std::string& srcPort);
 public:
     std::unordered_map<int, Model*> subModelsWithID;
-    CoupledModel(Engine* engine);
+    CoupledModel(Engine* engine, std::optional<std::string> name = std::nullopt);
 
     bool AddCoupling(Model* srcModel, const std::string& srcPort, Model* detModel, const std::string& detPort, CouplingType type);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort, Model* detModel, std::string* detPort);

@@ -31,6 +31,5 @@ public:
         this->AddCoupling(redForce,"RedFire",blueForce,"RedFire",IC);
         this->AddCoupling(blueForce,"BluePosition",redForce,"BluePosition",IC);
         this->AddCoupling(redForce,"RedPosition",blueForce,"RedPosition",IC);
-        this->LogMyBirth();
     }
 };

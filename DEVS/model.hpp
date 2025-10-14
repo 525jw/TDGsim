@@ -3,6 +3,7 @@
 #include <string>
 #include <algorithm>
 #include <typeinfo>
+#include <optional>
 
 #define TIME_INF 1e30f
 using TIME_T = float;
@@ -20,17 +21,20 @@ protected:
 
 private:
     int modelID = -1;
+    std::optional<std::string> name = std::nullopt;
     // input and output event sets
     std::vector<std::string> inputPorts;
     std::vector<std::string> outputPorts;
     
 public: 
-    Model(Engine* engine);
+    Model(Engine* engine, std::optional<std::string> name = std::nullopt);
     void SetModelID(int id);
+    void SetModelName(std::optional<std::string> name);
     void SetEngine(Engine* engine);
     void SetParentModel(Model* parentModel);
 
     const int GetModelID() const;
+    const std::optional<std::string>& GetModelName() const;
     const Engine* GetEngine() const;
     Model* GetParentModel() const;
 
@@ -51,7 +55,6 @@ public:
     virtual bool IsAtomic() const { return false; }
     virtual bool IsCoupled() const { return false; }
 
-    void LogMyBirth() const;
     virtual const char* ClassName() const {return typeid(*this).name();}
 
     virtual ~Model();

@@ -26,7 +26,7 @@ private:
     std::vector<std::string> states;
     std::string currentState;
 public:
-    AtomicModel(Engine* engine);
+    AtomicModel(Engine* engine, std::optional<std::string> name = std::nullopt);
 
     void AddState(const std::string& state);
     void RemoveState(const std::string& state);

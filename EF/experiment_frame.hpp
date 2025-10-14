@@ -29,6 +29,5 @@ public:
         this->AddCoupling(generator,"Start",this,"Start",EOC);
         // this->AddCoupling(this,"Result",dataCollector,"Result",EIC);
         // this->AddCoupling(dataCollector,"Restart",generator,"Restart",IC);
-        this->LogMyBirth();
     }
 };

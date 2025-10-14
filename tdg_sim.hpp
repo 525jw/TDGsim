@@ -9,9 +9,11 @@ public:
     TdgSim(Engine* engine)
     : CoupledModel(engine)
     {
+        // 생성-engine정보만 넘겨주기
         ExperimentFrame* ef = new ExperimentFrame(engine);
         Simulation* sim = new Simulation(engine);
 
+        
         ef->SetParentModel(this);
         sim->SetParentModel(this);
         this->RegisterSubModel(ef);
@@ -19,6 +21,5 @@ public:
 
         this->AddCoupling(ef,"Start",sim,"Start",IC);
         this->AddCoupling(sim,"Result",ef,"Result",IC);
-        this->LogMyBirth();
     }
 };

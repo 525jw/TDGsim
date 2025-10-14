@@ -133,7 +133,5 @@ public:
             this->AddCoupling(plt2_leader,"PlatoonOrd",plt2[i],"PlatoonOrd",IC);
             this->AddCoupling(plt2[i],"SoldierRep",plt2_leader,"SoldierRep",IC);
         }
-
-        this->LogMyBirth();
     }
 };
