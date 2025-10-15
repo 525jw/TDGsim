@@ -6,6 +6,7 @@
 #include <string>
 #include <string_view>
 #include <utility>
+#include <sstream>
 
 /* ───────────── Logger 본체 ───────────── */
 class Logger final {
@@ -52,8 +53,12 @@ std::string ToFixedString(float value, int precision = 3);
    - TA   : [t=000.000][TA]    model=XXX value=YYY
    - STATE: [t=000.000][STATE] model=XXX value=ZZZ
 */
-void LogTrace(double simTime, std::string_view component, std::string_view message);
-void LogError(double simTime, std::string_view component, std::string_view message);
+template <typename... Args>
+void LogTrace(double simTime, std::string_view component, Args&&... args);
+
+template <typename... Args>
+void LogError(double simTime, std::string_view component, Args&&... args);
+
 void LogTA   (double simTime, std::string_view modelName, float taValue);
 void LogState(double simTime, std::string_view modelName, std::string_view state);
 

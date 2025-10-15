@@ -1,6 +1,7 @@
 #pragma once
 #include "model.hpp"
 #include "coupling.hpp"
+#include "logger.hpp"
 #include <vector>
 #include <unordered_map>
 #include <string>

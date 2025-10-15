@@ -74,31 +74,37 @@ DummyLogger logger_simulation;
 
 /* ───────────── 최종 포맷 API ───────────── */
 
-// TRACE: 자유 문장
-void LogTrace(double simTime, std::string_view component, std::string_view text) {
+template <typename... Args>
+void LogTrace(double simTime, std::string_view component, Args&&... args) {
 #ifndef DISABLE_LOG
+    std::ostringstream oss_msg;
+    (oss_msg << ... << std::forward<Args>(args));
+
     std::ostringstream oss;
     oss << "[t=" << std::fixed << std::setprecision(3) << simTime << "]"
         << "[TRACE]"
         << "[" << component << "] "
-        << text;
+        << oss_msg.str();
     logger_system << oss.str() << std::endl;
 #else
-    (void)simTime; (void)component; (void)text;
+    (void)simTime; (void)component;
 #endif
 }
 
-// ERROR: 자유 문장
-void LogError(double simTime, std::string_view component, std::string_view sentence) {
+template <typename... Args>
+void LogError(double simTime, std::string_view component, Args&&... args) {
 #ifndef DISABLE_LOG
+    std::ostringstream oss_msg;
+    (oss_msg << ... << std::forward<Args>(args));
+
     std::ostringstream oss;
     oss << "[t=" << std::fixed << std::setprecision(3) << simTime << "]"
         << "[ERROR]"
         << "[" << component << "] "
-        << sentence;
+        << oss_msg.str();
     logger_system << oss.str() << std::endl;
 #else
-    (void)simTime; (void)component; (void)sentence;
+    (void)simTime; (void)component;
 #endif
 }
 
