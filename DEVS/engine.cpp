@@ -3,51 +3,21 @@
 Engine::Engine() : currentTime(0.0f), lastTime(0.0f) {}
 
 void Engine::Run(){
-
-    // DEBUG ONLY -----------
-    int countFire = 0;
-    // ----------------------
-
-    // std::cout       << "[Engine::Run]"<< " >>> Engine starts "
-    //                 << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
-    //                 << " <<< "
-    //                 << std::endl;
-
-    // std::vector<int> keys;
-    // for (const auto& pair : modelsWithID) {
-    //     keys.push_back(pair.first);
-    // }
-    // for (const auto& key : keys) {
-    //     logger_system << "[Engine::Run]"<< " Prepared Model ID : " << key << std::endl;
-    // }
-
     while(this->currentTime<200.0){ //// TODO : needs while loop unitl the end time
-        // std::cout       << "[Engine::Run]"<< " Engine running " 
-        //                 << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
-        //                 << std::endl;
-
-        logger_system   << "[Engine::Run]"<< " Engine running "
-                        << "--"
-                        << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
-                        << "------------------------------------"
-                        << std::endl;
+        LogTrace(this->GetCurrentTime(),"Engine::Run","event queue size=",this->eventQueue.size(),"-------------------------------------------------------------------");
 
         if(lastTime > currentTime){
-            logger_system << "[Engine::Run][ERROR] time regression "
-                          << "last=" << lastTime << " current=" << currentTime
-                          << std::endl;
+            LogError(this->GetCurrentTime(),"Engine::Run","time regression"," last=",ToFixedString(lastTime)," current=",ToFixedString(currentTime));
             for (const auto& pair : modelsWithID) {
                 if (pair.second == nullptr) continue;
-                logger_system << "  model " << pair.first
-                              << " next=" << pair.second->GetNextTime()
-                              << std::endl;
+                LogError(this->GetCurrentTime(),"Engine::Run"," model=",pair.second->GetNameWithId()," next=",pair.second->GetNextTime());
             }
             exit(1);
         }
 
         if(this->eventQueue.empty()){
-            logger_system   << "[Engine::Run] Event queue is empty, "
-                            << "Query nextTime"<<std::endl;
+            LogTrace(this->GetCurrentTime(),"Engine::Run","event queue is empty");
+
 
             TIME_T minTA = this->rootModel->QueryNextTime();
             if(minTA > TIME_INF)
@@ -55,11 +25,10 @@ void Engine::Run(){
             this->lastTime = this->currentTime;
             this->currentTime = minTA;
 
-            logger_system   << "[Engine::Run] Received minTA = "<<minTA
-                            << " Request (*,"<<this->currentTime<<")"<<std::endl;
+            LogTrace(this->GetCurrentTime(),"Engine::Run","received minTA=",minTA," requests (*,t)");
             this->rootModel->ReceiveScheduleTime(this->currentTime);
         }else{
-            // logger_system   << "[Engine::Run] Starts broadcasting events "<<std::endl;
+            LogTrace(this->GetCurrentTime(),"Engine::Run","event queue is not empty");
             
             Event* curEvent = nullptr;
             Model* curModel = nullptr;
@@ -77,28 +46,19 @@ void Engine::Run(){
                     continue;
                 }
 
-                logger_system   << "[Engine::Run] Request (x,"<<this->currentTime<<")"
-                                <<" SenderModel : " <<curEvent->getSenderModelID()
-                                <<" SenderPort : "  <<curEvent->getSenderPort()
-                                <<std::endl;
+                LogTrace(this->GetCurrentTime(),"Engine::Run","requests (x,t)",
+                        " senderModel=",this->modelsWithID[curEvent->getSenderModelID()]->GetNameWithId(),
+                        " senderPort=",curEvent->getSenderPort());
+
                 curModel->GetParentModel()->ReceiveEvent(*curEvent, this->currentTime);
             }
         }
     }
-
-    // logger_world << "Total Fire Turns : "<< countFire << std::endl; // DEBUG ONLY
-
-    // std::cout       << "[Engine::Run]"<< " >>> Engine Ends "
-    //                 << "CurTime : " << this->currentTime<<", Event queue size : "<<this->eventQueue.size()
-    //                 << " <<< "
-    //                 << std::endl;
 }
 
 void Engine::AddEvent(Event* event){
-    logger_system   <<"[Engine::AddEvent]"<<" Event in,"
-                    <<" SenderModel : "<<event->getSenderModelID()
-                    <<" SenderPort : "<<event->getSenderPort()
-                    <<std::endl;
+    LogTrace(this->GetCurrentTime(),"Engine::AddEvent","event in",
+            " senderModel=",this->modelsWithID[event->getSenderModelID()]->GetNameWithId()," senderPort=",event->getSenderPort());
 
     this->eventQueue.push(event);
 }
