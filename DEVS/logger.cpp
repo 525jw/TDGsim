@@ -71,37 +71,18 @@ DummyLogger logger_system;
 DummyLogger logger_simulation;
 #endif
 
-/* ───────────── 내부 포맷 헬퍼 ───────────── */
-static inline void prefix_with_component(double t, const char* level, std::string_view comp) {
-#ifndef DISABLE_LOG
-    std::ostringstream oss;
-    oss << "[t=" << std::fixed << std::setprecision(3) << t << "]"
-        << "[" << level << "]"
-        << "[" << comp << "] ";
-    logger_system << oss.str();
-#else
-    (void)t; (void)level; (void)comp;
-#endif
-}
-
-static inline void prefix_no_component(double t, const char* level) {
-#ifndef DISABLE_LOG
-    std::ostringstream oss;
-    oss << "[t=" << std::fixed << std::setprecision(3) << t << "]"
-        << "[" << level << "] ";
-    logger_system << oss.str();
-#else
-    (void)t; (void)level;
-#endif
-}
 
 /* ───────────── 최종 포맷 API ───────────── */
 
 // TRACE: 자유 문장
 void LogTrace(double simTime, std::string_view component, std::string_view text) {
 #ifndef DISABLE_LOG
-    prefix_with_component(simTime, "TRACE", component);
-    logger_system << std::string(text) << std::endl;
+    std::ostringstream oss;
+    oss << "[t=" << std::fixed << std::setprecision(3) << simTime << "]"
+        << "[TRACE]"
+        << "[" << component << "] "
+        << text;
+    logger_system << oss.str() << std::endl;
 #else
     (void)simTime; (void)component; (void)text;
 #endif
@@ -110,8 +91,12 @@ void LogTrace(double simTime, std::string_view component, std::string_view text)
 // ERROR: 자유 문장
 void LogError(double simTime, std::string_view component, std::string_view sentence) {
 #ifndef DISABLE_LOG
-    prefix_with_component(simTime, "ERROR", component);
-    logger_system << std::string(sentence) << std::endl;
+    std::ostringstream oss;
+    oss << "[t=" << std::fixed << std::setprecision(3) << simTime << "]"
+        << "[ERROR]"
+        << "[" << component << "] "
+        << sentence;
+    logger_system << oss.str() << std::endl;
 #else
     (void)simTime; (void)component; (void)sentence;
 #endif
@@ -120,10 +105,12 @@ void LogError(double simTime, std::string_view component, std::string_view sente
 // TA: model/value만
 void LogTA(double simTime, std::string_view modelName, float taValue) {
 #ifndef DISABLE_LOG
-    prefix_no_component(simTime, "TA");
-    logger_system << "model=" << std::string(modelName)
-                  << " value=" << ToFixedString(taValue, 3)
-                  << std::endl;
+    std::ostringstream oss;
+    oss << "[t=" << std::fixed << std::setprecision(3) << simTime << "]"
+        << "[TA] "
+        << "model=" << modelName
+        << " value=" << ToFixedString(taValue, 3);
+    logger_system << oss.str() << std::endl;
 #else
     (void)simTime; (void)modelName; (void)taValue;
 #endif
@@ -132,10 +119,12 @@ void LogTA(double simTime, std::string_view modelName, float taValue) {
 // STATE: model/value만
 void LogState(double simTime, std::string_view modelName, std::string_view state) {
 #ifndef DISABLE_LOG
-    prefix_no_component(simTime, "STATE");
-    logger_system << "model=" << std::string(modelName)
-                  << " value=" << std::string(state)
-                  << std::endl;
+    std::ostringstream oss;
+    oss << "[t=" << std::fixed << std::setprecision(3) << simTime << "]"
+        << "[STATE] "
+        << "model=" << modelName
+        << " value=" << state;
+    logger_system << oss.str() << std::endl;
 #else
     (void)simTime; (void)modelName; (void)state;
 #endif
