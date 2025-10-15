@@ -47,26 +47,66 @@ private:
 /* ───────────── 포맷 유틸 ───────────── */
 std::string ToFixedString(float value, int precision = 3);
 
-/* ───────────── 구조 로그 API ─────────────
-   - TRACE: [t=000.000][TRACE][Message]
-   - ERROR: [t=000.000][ERROR][Message]
-   - TA   : [t=000.000][TA]    model=XXX value=YYY
-   - STATE: [t=000.000][STATE] model=XXX value=ZZZ
-*/
+/* ───────────── 로그 API ───────────── */
 template <typename... Args>
-void LogTrace(double simTime, std::string_view component, Args&&... args);
+void LogTrace(double simTime, std::string_view component, Args&&... args) {
+#ifndef DISABLE_LOG
+    std::ostringstream msg;
+    (msg << ... << std::forward<Args>(args));
+
+    std::ostringstream oss;
+    oss << "[t=" << std::fixed << std::setprecision(3) << simTime << "]"
+        << "[TRACE]"
+        << "[" << component << "] ";
+    if (!msg.str().empty()) oss << msg.str();
+
+    logger_system << oss.str() << std::endl;
+#else
+    (void)simTime; (void)component;
+#endif
+}
 
 template <typename... Args>
-void LogError(double simTime, std::string_view component, Args&&... args);
+void LogError(double simTime, std::string_view component, Args&&... args) {
+#ifndef DISABLE_LOG
+    std::ostringstream msg;
+    (msg << ... << std::forward<Args>(args));
+
+    std::ostringstream oss;
+    oss << "[t=" << std::fixed << std::setprecision(3) << simTime << "]"
+        << "[ERROR]"
+        << "[" << component << "] ";
+    if (!msg.str().empty()) oss << msg.str();
+
+    logger_system << oss.str() << std::endl;
+#else
+    (void)simTime; (void)component;
+#endif
+}
 
 void LogTA   (double simTime, std::string_view modelName, float taValue);
 void LogState(double simTime, std::string_view modelName, std::string_view state);
 
-/* 유지: 월드/도메인용 */
+/* ───────────── 시뮬레이션 로그 ───────────── */
+template <typename... Args>
 void LogSimulation(double simTime,
                    std::string_view actor,
                    std::string_view action,
-                   std::initializer_list<std::pair<std::string_view, std::string>> extras = {});
+                   Args&&... args) {
+#ifndef DISABLE_LOG
+    std::ostringstream msg;
+    (msg << ... << std::forward<Args>(args));
+
+    std::ostringstream oss;
+    oss << "[" << std::fixed << std::setprecision(3) << simTime << "] "
+        << actor << " : " << action;
+    if (!msg.str().empty()) oss << " " << msg.str();
+
+    logger_simulation << oss.str() << std::endl;
+#else
+    (void)simTime; (void)actor; (void)action;
+#endif
+}
 
 /* ───────────── 전역 로거 선언 ───────────── */
 #ifndef DISABLE_LOG

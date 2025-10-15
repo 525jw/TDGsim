@@ -34,7 +34,6 @@ Logger& Logger::operator<<(std::ostream& (*manip)(std::ostream&)) {
     std::lock_guard<std::mutex> lock(mtx_);
     if (limitReached()) return *this;
     if (outFile_.is_open()) {
-        // endl 식별 시 줄수 증가
         using endl_t = std::ostream& (*)(std::ostream&);
         if (manip == static_cast<endl_t>(std::endl)) ++lineCount_;
         manip(outFile_);
@@ -71,44 +70,8 @@ DummyLogger logger_system;
 DummyLogger logger_simulation;
 #endif
 
+/* ───────────── 기타 로그 API ───────────── */
 
-/* ───────────── 최종 포맷 API ───────────── */
-
-template <typename... Args>
-void LogTrace(double simTime, std::string_view component, Args&&... args) {
-#ifndef DISABLE_LOG
-    std::ostringstream oss_msg;
-    (oss_msg << ... << std::forward<Args>(args));
-
-    std::ostringstream oss;
-    oss << "[t=" << std::fixed << std::setprecision(3) << simTime << "]"
-        << "[TRACE]"
-        << "[" << component << "] "
-        << oss_msg.str();
-    logger_system << oss.str() << std::endl;
-#else
-    (void)simTime; (void)component;
-#endif
-}
-
-template <typename... Args>
-void LogError(double simTime, std::string_view component, Args&&... args) {
-#ifndef DISABLE_LOG
-    std::ostringstream oss_msg;
-    (oss_msg << ... << std::forward<Args>(args));
-
-    std::ostringstream oss;
-    oss << "[t=" << std::fixed << std::setprecision(3) << simTime << "]"
-        << "[ERROR]"
-        << "[" << component << "] "
-        << oss_msg.str();
-    logger_system << oss.str() << std::endl;
-#else
-    (void)simTime; (void)component;
-#endif
-}
-
-// TA: model/value만
 void LogTA(double simTime, std::string_view modelName, float taValue) {
 #ifndef DISABLE_LOG
     std::ostringstream oss;
@@ -122,7 +85,6 @@ void LogTA(double simTime, std::string_view modelName, float taValue) {
 #endif
 }
 
-// STATE: model/value만
 void LogState(double simTime, std::string_view modelName, std::string_view state) {
 #ifndef DISABLE_LOG
     std::ostringstream oss;
@@ -135,36 +97,3 @@ void LogState(double simTime, std::string_view modelName, std::string_view state
     (void)simTime; (void)modelName; (void)state;
 #endif
 }
-
-#ifndef DISABLE_LOG
-namespace {
-std::string FormatFields(std::initializer_list<std::pair<std::string_view, std::string>> fields) {
-    std::ostringstream oss;
-    bool first = true;
-    for (const auto& [key, value] : fields) {
-        if (!first) oss << ' ';
-        else first = false;
-        oss << key << '=' << value;
-    }
-    return oss.str();
-}
-} // namespace
-
-void LogSimulation(double simTime,
-                   std::string_view actor,
-                   std::string_view action,
-                   std::initializer_list<std::pair<std::string_view, std::string>> extras)
-{
-    std::ostringstream oss;
-    oss << '[' << std::fixed << std::setprecision(3) << simTime << "] "
-        << actor << " : " << action;
-
-    const std::string extra = FormatFields(extras);
-    if (!extra.empty()) oss << ' ' << extra;
-
-    logger_simulation << oss.str() << std::endl;
-}
-#else
-void LogSimulation(double, std::string_view, std::string_view,
-                   std::initializer_list<std::pair<std::string_view, std::string>>) {}
-#endif
