@@ -1,7 +1,8 @@
 #include "atomic_model.hpp"
+#include <utility>
 
-AtomicModel::AtomicModel(Engine* engine)
-    : Model(engine) {}
+AtomicModel::AtomicModel(Engine* engine, std::optional<std::string> name)
+    : Model(engine, std::move(name)) {}
     
 const std::vector<std::string>& AtomicModel::GetStates() const{
     return this->states;
@@ -43,11 +44,10 @@ void AtomicModel::ReceiveScheduleTime(const TIME_T currentTime){
     }
 }
 const TIME_T AtomicModel::QueryNextTime() const{
-    // if (this->GetNextTime() <= 100000.0f) {
-        logger_system << "[MinTA] " << this->GetModelID()
-                        << " state : "<<this->GetCurState()
-                        << " : next time -> " << this->GetNextTime() << std::endl;
-    // }
+    LogSystem(this->engine->GetCurrentTime(), "AM.QueryNextTime",
+            {{"model", this->GetNameWithId()},
+             {"state", this->GetCurState()},
+             {"nextTime", ToFixedString(this->GetNextTime())}});
     return this->nextTime;
 }
 

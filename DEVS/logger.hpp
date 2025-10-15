@@ -1,8 +1,11 @@
 #pragma once
 #include <fstream>
+#include <initializer_list>
 #include <iostream>
 #include <mutex>
 #include <string>
+#include <string_view>
+#include <utility>
 
 /* ───────────── Logger 본체 ───────────── */
 class Logger final {
@@ -40,15 +43,24 @@ private:
     std::mutex    mtx_;
 };
 
+void LogSystem(double simTime,
+             std::string_view component,
+             std::initializer_list<std::pair<std::string_view, std::string>> fields = {});
+void LogSimulation(double simTime,
+                   std::string_view actor,
+                   std::string_view action,
+                   std::initializer_list<std::pair<std::string_view, std::string>> extras = {});
+std::string ToFixedString(float value, int precision = 3);
+
 /* ───────────── 전역 로거 선언 ───────────── */
 #ifndef DISABLE_LOG
 extern Logger logger_system;   // 시스템 로그
-extern Logger logger_world;    // 게임/시뮬레이션 로그
+extern Logger logger_simulation;    // 시뮬레이션 로그
 #else
 struct DummyLogger {
     template <typename T> DummyLogger& operator<<(const T&) { return *this; }
     DummyLogger& operator<<(std::ostream& (*)(std::ostream&)) { return *this; }
 };
 extern DummyLogger logger_system;
-extern DummyLogger logger_world;
+extern DummyLogger logger_simulation;
 #endif

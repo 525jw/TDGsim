@@ -34,7 +34,9 @@ public:
     void SetParentModel(Model* parentModel);
 
     const int GetModelID() const;
-    const std::optional<std::string>& GetModelName() const;
+    const std::optional<std::string>& GetName() const;
+    std::string GetNameWithId() const;
+
     const Engine* GetEngine() const;
     Model* GetParentModel() const;
 
@@ -54,8 +56,6 @@ public:
 
     virtual bool IsAtomic() const { return false; }
     virtual bool IsCoupled() const { return false; }
-
-    virtual const char* ClassName() const {return typeid(*this).name();}
 
     virtual ~Model();
 };
