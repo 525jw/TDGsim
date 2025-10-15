@@ -43,19 +43,30 @@ private:
     std::mutex    mtx_;
 };
 
-void LogSystem(double simTime,
-             std::string_view component,
-             std::initializer_list<std::pair<std::string_view, std::string>> fields = {});
+/* ───────────── 포맷 유틸 ───────────── */
+std::string ToFixedString(float value, int precision = 3);
+
+/* ───────────── 구조 로그 API ─────────────
+   - TRACE: [t=000.000][TRACE][Message]
+   - ERROR: [t=000.000][ERROR][Message]
+   - TA   : [t=000.000][TA]    model=XXX value=YYY
+   - STATE: [t=000.000][STATE] model=XXX value=ZZZ
+*/
+void LogTrace(double simTime, std::string_view component, std::string_view message);
+void LogError(double simTime, std::string_view component, std::string_view message);
+void LogTA   (double simTime, std::string_view modelName, float taValue);
+void LogState(double simTime, std::string_view modelName, std::string_view state);
+
+/* 유지: 월드/도메인용 */
 void LogSimulation(double simTime,
                    std::string_view actor,
                    std::string_view action,
                    std::initializer_list<std::pair<std::string_view, std::string>> extras = {});
-std::string ToFixedString(float value, int precision = 3);
 
 /* ───────────── 전역 로거 선언 ───────────── */
 #ifndef DISABLE_LOG
-extern Logger logger_system;   // 시스템 로그
-extern Logger logger_simulation;    // 시뮬레이션 로그
+extern Logger logger_system;    // 시스템 로그
+extern Logger logger_simulation;     // 시뮬레이션 로그
 #else
 struct DummyLogger {
     template <typename T> DummyLogger& operator<<(const T&) { return *this; }

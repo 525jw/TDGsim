@@ -34,8 +34,9 @@ Logger& Logger::operator<<(std::ostream& (*manip)(std::ostream&)) {
     std::lock_guard<std::mutex> lock(mtx_);
     if (limitReached()) return *this;
     if (outFile_.is_open()) {
-        if (manip == static_cast<std::ostream& (*)(std::ostream&)>(std::endl))
-            ++lineCount_;
+        // endl 식별 시 줄수 증가
+        using endl_t = std::ostream& (*)(std::ostream&);
+        if (manip == static_cast<endl_t>(std::endl)) ++lineCount_;
         manip(outFile_);
         outFile_.flush();
     }
@@ -48,8 +49,9 @@ void Logger::setMaxLines(std::size_t max) {
 }
 
 std::size_t Logger::lineCount() const { return lineCount_; }
-
 bool Logger::limitReached() const { return lineCount_ >= maxLines_; }
+
+/* ───────────── 유틸 ───────────── */
 
 std::string ToFixedString(float value, int precision) {
     if (!std::isfinite(value) || std::fabs(static_cast<double>(value)) >= 9.9e29) {
@@ -63,47 +65,95 @@ std::string ToFixedString(float value, int precision) {
 /* ───────────── 전역 로거 정의 ───────────── */
 #ifndef DISABLE_LOG
 Logger logger_system{"logs/log_system.txt"};
-Logger logger_world {"logs/log_simulation.txt"};
+Logger logger_simulation {"logs/log_simulation.txt"};
+#else
+DummyLogger logger_system;
+DummyLogger logger_simulation;
+#endif
 
+/* ───────────── 내부 포맷 헬퍼 ───────────── */
+static inline void prefix_with_component(double t, const char* level, std::string_view comp) {
+#ifndef DISABLE_LOG
+    std::ostringstream oss;
+    oss << "[t=" << std::fixed << std::setprecision(3) << t << "]"
+        << "[" << level << "]"
+        << "[" << comp << "] ";
+    logger_system << oss.str();
+#else
+    (void)t; (void)level; (void)comp;
+#endif
+}
+
+static inline void prefix_no_component(double t, const char* level) {
+#ifndef DISABLE_LOG
+    std::ostringstream oss;
+    oss << "[t=" << std::fixed << std::setprecision(3) << t << "]"
+        << "[" << level << "] ";
+    logger_system << oss.str();
+#else
+    (void)t; (void)level;
+#endif
+}
+
+/* ───────────── 최종 포맷 API ───────────── */
+
+// TRACE: 자유 문장
+void LogTrace(double simTime, std::string_view component, std::string_view text) {
+#ifndef DISABLE_LOG
+    prefix_with_component(simTime, "TRACE", component);
+    logger_system << std::string(text) << std::endl;
+#else
+    (void)simTime; (void)component; (void)text;
+#endif
+}
+
+// ERROR: 자유 문장
+void LogError(double simTime, std::string_view component, std::string_view sentence) {
+#ifndef DISABLE_LOG
+    prefix_with_component(simTime, "ERROR", component);
+    logger_system << std::string(sentence) << std::endl;
+#else
+    (void)simTime; (void)component; (void)sentence;
+#endif
+}
+
+// TA: model/value만
+void LogTA(double simTime, std::string_view modelName, float taValue) {
+#ifndef DISABLE_LOG
+    prefix_no_component(simTime, "TA");
+    logger_system << "model=" << std::string(modelName)
+                  << " value=" << ToFixedString(taValue, 3)
+                  << std::endl;
+#else
+    (void)simTime; (void)modelName; (void)taValue;
+#endif
+}
+
+// STATE: model/value만
+void LogState(double simTime, std::string_view modelName, std::string_view state) {
+#ifndef DISABLE_LOG
+    prefix_no_component(simTime, "STATE");
+    logger_system << "model=" << std::string(modelName)
+                  << " value=" << std::string(state)
+                  << std::endl;
+#else
+    (void)simTime; (void)modelName; (void)state;
+#endif
+}
+
+#ifndef DISABLE_LOG
 namespace {
 std::string FormatFields(std::initializer_list<std::pair<std::string_view, std::string>> fields) {
     std::ostringstream oss;
     bool first = true;
     for (const auto& [key, value] : fields) {
-        if (!first) {
-            oss << ' ';
-        } else {
-            first = false;
-        }
+        if (!first) oss << ' ';
+        else first = false;
         oss << key << '=' << value;
     }
     return oss.str();
 }
 } // namespace
-
-void LogSystem(double simTime,
-             std::string_view level,
-             std::initializer_list<std::pair<std::string_view, std::string>> fields)
-{
-
-    std::ostringstream oss;
-    oss << '[' << std::fixed << std::setprecision(3) << simTime
-        << "][" << level << ']';
-
-    std::ostringstream payload;
-
-    const std::string extras = FormatFields(fields);
-    if (!extras.empty()) {
-        payload << ' ' << extras;
-    }
-
-    const std::string payloadStr = payload.str();
-    if (!payloadStr.empty()) {
-        oss << ' ' << payloadStr;
-    }
-
-    logger_system << oss.str() << std::endl;
-}
 
 void LogSimulation(double simTime,
                    std::string_view actor,
@@ -112,25 +162,14 @@ void LogSimulation(double simTime,
 {
     std::ostringstream oss;
     oss << '[' << std::fixed << std::setprecision(3) << simTime << "] "
-        << actor << ' : ' << action;
+        << actor << " : " << action;
 
     const std::string extra = FormatFields(extras);
-    if (!extra.empty()) {
-        oss << ' ' << extra;
-    }
+    if (!extra.empty()) oss << ' ' << extra;
 
-    logger_world << oss.str() << std::endl;
+    logger_simulation << oss.str() << std::endl;
 }
 #else
-DummyLogger logger_system;
-DummyLogger logger_simulation;
-
-void LogSystem(double,
-             std::string_view,
-             std::initializer_list<std::pair<std::string_view, std::string>>) {}
-
-void LogSimulation(double,
-                   std::string_view,
-                   std::string_view,
+void LogSimulation(double, std::string_view, std::string_view,
                    std::initializer_list<std::pair<std::string_view, std::string>>) {}
 #endif
