@@ -67,6 +67,7 @@ bool Environment::ExtTransFn(const std::string& inPort, const std::any& anyMessa
 
             entities[RegisterEntityIdByName(e.name)] = std::move(e);
         }
+        LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"ENV_INIT","seed=",this->seed);
         this->SetCurState("WAIT");
     }
     return true;

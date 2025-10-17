@@ -12,6 +12,7 @@ public:
     BlueForce(Engine* engine)
     : CoupledModel(engine)
     {
+        // INFANTRY
         // === 생성 ===
         std::vector<int> plt1_Ids; plt1_Ids.clear();
         std::vector<int> plt2_Ids; plt2_Ids.clear();

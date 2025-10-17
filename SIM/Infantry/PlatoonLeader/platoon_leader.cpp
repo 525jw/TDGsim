@@ -15,7 +15,7 @@ PlatoonLeader::PlatoonLeader(Engine* engine, int entityId, std::vector<int> *mem
     this->SetCurState("WAIT");
 
     this->AddInputPort("CompanyOrd");
-    this->AddInputPort("SoldierRep");
+    this->AddInputPort("SoldierRep");//detection res
     this->AddInputPort("FireFinished");
 
     this->AddOutputPort("PlatoonOrd");
@@ -52,7 +52,7 @@ bool PlatoonLeader::ExtTransFn(const std::string& inPort, const std::any& anyMes
     } else if (inPort == "SoldierRep") {
         SoldierRep message;
         if (!TryCastMessage(anyMessage, message, "PlatoonLeader::ExtTransFn.SoldierRep")) return false;
-        if (!message.enemyDetected) {
+        if (!message.enemyDetected) { // when enemyDetected==true, Soldier should be occupied by Fire exclusively
             this->SetCurState("DECIDE");
             this->t_dec = 0.0f;
         }

@@ -36,7 +36,7 @@ void AtomicModel::ReceiveEvent(Event& event,TIME_T currentTime){
 }
 
 void AtomicModel::ReceiveScheduleTime(const TIME_T currentTime){
-    LogTrace(this->engine->GetCurrentTime(),"AM::ReceiveScheduleTime","model=",this->GetNameWithId()," scheduleTime=",currentTime);
+    LogTrace(this->engine->GetCurrentTime(),"AM::ReceiveScheduleTime","model=",this->GetNameWithId()," scheduleTime=",currentTime, " nextTime=",this->nextTime);
     if(currentTime == this->nextTime){
         OutputFn();
         IntTransFn();

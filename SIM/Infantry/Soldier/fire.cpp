@@ -39,26 +39,30 @@ bool Fire::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
 }
 
 bool Fire::OutputFn(){
-    if (this->GetCurState() != "FIRE") {
+    if (this->GetCurState() == "FIRE") {
+        ensureRng();
+        std::uniform_real_distribution<float> dist(0.0f, 1.0f);
+        float roll = dist(rng);
+        if (roll <= this->accuracy) {
+            FireMsg message;
+            if(!env->QueryEntityById(targetId)){
+                // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"AIM","target is already dead");
+                return true;
+            }
+            // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"AIM","target=",env->QueryEntityById(this->targetId)->name);
+            message.senderId = this->info->id;
+            message.senderType = this->info->forceType;
+            message.targetId = this->targetId;
+
+            const Entity* targetEntity = env->QueryEntityById(targetId);
+
+            std::any anyMessage = message;
+            LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"FIRE","shoot at ",targetEntity->name);
+            this->AddOutputEvent("FireOut", anyMessage);
+        } else {
+            // miss: no event emitted
+        }
         return true;
-    }
-
-    ensureRng();
-    std::uniform_real_distribution<float> dist(0.0f, 1.0f);
-    float roll = dist(rng);
-    if (roll <= this->accuracy) {
-        FireMsg message;
-        message.senderId = this->info->id;
-        message.senderType = this->info->forceType;
-        message.targetId = this->targetId;
-
-        const Entity* targetEntity = env->QueryEntityById(targetId);
-
-        std::any anyMessage = message;
-        LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"FIRE","shoot at ",targetEntity->name);
-        this->AddOutputEvent("FireOut", anyMessage);
-    } else {
-        // miss: no event emitted
     }
     return true;
 }
