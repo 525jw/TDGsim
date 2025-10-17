@@ -126,6 +126,7 @@ public:
             this->AddCoupling(this,"RedPosition",plt1[i],"PositionIn",EIC);
             this->AddCoupling(plt1_leader,"PlatoonOrd",plt1[i],"PlatoonOrd",IC);
             this->AddCoupling(plt1[i],"SoldierRep",plt1_leader,"SoldierRep",IC);
+            this->AddCoupling(plt1[i],"FireOut",plt1_leader,"FireFinished",IC);
         }
         for (int i = 0; i < numOfPl2; ++i) {
             this->AddCoupling(this, "Start", plt2[i], "Start", EIC);
@@ -135,6 +136,7 @@ public:
             this->AddCoupling(this,"RedPosition",plt2[i],"PositionIn",EIC);
             this->AddCoupling(plt2_leader,"PlatoonOrd",plt2[i],"PlatoonOrd",IC);
             this->AddCoupling(plt2[i],"SoldierRep",plt2_leader,"SoldierRep",IC);
+            this->AddCoupling(plt2[i],"FireOut",plt2_leader,"FireFinished",IC);
         }
     }
 };

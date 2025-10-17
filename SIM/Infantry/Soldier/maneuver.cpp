@@ -38,7 +38,7 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
 
         if(ord.task == TaskType::MOVE){ //이동명령
             this->nextPos = ord.to;
-            this->curSpeed = 1.0f; // TODO:지형에 의존적으로 적용시킬것 
+            this->curSpeed = 4.0f; // TODO:지형에 의존적으로 적용시킬것 
             LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"RECEIVE_ORDER",
                         "task=","MOVE",
                         " from=(",this->info->position.x,", ",this->info->position.y,")",
@@ -85,6 +85,8 @@ bool Maneuver::OutputFn() {
             this->info->position = this->nextPos; 
             this->AddOutputEvent("PositionOut", anyMessage);
         }
+    }else if(this->GetCurState()=="DEAD"){
+        
     }
     return true;
 }

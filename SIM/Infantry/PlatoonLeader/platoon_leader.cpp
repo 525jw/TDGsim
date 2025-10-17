@@ -1,4 +1,5 @@
 #include "platoon_leader.hpp"
+#include <algorithm>
 
 PlatoonLeader::PlatoonLeader(Engine* engine, int entityId, std::vector<int> *membersId)
     : AtomicModel(engine)
@@ -15,6 +16,7 @@ PlatoonLeader::PlatoonLeader(Engine* engine, int entityId, std::vector<int> *mem
 
     this->AddInputPort("CompanyOrd");
     this->AddInputPort("SoldierRep");
+    this->AddInputPort("FireFinished");
 
     this->AddOutputPort("PlatoonOrd");
     this->AddOutputPort("PlatoonRep");
@@ -54,6 +56,9 @@ bool PlatoonLeader::ExtTransFn(const std::string& inPort, const std::any& anyMes
             this->SetCurState("DECIDE");
             this->t_dec = 0.0f;
         }
+    } else if (inPort == "FireFinished"){
+        this->SetCurState("DECIDE");
+        this->t_dec = 0.0f;
     }
     return true;
 }
@@ -82,16 +87,52 @@ bool PlatoonLeader::OutputFn() {
             if (!plan.success) return true;
             order.orders.reserve(plan.orderedMemberIds.size());
 
-            auto nextStepFor = [&](Point p) -> Point {
-                if (plan.gridWidth <= 0 || plan.gridHeight <= 0) return Point{-1, -1};
-                if (p.x < 0 || p.y < 0) return Point{-1, -1};
-                if (p.x >= plan.gridWidth || p.y >= plan.gridHeight) return Point{-1, -1};
-                std::size_t idx =
-                    static_cast<std::size_t>(p.y) * static_cast<std::size_t>(plan.gridWidth) +
-                    static_cast<std::size_t>(p.x);
-                if (idx >= plan.nextStepGrid.size()) return Point{-1, -1};
-                return plan.nextStepGrid[idx];
+            auto alignPlanWithEnvironment = [&]() -> bool {
+                for (int memberId : plan.orderedMemberIds) {
+                    Point currentPos = environment.QueryEntityPosById(memberId);
+                    if (!environment.InBounds(currentPos)) {
+                        return false;
+                    }
+
+                    auto pathIt = plan.memberPaths.find(memberId);
+                    if (pathIt == plan.memberPaths.end()) {
+                        return false;
+                    }
+                    const std::vector<Point>& path = pathIt->second;
+                    if (path.empty()) {
+                        plan.memberPathIndices[memberId] = 0;
+                        continue;
+                    }
+
+                    std::size_t idx = 0;
+                    auto idxIt = plan.memberPathIndices.find(memberId);
+                    if (idxIt != plan.memberPathIndices.end()) {
+                        idx = idxIt->second;
+                        if (idx >= path.size()) {
+                            idx = path.size() - 1;
+                        }
+                    }
+
+                    if (path[idx] != currentPos) {
+                        auto found = std::find(path.begin(), path.end(), currentPos);
+                        if (found == path.end()) {
+                            return false;
+                        }
+                        idx = static_cast<std::size_t>(std::distance(path.begin(), found));
+                    }
+                    plan.memberPathIndices[memberId] = idx;
+                }
+                return true;
             };
+
+            if (!alignPlanWithEnvironment()) {
+                if (!RebuildPlatoonWaypointPlan(plan, plan.activeWaypoint)) {
+                    return true;
+                }
+                if (!alignPlanWithEnvironment()) {
+                    return true;
+                }
+            }
 
             for (int memberId : plan.orderedMemberIds) {
                 Point currentPos = environment.QueryEntityPosById(memberId);
@@ -99,10 +140,50 @@ bool PlatoonLeader::OutputFn() {
                 memberOrder.task = TaskType::HOLD;
                 memberOrder.to = currentPos;
 
-                Point nextTarget = nextStepFor(currentPos);
-                if (nextTarget.x != -1 && nextTarget.y != -1 && nextTarget != currentPos) {
-                    memberOrder.task = TaskType::MOVE;
-                    memberOrder.to = nextTarget;
+                auto pathIt = plan.memberPaths.find(memberId);
+                if (pathIt == plan.memberPaths.end() || pathIt->second.empty()) {
+                    auto goalIt = plan.memberGoalPositions.find(memberId);
+                    if (goalIt != plan.memberGoalPositions.end()) {
+                        memberOrder.to = goalIt->second;
+                    }
+                    order.orders.emplace(memberId, memberOrder);
+                    continue;
+                }
+
+                const std::vector<Point>& path = pathIt->second;
+                std::size_t idx = 0;
+                auto idxIt = plan.memberPathIndices.find(memberId);
+                if (idxIt != plan.memberPathIndices.end()) {
+                    idx = idxIt->second;
+                }
+                if (idx >= path.size()) {
+                    idx = path.size() - 1;
+                    plan.memberPathIndices[memberId] = idx;
+                }
+
+                if (path[idx] != currentPos) {
+                    auto found = std::find(path.begin(), path.end(), currentPos);
+                    if (found != path.end()) {
+                        idx = static_cast<std::size_t>(std::distance(path.begin(), found));
+                        plan.memberPathIndices[memberId] = idx;
+                    } else {
+                        order.orders.emplace(memberId, memberOrder);
+                        continue;
+                    }
+                }
+
+                if (idx + 1 < path.size()) {
+                    Point nextTarget = path[idx + 1];
+                    if (nextTarget != currentPos) {
+                        memberOrder.task = TaskType::MOVE;
+                        memberOrder.to = nextTarget;
+                        plan.memberPathIndices[memberId] = idx + 1;
+                    }
+                } else {
+                    auto goalIt = plan.memberGoalPositions.find(memberId);
+                    if (goalIt != plan.memberGoalPositions.end()) {
+                        memberOrder.to = goalIt->second;
+                    }
                 }
 
                 order.orders.emplace(memberId, memberOrder);

@@ -11,7 +11,7 @@ private:
 
     // attribute
     TIME_T fireFreq = 1.0f;
-    float accuracy = 0.7f;
+    float accuracy = 0.1f;
     int targetId = -1;
 
     // DEVS

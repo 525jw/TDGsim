@@ -130,3 +130,7 @@ public:
     int targetId;
     Point targetPoint;
 };
+
+class DeadMsg{
+public:
+};

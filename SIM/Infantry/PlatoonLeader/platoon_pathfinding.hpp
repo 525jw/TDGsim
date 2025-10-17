@@ -13,15 +13,15 @@ struct PointHash {
 struct PlatoonManeuverPlan {
     bool success = false;
     Point referenceStart{0, 0};
-    Point goal{0, 0};         // final waypoint
-    Point currentGoal{0, 0};  // active waypoint
+    Point goal{0, 0};         // representative waypoint for the platoon
+    Point currentGoal{0, 0};  // active waypoint (same as goal for single-hop plans)
     std::vector<int> orderedMemberIds;
     std::unordered_map<int, Point> memberStartPositions;
+    std::unordered_map<int, Point> memberGoalPositions;
+    std::unordered_map<int, std::vector<Point>> memberPaths;
+    std::unordered_map<int, std::size_t> memberPathIndices;
     std::vector<Point> waypointGoals;
     std::size_t activeWaypoint = 0;
-    int gridWidth = 0; // HERE: cached grid width
-    int gridHeight = 0; // HERE: cached grid height
-    std::vector<Point> nextStepGrid; // HERE: flattened next-step table
     std::string failureReason;
     int maxExpand = 200000;
 };

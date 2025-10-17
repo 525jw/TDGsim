@@ -11,7 +11,7 @@ private:
 
     // attribute
     std::vector<int> enemyIds;   // tracked enemy ids inside vision
-    int vision = 10;
+    int vision = 20;
 
     // DEVS
     TIME_T t_det = 0.0f;

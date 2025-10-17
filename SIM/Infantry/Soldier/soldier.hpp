@@ -49,6 +49,5 @@ public:
         // this->AddCoupling(mnv,"PositionOut",this,"PositionOut",EOC);
         this->AddCoupling(det,"SoldierRep",this,"SoldierRep",EOC);
         this->AddCoupling(fire,"FireOut",this,"FireOut",EOC);
-
     }
 };
