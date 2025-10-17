@@ -2,10 +2,15 @@
 """
 Timeline visualizer for TDGsim run logs.
 
-It reuses the map styling from map_reader.py and replays the events recorded
-in logs/log_world.txt. Each simulation time-step updates unit positions,
-draws small rectangles for both sides, and briefly overlays shot lines when
-fire events occur. Killed units disappear from the board.
+- Loads map.json for initial unit layout
+- Parses run logs into (time -> events)
+- Replays:
+    * MOVE : 기존 위치에서 새 위치로 표시(확정 MOVE 라인 즉시 반영)
+    * FIRE : 사수 -> 목표로 선(좌표면 좌표, 유닛명이면 그 유닛 위치, 없으면 사수 자기좌표)
+    * DEAD : 팀과 무관하게 보드에서 제거
+
+Run:
+    python visualizer.py
 """
 
 from __future__ import annotations
@@ -20,7 +25,7 @@ from typing import Dict, Iterable, List, Optional, Tuple
 
 import pygame
 
-# --- Rendering colours (same palette as map_reader.py) ---------------------
+# ---------------------- Colors / Glyphs ----------------------
 COLORS = {
     "bg": (247, 247, 247),
     "grid": (200, 200, 200),
@@ -35,45 +40,48 @@ COLORS = {
     "red": (222, 45, 38),
     "red_e": (165, 15, 21),
     "white": (255, 255, 255),
-    "shot": (255, 215, 0),
 }
 
-
 def glyph(unit_type: str) -> str:
-    unit_type = (unit_type or "").lower()
-    if unit_type.startswith(("rifle", "inf")):
-        return "R"
-    if unit_type.startswith(("tank", "arm")):
-        return "T"
-    return (unit_type[:3] or "?").upper()
-
+    t = (unit_type or "").lower()
+    if t.startswith(("rifle", "inf")): return "R"
+    if t.startswith(("tank", "arm")):  return "T"
+    return (t[:3] or "?").upper()
 
 def infer_side(unit_name: str) -> str:
-    upper = unit_name.upper()
-    if upper.startswith("BLUE"):
-        return "BLUE"
-    if upper.startswith("RED"):
-        return "RED"
+    u = (unit_name or "").upper()
+    if u.startswith("BLUE"): return "BLUE"
+    if u.startswith("RED"):  return "RED"
     return "NEUTRAL"
 
-
 def map_patch_colour(kind: str) -> Tuple[int, int, int]:
-    return COLORS.get(kind.lower(), COLORS["plain"])
+    return COLORS.get((kind or "").lower(), COLORS["plain"])
 
+# ---------------------- Name normalization ----------------------
+_SUFFIXES = {"MNV", "FIR", "FIRE", "DET", "MNE"}  # 확실한 접미만 제거
 
-# --- Data containers -------------------------------------------------------
+def base_unit_name(name: str) -> str:
+    """ 'BLUE-PLT1-SOL13-MNV' -> 'BLUE-PLT1-SOL13' """
+    if not name: return name
+    s = name.strip().strip("[]")
+    parts = s.split("-")
+    if len(parts) >= 2:
+        last = parts[-1]
+        if last.isalpha() and len(last) <= 4 and last.upper() in _SUFFIXES:
+            return "-".join(parts[:-1])
+    return s
+
+# ---------------------- Data Types ----------------------
 @dataclass
 class UnitInfo:
     side: str = "NEUTRAL"
     unit_type: str = ""
-
 
 @dataclass
 class ShotOverlay:
     source: Tuple[int, int]
     target: Tuple[int, int]
     colour: Tuple[int, int, int]
-
 
 @dataclass
 class SimulationState:
@@ -97,8 +105,7 @@ class SimulationState:
         self.dead_units.discard(unit)
 
     def remove_unit(self, unit: str) -> None:
-        if unit in self.positions:
-            del self.positions[unit]
+        self.positions.pop(unit, None)
         self.dead_units.add(unit)
 
     def ensure_info(self, unit: str) -> UnitInfo:
@@ -106,7 +113,8 @@ class SimulationState:
             self.unit_info[unit] = UnitInfo(side=infer_side(unit), unit_type="")
         return self.unit_info[unit]
 
-    def lookup(self, unit: str) -> Optional[Tuple[int, int]]:
+    def lookup(self, unit: Optional[str]) -> Optional[Tuple[int, int]]:
+        if not unit: return None
         return self.positions.get(unit) or self.last_known.get(unit)
 
     def reset(self) -> None:
@@ -114,126 +122,159 @@ class SimulationState:
         self.last_known = dict(self.initial_positions)
         self.dead_units.clear()
 
+# ---------------------- Log Parsing ----------------------
+# 시간: "[1.000]" 또는 "when Time : 1.000"
+TIME_RE_A = re.compile(r"when Time\s*:\s*([0-9]+(?:\.[0-9]+)?)")
+TIME_RE_B = re.compile(r"\[(?:t\s*=\s*)?([0-9]+(?:\.[0-9]+)?)\]")
 
-# --- Log parsing -----------------------------------------------------------
-MOVE_LINE = re.compile(
-    r"\[(?P<unit>[^\]]+)\]\s+\|\s+Task:\s+MOVE\s+\|\s+From:\s+\("
-    r"(?P<fx>-?\d+),\s*(?P<fy>-?\d+)\)\s+\|\s+To:\s+\("
-    r"(?P<tx>-?\d+),\s*(?P<ty>-?\d+)\)"
+# 공통: 앞에 타임스탬프가 올 수 있음
+TS_PREFIX = r"(?:\[\s*[0-9]+(?:\.[0-9]+)?\s*\]\s*)?"
+
+# MOVE A: "[UNIT] | Task: MOVE | From: (...) | To: (...)"
+MOVE_RE_A = re.compile(
+    r"\[(?P<unit>[^\]]+)\]\s*\|\s*Task:\s*MOVE\b.*?\bFrom:\s*\(\s*(?P<fx>-?\d+)\s*,\s*(?P<fy>-?\d+)\s*\)"
+    r".*?\bTo:\s*\(\s*(?P<tx>-?\d+)\s*,\s*(?P<ty>-?\d+)\s*\)"
 )
-TIME_PATTERN = re.compile(r"when Time\s*:\s*([0-9]+(?:\.[0-9]+)?)")
 
+# MOVE B: "[t] UNIT : MOVE from=(x, y) to=(x, y)"  ← 네 로그 포맷
+MOVE_RE_B = re.compile(
+    TS_PREFIX +
+    r"(?P<unit>[A-Za-z0-9\-_.]+)\s*[:|]\s*MOVE\b.*?\bfrom\s*=\s*\(\s*(?P<fx>-?\d+)\s*,\s*(?P<fy>-?\d+)\s*\)"
+    r".*?\bto\s*=\s*\(\s*(?P<tx>-?\d+)\s*,\s*(?P<ty>-?\d+)\s*\)",
+    re.IGNORECASE,
+)
+
+# RECEIVE_ORDER MOVE: 초기좌표 추정만
+RECV_MOVE_RE = re.compile(
+    TS_PREFIX +
+    r"(?P<unit>[A-Za-z0-9\-_.]+)\s*[:|]\s*RECEIVE_ORDER\b.*?\btask\s*=\s*MOVE\b.*?\bfrom\s*=\s*\(\s*(?P<fx>-?\d+)\s*,\s*(?P<fy>-?\d+)\s*\)"
+    r".*?\bto\s*=\s*\(\s*(?P<tx>-?\d+)\s*,\s*(?P<ty>-?\d+)\s*\)",
+    re.IGNORECASE,
+)
+
+# FIRE/SHOOT 라인: "[t] UNIT : FIRE shoot at TARGET" 등
+SHOOT_LINE_RE = re.compile(
+    TS_PREFIX + r"(?P<unit>[A-Za-z0-9\-_.]+)\s*[:|].*\b(FIRE|SHOOT)\b(?P<body>.*)$",
+    re.IGNORECASE,
+)
+COORD_IN_PARENS_RE = re.compile(r"\(\s*(?P<x>-?\d+)\s*,\s*(?P<y>-?\d+)\s*\)")
+MISSING_TARGET_RE = re.compile(r"shoot\s+at\s+missing\s+target", re.IGNORECASE)
+
+# DEAD: "[t] UNIT : DEAD" 또는 "[t] UNIT is dead"
+DEAD_RE_A = re.compile(TS_PREFIX + r"(?P<unit>[A-Za-z0-9\-_.]+)\s*is\s*dead\b", re.IGNORECASE)
+DEAD_RE_B = re.compile(TS_PREFIX + r"(?P<unit>[A-Za-z0-9\-_.]+)\s*[:|].*\bDEAD\b", re.IGNORECASE)
 
 def parse_log(log_path: str) -> Tuple[Dict[float, List[dict]], Dict[str, Tuple[int, int]]]:
     events: Dict[float, List[dict]] = defaultdict(list)
-    pending_move: Dict[str, Tuple[int, int]] = {}
     inferred_initials: Dict[str, Tuple[int, int]] = {}
 
     current_time = 0.0
 
-    with open(log_path, "r", encoding="utf-8") as handle:
-        for raw_line in handle:
-            line = raw_line.strip()
+    with open(log_path, "r", encoding="utf-8", errors="ignore") as fh:
+        for raw in fh:
+            line = raw.strip()
             if not line:
                 continue
 
-            time_match = TIME_PATTERN.search(line)
-            if time_match:
-                current_time = float(time_match.group(1))
+            # 시간 앵커
+            tm = TIME_RE_A.search(line) or TIME_RE_B.search(line)
+            if tm:
+                try:
+                    current_time = float(tm.group(1))
+                except Exception:
+                    pass  # 못 읽어도 진행
 
-            move_match = MOVE_LINE.match(line)
-            if move_match:
-                unit = move_match.group("unit").strip()
-                fx, fy = int(move_match.group("fx")), int(move_match.group("fy"))
-                tx, ty = int(move_match.group("tx")), int(move_match.group("ty"))
-                pending_move[unit] = (tx, ty)
+            # --- MOVE 확정: A/B 포맷 -> 바로 이벤트 추가 ---
+            mm = MOVE_RE_A.search(line) or MOVE_RE_B.search(line)
+            if mm:
+                unit_raw = mm.group("unit").strip()
+                unit = base_unit_name(unit_raw)
+                fx, fy = int(mm.group("fx")), int(mm.group("fy"))
+                tx, ty = int(mm.group("tx")), int(mm.group("ty"))
+                inferred_initials.setdefault(unit, (fx, fy))
+                events[current_time].append({"type": "move", "unit": unit, "pos": (tx, ty)})
+                continue
+
+            # RECEIVE_ORDER MOVE: 초기좌표 추정(이벤트는 아님)
+            rm = RECV_MOVE_RE.search(line)
+            if rm:
+                unit_raw = rm.group("unit").strip()
+                unit = base_unit_name(unit_raw)
+                fx, fy = int(rm.group("fx")), int(rm.group("fy"))
                 inferred_initials.setdefault(unit, (fx, fy))
                 continue
 
-            if "moved to ordered position" in line:
-                unit = line.split("]", 1)[0][1:].strip()
-                dest = pending_move.get(unit)
-                if dest:
-                    events[current_time].append(
-                        {"type": "move", "unit": unit, "pos": dest}
-                    )
-                continue
+            # FIRE/SHOOT
+            sm = SHOOT_LINE_RE.search(line)
+            if sm:
+                unit = base_unit_name(sm.group("unit").strip())
+                body = sm.group("body") or ""
 
-            if "] shoot " in line:
-                unit = line.split("]", 1)[0][1:].strip()
-                remainder = line.split("]", 1)[1].strip()
-                body = remainder.split("when Time", 1)[0].strip()
-
-                # Handle the special "shoot at missing target" diagnostic
-                if body.startswith("shoot at missing target"):
-                    events[current_time].append(
-                        {"type": "shoot", "unit": unit, "target": None}
-                    )
+                if MISSING_TARGET_RE.search(body):
+                    events[current_time].append({"type": "shoot", "unit": unit, "target": None})
                     continue
 
-                if body.startswith("shoot "):
-                    target = body[len("shoot ") :].strip()
-                    if target:
-                        events[current_time].append(
-                            {"type": "shoot", "unit": unit, "target": target}
-                        )
+                cm = COORD_IN_PARENS_RE.search(body)
+                if cm:
+                    tx, ty = int(cm.group("x")), int(cm.group("y"))
+                    events[current_time].append({"type": "shoot", "unit": unit, "target_coord": (tx, ty)})
+                    continue
+
+                lowered = body.lower()
+                for token in ("shoot at", "shoot", "fire at", "fire"):
+                    if token in lowered:
+                        seg = lowered.split(token, 1)[1].strip()
+                        raw_target = seg.split()[0] if seg else ""
+                        target = base_unit_name(raw_target) if raw_target else None
+                        events[current_time].append({"type": "shoot", "unit": unit, "target": target})
+                        break
+                else:
+                    events[current_time].append({"type": "shoot", "unit": unit, "target": None})
                 continue
 
-            if " is dead" in line:
-                unit = line.split("]", 1)[0][1:].strip()
+            # DEAD
+            dm = DEAD_RE_A.search(line) or DEAD_RE_B.search(line)
+            if dm:
+                unit = base_unit_name(dm.group("unit"))
                 events[current_time].append({"type": "death", "unit": unit})
                 continue
 
     return events, inferred_initials
 
-
-# --- Map loading -----------------------------------------------------------
+# ---------------------- Map Loading ----------------------
 def load_map(map_path: str) -> Tuple[dict, Dict[str, Tuple[int, int]], Dict[str, UnitInfo]]:
-    with open(map_path, "r", encoding="utf-8") as handle:
-        spec = json.load(handle)
+    with open(map_path, "r", encoding="utf-8") as fh:
+        spec = json.load(fh)
 
     units_pos: Dict[str, Tuple[int, int]] = {}
     info: Dict[str, UnitInfo] = {}
 
-    for unit in spec.get("units", []):
-        uid = unit["uid"]
-        units_pos[uid] = (int(unit["x"]), int(unit["y"]))
-        info[uid] = UnitInfo(side=unit.get("side", "NEUTRAL").upper(), unit_type=unit.get("type", ""))
+    for u in spec.get("units", []):
+        uid = u.get("uid") or u.get("name") or f"{u.get('side','U')}-{u.get('type','U')}-{u.get('x')},{u.get('y')}"
+        x, y = int(u["x"]), int(u["y"])
+        units_pos[uid] = (x, y)
+        info[uid] = UnitInfo(side=str(u.get("side","NEUTRAL")).upper(), unit_type=u.get("type",""))
 
     return spec, units_pos, info
 
-
-# --- Rendering helpers -----------------------------------------------------
+# ---------------------- Rendering ----------------------
 def draw_background(screen: pygame.Surface, width: int, height: int, cell: int, patches: Iterable[dict]) -> None:
     screen.fill(COLORS["bg"])
-
     for x in range(width + 1):
-        pygame.draw.line(
-            screen, COLORS["grid"], (x * cell, 0), (x * cell, height * cell), 1
-        )
+        pygame.draw.line(screen, COLORS["grid"], (x * cell, 0), (x * cell, height * cell), 1)
     for y in range(height + 1):
-        pygame.draw.line(
-            screen, COLORS["grid"], (0, y * cell), (width * cell, y * cell), 1
-        )
+        pygame.draw.line(screen, COLORS["grid"], (0, y * cell), (width * cell, y * cell), 1)
 
-    for patch in patches:
-        colour = map_patch_colour(patch.get("kind", "plain"))
-        x1, y1, x2, y2 = patch["x1"], patch["y1"], patch["x2"], patch["y2"]
+    for p in patches:
+        colour = map_patch_colour(p.get("kind", "plain"))
+        x1, y1, x2, y2 = p["x1"], p["y1"], p["x2"], p["y2"]
         rect = pygame.Rect(
-            min(x1, x2) * cell,
-            min(y1, y2) * cell,
-            (abs(x2 - x1) + 1) * cell,
-            (abs(y2 - y1) + 1) * cell,
+            min(x1, x2) * cell, min(y1, y2) * cell,
+            (abs(x2 - x1) + 1) * cell, (abs(y2 - y1) + 1) * cell
         )
         pygame.draw.rect(screen, colour, rect)
 
-
-def draw_units(
-    screen: pygame.Surface,
-    state: SimulationState,
-    cell: int,
-    font: pygame.font.Font,
-) -> None:
+def draw_units(screen: pygame.Surface, state: SimulationState, cell: int, font: pygame.font.Font) -> None:
     for unit, pos in state.positions.items():
         info = state.unit_info.get(unit) or UnitInfo(side=infer_side(unit))
         x, y = pos
@@ -251,39 +292,27 @@ def draw_units(
 
         tag = glyph(info.unit_type)
         label = font.render(tag, True, COLORS["white"])
-        screen.blit(
-            label,
-            (x * cell + (cell - label.get_width()) // 2, y * cell + (cell - label.get_height()) // 2),
-        )
-
+        screen.blit(label, (x * cell + (cell - label.get_width()) // 2,
+                            y * cell + (cell - label.get_height()) // 2))
 
 def draw_shots(screen: pygame.Surface, shots: Iterable[ShotOverlay], cell: int) -> None:
     for shot in shots:
         sx, sy = shot.source
         tx, ty = shot.target
         start = (sx * cell + cell // 2, sy * cell + cell // 2)
-        end = (tx * cell + cell // 2, ty * cell + cell // 2)
-        pygame.draw.line(screen, shot.colour, start, end, 3)
+        end   = (tx * cell + cell // 2, ty * cell + cell // 2)
+        pygame.draw.line(screen, (30, 30, 30), start, end, 3)
 
-
-# --- Playback --------------------------------------------------------------
+# ---------------------- Playback ----------------------
 def build_timeline(events: Dict[float, List[dict]]) -> List[Tuple[float, List[dict]]]:
-    return sorted((time, evts) for time, evts in events.items())
-
+    return sorted(events.items(), key=lambda kv: kv[0])
 
 def describe_event(ev: dict) -> str:
-    etype = ev["type"]
-    unit = ev.get("unit", "?")
-    if etype == "move":
-        pos = ev["pos"]
-        return f"{unit} moved to {pos}"
-    if etype == "shoot":
-        target = ev.get("target") or "unknown"
-        return f"{unit} shot {target}"
-    if etype == "death":
-        return f"{unit} eliminated"
+    k = ev["type"]; u = ev.get("unit","?")
+    if k == "move":  return f"{u} -> {ev['pos']}"
+    if k == "shoot": return f"{u} fired"
+    if k == "death": return f"{u} KIA"
     return repr(ev)
-
 
 def playback(
     spec: dict,
@@ -311,33 +340,27 @@ def playback(
     paused = False
     accumulator = 0.0
 
+    SHOT_HOLD_MS = 350
+    shot_expire_at = 0
+
     running = True
     step_once = False
     while running:
         dt = clock.tick(fps)
         accumulator += dt
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key in (pygame.K_ESCAPE, pygame.K_q):
-                    running = False
-                elif event.key == pygame.K_SPACE:
-                    paused = not paused
-                elif event.key in (pygame.K_RIGHT, pygame.K_RETURN):
-                    paused = True
-                    step_once = True
-                elif event.key == pygame.K_r:
-                    # Reset timeline
+        for ev in pygame.event.get():
+            if ev.type == pygame.QUIT: running = False
+            elif ev.type == pygame.KEYDOWN:
+                if ev.key in (pygame.K_ESCAPE, pygame.K_q): running = False
+                elif ev.key == pygame.K_SPACE: paused = not paused
+                elif ev.key in (pygame.K_RIGHT, pygame.K_RETURN):
+                    paused = True; step_once = True
+                elif ev.key == pygame.K_r:
                     state.reset()
-                    current_index = 0
-                    current_time = 0.0
-                    current_shots = []
-                    last_event_text = "Reset"
-                    paused = True
-                    accumulator = 0.0
-                    step_once = False
+                    current_index = 0; current_time = 0.0
+                    current_shots = []; last_event_text = "Reset"
+                    paused = True; accumulator = 0.0; step_once = False
 
         if current_index >= len(timeline):
             paused = True
@@ -352,35 +375,42 @@ def playback(
             if not paused:
                 accumulator %= step_delay_ms
             else:
-                step_once = False
-                accumulator = 0.0
+                step_once = False; accumulator = 0.0
 
-            step_time, events = timeline[current_index]
+            step_time, evts = timeline[current_index]
             current_shots = []
-            texts = []
+            shot_expire_at = pygame.time.get_ticks() + SHOT_HOLD_MS
 
-            for ev in events:
-                etype = ev["type"]
-                if etype == "move":
-                    state.set_position(ev["unit"], ev["pos"])
-                elif etype == "shoot":
-                    shooter = ev["unit"]
-                    target = ev.get("target")
+            texts = []
+            for e in evts:
+                t = e["type"]
+                if t == "move":
+                    state.set_position(e["unit"], e["pos"])
+                elif t == "shoot":
+                    shooter = e["unit"]
                     shooter_pos = state.lookup(shooter)
-                    target_pos = state.lookup(target) if target else None
-                    info = state.ensure_info(shooter)
-                    colour = COLORS["blue_e"] if info.side == "BLUE" else COLORS["red_e"]
+                    target_pos = e.get("target_coord")
+                    if target_pos is None:
+                        tgt_name = e.get("target")
+                        target_pos = state.lookup(tgt_name)
+                    if target_pos is None:
+                        target_pos = shooter_pos
                     if shooter_pos and target_pos:
+                        side = state.ensure_info(shooter).side
+                        colour = COLORS["blue_e"] if side == "BLUE" else COLORS["red_e"]
                         current_shots.append(
                             ShotOverlay(source=shooter_pos, target=target_pos, colour=colour)
                         )
-                elif etype == "death":
-                    state.remove_unit(ev["unit"])
-                texts.append(describe_event(ev))
+                elif t == "death":
+                    state.remove_unit(e["unit"])
+                texts.append(describe_event(e))
 
             current_time = step_time
-            last_event_text = "; ".join(texts) if texts else f"Time {step_time}: no change"
+            last_event_text = "; ".join(texts) if texts else f"{step_time:.2f}: (no change)"
             current_index += 1
+
+        if current_shots and pygame.time.get_ticks() > shot_expire_at:
+            current_shots = []
 
         draw_background(screen, width, height, cell_size, patches)
         draw_units(screen, state, cell_size, font)
@@ -388,9 +418,9 @@ def playback(
 
         hud_lines = [
             f"Time: {current_time:.2f}",
-            f"{'Paused' if paused else 'Running'}",
+            f"{'Paused' if paused else 'Running'}  step={current_index}/{len(timeline)}",
             last_event_text,
-            "SPACE=Pause  RIGHT=Step  ESC=Quit",
+            "SPACE=Pause  RIGHT/ENTER=Step  R=Reset  ESC=Quit",
         ]
         for i, line in enumerate(hud_lines):
             surf = hud_font.render(line, True, COLORS["blue_e"])
@@ -400,30 +430,48 @@ def playback(
 
     pygame.quit()
 
+# ---------------------- Helpers ----------------------
+def auto_find_log(script_dir: str) -> Optional[str]:
+    candidates = [
+        os.path.join(script_dir, "log_simulation.txt"),
+        os.path.join(script_dir, "logs", "log_simulation.txt"),
+        os.path.join(script_dir, "log_world.txt"),
+        os.path.join(script_dir, "logs", "log_world.txt"),
+    ]
+    for p in candidates:
+        if os.path.isfile(p):
+            return p
+    return None
 
-# --- Command line ----------------------------------------------------------
+# ---------------------- CLI ----------------------
 def main() -> None:
     parser = argparse.ArgumentParser(description="Replay TDGsim logs on the tactical map.")
-    parser.add_argument("--map", default="map.json", help="Path to map specification JSON.")
-    parser.add_argument(
-        "--log",
-        default=os.path.join("logs", "log_world.txt"),
-        help="Simulation log file to replay.",
-    )
+    parser.add_argument("--map", help="Path to map specification JSON.")
+    parser.add_argument("--log", help="Simulation log file to replay.")
     parser.add_argument("--cell", type=int, default=10, help="Pixel size of each map cell.")
     parser.add_argument("--fps", type=int, default=60, help="Render frames per second.")
-    parser.add_argument(
-        "--interval",
-        type=int,
-        default=600,
-        help="Milliseconds to wait before advancing to the next simulation time-step.",
-    )
-
+    parser.add_argument("--interval", type=int, default=600, help="Milliseconds per simulation step.")
     args = parser.parse_args()
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    map_path = args.map if os.path.isabs(args.map) else os.path.join(script_dir, args.map)
-    log_path = args.log if os.path.isabs(args.log) else os.path.join(script_dir, args.log)
+
+    map_path = args.map or os.path.join(script_dir, "map.json")
+    if not os.path.isabs(map_path):
+        map_path = os.path.join(script_dir, map_path)
+
+    if args.log:
+        log_path = args.log if os.path.isabs(args.log) else os.path.join(script_dir, args.log)
+        if not os.path.isfile(log_path):
+            auto = auto_find_log(script_dir)
+            if not auto:
+                raise FileNotFoundError(f"Log not found: {log_path}")
+            log_path = auto
+    else:
+        log_path = auto_find_log(script_dir)
+        if not log_path:
+            raise FileNotFoundError("No log file found. Put one of these next to the script:\n"
+                                    "  log_simulation.txt, logs/log_simulation.txt, "
+                                    "  log_world.txt, logs/log_world.txt")
 
     spec, positions, info = load_map(map_path)
     events, inferred_initials = parse_log(log_path)
@@ -452,7 +500,6 @@ def main() -> None:
         fps=args.fps,
         step_delay_ms=max(50, args.interval),
     )
-
 
 if __name__ == "__main__":
     main()

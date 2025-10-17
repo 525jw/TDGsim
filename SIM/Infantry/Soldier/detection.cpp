@@ -9,15 +9,13 @@ Detection::Detection(Engine* engine, Entity* info)
     this->AddState("DETECT");
 
     this->SetCurState("WAIT");
-    this->t_det = 0.0f;
 
     this->AddInputPort("MyPosition");
-    this->AddInputPort("EnemyPosition");
+    // this->AddInputPort("EnemyPosition");
     this->AddOutputPort("SoldierRep");
 
     enemyIds.clear();
 
-    this->LogMyBirth();
 
     this->UpdateTime(0.0f);
 }
@@ -69,7 +67,7 @@ void Detection::RebuildEnemyPosList() {
     }
 }
 bool Detection::ExtTransFn(const std::string& inPort, const std::any& anyMessage){
-    if (inPort=="MyPosition" || inPort=="EnemyPosition") {
+    if (inPort=="MyPosition") {
         PositionMsg message;
         if(!TryCastMessage(anyMessage,message,"")) return false;
         this->SetCurState("DETECT");
@@ -84,13 +82,13 @@ bool Detection::OutputFn(){
         return true;
     }
 
-    logger_world << "["<<this->info->name<<"] "<< "looks around"<<" when Time : "<<this->engine->GetCurrentTime()<<std::endl;
+    LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"DETECT","looks around");
     this->RebuildEnemyPosList();
     
     SoldierRep message;
     if (!enemyIds.empty()) {
         message.enemyDetected = true;
-        logger_world << "["<<this->info->name<<"] "<< "detected something"<<" when Time : "<<this->engine->GetCurrentTime()<<std::endl;
+        LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"DETECT","detected somthing");
     }else{
         message.enemyDetected = false;
     }
@@ -105,12 +103,11 @@ bool Detection::IntTransFn(){
     if (this->GetCurState() == "DETECT") {
         this->SetCurState("WAIT");
     }
-    this->t_det = scanInterval;
     return true;
 }
 
 TIME_T Detection::TimeAdvanceFn(){
-    if (this->GetCurState() == "WAIT")   return scanInterval;
+    if (this->GetCurState() == "WAIT")   return TIME_INF;
     if (this->GetCurState() == "DETECT") return t_det;
     return -1;
 }

@@ -24,12 +24,12 @@ void Model::SetParentModel(Model* parentModel){
 const int Model::GetModelID() const{
     return this->modelID;
 }
-const std::optional<std::string>& Model::GetName() const{
-    return this->name;
+const std::string& Model::GetName() const {
+    static const std::string kDefaultName{"NONAME"};
+    return this->name ? *this->name : kDefaultName;
 }
 std::string Model::GetNameWithId() const {
-    return this->GetName().value_or("NONAME")
-         + "(" + std::to_string(this->GetModelID()) + ")";
+    return this->GetName()+ "(" + std::to_string(this->GetModelID()) + ")";
 }
 const Engine* Model::GetEngine() const{
     return this->engine;

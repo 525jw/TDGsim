@@ -13,7 +13,6 @@ Fire::Fire(Engine* engine, Entity* info)
     this->AddInputPort("SoldierRep");
     this->AddOutputPort("FireOut");
 
-    this->LogMyBirth();
 }
 
 TIME_T Fire::fireEquation(){
@@ -54,19 +53,9 @@ bool Fire::OutputFn(){
         message.targetId = this->targetId;
 
         const Entity* targetEntity = env->QueryEntityById(targetId);
-        if (!targetEntity) {
-            logger_world << "[" << this->info->name << "] "
-                         << "shoot at missing target (" << targetId << ")"
-                         << " when Time : " << this->engine->GetCurrentTime()
-                         << std::endl;
-            return true;
-        }
 
         std::any anyMessage = message;
-        logger_world << "[" << this->info->name << "] "
-                     << "shoot " << targetEntity->name
-                     << " when Time : " << this->engine->GetCurrentTime()
-                     << std::endl;
+        LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"FIRE","shoot at ",targetEntity->name);
         this->AddOutputEvent("FireOut", anyMessage);
     } else {
         // miss: no event emitted

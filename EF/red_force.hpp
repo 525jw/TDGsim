@@ -12,9 +12,9 @@ public:
     RedForce(Engine* engine)
     : CoupledModel(engine)
     {
-        std::vector<int> plt1_Ids; plt1_Ids.clear();
-        std::vector<int> plt2_Ids; plt2_Ids.clear();
-        std::vector<int> cmp_Ids; cmp_Ids.clear();
+        std::vector<int> plt1_Ids;
+        std::vector<int> plt2_Ids;
+        std::vector<int> cmp_Ids;
 
         std::vector<Soldier*> plt1;
         const int numOfPl1 = 25;
@@ -79,27 +79,24 @@ public:
         plt2.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("RED-PLT2-SOL25"), "RED-PLT2-SOL25", Side::RED, ForceType::RIFLE, {78,57}})); plt2_Ids.push_back(env->QueryEntityIdByName("RED-PLT2-SOL25"));
 
         for (int i = 0; i < numOfPl1; ++i) {
-            plt1[i]->SetParentModel(this);
             this->RegisterSubModel(plt1[i]);
+            plt1[i]->SetParentModel(this);
         }
         for (int i = 0; i < numOfPl2; ++i) {
-            plt2[i]->SetParentModel(this);
             this->RegisterSubModel(plt2[i]);
+            plt2[i]->SetParentModel(this);
         }
 
         PlatoonLeader* plt1_leader = new PlatoonLeader(engine, env->RegisterEntityIdByName("RED-PLT1-LEADER"), &plt1_Ids); cmp_Ids.push_back(env->QueryEntityIdByName("RED-PLT1-LEADER"));
         PlatoonLeader* plt2_leader = new PlatoonLeader(engine, env->RegisterEntityIdByName("RED-PLT2-LEADER"), &plt2_Ids); cmp_Ids.push_back(env->QueryEntityIdByName("RED-PLT2-LEADER"));
-        plt1_leader->SetModelName("RED-PLT1-LEADER");
-        plt1_leader->SetParentModel(this);
         this->RegisterSubModel(plt1_leader);
-        plt2_leader->SetModelName("RED-PLT2-LEADER");
-        plt2_leader->SetParentModel(this);
         this->RegisterSubModel(plt2_leader);
+        plt1_leader->SetParentModel(this);
+        plt2_leader->SetParentModel(this);
 
         HQ* hq = new HQ(engine, &cmp_Ids, Side::RED);
-        hq->SetModelName("RED-HQ");
-        hq->SetParentModel(this);
         this->RegisterSubModel(hq);
+        hq->SetParentModel(this);
 
         this->AddInputPort("Start");
         this->AddInputPort("BlueFire");

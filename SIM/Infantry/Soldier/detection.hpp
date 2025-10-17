@@ -15,7 +15,6 @@ private:
 
     // DEVS
     TIME_T t_det = 0.0f;
-    TIME_T scanInterval = 1.0f;
 
     TIME_T detEquation() const;
 public:

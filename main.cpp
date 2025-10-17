@@ -10,6 +10,6 @@ int main(){
     engine.SetRootModel(&tdgSim);
     engine.Run();
     
-    std::puts("TDG done");
+    std::puts("TDG ends");
     return 0;
 }

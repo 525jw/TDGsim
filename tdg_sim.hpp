@@ -9,14 +9,17 @@ public:
     TdgSim(Engine* engine)
     : CoupledModel(engine)
     {
-        // 생성-engine정보만 넘겨주기
+        this->SetModelName("TDGSim");
+        
         ExperimentFrame* ef = new ExperimentFrame(engine);
         Simulation* sim = new Simulation(engine);
 
-        
+        ef->SetModelName("EF");
         ef->SetParentModel(this);
-        sim->SetParentModel(this);
         this->RegisterSubModel(ef);
+        
+        sim->SetModelName("SIM");
+        sim->SetParentModel(this);
         this->RegisterSubModel(sim);
 
         this->AddCoupling(ef,"Start",sim,"Start",IC);

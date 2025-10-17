@@ -34,7 +34,7 @@ public:
     void SetParentModel(Model* parentModel);
 
     const int GetModelID() const;
-    const std::optional<std::string>& GetName() const;
+    const std::string& GetName() const;
     std::string GetNameWithId() const;
 
     const Engine* GetEngine() const;

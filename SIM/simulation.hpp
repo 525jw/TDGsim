@@ -14,12 +14,17 @@ public:
         BlueForce* blueForce = new BlueForce(engine);
         RedForce* redForce = new RedForce(engine);
         
-        this->RegisterSubModel(env);
-        this->RegisterSubModel(blueForce);
-        this->RegisterSubModel(redForce);
+        env->SetModelName("Environment");
         env->SetParentModel(this);
+        this->RegisterSubModel(env);
+
+        blueForce->SetModelName("BlueForce");
         blueForce->SetParentModel(this);
+        this->RegisterSubModel(blueForce);
+        
+        redForce->SetModelName("RedForce");
         redForce->SetParentModel(this);
+        this->RegisterSubModel(redForce);
 
         this->AddInputPort("Start");
         this->AddOutputPort("Result");

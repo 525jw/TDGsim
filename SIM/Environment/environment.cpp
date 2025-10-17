@@ -16,8 +16,6 @@ Environment::Environment(Engine* engine)
 
     assert(env == nullptr && "Only one Environment instance expected");
     env = this;
-
-    this->LogMyBirth();
 }
 
 Environment::~Environment() {
@@ -69,8 +67,6 @@ bool Environment::ExtTransFn(const std::string& inPort, const std::any& anyMessa
 
             entities[RegisterEntityIdByName(e.name)] = std::move(e);
         }
-
-        logger_system << "[Init] Environment received Scenario and saved all" << std::endl;
         this->SetCurState("WAIT");
     }
     return true;
@@ -128,6 +124,5 @@ int Environment::RegisterEntityIdByName(const std::string& name){
 
     int id = nextId++;
     nameToId[name] = id;
-    logger_system << "[Init] " << name << " Entity Id : " << id <<std::endl;
     return id;
 }

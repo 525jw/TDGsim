@@ -1,6 +1,4 @@
 #include "platoon_leader.hpp"
-#include <cmath>
-#include <new>
 
 PlatoonLeader::PlatoonLeader(Engine* engine, int entityId, std::vector<int> *membersId)
     : AtomicModel(engine)
@@ -21,159 +19,67 @@ PlatoonLeader::PlatoonLeader(Engine* engine, int entityId, std::vector<int> *mem
     this->AddOutputPort("PlatoonOrd");
     this->AddOutputPort("PlatoonRep");
 
-    this->LogMyBirth();
 }
 
 bool PlatoonLeader::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
     if (inPort == "CompanyOrd") {
         CompanyOrd message;
-        if (!TryCastMessage(anyMessage, message, "")) return false;
+        if (!TryCastMessage(anyMessage, message, "PlatoonLeader::ExtTransFn.CompanyOrd")) return false;
 
-        // Check whether this platoon is the intended recipient
-        logger_world << "[TMP] " <<this->entityId<< " received order "<<" when Time : "<<this->engine->GetCurrentTime()<<std::endl;
         auto it = message.orders.find(this->entityId);
         if (it == message.orders.end()) {
             return true;
         }
         const Order& ord = it->second;
 
+        this->currentTask = ord.task;
         if (ord.task == TaskType::MOVE) {
-            try {
-                if (EnvReady()) {
-                    Environment& environment = *env;
-                    logger_world << "[DEBUG]" << " Environment size for plan " << environment.GetWidth()
-                                 << "x" << environment.GetHeight() << " members "
-                                 << memberIds.size() << std::endl;
-                }
-                this->plan = BuildPlatoonManeuverPlan(memberIds, ord.to);
-            } catch (const std::bad_alloc&) {
-                logger_world << "[ERROR]" << " Maneuver plan allocation failed for platoon " << this->entityId
-                             << " at time " << this->engine->GetCurrentTime() << std::endl;
-                throw;
-            }
-            logger_world << "[TMP] " <<this->entityId<< " built maneuver plan "<<" when Time : "<<this->engine->GetCurrentTime()<<std::endl;
-            logger_world << "[DEBUG] " << this->entityId << " plan goal (" << plan.goal.x << ", " << plan.goal.y << ") current (" << plan.currentGoal.x << ", " << plan.currentGoal.y << ")" << " when Time : " << this->engine->GetCurrentTime() << std::endl;
-            missionInProgress = plan.success;
-            if (!plan.success) {
-                logger_world << "[ERROR]" << " Maneuver plan build failed for platoon "
-                             << this->entityId << " reason: " << plan.failureReason
-                             << " when Time : " << this->engine->GetCurrentTime() << std::endl;
-            }
+            this->plan = BuildPlatoonManeuverPlan(memberIds, ord.to);
         } else if (ord.task == TaskType::HOLD) {
-            PlatoonManeuverPlan holdPlan;
-            holdPlan.success = true;
-            holdPlan.failureReason.clear();
-            holdPlan.orderedMemberIds = memberIds;
-
-            long long sumx = 0, sumy = 0;
-            for (int id : holdPlan.orderedMemberIds) {
-                Point p = env->QueryEntityPosById(id);
-                holdPlan.memberStartPositions[id] = p;
-                sumx += p.x;
-                sumy += p.y;
-            }
-            if (!holdPlan.orderedMemberIds.empty()) {
-                Point ref{
-                    int(sumx / static_cast<long long>(holdPlan.orderedMemberIds.size())),
-                    int(sumy / static_cast<long long>(holdPlan.orderedMemberIds.size()))
-                };
-                holdPlan.referenceStart = ref;
-                holdPlan.goal = ref; // use the centroid as the hold position
-                holdPlan.currentGoal = ref;
-                holdPlan.waypointGoals = {ref};
-                holdPlan.activeWaypoint = 0;
-            }
-            this->plan = std::move(holdPlan);
-            missionInProgress = false;
+            this->plan = PlatoonManeuverPlan{};
+            this->plan.orderedMemberIds = memberIds;
+            this->plan.goal = ord.to;
+            this->plan.currentGoal = ord.to;
+            this->plan.success = true;
+        } else {
+            this->plan = PlatoonManeuverPlan{};
         }
-
         this->SetCurState("DECIDE");
         this->t_dec = 0.0f;
-        logger_world << "[TMP] " <<this->entityId<< " state : DECIDE "<<" when Time : "<<this->engine->GetCurrentTime()<<std::endl;
 
     } else if (inPort == "SoldierRep") {
         SoldierRep message;
-        if (!TryCastMessage(anyMessage, message, "")) return false;
-        if (message.enemyDetected) {
-            engagedMemberIds.insert(message.entityId);
-        } else {
-            engagedMemberIds.erase(message.entityId);
+        if (!TryCastMessage(anyMessage, message, "PlatoonLeader::ExtTransFn.SoldierRep")) return false;
+        if (!message.enemyDetected) {
+            this->SetCurState("DECIDE");
+            this->t_dec = 0.0f;
         }
-        this->SetCurState("DECIDE");
-        this->t_dec = 0.0f;
-        missionInProgress = true;
     }
     return true;
 }
 
 bool PlatoonLeader::OutputFn() {
     if (this->GetCurState() == "DECIDE") {
-        logger_world << "[TMP] " <<this->entityId<< " decide "<<" when Time : "<<this->engine->GetCurrentTime()<<std::endl;
-        PlatoonOrd order; // 명령
-        bool allMembersAtGoal = true;
-        const bool enemyDetected = !engagedMemberIds.empty();
-        bool needFollowup = false;
+        if (!EnvReady()) return true;
+        Environment& environment = *env;
+        PlatoonOrd order;
 
-        if (enemyDetected) {
-            if (!EnvReady()) {
-                missionInProgress = false;
-                return true;
-            }
+        if (this->currentTask == TaskType::HOLD) {
             order.orders.reserve(memberIds.size());
-            Environment& environment = *env;
             for (int memberId : memberIds) {
                 Order holdOrder;
                 holdOrder.task = TaskType::HOLD;
                 holdOrder.to = environment.QueryEntityPosById(memberId);
                 order.orders.emplace(memberId, holdOrder);
             }
-            allMembersAtGoal = false;
-            needFollowup = true;
-        } else {
-            if (!plan.success) {
-                missionInProgress = false;
-                return true;
-            }
-            if (!EnvReady()) {
-                missionInProgress = false;
-                return true;
-            }
-            Environment& environment = *env;
 
-            auto allMembersAt = [&](Point target) {
-                for (int memberId : plan.orderedMemberIds) {
-                    if (environment.QueryEntityPosById(memberId) != target) {
-                        return false;
-                    }
-                }
-                return true;
-            };
+            std::any anyOrder = order;
+            this->AddOutputEvent("PlatoonOrd", anyOrder);
+            return true;
+        }
 
-            if (!plan.waypointGoals.empty()) {
-                while (plan.activeWaypoint + 1 < plan.waypointGoals.size() &&
-                       allMembersAt(plan.currentGoal)) {
-                    std::size_t nextIndex = plan.activeWaypoint + 1;
-                    logger_world << "[TMP] " << this->entityId << " advancing waypoint to "
-                                 << "(" << plan.waypointGoals[nextIndex].x << ", "
-                                 << plan.waypointGoals[nextIndex].y << ")"
-                                 << " when Time : " << this->engine->GetCurrentTime() << std::endl;
-                    if (!RebuildPlatoonWaypointPlan(plan, nextIndex)) {
-                        logger_world << "[ERROR]" << " Failed to rebuild waypoint grid for platoon "
-                                     << this->entityId << " : " << plan.failureReason << std::endl;
-                        missionInProgress = false;
-                        return true;
-                    }
-                }
-            } else {
-                plan.currentGoal = plan.goal;
-            }
-
-            Point stageGoal = plan.currentGoal;
-            logger_world << "[DEBUG] " << this->entityId << " stage goal (" << stageGoal.x << ", " << stageGoal.y << ")"
-                         << " when Time : " << this->engine->GetCurrentTime() << std::endl;
-            bool allMembersAtStageGoal = true;
-            const bool finalWaypoint = plan.waypointGoals.empty() ||
-                                       (plan.activeWaypoint + 1 == plan.waypointGoals.size());
+        if (this->currentTask == TaskType::MOVE) {
+            if (!plan.success) return true;
             order.orders.reserve(plan.orderedMemberIds.size());
 
             auto nextStepFor = [&](Point p) -> Point {
@@ -188,84 +94,32 @@ bool PlatoonLeader::OutputFn() {
             };
 
             for (int memberId : plan.orderedMemberIds) {
-                Order memberOrder;
                 Point currentPos = environment.QueryEntityPosById(memberId);
+                Order memberOrder;
                 memberOrder.task = TaskType::HOLD;
                 memberOrder.to = currentPos;
 
-                if (currentPos != stageGoal) {
-                    Point nextTarget = nextStepFor(currentPos);
-                    if (nextTarget.x == -1 || nextTarget.y == -1) {
-                        logger_world << "[DEBUG] " << this->entityId << " member " << memberId
-                                     << " no route from (" << currentPos.x << ", " << currentPos.y << ")"
-                                     << " to stage goal (" << stageGoal.x << ", " << stageGoal.y << ")"
-                                     << " when Time : " << this->engine->GetCurrentTime() << std::endl;
-                    } else if (nextTarget == currentPos) {
-                        logger_world << "[DEBUG] " << this->entityId << " member " << memberId
-                                     << " next step equals current at (" << currentPos.x << ", " << currentPos.y << ")"
-                                     << " stage goal (" << stageGoal.x << ", " << stageGoal.y << ")"
-                                     << " when Time : " << this->engine->GetCurrentTime() << std::endl;
-                    } else {
-                        logger_world << "[DEBUG] " << this->entityId << " member " << memberId
-                                     << " moving from (" << currentPos.x << ", " << currentPos.y << ")"
-                                     << " to (" << nextTarget.x << ", " << nextTarget.y << ")"
-                                     << " stage goal (" << stageGoal.x << ", " << stageGoal.y << ")"
-                                     << " when Time : " << this->engine->GetCurrentTime() << std::endl;
-                        memberOrder.task = TaskType::MOVE;
-                        memberOrder.to = nextTarget;
-                    }
+                Point nextTarget = nextStepFor(currentPos);
+                if (nextTarget.x != -1 && nextTarget.y != -1 && nextTarget != currentPos) {
+                    memberOrder.task = TaskType::MOVE;
+                    memberOrder.to = nextTarget;
                 }
 
-                if (memberOrder.task == TaskType::MOVE) {
-                    needFollowup = true;
-                    allMembersAtStageGoal = false;
-                } else if (currentPos != stageGoal) {
-                    needFollowup = true;
-                    allMembersAtStageGoal = false;
-                }
                 order.orders.emplace(memberId, memberOrder);
             }
 
-            if (!finalWaypoint || !allMembersAtStageGoal) {
-                needFollowup = true;
-            }
-            allMembersAtGoal = finalWaypoint && allMembersAtStageGoal;
+            std::any anyOrder = order;
+            this->AddOutputEvent("PlatoonOrd", anyOrder);
+            return true;
         }
-        std::any anyOrder = order;
-        this->AddOutputEvent("PlatoonOrd", anyOrder);
-        logger_world << "[TMP] " <<this->entityId<< " ordered "<<" when Time : "<<this->engine->GetCurrentTime()<<std::endl;
-
-        const bool missionSuccess = (!enemyDetected) && plan.success && allMembersAtGoal;
-        const bool shouldReport = enemyDetected || missionSuccess;
-        if (shouldReport) {
-            PlatoonRep report; // 보고
-            report.entityId = this->entityId;
-            report.succeed = missionSuccess;
-
-            std::any anyReport = report;
-            this->AddOutputEvent("PlatoonRep", anyReport);
-        }
-
-        missionInProgress = needFollowup;
-        logger_world << "[DEBUG] " << this->entityId << " missionInProgress=" << missionInProgress
-                     << " needFollowup=" << needFollowup
-                     << " when Time : " << this->engine->GetCurrentTime() << std::endl;
     }
     return true;
 }
 
 bool PlatoonLeader::IntTransFn() {
     if (this->GetCurState() == "DECIDE") {
-        if (missionInProgress) {
-            this->SetCurState("DECIDE");
-            this->t_dec = decisionInterval;
-        } else {
-            this->SetCurState("WAIT");
-            this->t_dec = 0.0f;
-        }
-        logger_world << "[DEBUG] " << this->entityId << " IntTrans missionInProgress=" << missionInProgress
-                     << " set t_dec=" << this->t_dec
-                     << " when Time : " << this->engine->GetCurrentTime() << std::endl;
+        this->SetCurState("WAIT");
+        this->t_dec = 0.0f;
     }
     return true;
 }

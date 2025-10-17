@@ -82,24 +82,27 @@ public:
 
 
         for (int i = 0; i < numOfPl1; ++i) {
-            this->RegisterSubModel(plt1[i]);
             plt1[i]->SetParentModel(this);
+            this->RegisterSubModel(plt1[i]);
         }
         for (int i = 0; i < numOfPl2; ++i) {
-            this->RegisterSubModel(plt2[i]);
             plt2[i]->SetParentModel(this);
+            this->RegisterSubModel(plt2[i]);
         }
 
         PlatoonLeader* plt1_leader = new PlatoonLeader(engine, env->RegisterEntityIdByName("BLUE-PLT1-LEADER"),&plt1_Ids); cmp_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT1-LEADER"));
         PlatoonLeader* plt2_leader = new PlatoonLeader(engine, env->RegisterEntityIdByName("BLUE-PLT2-LEADER"),&plt2_Ids); cmp_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT2-LEADER"));
-        this->RegisterSubModel(plt1_leader);
-        this->RegisterSubModel(plt2_leader);
+        plt1_leader->SetModelName("BLUE-PLT1-LEADER");
         plt1_leader->SetParentModel(this);
+        this->RegisterSubModel(plt1_leader);
+        plt2_leader->SetModelName("BLUE-PLT2-LEADER");
         plt2_leader->SetParentModel(this);
+        this->RegisterSubModel(plt2_leader);
 
         HQ* hq = new HQ(engine,&cmp_Ids);
-        this->RegisterSubModel(hq);
+        hq->SetModelName("BLUE-HQ");
         hq->SetParentModel(this);
+        this->RegisterSubModel(hq);
 
         this->AddInputPort("Start");
         this->AddInputPort("RedFire");

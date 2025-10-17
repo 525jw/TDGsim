@@ -189,7 +189,6 @@ HQ::HQ(Engine* engine,
     AddOutputPort("CompanyOrd");
     AddInputPort("InfantryRep");
 
-    this->LogMyBirth();
 }
 
 bool HQ::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
@@ -207,11 +206,9 @@ bool HQ::OutputFn() {
             hqSide,
             controlledEntityIds);
 
-        // === 로그출력 ===
-        logger_world << "[TMP] HQ(" << ToString(hqSide) << ") loaded order(s) from "
-                     << ordersFilePath << ":" << std::endl;
+        LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER");
         if (order.orders.empty()) {
-            logger_world << "  (no orders loaded)" << std::endl;
+            LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER"," orders are empty");
         } else {
             for (const auto& [entityId, ord] : order.orders) {
                 std::string taskStr;
@@ -221,10 +218,7 @@ bool HQ::OutputFn() {
                     case TaskType::HOLD: taskStr = "HOLD"; break;
                     default: taskStr = "UNKNOWN"; break;
                 }
-                logger_world << "  EntityID: " << entityId
-                          << " | Task: " << taskStr
-                          << " | To: (" << ord.to.x << ", " << ord.to.y << ")"
-                          << std::endl;
+                LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER"," entityId=",entityId," task=",taskStr," to=",ord.to.x,",",ord.to.y);
             }
         }
 

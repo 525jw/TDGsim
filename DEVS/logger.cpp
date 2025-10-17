@@ -48,7 +48,10 @@ void Logger::setMaxLines(std::size_t max) {
 }
 
 std::size_t Logger::lineCount() const { return lineCount_; }
-bool Logger::limitReached() const { return lineCount_ >= maxLines_; }
+bool Logger::limitReached() const {
+    if (maxLines_ == 0) return false;  // 0이면 라인 제한 없음
+    return lineCount_ >= maxLines_;
+}
 
 /* ───────────── 유틸 ───────────── */
 
@@ -63,7 +66,7 @@ std::string ToFixedString(float value, int precision) {
 
 /* ───────────── 전역 로거 정의 ───────────── */
 #ifndef DISABLE_LOG
-Logger logger_system{"logs/log_system.txt"};
+Logger logger_system{"logs/log_system.txt",0};
 Logger logger_simulation {"logs/log_simulation.txt"};
 #else
 DummyLogger logger_system;

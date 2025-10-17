@@ -7,6 +7,7 @@
 #include <string_view>
 #include <utility>
 #include <sstream>
+#include <iomanip>
 
 /* ───────────── Logger 본체 ───────────── */
 class Logger final {
@@ -46,6 +47,18 @@ private:
 
 /* ───────────── 포맷 유틸 ───────────── */
 std::string ToFixedString(float value, int precision = 3);
+
+#ifndef DISABLE_LOG
+extern Logger logger_system;
+extern Logger logger_simulation;
+#else
+struct DummyLogger {
+    template <typename T> DummyLogger& operator<<(const T&) { return *this; }
+    DummyLogger& operator<<(std::ostream& (*)(std::ostream&)) { return *this; }
+};
+extern DummyLogger logger_system;
+extern DummyLogger logger_simulation;
+#endif
 
 /* ───────────── 로그 API ───────────── */
 template <typename... Args>
@@ -108,15 +121,3 @@ void LogSimulation(double simTime,
 #endif
 }
 
-/* ───────────── 전역 로거 선언 ───────────── */
-#ifndef DISABLE_LOG
-extern Logger logger_system;    // 시스템 로그
-extern Logger logger_simulation;     // 시뮬레이션 로그
-#else
-struct DummyLogger {
-    template <typename T> DummyLogger& operator<<(const T&) { return *this; }
-    DummyLogger& operator<<(std::ostream& (*)(std::ostream&)) { return *this; }
-};
-extern DummyLogger logger_system;
-extern DummyLogger logger_simulation;
-#endif

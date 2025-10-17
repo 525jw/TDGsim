@@ -74,7 +74,10 @@ void CoupledModel::RouteEIC(Event& event, TIME_T currentTime){  // Handling EIC
         }
 
         Event ev = event;
-         if (cp->getSrcModel()->IsCoupled()){
+        // NOTE: Translate()가 이벤트의 sender(모델/포트)를 현재 커플링 기준으로 덮어쓴다.
+        //       따라서 downstream atomic에서는 원래 upstream sender 정보를 더 이상 사용할 수 없다.
+        //       IsCoupled() 가드가 없으면 포트 이름을 링크 별로 다르게 쓸 수 있다.
+        //  if (cp->getSrcModel()->IsCoupled()){
             ev = this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
             
             LogTrace(this->engine->GetCurrentTime(),"CM::RouteEIC",
@@ -83,7 +86,7 @@ void CoupledModel::RouteEIC(Event& event, TIME_T currentTime){  // Handling EIC
                     " destModel=",cp->getDetModel()->GetNameWithId()," destPort=",cp->getDetPort());
 
             cp->getDetModel()->ReceiveEvent(ev, currentTime);
-        }
+        // }
     }
 }
 void CoupledModel::RouteEOC(Event& event, TIME_T currentTime){  // Handling EOC
@@ -116,9 +119,9 @@ void CoupledModel::RouteIC(Event& event, TIME_T currentTime){  // Handling IC
         }
 
         Event ev = event;
-        if (cp->getDetModel()->IsCoupled()) {
+        // if (cp->getDetModel()->IsCoupled()) {
             ev = this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
-        }
+        // }
 
         LogTrace(this->engine->GetCurrentTime(),"CM::RouteIC",
                     "model=",this->GetNameWithId(),

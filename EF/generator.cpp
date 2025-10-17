@@ -13,7 +13,6 @@ Generator::Generator(Engine* engine)
 
     randomSeed_ = GenerateRandomSeed();
     scenarioPath_ = "map.json";
-    this->LogMyBirth();
     this->UpdateTime(0.0f);
 }
 
@@ -38,7 +37,6 @@ bool Generator::OutputFn() {
         message.scen = &scenario_;     
         std::any anyMessage = message;
         this->AddOutputEvent("Start",anyMessage);
-        logger_system << "[Init] Generator loaded file and sent Scenario" << std::endl;
     }
     return true;
 }

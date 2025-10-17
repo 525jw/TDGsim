@@ -13,13 +13,12 @@ public:
         Generator* generator = new Generator(engine);
         // DataCollector* dataCollector = new DataCollector(engine);
 
-        // 자식모델 목록에 등록
-        this->RegisterSubModel(generator);
-        // this->RegisterSubModel(dataCollector);
-
+        // 이름 설정-id는 생성자에서 자동 등록,TODO 이름도 생성자에서 handle가능하게
+        generator->SetModelName("Generator");
         // 부모를 this로 설정
         generator->SetParentModel(this);
-        // dataCollector->SetParentModel(this);
+        // 자식모델 목록에 등록
+        this->RegisterSubModel(generator);
 
         // IO port 설정
         this->AddInputPort("Result");
