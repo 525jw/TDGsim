@@ -12,7 +12,7 @@ private:
     // attribute
     Point nextPos = {-1,-1};
     float curSpeed = -1.0f;
-    TIME_T lookAroundPeriod = 1.5f; // TODO:이산시간시뮬레이션화 될 수 있음, env와 pos가 상호작용하게 하는 편이 좋을 것
+    TIME_T lookAroundPeriod = 2.0f; // TODO:이산시간시뮬레이션화 될 수 있음, env와 pos가 상호작용하게 하는 편이 좋을 것
 
     // DEVS
     TIME_T t_mnv = -1.0f;

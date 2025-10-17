@@ -17,7 +17,7 @@ Generator::Generator(Engine* engine)
 }
 
 unsigned int Generator::GenerateRandomSeed() {
-    // return 1760676784;
+    // return 1760684342;
     return static_cast<unsigned int>(time(nullptr));
 }
 
