@@ -11,7 +11,7 @@ class Engine;
 
 class AtomicModel : public Model{
 protected:
-    TIME_T executedTime; // NOTE : Currently unused; specified in the textbook;
+    TIME_T executedTime;
     template<typename T>
     static bool TryCastMessage(const std::any& raw, T& typed, const std::string& context = "") {
         try {

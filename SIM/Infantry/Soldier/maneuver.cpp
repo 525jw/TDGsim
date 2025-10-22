@@ -38,7 +38,7 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
 
         if(ord.task == TaskType::MOVE){ //이동명령
             this->nextPos = ord.to;
-            this->curSpeed = 4.0f; // TODO:지형에 의존적으로 적용시킬것 
+            this->curSpeed = moveSpeed; // TODO:지형에 의존적으로 적용시킬것 
             LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"RECEIVE_ORDER",
                         "task=","MOVE",
                         " from=(",this->info->position.x,", ",this->info->position.y,")",
@@ -49,8 +49,9 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
             LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"RECEIVE_ORDER","task=","HOLD");
         }
 
-        this->SetCurState("MOVE");
         this->t_mnv = mnvEquation(this->curSpeed);
+        if(GetCurState()=="MOVE") this->t_mnv = std::max(0.f, t_mnv - executedTime);
+        this->SetCurState("MOVE");
     }else if(inPort == "FireIn"){  // TODO: DamageEvaluation::AM 으로 추후 분리
         FireMsg message;
         if(!TryCastMessage(anyMessage,message,"")) return false;

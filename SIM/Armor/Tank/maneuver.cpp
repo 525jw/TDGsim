@@ -49,8 +49,9 @@ bool TankManeuver::ExtTransFn(const std::string& inPort, const std::any& anyMess
             LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"RECEIVE_ORDER","task=","HOLD");
         }
 
-        this->SetCurState("MOVE");
         this->t_mnv = mnvEquation(this->curSpeed);
+        if(GetCurState()=="MOVE") this->t_mnv = std::max(0.f, t_mnv - executedTime);
+        this->SetCurState("MOVE");
     }else if(inPort == "FireIn"){  // TODO: DamageEvaluation::AM 으로 추후 분리
         FireMsg message;
         if(!TryCastMessage(anyMessage,message,"")) return false;

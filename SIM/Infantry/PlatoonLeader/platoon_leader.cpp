@@ -69,6 +69,59 @@ bool PlatoonLeader::OutputFn() {
         Environment& environment = *env;
         PlatoonOrd order;
 
+        auto pruneMissingMembers = [&]() {
+            std::vector<int> missing;
+            auto markMissing = [&](int memberId) {
+                if (!environment.QueryEntityById(memberId)) {
+                    if (std::find(missing.begin(), missing.end(), memberId) == missing.end()) {
+                        missing.push_back(memberId);
+                    }
+                }
+            };
+
+            for (int memberId : memberIds) {
+                markMissing(memberId);
+            }
+            for (int memberId : plan.orderedMemberIds) {
+                markMissing(memberId);
+            }
+            if (missing.empty()) {
+                return;
+            }
+
+            auto eraseMissingFromVec = [&](std::vector<int>& ids) {
+                ids.erase(
+                    std::remove_if(
+                        ids.begin(),
+                        ids.end(),
+                        [&](int id) {
+                            return std::find(missing.begin(), missing.end(), id) != missing.end();
+                        }),
+                    ids.end());
+            };
+
+            eraseMissingFromVec(memberIds);
+            eraseMissingFromVec(plan.orderedMemberIds);
+
+            for (int memberId : missing) {
+                plan.memberStartPositions.erase(memberId);
+                plan.memberGoalPositions.erase(memberId);
+                plan.memberPaths.erase(memberId);
+                plan.memberPathIndices.erase(memberId);
+            }
+
+            if (plan.orderedMemberIds.empty()) {
+                plan.memberStartPositions.clear();
+                plan.memberGoalPositions.clear();
+                plan.memberPaths.clear();
+                plan.memberPathIndices.clear();
+                plan.success = true;
+                plan.failureReason.clear();
+            }
+        };
+
+        pruneMissingMembers();
+
         if (this->currentTask == TaskType::HOLD) {
             order.orders.reserve(memberIds.size());
             for (int memberId : memberIds) {
@@ -84,6 +137,15 @@ bool PlatoonLeader::OutputFn() {
         }
 
         if (this->currentTask == TaskType::MOVE) {
+            if (!plan.success) {
+                if (plan.orderedMemberIds.empty() || plan.waypointGoals.empty()) {
+                    return true;
+                }
+                if (!RebuildPlatoonWaypointPlan(plan, plan.activeWaypoint)) {
+                    return true;
+                }
+            }
+
             if (!plan.success) return true;
             order.orders.reserve(plan.orderedMemberIds.size());
 
