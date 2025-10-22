@@ -182,6 +182,7 @@ HQ::HQ(Engine* engine,
 
     this->AddState("WAIT");
     this->AddState("DECIDE");
+    this->AddState("Report");
 
     this->SetCurState("WAIT");
 
@@ -193,9 +194,10 @@ HQ::HQ(Engine* engine,
 
 bool HQ::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
     if (inPort == "Start"){
+        // Indirect message — payload contained in json file
         this->SetCurState("DECIDE");
     }else if(inPort == "InfantryRep"){
-        this->SetCurState("DECIDE");
+        this->SetCurState("REPORT");
     }
     return true;
 }
@@ -237,5 +239,6 @@ bool HQ::IntTransFn() {
 TIME_T HQ::TimeAdvanceFn() {
     if(this->GetCurState()=="WAIT") return TIME_INF;
     if(this->GetCurState()=="DECIDE") return t_dec;
+    if(this->GetCurState()=="REPORT") return t_rep;
     return -1;
 }

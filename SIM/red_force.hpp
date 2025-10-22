@@ -133,5 +133,45 @@ public:
             this->AddCoupling(plt2[i],"SoldierRep",plt2_leader,"SoldierRep",IC);
             this->AddCoupling(plt2[i],"FireOut",plt2_leader,"FireFinished",IC);
         }
+
+    //     // Append RED tanks from map.json and couple to leaders and I/O
+    //     try {
+    //         std::ifstream ifs("map.json");
+    //         if (ifs.is_open()) {
+    //             nlohmann::json j; ifs >> j;
+    //             const char* keysEnt[] = {"units", "entities"};
+    //             for (const char* key : keysEnt) {
+    //                 if (!j.contains(key) || !j[key].is_array()) continue;
+    //                 for (const auto& u : j[key]){
+    //                     std::string type = u.value("type", std::string{"rifle"});
+    //                     std::string side = u.value("side", std::string{"RED"});
+    //                     if (!(type == "tank" || type == "TANK")) continue;
+    //                     if (!(side == "red" || side == "RED")) continue;
+    //                     std::string uid = u.value("uid", std::string{});
+    //                     int x=0,y=0;
+    //                     if (u.contains("x") && u.contains("y")) { x = u["x"].get<int>(); y = u["y"].get<int>(); }
+    //                     else if (u.contains("pos") && u["pos"].is_array() && u["pos"].size()>=2) { x = u["pos"][0].get<int>(); y = u["pos"][1].get<int>(); }
+    //                     int id = env->RegisterEntityIdByName(uid);
+    //                     Tank* t = new Tank(engine, Entity{id, uid, Side::RED, ForceType::TANK, {x,y}});
+    //                     t->SetModelName(uid);
+    //                     t->SetParentModel(this);
+    //                     this->RegisterSubModel(t);
+
+    //                     // Force-level couplings
+    //                     this->AddCoupling(this, "Start", t, "Start", EIC);
+    //                     this->AddCoupling(this, "BlueFire",     t, "FireIn",     EIC);
+    //                     this->AddCoupling(t, "FireOut",      this, "RedFire",     EOC);
+    //                     this->AddCoupling(t, "PositionOut", this, "RedPosition", EOC);
+    //                     this->AddCoupling(this,"BluePosition",t,"PositionIn",EIC);
+
+    //                     // Attach to a leader (use PLT1 by default)
+    //                     this->AddCoupling(plt1_leader,"PlatoonOrd",t,"PlatoonOrd",IC);
+    //                     this->AddCoupling(t,"SoldierRep",plt1_leader,"SoldierRep",IC);
+    //                     this->AddCoupling(t,"FireOut",plt1_leader,"FireFinished",IC);
+    //                 }
+    //                 break;
+    //             }
+    //         }
+    //     } catch(...) { /* ignore */ }
     }
 };

@@ -17,7 +17,8 @@ Generator::Generator(Engine* engine)
 }
 
 unsigned int Generator::GenerateRandomSeed() {
-    // return 1760684342;
+    // they stop fighting
+    // return 1761028717;
     return static_cast<unsigned int>(time(nullptr));
 }
 

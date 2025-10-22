@@ -10,6 +10,7 @@ private:
     Side hqSide;
     std::string ordersFilePath;
     TIME_T t_dec = 0.0f;
+    TIME_T t_rep = 0.0f;
 public:
     HQ(Engine* engine,
        std::vector<int>* membersId,

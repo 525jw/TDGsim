@@ -6,6 +6,7 @@
 #include "SIM/Infantry/Soldier/soldier.hpp"
 #include "SIM/Infantry/PlatoonLeader/platoon_leader.hpp"
 #include "SIM/HQ/hq.hpp"
+#include "SIM/Armor/Tank/tank.hpp"
 
 class BlueForce : public CoupledModel{
 public:
@@ -81,6 +82,8 @@ public:
         plt2.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT2-SOL24"), "BLUE-PLT2-SOL24", Side::BLUE, ForceType::RIFLE, {84,70}})); plt2_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT2-SOL24"));
         plt2.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT2-SOL25"), "BLUE-PLT2-SOL25", Side::BLUE, ForceType::RIFLE, {85,67}})); plt2_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT2-SOL25"));
 
+        // Register tank ID in PLT1 before leader creation
+        plt1_Ids.push_back(env->RegisterEntityIdByName("BLUE-TNK"));
 
         for (int i = 0; i < numOfPl1; ++i) {
             plt1[i]->SetParentModel(this);
@@ -138,6 +141,29 @@ public:
             this->AddCoupling(plt2_leader,"PlatoonOrd",plt2[i],"PlatoonOrd",IC);
             this->AddCoupling(plt2[i],"SoldierRep",plt2_leader,"SoldierRep",IC);
             this->AddCoupling(plt2[i],"FireOut",plt2_leader,"FireFinished",IC);
+        }
+
+        {
+            // BLUE-TNK at {7,61}
+            int id = env->RegisterEntityIdByName("BLUE-TNK");
+            Tank* t = new Tank(engine, Entity{id, "BLUE-TNK", Side::BLUE, ForceType::TANK, {7,61}});
+            t->SetModelName("BLUE-TNK");
+            t->SetParentModel(this);
+            this->RegisterSubModel(t);
+
+            // Couple to force-level ports
+            this->AddCoupling(this, "Start", t, "Start", EIC);
+            this->AddCoupling(this, "RedFire",     t, "FireIn",     EIC);
+            this->AddCoupling(t, "FireOut",      this, "BlueFire",     EOC);
+            this->AddCoupling(t, "PositionOut", this, "BluePosition", EOC);
+            this->AddCoupling(this,"RedPosition",t,"PositionIn",EIC);
+
+            // Attach to PLT1 leader by default
+            this->AddCoupling(plt1_leader,"PlatoonOrd",t,"PlatoonOrd",IC);
+            this->AddCoupling(t,"SoldierRep",plt1_leader,"SoldierRep",IC);
+            this->AddCoupling(t,"FireOut",plt1_leader,"FireFinished",IC);
+            // Also track at company level if needed
+            plt1_Ids.push_back(id);
         }
     }
 };

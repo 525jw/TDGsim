@@ -6,3 +6,5 @@ g++ -std=gnu++17 -O2 -I. \
 
 
 g++ -std=gnu++17 -O2 -I. main.cpp $(find DEVS EF SIM -name "*.cpp") -o tdg && ./tdg
+
+// 1. 피드백 주기위한 종료시점 2. tank, art 3. red hq
