@@ -43,25 +43,33 @@ bool Fire::OutputFn(){
         ensureRng();
         std::uniform_real_distribution<float> dist(0.0f, 1.0f);
         float roll = dist(rng);
-        if (roll <= this->accuracy) {
-            FireMsg message;
-            if(!env->QueryEntityById(targetId)){
-                // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"AIM","target is already dead");
-                return true;
-            }
-            // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"AIM","target=",env->QueryEntityById(this->targetId)->name);
-            message.senderId = this->info->id;
-            message.senderType = this->info->forceType;
+
+        FireMsg message;
+        message.senderId = this->info->id;
+        message.senderType = this->info->forceType;
+
+        const Entity* targetEntity = env->QueryEntityById(targetId);
+        const bool targetAlive = targetEntity != nullptr;
+        const bool hit = targetAlive && roll <= this->accuracy;
+
+        if (hit) {
             message.targetId = this->targetId;
-
-            const Entity* targetEntity = env->QueryEntityById(targetId);
-
+            message.targetPoint = targetEntity->position;
             std::any anyMessage = message;
             LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"FIRE","shoot at ",targetEntity->name);
             this->AddOutputEvent("FireOut", anyMessage);
         } else {
-            // miss: no event emitted
+            message.targetId = -1;
+            message.targetPoint = targetAlive ? targetEntity->position : Point{-1, -1};
+            std::any anyMessage = message;
+            if (targetAlive) {
+                LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"FIRE","missed ",targetEntity->name);
+            } else {
+                LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"FIRE","target already dead");
+            }
+            this->AddOutputEvent("FireOut", anyMessage);
         }
+
         return true;
     }
     return true;
