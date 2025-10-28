@@ -43,65 +43,29 @@
     },
     {
       "who": {
-        "unit": "BLUE-ART",
-        "side": "BLUE",
-        "forcetype": "ART"
-      },
-      "what": {
-        "task": "BOMBARD",
-        "task_params": {
-          "ammo": "HE",
-          "method": "TIME",
-          "volume": {
-            "duration": 180,
-            "rate": "SUSTAINED"
-          },
-          "point": [
-            85.0,
-            31.0
-          ]
-        }
-      },
-      "where": {},
-      "priority": 50,
-      "constraints": {},
-      "when_sim": {
-        "dur": 3
-      }
-    },
-    {
-      "who": {
-        "unit": "BLUE-ART",
-        "side": "BLUE",
-        "forcetype": "ART"
-      },
-      "what": {
-        "task": "BOMBARD",
-        "task_params": {
-          "ammo": "HE",
-          "method": "TIME",
-          "volume": {
-            "duration": 180,
-            "rate": "SUSTAINED"
-          },
-          "point": [
-            76.0,
-            55.0
-          ]
-        }
-      },
-      "where": {},
-      "priority": 50,
-      "constraints": {},
-      "when_sim": {
-        "dur": 3
-      }
-    },
-    {
-      "who": {
         "unit": "BLUE-TNK",
         "side": "BLUE",
         "forcetype": "TNK"
+      },
+      "what": {
+        "task": "HOLD",
+        "task_params": {
+          "duration": 180
+        }
+      },
+      "where": {},
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT1",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
       },
       "what": {
         "task": "MOVE",
@@ -111,12 +75,12 @@
       },
       "where": {
         "point": [
-          12.0,
+          18.0,
           60.0
         ],
         "route": [
           [
-            12.0,
+            18.0,
             60.0
           ]
         ]
@@ -142,14 +106,98 @@
       },
       "where": {
         "point": [
-          75.0,
-          30.0
+          20.0,
+          52.0
         ],
         "route": [
           [
+            20.0,
+            52.0
           ]
         ]
       },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT1",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "MOVE",
+        "task_params": {
+          "speed_mode": "NORMAL"
+        }
+      },
+      "where": {
+        "point": [
+          22.0,
+          46.0
+        ],
+        "route": [
+          [
+            22.0,
+            46.0
+          ]
+        ]
+      },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT1",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "MOVE",
+        "task_params": {
+          "speed_mode": "NORMAL"
+        }
+      },
+      "where": {
+        "point": [
+          30.0,
+          46.0
+        ],
+        "route": [
+          [
+            30.0,
+            46.0
+          ]
+        ]
+      },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT1",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "HOLD",
+        "task_params": {
+          "duration": 180
+        }
+      },
+      "where": {},
       "priority": 50,
       "constraints": {},
       "when_sim": {
@@ -164,7 +212,7 @@
         "echelon": "PLT"
       },
       "what": {
-        "task": "HOLD",
+        "task": "MOVE",
         "task_params": {
           "speed_mode": "NORMAL"
         }
@@ -189,9 +237,10 @@
     },
     {
       "who": {
-        "unit": "BLUE-TNK",
+        "unit": "BLUE-PLT2",
         "side": "BLUE",
-        "forcetype": "TNK"
+        "forcetype": "INF",
+        "echelon": "PLT"
       },
       "what": {
         "task": "MOVE",
@@ -201,16 +250,446 @@
       },
       "where": {
         "point": [
-          24.0,
-          46.0
+          70.0,
+          60.0
         ],
         "route": [
           [
-            24.0,
-            46.0
+            70.0,
+            60.0
           ]
         ]
       },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT2",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "MOVE",
+        "task_params": {
+          "speed_mode": "NORMAL"
+        }
+      },
+      "where": {
+        "point": [
+          69.0,
+          47.0
+        ],
+        "route": [
+          [
+            69.0,
+            47.0
+          ]
+        ]
+      },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT2",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "MOVE",
+        "task_params": {
+          "speed_mode": "NORMAL"
+        }
+      },
+      "where": {
+        "point": [
+          74.0,
+          52.0
+        ],
+        "route": [
+          [
+            74.0,
+            52.0
+          ]
+        ]
+      },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT2",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "HOLD",
+        "task_params": {
+          "duration": 180
+        }
+      },
+      "where": {},
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT1",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "MOVE",
+        "task_params": {
+          "speed_mode": "NORMAL"
+        }
+      },
+      "where": {
+        "point": [
+          70.0,
+          50.0
+        ],
+        "route": [
+          [
+            70.0,
+            50.0
+          ]
+        ]
+      },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT1",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "MOVE",
+        "task_params": {
+          "speed_mode": "NORMAL"
+        }
+      },
+      "where": {
+        "point": [
+          74.0,
+          52.0
+        ],
+        "route": [
+          [
+            74.0,
+            52.0
+          ]
+        ]
+      },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT1",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "HOLD",
+        "task_params": {
+          "duration": 180
+        }
+      },
+      "where": {},
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT2",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "MOVE",
+        "task_params": {
+          "speed_mode": "NORMAL"
+        }
+      },
+      "where": {
+        "point": [
+          80.0,
+          45.0
+        ],
+        "route": [
+          [
+            80.0,
+            45.0
+          ]
+        ]
+      },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT2",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "MOVE",
+        "task_params": {
+          "speed_mode": "NORMAL"
+        }
+      },
+      "where": {
+        "point": [
+          85.0,
+          35.0
+        ],
+        "route": [
+          [
+            85.0,
+            35.0
+          ]
+        ]
+      },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT2",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "HOLD",
+        "task_params": {
+          "duration": 180
+        }
+      },
+      "where": {},
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT1",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "MOVE",
+        "task_params": {
+          "speed_mode": "NORMAL"
+        }
+      },
+      "where": {
+        "point": [
+          75.0,
+          36.0
+        ],
+        "route": [
+          [
+            75.0,
+            36.0
+          ]
+        ]
+      },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT1",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "MOVE",
+        "task_params": {
+          "speed_mode": "NORMAL"
+        }
+      },
+      "where": {
+        "point": [
+          85.0,
+          33.0
+        ],
+        "route": [
+          [
+            85.0,
+            33.0
+          ]
+        ]
+      },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT1",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "HOLD",
+        "task_params": {
+          "duration": 180
+        }
+      },
+      "where": {},
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT1",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "MOVE",
+        "task_params": {
+          "speed_mode": "NORMAL"
+        }
+      },
+      "where": {
+        "point": [
+          85.0,
+          31.0
+        ],
+        "route": [
+          [
+            85.0,
+            31.0
+          ]
+        ]
+      },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT2",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "MOVE",
+        "task_params": {
+          "speed_mode": "NORMAL"
+        }
+      },
+      "where": {
+        "point": [
+          85.0,
+          31.0
+        ],
+        "route": [
+          [
+            85.0,
+            31.0
+          ]
+        ]
+      },
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT1",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "HOLD",
+        "task_params": {
+          "duration": 180
+        }
+      },
+      "where": {},
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 180
+      }
+    },
+    {
+      "who": {
+        "unit": "BLUE-PLT2",
+        "side": "BLUE",
+        "forcetype": "INF",
+        "echelon": "PLT"
+      },
+      "what": {
+        "task": "HOLD",
+        "task_params": {
+          "duration": 180
+        }
+      },
+      "where": {},
       "priority": 50,
       "constraints": {},
       "when_sim": {
