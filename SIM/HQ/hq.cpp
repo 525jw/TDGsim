@@ -159,8 +159,11 @@ CompanyOrd LoadOrderFromFile(const std::string& path,
         }
         Order order{};
         order.task = task;
-        order.to = destination;
-        companyOrder.orders.emplace(entityId, order);
+        if (hasDestination) {
+            order.to = destination;
+            order.hasDestination = true;
+        }
+        companyOrder.orders[entityId].push_back(order);
     }
 
     return companyOrder;
@@ -212,15 +215,22 @@ bool HQ::OutputFn() {
         if (order.orders.empty()) {
             LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER"," orders are empty");
         } else {
-            for (const auto& [entityId, ord] : order.orders) {
-                std::string taskStr;
-                switch (ord.task) {
-                    case TaskType::MOVE: taskStr = "MOVE"; break;
-                    case TaskType::BOMBARD: taskStr = "BOMBARD"; break;
-                    case TaskType::HOLD: taskStr = "HOLD"; break;
-                    default: taskStr = "UNKNOWN"; break;
+            for (const auto& [entityId, ordList] : order.orders) {
+                for (std::size_t idx = 0; idx < ordList.size(); ++idx) {
+                    const Order& ord = ordList[idx];
+                    std::string taskStr;
+                    switch (ord.task) {
+                        case TaskType::MOVE: taskStr = "MOVE"; break;
+                        case TaskType::BOMBARD: taskStr = "BOMBARD"; break;
+                        case TaskType::HOLD: taskStr = "HOLD"; break;
+                        default: taskStr = "UNKNOWN"; break;
+                    }
+                    if (ord.hasDestination) {
+                        LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER"," entityId=",entityId," idx=",idx," task=",taskStr," to=",ord.to.x,",",ord.to.y);
+                    } else {
+                        LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER"," entityId=",entityId," idx=",idx," task=",taskStr," without destination");
+                    }
                 }
-                LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER"," entityId=",entityId," task=",taskStr," to=",ord.to.x,",",ord.to.y);
             }
         }
 

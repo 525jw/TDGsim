@@ -143,27 +143,27 @@ public:
             this->AddCoupling(plt2[i],"FireOut",plt2_leader,"FireFinished",IC);
         }
 
-        {
-            // BLUE-TNK at {7,61}
-            int id = env->RegisterEntityIdByName("BLUE-TNK");
-            Tank* t = new Tank(engine, Entity{id, "BLUE-TNK", Side::BLUE, ForceType::TANK, {7,61}});
-            t->SetModelName("BLUE-TNK");
-            t->SetParentModel(this);
-            this->RegisterSubModel(t);
+        // {
+        //     // BLUE-TNK at {7,61}
+        //     int id = env->RegisterEntityIdByName("BLUE-TNK");
+        //     Tank* t = new Tank(engine, Entity{id, "BLUE-TNK", Side::BLUE, ForceType::TANK, {7,61}});
+        //     t->SetModelName("BLUE-TNK");
+        //     t->SetParentModel(this);
+        //     this->RegisterSubModel(t);
 
-            // Couple to force-level ports
-            this->AddCoupling(this, "Start", t, "Start", EIC);
-            this->AddCoupling(this, "RedFire",     t, "FireIn",     EIC);
-            this->AddCoupling(t, "FireOut",      this, "BlueFire",     EOC);
-            this->AddCoupling(t, "PositionOut", this, "BluePosition", EOC);
-            this->AddCoupling(this,"RedPosition",t,"PositionIn",EIC);
+        //     // Couple to force-level ports
+        //     this->AddCoupling(this, "Start", t, "Start", EIC);
+        //     this->AddCoupling(this, "RedFire",     t, "FireIn",     EIC);
+        //     this->AddCoupling(t, "FireOut",      this, "BlueFire",     EOC);
+        //     this->AddCoupling(t, "PositionOut", this, "BluePosition", EOC);
+        //     this->AddCoupling(this,"RedPosition",t,"PositionIn",EIC);
 
-            // Attach to PLT1 leader by default
-            this->AddCoupling(plt1_leader,"PlatoonOrd",t,"PlatoonOrd",IC);
-            this->AddCoupling(t,"SoldierRep",plt1_leader,"SoldierRep",IC);
-            this->AddCoupling(t,"FireOut",plt1_leader,"FireFinished",IC);
-            // Also track at company level if needed
-            plt1_Ids.push_back(id);
-        }
+        //     // Attach to PLT1 leader by default
+        //     this->AddCoupling(plt1_leader,"PlatoonOrd",t,"PlatoonOrd",IC);
+        //     this->AddCoupling(t,"SoldierRep",plt1_leader,"SoldierRep",IC);
+        //     this->AddCoupling(t,"FireOut",plt1_leader,"FireFinished",IC);
+        //     // Also track at company level if needed
+        //     plt1_Ids.push_back(id);
+        // }
     }
 };

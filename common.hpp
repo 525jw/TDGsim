@@ -60,10 +60,11 @@ struct Scenario {
 
 // order def
 enum class TaskType { MOVE, BOMBARD, HOLD };
-typedef struct {
-    TaskType task; // task
-    Point to; // to
-} Order;
+struct Order {
+    TaskType task = TaskType::HOLD;
+    Point to{0, 0};
+    bool hasDestination = false;
+};
 
 enum class EnvMoveResponse {
     Accepted,
@@ -94,7 +95,7 @@ public:
 
 class CompanyOrd{
 public:
-    std::unordered_map<int,Order> orders;
+    std::unordered_map<int,std::vector<Order>> orders;
 };
 class PlatoonOrd{
 public:

@@ -21,7 +21,7 @@ import os
 import re
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Dict, Iterable, List, Optional, Tuple
+from typing import Dict, Iterable, List, Optional, Set, Tuple
 
 import pygame
 
@@ -40,7 +40,10 @@ COLORS = {
     "red": (222, 45, 38),
     "red_e": (165, 15, 21),
     "white": (255, 255, 255),
+    "objective": (0, 0, 0),
 }
+
+OBJECTIVE_TARGET_UNIT = "BLUE-PLT1"
 
 def glyph(unit_type: str) -> str:
     t = (unit_type or "").lower()
@@ -257,8 +260,80 @@ def load_map(map_path: str) -> Tuple[dict, Dict[str, Tuple[int, int]], Dict[str,
 
     return spec, units_pos, info
 
+def _add_candidate_point(target: Set[Tuple[int, int]], candidate) -> None:
+    """Normalize assorted JSON coordinate formats into integer grid cells."""
+    if candidate is None:
+        return
+    if isinstance(candidate, dict):
+        if "x" in candidate and "y" in candidate:
+            _add_candidate_point(target, (candidate["x"], candidate["y"]))
+            return
+        for key in ("cell", "point", "pos", "position", "coord"):
+            if key in candidate:
+                _add_candidate_point(target, candidate[key])
+        for key in ("cells", "points", "positions", "coords", "tiles", "route"):
+            if key in candidate:
+                _add_candidate_point(target, candidate[key])
+        return
+    if isinstance(candidate, (list, tuple)):
+        if len(candidate) == 2:
+            try:
+                x = int(float(candidate[0]))
+                y = int(float(candidate[1]))
+            except (ValueError, TypeError):
+                return
+            target.add((x, y))
+        else:
+            for item in candidate:
+                _add_candidate_point(target, item)
+
+def collect_objective_cells(spec: dict, unit_name: str) -> Set[Tuple[int, int]]:
+    """Extract every destination cell declared for the given unit in map.json."""
+    cells: Set[Tuple[int, int]] = set()
+
+    objectives = spec.get("objectives")
+    if isinstance(objectives, dict):
+        if unit_name in objectives:
+            _add_candidate_point(cells, objectives[unit_name])
+        for value in objectives.values():
+            if isinstance(value, dict) and base_unit_name(value.get("unit") or "") == unit_name:
+                for key in ("cells", "points", "positions", "coords", "tiles", "route"):
+                    if key in value:
+                        _add_candidate_point(cells, value[key])
+                if "x" in value and "y" in value:
+                    _add_candidate_point(cells, (value["x"], value["y"]))
+    elif isinstance(objectives, list):
+        for entry in objectives:
+            if isinstance(entry, dict):
+                candidate_name = entry.get("unit") or entry.get("uid") or entry.get("name") or ""
+                if base_unit_name(candidate_name) != unit_name:
+                    continue
+                for key in ("cells", "points", "positions", "coords", "tiles", "route"):
+                    if key in entry:
+                        _add_candidate_point(cells, entry[key])
+                if "x" in entry and "y" in entry:
+                    _add_candidate_point(cells, (entry["x"], entry["y"]))
+            else:
+                _add_candidate_point(cells, entry)
+
+    for unit_spec in spec.get("units", []):
+        if base_unit_name(unit_spec.get("uid") or unit_spec.get("name") or "") != unit_name:
+            continue
+        for key in ("objectives", "objective", "destinations", "destination", "route", "routes"):
+            if key in unit_spec:
+                _add_candidate_point(cells, unit_spec[key])
+
+    return cells
+
 # ---------------------- Rendering ----------------------
-def draw_background(screen: pygame.Surface, width: int, height: int, cell: int, patches: Iterable[dict]) -> None:
+def draw_background(
+    screen: pygame.Surface,
+    width: int,
+    height: int,
+    cell: int,
+    patches: Iterable[dict],
+    objective_cells: Optional[Iterable[Tuple[int, int]]] = None,
+) -> None:
     screen.fill(COLORS["bg"])
     for x in range(width + 1):
         pygame.draw.line(screen, COLORS["grid"], (x * cell, 0), (x * cell, height * cell), 1)
@@ -273,6 +348,11 @@ def draw_background(screen: pygame.Surface, width: int, height: int, cell: int, 
             (abs(x2 - x1) + 1) * cell, (abs(y2 - y1) + 1) * cell
         )
         pygame.draw.rect(screen, colour, rect)
+
+    if objective_cells:
+        for ox, oy in objective_cells:
+            rect = pygame.Rect(ox * cell, oy * cell, cell, cell)
+            pygame.draw.rect(screen, COLORS["objective"], rect)
 
 def draw_units(screen: pygame.Surface, state: SimulationState, cell: int, font: pygame.font.Font) -> None:
     for unit, pos in state.positions.items():
@@ -325,6 +405,7 @@ def playback(
 ) -> None:
     width, height = spec["w"], spec["h"]
     patches = spec.get("patches", [])
+    objective_cells = collect_objective_cells(spec, OBJECTIVE_TARGET_UNIT)
 
     pygame.init()
     pygame.display.set_caption("TDGsim Timeline Visualizer")
@@ -412,7 +493,7 @@ def playback(
         if current_shots and pygame.time.get_ticks() > shot_expire_at:
             current_shots = []
 
-        draw_background(screen, width, height, cell_size, patches)
+        draw_background(screen, width, height, cell_size, patches, objective_cells)
         draw_units(screen, state, cell_size, font)
         draw_shots(screen, current_shots, cell_size)
 

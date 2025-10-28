@@ -109,8 +109,6 @@
     { "uid": "RED-PLT2-SOL22", "side": "RED", "type": "rifle", "x": 78, "y": 54 },
     { "uid": "RED-PLT2-SOL23", "side": "RED", "type": "rifle", "x": 78, "y": 55 },
     { "uid": "RED-PLT2-SOL24", "side": "RED", "type": "rifle", "x": 78, "y": 56 },
-    { "uid": "RED-PLT2-SOL25", "side": "RED", "type": "rifle", "x": 78, "y": 57 },
-
-    { "uid": "BLUE-TNK", "side": "BLUE", "type": "tank", "x": 7, "y": 61 }
+    { "uid": "RED-PLT2-SOL25", "side": "RED", "type": "rifle", "x": 78, "y": 57 }
   ]
 }

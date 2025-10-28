@@ -18,8 +18,10 @@ Generator::Generator(Engine* engine)
 
 unsigned int Generator::GenerateRandomSeed() {
     // they stop fighting
-    return 1761116978;
-    // return static_cast<unsigned int>(time(nullptr));
+    // return 1761116978;
+    // gonna be golden
+    // return 1761658211;
+    return static_cast<unsigned int>(time(nullptr));
 }
 
 bool Generator::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {

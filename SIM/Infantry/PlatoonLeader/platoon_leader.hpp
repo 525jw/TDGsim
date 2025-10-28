@@ -4,6 +4,8 @@
 #include "DEVS/logger.hpp"
 #include "SIM/Environment/environment.hpp"
 #include "platoon_pathfinding.hpp"
+#include <deque>
+#include <optional>
 
 class PlatoonLeader : public AtomicModel{
 private:
@@ -11,8 +13,14 @@ private:
     std::vector<int> memberIds;
     TaskType currentTask = TaskType::HOLD;
     PlatoonManeuverPlan plan;
+    std::deque<Order> pendingOrders;
+    std::optional<Order> activeOrder;
 
     TIME_T t_dec = 0.0f;
+
+    bool ActivateNextOrder(Environment& environment);
+    bool IsCurrentGoalReached(Environment& environment) const;
+    void ResetHoldPlan(const Order& ord);
 public:
     PlatoonLeader(Engine* engine, int entityId, std::vector<int> *membersId);
 
