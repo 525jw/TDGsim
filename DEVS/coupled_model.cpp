@@ -80,10 +80,10 @@ void CoupledModel::RouteEIC(Event& event, TIME_T currentTime){  // Handling EIC
         //  if (cp->getSrcModel()->IsCoupled()){
             ev = this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
             
-            LogTrace(this->engine->GetCurrentTime(),"CM::RouteEIC",
-                    "model=",this->GetNameWithId(),
-                    " srcModel=",cp->getSrcModel()->GetNameWithId()," srcPort=",cp->getSrcPort(),
-                    " destModel=",cp->getDetModel()->GetNameWithId()," destPort=",cp->getDetPort());
+            // LogTrace(this->engine->GetCurrentTime(),"CM::RouteEIC",
+            //         "model=",this->GetNameWithId(),
+            //         " srcModel=",cp->getSrcModel()->GetNameWithId()," srcPort=",cp->getSrcPort(),
+            //         " destModel=",cp->getDetModel()->GetNameWithId()," destPort=",cp->getDetPort());
 
             cp->getDetModel()->ReceiveEvent(ev, currentTime);
         // }
@@ -99,10 +99,10 @@ void CoupledModel::RouteEOC(Event& event, TIME_T currentTime){  // Handling EOC
 
         Event ev = this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
 
-        LogTrace(this->engine->GetCurrentTime(),"CM::RouteEOC",
-                    "model=",this->GetNameWithId(),
-                    " srcModel=",cp->getSrcModel()->GetNameWithId()," srcPort=",cp->getSrcPort(),
-                    " destModel=",cp->getDetModel()->GetNameWithId()," destPort=",cp->getDetPort());
+        // LogTrace(this->engine->GetCurrentTime(),"CM::RouteEOC",
+        //             "model=",this->GetNameWithId(),
+        //             " srcModel=",cp->getSrcModel()->GetNameWithId()," srcPort=",cp->getSrcPort(),
+        //             " destModel=",cp->getDetModel()->GetNameWithId()," destPort=",cp->getDetPort());
 
         if (this->GetParentModel() != nullptr) {
             this->GetParentModel()->ReceiveEvent(ev, currentTime);
@@ -123,10 +123,10 @@ void CoupledModel::RouteIC(Event& event, TIME_T currentTime){  // Handling IC
             ev = this->Translate(event, cp->getDetModel()->GetModelID(), cp->getDetPort());
         // }
 
-        LogTrace(this->engine->GetCurrentTime(),"CM::RouteIC",
-                    "model=",this->GetNameWithId(),
-                    " srcModel=",cp->getSrcModel()->GetNameWithId()," srcPort=",cp->getSrcPort(),
-                    " destModel=",cp->getDetModel()->GetNameWithId()," destPort=",cp->getDetPort());
+        // LogTrace(this->engine->GetCurrentTime(),"CM::RouteIC",
+        //             "model=",this->GetNameWithId(),
+        //             " srcModel=",cp->getSrcModel()->GetNameWithId()," srcPort=",cp->getSrcPort(),
+        //             " destModel=",cp->getDetModel()->GetNameWithId()," destPort=",cp->getDetPort());
 
         cp->getDetModel()->ReceiveEvent(ev, currentTime);
     }
@@ -160,7 +160,7 @@ const TIME_T CoupledModel::QueryNextTime() const{
         minTime = std::min(minTime, mid.second->QueryNextTime());
     }
     this->nextTime = minTime;
-    LogTrace(this->engine->GetCurrentTime(),"CM::QuerryNextTime","model=",this->GetNameWithId()," nextTime=",ToFixedString(this->GetNextTime()));
+    // LogTrace(this->engine->GetCurrentTime(),"CM::QuerryNextTime","model=",this->GetNameWithId()," nextTime=",ToFixedString(this->GetNextTime()));
     return minTime;
 }
 

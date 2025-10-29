@@ -39,14 +39,14 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
         if(ord.task == TaskType::MOVE){ //이동명령
             this->nextPos = ord.to;
             this->curSpeed = moveSpeed; // TODO:지형에 의존적으로 적용시킬것 
-            LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"RECEIVE_ORDER",
-                        "task=","MOVE",
-                        " from=(",this->info->position.x,", ",this->info->position.y,")",
-                        " to=(",ord.to.x,", ",ord.to.y,")");
+            // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"RECEIVE_ORDER",
+            //             "task=","MOVE",
+            //             " from=(",this->info->position.x,", ",this->info->position.y,")",
+            //             " to=(",ord.to.x,", ",ord.to.y,")");
         }else if(ord.task == TaskType::HOLD){ //정지명령
             this->nextPos = this->info->position;
             this->curSpeed = 0.0f;
-            LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"RECEIVE_ORDER","task=","HOLD");
+            // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"RECEIVE_ORDER","task=","HOLD");
         }
 
         this->t_mnv = mnvEquation(this->curSpeed);
@@ -80,7 +80,7 @@ bool Maneuver::OutputFn() {
                         " from=(",this->info->position.x,", ",this->info->position.y,")",
                         " to=(",this->nextPos.x,", ",this->nextPos.y,")");
             }else{
-                LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"HOLD_POSITION");
+                // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"HOLD_POSITION");
             }
             
             this->info->position = this->nextPos; 

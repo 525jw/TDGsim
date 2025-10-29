@@ -13,7 +13,7 @@
 class Logger final {
 public:
     explicit Logger(const std::string& filename,
-                    std::size_t maxLines = 20'000);
+                    std::size_t maxLines = 1'000'000);
     ~Logger();
 
     Logger(const Logger&)            = delete;

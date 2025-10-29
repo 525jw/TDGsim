@@ -3,7 +3,7 @@
 Engine::Engine() : currentTime(0.0f), lastTime(0.0f) {}
 
 void Engine::Run(){
-    while(this->currentTime<200.0){ //// TODO : needs while loop unitl the end time
+    while(this->currentTime<1000.0){ //// TODO : needs while loop unitl the end time
         LogTrace(this->GetCurrentTime(),"Engine::Run","event queue size=",this->eventQueue.size(),"-------------------------------------------------------------------");
 
         if(lastTime > currentTime){

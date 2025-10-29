@@ -67,7 +67,7 @@ std::string ToFixedString(float value, int precision) {
 /* ───────────── 전역 로거 정의 ───────────── */
 #ifndef DISABLE_LOG
 Logger logger_system{"logs/log_system.txt",0};
-Logger logger_simulation {"logs/log_simulation.txt"};
+Logger logger_simulation {"logs/log_simulation.txt",0};
 #else
 DummyLogger logger_system;
 DummyLogger logger_simulation;

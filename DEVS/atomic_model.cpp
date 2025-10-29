@@ -46,7 +46,7 @@ void AtomicModel::ReceiveScheduleTime(const TIME_T currentTime){
     }
 }
 const TIME_T AtomicModel::QueryNextTime() const{
-    LogTrace(this->engine->GetCurrentTime(),"AM::QuerryNextTime","model=",this->GetNameWithId()," nextTime=",ToFixedString(this->GetNextTime()));
+    // LogTrace(this->engine->GetCurrentTime(),"AM::QuerryNextTime","model=",this->GetNameWithId()," nextTime=",ToFixedString(this->GetNextTime()));
     return this->nextTime;
 }
 

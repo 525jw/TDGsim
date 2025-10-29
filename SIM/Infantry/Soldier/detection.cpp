@@ -82,13 +82,13 @@ bool Detection::OutputFn(){
         return true;
     }
 
-    LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"DETECT","looks around");
+    // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"DETECT","looks around");
     this->RebuildEnemyPosList();
     
     SoldierRep message;
     if (!enemyIds.empty()) {
         message.enemyDetected = true;
-        LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"DETECT","detected somthing");
+        // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"DETECT","detected somthing");
     }else{
         message.enemyDetected = false;
     }
