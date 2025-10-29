@@ -21,7 +21,7 @@ TIME_T Maneuver::mnvEquation(float speed) {\
     if(speed){
         return 1.0f / speed;
     }else{
-        return this->lookAroundPeriod;
+        return 1.0f / this->lookAroundPeriod;
     }
 }
 
