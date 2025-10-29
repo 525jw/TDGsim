@@ -21,6 +21,7 @@ unsigned int Generator::GenerateRandomSeed() {
     // return 1761116978;
     // gonna be golden
     // return 1761658211;
+    // return 1761722448;
     return static_cast<unsigned int>(time(nullptr));
 }
 
