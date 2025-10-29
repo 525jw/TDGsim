@@ -67,6 +67,16 @@ bool Environment::ExtTransFn(const std::string& inPort, const std::any& anyMessa
 
             entities[RegisterEntityIdByName(e.name)] = std::move(e);
         }
+
+        // 추가: 초기 총원 집계
+        initialBlue = 0;
+        initialRed = 0;
+        for(const auto& kv : entities){
+            const auto& ent = kv.second;
+            if (ent.side == Side::BLUE) ++initialBlue;
+            else if (ent.side == Side::RED) ++initialRed;
+        }
+
         LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"ENV_INIT","seed=",this->seed);
         this->SetCurState("WAIT");
     }
@@ -82,7 +92,7 @@ bool Environment::IntTransFn() {
 
 bool Environment::OutputFn() {
     if(this->GetCurState()=="UPDATE"){
-        
+
     }
     return true;
 }
