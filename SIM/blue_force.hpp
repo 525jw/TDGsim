@@ -6,7 +6,7 @@
 #include "SIM/Infantry/Soldier/soldier.hpp"
 #include "SIM/Infantry/PlatoonLeader/platoon_leader.hpp"
 #include "SIM/HQ/hq.hpp"
-#include "SIM/Armor/Tank/tank.hpp"
+// #include "SIM/Armor/Tank/tank.hpp"
 
 class BlueForce : public CoupledModel{
 public:

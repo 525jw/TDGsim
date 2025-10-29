@@ -129,7 +129,7 @@ public:
     int senderId;
     ForceType senderType;
     int targetId;
-    Point targetPoint;
+    std::vector<Point> targetPoint;
 };
 
 class DeadMsg{

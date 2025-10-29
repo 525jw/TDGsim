@@ -3,6 +3,34 @@
   "orders": [
     {
       "who": {
+        "unit": "BLUE-ART",
+        "side": "BLUE",
+        "forcetype": "ART"
+      },
+      "what": {
+        "task": "BOMBARD",
+        "task_params": {
+          "ammo": "HE",
+          "method": "TIME",
+          "volume": {
+            "duration": 180,
+            "rate": "SUSTAINED"
+          },
+          "point": [
+            76.0,
+            55.0
+          ]
+        }
+      },
+      "where": {},
+      "priority": 50,
+      "constraints": {},
+      "when_sim": {
+        "dur": 3
+      }
+    },
+    {
+      "who": {
         "unit": "RED-PLT1",
         "side": "RED",
         "forcetype": "INF",

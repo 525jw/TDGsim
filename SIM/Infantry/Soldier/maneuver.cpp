@@ -57,11 +57,23 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
         if(!TryCastMessage(anyMessage,message,"")) return false;
 
         // 본인에게 온 사격인지 탐색
-        if( (message.senderType == ForceType::ARTILLERY && message.targetPoint == this->info->position) ||
-            (message.senderType == ForceType::RIFLE && message.targetId == this->info->id) ){
-                env->RequestKillEntity(this->info->id);
-                this->SetCurState("DEAD");
-                LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"DEAD");
+        bool isDead = false;
+        if(message.senderType == ForceType::RIFLE && message.targetId == this->info->id){
+            isDead = true;
+        }else if(message.senderType == ForceType::ARTILLERY){
+            const Point& curPos = this->info->position;
+            for (const Point& targetPos : message.targetPoint) {
+                if (targetPos == curPos) {
+                    isDead = true;
+                    break;
+                }
+            }
+        }
+
+        if(isDead){
+            env->RequestKillEntity(this->info->id);
+            this->SetCurState("DEAD");
+            LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"DEAD");
         }
     }
     return true;

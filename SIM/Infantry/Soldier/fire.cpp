@@ -54,13 +54,13 @@ bool Fire::OutputFn(){
 
         if (hit) {
             message.targetId = this->targetId;
-            message.targetPoint = targetEntity->position;
+            message.targetPoint.push_back(Point{-1, -1});
             std::any anyMessage = message;
             LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"FIRE","shoot at ",targetEntity->name);
             this->AddOutputEvent("FireOut", anyMessage);
         } else {
             message.targetId = -1;
-            message.targetPoint = targetAlive ? targetEntity->position : Point{-1, -1};
+            message.targetPoint.push_back(Point{-1, -1});
             std::any anyMessage = message;
             if (targetAlive) {
                 LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"FIRE","missed ",targetEntity->name);

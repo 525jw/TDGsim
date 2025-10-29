@@ -50,7 +50,22 @@ bool Artillery::OutputFn(){
         message.senderId = this->info.id;
         message.senderType = this->info.forceType;
 
-        // TODO: targetPos에서 range거리 이내로 fatality 수만큼 위치를 지정해서 output으
+        message.targetPoint.clear();
+        int targetCount = std::max(0, static_cast<int>(std::round(this->fatality)));
+        message.targetPoint.reserve(static_cast<std::size_t>(targetCount));
+
+        constexpr float twoPi = 6.28318530717958647692f;
+        std::uniform_real_distribution<float> angleDist(0.0f, twoPi);
+        std::uniform_real_distribution<float> unitDist(0.0f, 1.0f);
+
+        for (int i = 0; i < targetCount; ++i) {
+            float angle = angleDist(rng);
+            float radius = std::sqrt(unitDist(rng)) * this->targetRange;
+            int x = static_cast<int>(std::round(this->targetPos.x + std::cos(angle) * radius));
+            int y = static_cast<int>(std::round(this->targetPos.y + std::sin(angle) * radius));
+            message.targetPoint.push_back({x, y});
+        }
+
         std::any anyMessage = message;
         // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"FIRE","shoot");
         this->AddOutputEvent("FireOut", anyMessage);
