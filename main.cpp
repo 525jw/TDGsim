@@ -24,11 +24,6 @@ int main(){
                 
                 const int W = env->GetWidth();
                 const int H = env->GetHeight();
-
-                const int X1 = std::max(0, std::min(x1, W - 1));
-                const int X2 = std::max(0, std::min(x2, W - 1));
-                const int Y1 = std::max(0, std::min(y1, H - 1));
-                const int Y2 = std::max(0, std::min(y2, H - 1));
                 
                 // 사각형 내 BLUE/RED 카운트 함수
                 auto countInRect = [&](int x1, int x2, int y1, int y2, int& blueCnt, int& redCnt) {
