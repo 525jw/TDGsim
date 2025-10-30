@@ -113,7 +113,7 @@ int main(){
                 if (fsize > 0) {
                     std::fprintf(fp, "\n");
                 }
-                std::fprintf(fp, "=== Simulation Result * %d ===\n", SimCnt);
+                std::fprintf(fp, "=== Simulation Result %d ===\n", SimCnt);
                 std::fprintf(fp, "Seed: %d\n", seed);
                 std::fprintf(fp, "Objective Area 1 (x:%d~%d, y:%d~%d): BLUE inside = %d RED inside = %d\n",
                             A1_x1_disp, A1_x2_disp, A1_y1_disp, A1_y2_disp, blueInA1, redInA1);
