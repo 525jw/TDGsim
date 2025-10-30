@@ -8,88 +8,128 @@ int main(){
 
     TdgSim tdgSim(&engine);
     engine.SetRootModel(&tdgSim);
-    engine.Run();
 
-    // RSH
-    // 시뮬레이션 결과 집계
-    {
-        if (EnvReady()) {
-            const unsigned int seed = env->GetSeed();
-            // 1) 목표 구역 내 BLUE/RED 인원 수 (x:83~87, y:29~33)
-            // map 수정 시 목표 구역 수정 필요
-            const int x1 = 83, x2 = 87, y1 = 29, y2 = 33;
-            int blueInObj = 0, redInObj = 0;
-            const int W = env->GetWidth();
-            const int H = env->GetHeight();
-            const int X1 = std::max(0, std::min(x1, W - 1));
-            const int X2 = std::max(0, std::min(x2, W - 1));
-            const int Y1 = std::max(0, std::min(y1, H - 1));
-            const int Y2 = std::max(0, std::min(y2, H - 1));
+    for (int i = 0; i < 10; ++i) {
+        engine.Run();
+        // RSH
+        // 시뮬레이션 결과 집계
+        {
+            if (EnvReady()) {
+                const unsigned int seed = env->GetSeed();
 
-            // 목표구역 스캔
-            for (int y = Y1; y <= Y2; ++y) {
-                for (int x = X1; x <= X2; ++x) {
-                    for (int id : env->QueryEntityIdsAt(Point{x, y})) {
-                        if (const Entity* e = env->QueryEntityById(id)) {
-                            if (e->side == Side::BLUE) ++blueInObj;
-                            if (e->side == Side::RED) ++redInObj;
+                // [고정 좌표] 목표 구역 (area1~3)
+                const int A1_x1_disp = 21, A1_x2_disp = 37, A1_y1_disp = 84, A1_y2_disp = 100;
+                const int A2_x1_disp = 63, A2_x2_disp = 79, A2_y1_disp = 84, A2_y2_disp = 100;
+                const int A3_x1_disp = 13, A3_x2_disp = 80, A3_y1_disp = 15, A3_y2_disp = 25;
+                
+                const int W = env->GetWidth();
+                const int H = env->GetHeight();
+
+                const int X1 = std::max(0, std::min(x1, W - 1));
+                const int X2 = std::max(0, std::min(x2, W - 1));
+                const int Y1 = std::max(0, std::min(y1, H - 1));
+                const int Y2 = std::max(0, std::min(y2, H - 1));
+                
+                // 사각형 내 BLUE/RED 카운트 함수
+                auto countInRect = [&](int x1, int x2, int y1, int y2, int& blueCnt, int& redCnt) {
+                    // 좌표 정렬
+                    if (x1 > x2) std::swap(x1, x2);
+                    if (y1 > y2) std::swap(y1, y2);
+                    // 맵 경계 보정
+                    const int X1 = std::max(0, std::min(x1, W - 1));
+                    const int X2 = std::max(0, std::min(x2, W - 1));
+                    const int Y1 = std::max(0, std::min(y1, H - 1));
+                    const int Y2 = std::max(0, std::min(y2, H - 1));
+                    
+                    // 1) 목표 구역 내 생존자 카운트 
+                    blueCnt = 0; redCnt = 0;
+                    for (int y = Y1; y <= Y2; ++y) {
+                        for (int x = X1; x <= X2; ++x) {
+                            for (int id : env->QueryEntityIdsAt(Point{x, y})) {
+                                if (const Entity* e = env->QueryEntityById(id)) {
+                                    if (e->side == Side::BLUE) ++blueCnt;
+                                    else if (e->side == Side::RED) ++redCnt;
+                                }
+                            }
                         }
                     }
-                }
-            }
+                };
 
-            // 2) 전체 생존자/사상자
-            std::unordered_set<int> aliveIds;
-            int aliveBlue = 0, aliveRed = 0;
+                // ── 카운트 ──
+                int blueInA1 = 0, redInA1 = 0;
+                int blueInA2 = 0, redInA2 = 0;
+                int blueInA3 = 0, redInA3 = 0;
 
-            for (int y = 0; y < H; ++y) {
-                for (int x = 0; x < W; ++x) {
-                    auto ids = env->QueryEntityIdsAt(Point{x, y});
-                    for (int id : ids) {
-                        if (aliveIds.insert(id).second) {
-                            if (const Entity* e = env->QueryEntityById(id)) {
-                                if (e->side == Side::BLUE) ++aliveBlue;
-                                else if (e->side == Side::RED) ++aliveRed;
+                countInRect(A1_x1_disp, A1_x2_disp, A1_y1_disp, A1_y2_disp, blueInA1, redInA1);
+                countInRect(A2_x1_disp, A2_x2_disp, A2_y1_disp, A2_y2_disp, blueInA2, redInA2);
+                countInRect(A3_x1_disp, A3_x2_disp, A3_y1_disp, A3_y2_disp, blueInA3, redInA3);
+
+                // 2) 전체 생존자/사상자
+                std::unordered_set<int> aliveIds;
+                int aliveBlue = 0, aliveRed = 0;
+
+                for (int y = 0; y < H; ++y) {
+                    for (int x = 0; x < W; ++x) {
+                        auto ids = env->QueryEntityIdsAt(Point{x, y});
+                        for (int id : ids) {
+                            if (aliveIds.insert(id).second) {
+                                if (const Entity* e = env->QueryEntityById(id)) {
+                                    if (e->side == Side::BLUE) ++aliveBlue;
+                                    else if (e->side == Side::RED) ++aliveRed;
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            const int initBlue = env->GetInitialBlue();
-            const int initRed  = env->GetInitialRed();
-            const int kiasBlue = std::max(0, initBlue - aliveBlue);
-            const int kiasRed  = std::max(0, initRed  - aliveRed);
+                const int initBlue = env->GetInitialBlue();
+                const int initRed  = env->GetInitialRed();
+                const int kiasBlue = std::max(0, initBlue - aliveBlue);
+                const int kiasRed  = std::max(0, initRed  - aliveRed);
 
-            // 콘솔 출력
-            std::printf("\n=== Simulation Result ===\n");
-            std::printf("Seed: %d\n", seed);
-            std::printf("Objective Area (x:%d~%d, y:%d~%d): BLUE inside = %d RED inside = %d\n",
-                        X1, X2, Y1, Y2, blueInObj, redInObj);
-            std::printf("Alive   - BLUE: %d / RED: %d\n", aliveBlue, aliveRed);
-            std::printf("Initial - BLUE: %d / RED: %d\n", initBlue, initRed);
-            std::printf("Casualties (KIA/MIA approximated) - BLUE: %d / RED: %d\n", kiasBlue, kiasRed);
-            std::printf("==========================\n\n");
+                // 콘솔 출력
+                std::printf("\n=== Simulation Result ===\n");
+                std::printf("Seed: %d\n", seed);
+                std::printf("Objective Area 1 (x:%d~%d, y:%d~%d): BLUE inside = %d RED inside = %d\n",
+                            A1_x1_disp, A1_x2_disp, A1_y1_disp, A1_y2_disp, blueInA1, redInA1);
+                std::printf("Objective Area 2 (x:%d~%d, y:%d~%d): BLUE inside = %d RED inside = %d\n",
+                            A2_x1_disp, A2_x2_disp, A2_y1_disp, A2_y2_disp, blueInA2, redInA2);
+                std::printf("Objective Area 3 (x:%d~%d, y:%d~%d): BLUE inside = %d RED inside = %d\n",
+                            A3_x1_disp, A3_x2_disp, A3_y1_disp, A3_y2_disp, blueInA3, redInA3);
+                std::printf("Alive   - BLUE: %d / RED: %d\n", aliveBlue, aliveRed);
+                std::printf("Initial - BLUE: %d / RED: %d\n", initBlue, initRed);
+                std::printf("Casualties - BLUE: %d / RED: %d\n", kiasBlue, kiasRed);
+                std::printf("==========================\n\n");
 
-            // 파일 출력 (result_summary.txt)
-            std::FILE* fp = std::fopen("result_summary.txt", "w");
-            if (fp) {
-                std::fprintf(fp, "=== Simulation Result ===\n");
-                std::fprintf(fp, "Seed: %d\n", seed);
-                std::fprintf(fp, "Objective Area (x:%d~%d, y:%d~%d): BLUE inside = %d RED inside = %d\n",
-                            X1, X2, Y1, Y2, blueInObj, redInObj);
-                std::fprintf(fp, "Alive   - BLUE: %d / RED: %d\n", aliveBlue, aliveRed);
-                std::fprintf(fp, "Initial - BLUE: %d / RED: %d\n", initBlue, initRed);
-                std::fprintf(fp, "Casualties (KIA/MIA approximated) - BLUE: %d / RED: %d\n",
-                            kiasBlue, kiasRed);
-                std::fprintf(fp, "==========================\n");
-                std::fclose(fp);
-                std::printf("[OK] Saved summary to result_summary.txt\n");
+                // 파일 출력 (result_summary.txt)
+                std::FILE* fp = std::fopen("result_summary.txt", "a");
+                if (fp) {
+                    // 기존 내용이 있으면 구분을 위해 한 줄 공백 추가
+                    std::fseek(fp, 0, SEEK_END);
+                    long fsize = std::ftell(fp);
+                    if (fsize > 0) {
+                        std::fprintf(fp, "\n");
+                    }
+                    std::fprintf(fp, "=== Simulation Result ===\n");
+                    std::fprintf(fp, "Seed: %d\n", seed);
+                    std::fprintf(fp, "Objective Area 1 (x:%d~%d, y:%d~%d): BLUE inside = %d RED inside = %d\n",
+                                A1_x1_disp, A1_x2_disp, A1_y1_disp, A1_y2_disp, blueInA1, redInA1);
+                    std::fprintf(fp, "Objective Area 2 (x:%d~%d, y:%d~%d): BLUE inside = %d RED inside = %d\n",
+                                A2_x1_disp, A2_x2_disp, A2_y1_disp, A2_y2_disp, blueInA2, redInA2);
+                    std::fprintf(fp, "Objective Area 3 (x:%d~%d, y:%d~%d): BLUE inside = %d RED inside = %d\n",
+                                A3_x1_disp, A3_x2_disp, A3_y1_disp, A3_y2_disp, blueInA3, redInA3);
+                    std::fprintf(fp, "Alive   - BLUE: %d / RED: %d\n", aliveBlue, aliveRed);
+                    std::fprintf(fp, "Initial - BLUE: %d / RED: %d\n", initBlue, initRed);
+                    std::fprintf(fp, "Casualties - BLUE: %d / RED: %d\n", kiasBlue, kiasRed);
+                    std::fprintf(fp, "==========================\n");
+                    std::fclose(fp);
+                    std::printf("[OK] Saved summary to result_summary.txt\n");
+                } else {
+                    std::fprintf(stderr, "[ERROR] Could not open result_summary.txt for appending.\n");
+                }
             } else {
-                std::fprintf(stderr, "[ERROR] Could not open result_summary.txt for writing.\n");
+                std::fprintf(stderr, "[WARN] Environment is not ready. No summary produced.\n");
             }
-        } else {
-            std::fprintf(stderr, "[WARN] Environment is not ready. No summary produced.\n");
         }
     }
     
