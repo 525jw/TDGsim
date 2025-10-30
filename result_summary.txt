@@ -1,0 +1,7 @@
+=== Simulation Result ===
+Seed: 1761804359
+Objective Area (x:83~87, y:29~33): BLUE inside = 0 RED inside = 11
+Alive   - BLUE: 1 / RED: 17
+Initial - BLUE: 51 / RED: 50
+Casualties - BLUE: 50 / RED: 33
+==========================
