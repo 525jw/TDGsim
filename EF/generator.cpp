@@ -17,12 +17,10 @@ Generator::Generator(Engine* engine)
 }
 
 unsigned int Generator::GenerateRandomSeed() {
-    // they stop fighting
-    // return 1761116978;
-    // gonna be golden
-    // return 1761658211;
-    // return 1761722448;
-    return static_cast<unsigned int>(time(nullptr));
+    auto now = std::chrono::high_resolution_clock::now();
+    return static_cast<unsigned int>(
+        now.time_since_epoch().count()
+    );
 }
 
 bool Generator::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {

@@ -47,7 +47,7 @@ def compile_project():
     print("[Build] Success: tdg.exe ready.")
 
 
-def run_and_archive(runs: int = 10):
+def run_and_archive(runs: int = 100):
     root = Path(__file__).parent
     exe = root / "tdg.exe"
     logs_dir = root / "logs"
@@ -92,7 +92,7 @@ def run_and_archive(runs: int = 10):
 
 def main():
     compile_project()
-    run_and_archive(10)
+    run_and_archive(100)
 
 
 if __name__ == "__main__":

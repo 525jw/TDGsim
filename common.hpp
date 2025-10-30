@@ -16,6 +16,7 @@
 #include <cctype>
 #include <cstdint>
 #include <functional>
+#include <chrono>
 #include "json.hpp"
 using json = nlohmann::json;
 // ============================ Config ===========================
@@ -34,7 +35,7 @@ namespace config {
         // 반지름 5의 원을 그린다
         float explosive_range = 5;
         // 그 중 한 점을 고른다
-        float explosive_power = 1;
+        float explosive_power = 5;
         float ammo = 10;
     };
     inline Infantry inf;
