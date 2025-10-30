@@ -6,6 +6,7 @@
 #include "SIM/Infantry/Soldier/soldier.hpp"
 #include "SIM/Infantry/PlatoonLeader/platoon_leader.hpp"
 #include "SIM/HQ/hq.hpp"
+#include "SIM/Artillery/artillery.hpp"
 // #include "SIM/Armor/Tank/tank.hpp"
 
 class BlueForce : public CoupledModel{
@@ -94,6 +95,7 @@ public:
             this->RegisterSubModel(plt2[i]);
         }
 
+        // 소대장 - 소대원보다 나중에 생성할 것
         PlatoonLeader* plt1_leader = new PlatoonLeader(engine, env->RegisterEntityIdByName("BLUE-PLT1-LEADER"),&plt1_Ids); cmp_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT1-LEADER"));
         PlatoonLeader* plt2_leader = new PlatoonLeader(engine, env->RegisterEntityIdByName("BLUE-PLT2-LEADER"),&plt2_Ids); cmp_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT2-LEADER"));
         plt1_leader->SetModelName("BLUE-PLT1-LEADER");
@@ -103,6 +105,12 @@ public:
         plt2_leader->SetParentModel(this);
         this->RegisterSubModel(plt2_leader);
 
+        // 포병
+        Artillery* art = new Artillery(engine, Entity{env->RegisterEntityIdByName("BLUE-ART"), "BLUE-ART", Side::BLUE, ForceType::ARTILLERY, {10,90}}); cmp_Ids.push_back(env->QueryEntityIdByName("BLUE-ART"));
+        art->SetParentModel(this);
+        this->RegisterSubModel(art);
+
+        // 중대장 - 중대원보다 나중에 생성할 것
         HQ* hq = new HQ(engine,&cmp_Ids);
         hq->SetModelName("BLUE-HQ");
         hq->SetParentModel(this);
@@ -122,6 +130,10 @@ public:
         this->AddCoupling(plt1_leader,"PlatoonRep",hq,"InfantryRep",IC);
         this->AddCoupling(plt2_leader,"PlatoonRep",hq,"InfantryRep",IC);
 
+        this->AddCoupling(hq,"CompanyOrd",art,"CompanyOrd",IC);
+        this->AddCoupling(art,"FireOut",this,"BlueFire",EOC);
+
+
         for (int i = 0; i < numOfPl1; ++i) {
             this->AddCoupling(this, "Start", plt1[i], "Start", EIC);
             this->AddCoupling(this, "RedFire",     plt1[i], "FireIn",     EIC);
@@ -131,6 +143,7 @@ public:
             this->AddCoupling(plt1_leader,"PlatoonOrd",plt1[i],"PlatoonOrd",IC);
             this->AddCoupling(plt1[i],"SoldierRep",plt1_leader,"SoldierRep",IC);
             this->AddCoupling(plt1[i],"FireOut",plt1_leader,"FireFinished",IC);
+            this->AddCoupling(art,"FireOut",plt1[i],"FireIn",IC); // FF 기능
         }
         for (int i = 0; i < numOfPl2; ++i) {
             this->AddCoupling(this, "Start", plt2[i], "Start", EIC);
@@ -141,7 +154,13 @@ public:
             this->AddCoupling(plt2_leader,"PlatoonOrd",plt2[i],"PlatoonOrd",IC);
             this->AddCoupling(plt2[i],"SoldierRep",plt2_leader,"SoldierRep",IC);
             this->AddCoupling(plt2[i],"FireOut",plt2_leader,"FireFinished",IC);
+            this->AddCoupling(art,"FireOut",plt2[i],"FireIn",IC); // FF 기능
         }
+
+
+        plt1_leader->SetModelName("BLUE-PLT1-LEADER");
+        plt1_leader->SetParentModel(this);
+        this->RegisterSubModel(plt1_leader);
 
         // {
         //     // BLUE-TNK at {7,61}

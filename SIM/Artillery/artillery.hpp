@@ -8,8 +8,8 @@ class Artillery : public AtomicModel{
 private:
     Entity info;
     Point targetPos = {-1,-1};
-    float targetRange = 5.0f;
-    float fatality = 5;
+    float targetRange = 10.0f;
+    float power = 30;
     float fireFreq = 10.0f;
     TIME_T t_fire = 0.0f;
     int ammo = 10;

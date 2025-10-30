@@ -19,22 +19,40 @@ TIME_T Artillery::fireEquation(){
 }
 bool Artillery::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
     if (inPort == "CompanyOrd") {
-        PlatoonOrd message;
+        CompanyOrd message;
         if(!TryCastMessage(anyMessage,message,"")) return false;
-        // 본인에게 온 명령인지 탐색
         auto it = message.orders.find(this->info.id);
         if (it == message.orders.end()) {
             return true;
         }
-        const Order& ord = it->second;
 
         const auto& orderList = it->second; // std::vector<Order>
-
-        if(ord.task == TaskType::BOMBARD){
-            this->targetPos = ord.to;
-            this->SetCurState("Fire");
+        for (const Order& ord : orderList) {
+            if (ord.task == TaskType::BOMBARD) {
+                this->targetPos = ord.to;
+                this->t_fire=fireEquation();
+                this->SetCurState("FIRE");
+                break;
+            }
         }
     }
+    // else if (inPort == "PlatoonOrd") {
+    //     PlatoonOrd message;
+    //     if(!TryCastMessage(anyMessage,message,"")) return false;
+    //     // 본인에게 온 명령인지 탐색
+    //     auto it = message.orders.find(this->info.id);
+    //     if (it == message.orders.end()) {
+    //         return true;
+    //     }
+    //     const Order& ord = it->second;
+
+    //     const auto& orderList = it->second; // std::vector<Order>
+
+    //     if(ord.task == TaskType::BOMBARD){
+    //         this->targetPos = ord.to;
+    //         this->SetCurState("Fire");
+    //     }
+    // }
     return true;
 }
 
@@ -51,7 +69,7 @@ bool Artillery::OutputFn(){
         message.senderType = this->info.forceType;
 
         message.targetPoint.clear();
-        int targetCount = std::max(0, static_cast<int>(std::round(this->fatality)));
+        int targetCount = std::max(0, static_cast<int>(std::round(this->power)));
         message.targetPoint.reserve(static_cast<std::size_t>(targetCount));
 
         constexpr float twoPi = 6.28318530717958647692f;
@@ -66,8 +84,18 @@ bool Artillery::OutputFn(){
             message.targetPoint.push_back({x, y});
         }
 
+        std::ostringstream oss;
+        oss << "targets: ";
+        for (size_t i = 0; i < message.targetPoint.size(); ++i) {
+            const auto& p = message.targetPoint[i];
+            oss << "(" << p.x << "," << p.y << ")";
+            if (i + 1 < message.targetPoint.size()) oss << ", ";
+        }
+        LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"FIRE",oss.str());
+
+
+
         std::any anyMessage = message;
-        // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"FIRE","shoot");
         this->AddOutputEvent("FireOut", anyMessage);
         return true;
     }

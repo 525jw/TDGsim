@@ -7,6 +7,7 @@
     { "kind": "bridge", "x1": 68, "y1": 47, "x2": 69, "y2": 48 }
   ],
   "units": [
+    { "uid": "BLUE-ART", "side": "BLUE", "type": "artillery", "x": 10, "y": 90 },
     { "uid": "BLUE-PLT1-SOL01", "side": "BLUE", "type": "rifle", "x": 14, "y": 68 },
     { "uid": "BLUE-PLT1-SOL02", "side": "BLUE", "type": "rifle", "x": 13, "y": 67 },
     { "uid": "BLUE-PLT1-SOL03", "side": "BLUE", "type": "rifle", "x": 13, "y": 68 },

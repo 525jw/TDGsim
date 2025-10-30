@@ -65,7 +65,9 @@ bool Environment::ExtTransFn(const std::string& inPort, const std::any& anyMessa
             if (e.position.x >= width)  e.position.x = width  - 1;
             if (e.position.y >= height) e.position.y = height - 1;
 
-            entities[RegisterEntityIdByName(e.name)] = std::move(e);
+            const int assignedId = RegisterEntityIdByName(e.name);
+            e.id = assignedId;
+            entities[assignedId] = std::move(e);
         }
         LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"ENV_INIT","seed=",this->seed);
         this->SetCurState("WAIT");
