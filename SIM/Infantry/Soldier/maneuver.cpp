@@ -25,9 +25,9 @@ Maneuver::Maneuver(Engine* engine, Entity* info)
 
 TIME_T Maneuver::mnvEquation(float speed) {\
     if(speed){
-        return 1.0f / speed;
+        return config::inf.walking_speed_spc;
     }else{
-        return 1.0f / config::inf.looking_speed_cps;
+        return config::inf.looking_speed_spc;
     }
 }
 

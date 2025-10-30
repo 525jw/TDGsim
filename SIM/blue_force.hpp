@@ -7,17 +7,14 @@
 #include "SIM/Infantry/PlatoonLeader/platoon_leader.hpp"
 #include "SIM/HQ/hq.hpp"
 #include "SIM/Artillery/artillery.hpp"
-// #include "SIM/Armor/Tank/tank.hpp"
-
 class BlueForce : public CoupledModel{
 public:
     BlueForce(Engine* engine)
     : CoupledModel(engine)
     {
-        // INFANTRY
-        // === 생성 ===
         std::vector<int> plt1_Ids; plt1_Ids.clear();
         std::vector<int> plt2_Ids; plt2_Ids.clear();
+        std::vector<int> plt3_Ids; plt3_Ids.clear();
         std::vector<int> cmp_Ids; cmp_Ids.clear();
 
         std::vector<Soldier*> plt1;
@@ -28,7 +25,10 @@ public:
         const int numOfPl2 = 25;
         plt2.reserve(numOfPl2);
 
-        // TODO: 나중에 하드코딩 고쳐놓기
+        std::vector<Soldier*> plt3;
+        const int numOfPl3 = 25;
+        plt3.reserve(numOfPl3);
+
         // === BLUE PLT1 ===
         plt1.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT1-SOL01"), "BLUE-PLT1-SOL01", Side::BLUE, ForceType::RIFLE, {23,88}})); plt1_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT1-SOL01"));
         plt1.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT1-SOL02"), "BLUE-PLT1-SOL02", Side::BLUE, ForceType::RIFLE, {24,88}})); plt1_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT1-SOL02"));
@@ -83,8 +83,32 @@ public:
         plt2.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT2-SOL24"), "BLUE-PLT2-SOL24", Side::BLUE, ForceType::RIFLE, {73,127}})); plt2_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT2-SOL24"));
         plt2.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT2-SOL25"), "BLUE-PLT2-SOL25", Side::BLUE, ForceType::RIFLE, {74,127}})); plt2_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT2-SOL25"));
 
-        // Register tank ID in PLT1 before leader creation
-        plt1_Ids.push_back(env->RegisterEntityIdByName("BLUE-TNK"));
+        // === BLUE PLT3 ===
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL01"), "BLUE-PLT3-SOL01", Side::BLUE, ForceType::RIFLE, {32,100}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL01"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL02"), "BLUE-PLT3-SOL02", Side::BLUE, ForceType::RIFLE, {33,100}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL02"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL03"), "BLUE-PLT3-SOL03", Side::BLUE, ForceType::RIFLE, {34,100}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL03"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL04"), "BLUE-PLT3-SOL04", Side::BLUE, ForceType::RIFLE, {35,100}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL04"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL05"), "BLUE-PLT3-SOL05", Side::BLUE, ForceType::RIFLE, {36,100}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL05"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL06"), "BLUE-PLT3-SOL06", Side::BLUE, ForceType::RIFLE, {32,101}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL06"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL07"), "BLUE-PLT3-SOL07", Side::BLUE, ForceType::RIFLE, {33,101}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL07"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL08"), "BLUE-PLT3-SOL08", Side::BLUE, ForceType::RIFLE, {34,101}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL08"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL09"), "BLUE-PLT3-SOL09", Side::BLUE, ForceType::RIFLE, {35,101}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL09"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL10"), "BLUE-PLT3-SOL10", Side::BLUE, ForceType::RIFLE, {36,101}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL10"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL11"), "BLUE-PLT3-SOL11", Side::BLUE, ForceType::RIFLE, {32,102}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL11"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL12"), "BLUE-PLT3-SOL12", Side::BLUE, ForceType::RIFLE, {33,102}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL12"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL13"), "BLUE-PLT3-SOL13", Side::BLUE, ForceType::RIFLE, {34,102}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL13"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL14"), "BLUE-PLT3-SOL14", Side::BLUE, ForceType::RIFLE, {35,102}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL14"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL15"), "BLUE-PLT3-SOL15", Side::BLUE, ForceType::RIFLE, {36,102}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL15"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL16"), "BLUE-PLT3-SOL16", Side::BLUE, ForceType::RIFLE, {32,103}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL16"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL17"), "BLUE-PLT3-SOL17", Side::BLUE, ForceType::RIFLE, {33,103}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL17"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL18"), "BLUE-PLT3-SOL18", Side::BLUE, ForceType::RIFLE, {34,103}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL18"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL19"), "BLUE-PLT3-SOL19", Side::BLUE, ForceType::RIFLE, {35,103}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL19"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL20"), "BLUE-PLT3-SOL20", Side::BLUE, ForceType::RIFLE, {36,103}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL20"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL21"), "BLUE-PLT3-SOL21", Side::BLUE, ForceType::RIFLE, {32,104}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL21"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL22"), "BLUE-PLT3-SOL22", Side::BLUE, ForceType::RIFLE, {33,104}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL22"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL23"), "BLUE-PLT3-SOL23", Side::BLUE, ForceType::RIFLE, {34,104}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL23"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL24"), "BLUE-PLT3-SOL24", Side::BLUE, ForceType::RIFLE, {35,104}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL24"));
+        plt3.push_back(new Soldier(engine, Entity{env->RegisterEntityIdByName("BLUE-PLT3-SOL25"), "BLUE-PLT3-SOL25", Side::BLUE, ForceType::RIFLE, {36,104}})); plt3_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-SOL25"));
 
         for (int i = 0; i < numOfPl1; ++i) {
             plt1[i]->SetParentModel(this);
@@ -94,19 +118,27 @@ public:
             plt2[i]->SetParentModel(this);
             this->RegisterSubModel(plt2[i]);
         }
+        for (int i = 0; i < numOfPl3; ++i) {
+            plt3[i]->SetParentModel(this);
+            this->RegisterSubModel(plt3[i]);
+        }
 
         // 소대장 - 소대원보다 나중에 생성할 것
-        PlatoonLeader* plt1_leader = new PlatoonLeader(engine, env->RegisterEntityIdByName("BLUE-PLT1-LEADER"),&plt1_Ids); cmp_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT1-LEADER"));
-        PlatoonLeader* plt2_leader = new PlatoonLeader(engine, env->RegisterEntityIdByName("BLUE-PLT2-LEADER"),&plt2_Ids); cmp_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT2-LEADER"));
+        PlatoonLeader* plt1_leader = new PlatoonLeader(engine, env->RegisterEntityIdByName("BLUE-PLT1-LEADER"), &plt1_Ids); cmp_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT1-LEADER"));
+        PlatoonLeader* plt2_leader = new PlatoonLeader(engine, env->RegisterEntityIdByName("BLUE-PLT2-LEADER"), &plt2_Ids); cmp_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT2-LEADER"));
+        PlatoonLeader* plt3_leader = new PlatoonLeader(engine, env->RegisterEntityIdByName("BLUE-PLT3-LEADER"), &plt3_Ids); cmp_Ids.push_back(env->QueryEntityIdByName("BLUE-PLT3-LEADER"));
         plt1_leader->SetModelName("BLUE-PLT1-LEADER");
         plt1_leader->SetParentModel(this);
         this->RegisterSubModel(plt1_leader);
         plt2_leader->SetModelName("BLUE-PLT2-LEADER");
         plt2_leader->SetParentModel(this);
         this->RegisterSubModel(plt2_leader);
+        plt3_leader->SetModelName("BLUE-PLT3-LEADER");
+        plt3_leader->SetParentModel(this);
+        this->RegisterSubModel(plt3_leader);
 
         // 포병
-        Artillery* art = new Artillery(engine, Entity{env->RegisterEntityIdByName("BLUE-ART"), "BLUE-ART", Side::BLUE, ForceType::ARTILLERY, {10,90}}); cmp_Ids.push_back(env->QueryEntityIdByName("BLUE-ART"));
+        Artillery* art = new Artillery(engine, Entity{env->RegisterEntityIdByName("BLUE-ART"), "BLUE-ART", Side::BLUE, ForceType::ARTILLERY, {10,130}}); cmp_Ids.push_back(env->QueryEntityIdByName("BLUE-ART"));
         art->SetParentModel(this);
         this->RegisterSubModel(art);
 
@@ -121,68 +153,50 @@ public:
         this->AddOutputPort("BlueFire");
         this->AddInputPort("RedPosition");
         this->AddOutputPort("BluePosition");
-        
 
         // === 커플링 ===
         this->AddCoupling(this,"Start",hq,"Start",EIC);
         this->AddCoupling(hq,"CompanyOrd",plt1_leader,"CompanyOrd",IC);
-        this->AddCoupling(hq,"CompanyOrd",plt2_leader,"CompanyOrd",IC);
         this->AddCoupling(plt1_leader,"PlatoonRep",hq,"InfantryRep",IC);
+        this->AddCoupling(hq,"CompanyOrd",plt2_leader,"CompanyOrd",IC);
         this->AddCoupling(plt2_leader,"PlatoonRep",hq,"InfantryRep",IC);
-
+        this->AddCoupling(hq,"CompanyOrd",plt3_leader,"CompanyOrd",IC);
+        this->AddCoupling(plt3_leader,"PlatoonRep",hq,"InfantryRep",IC);
         this->AddCoupling(hq,"CompanyOrd",art,"CompanyOrd",IC);
         this->AddCoupling(art,"FireOut",this,"BlueFire",EOC);
 
-
         for (int i = 0; i < numOfPl1; ++i) {
             this->AddCoupling(this, "Start", plt1[i], "Start", EIC);
-            this->AddCoupling(this, "RedFire",     plt1[i], "FireIn",     EIC);
-            this->AddCoupling(plt1[i], "FireOut",      this, "BlueFire",     EOC);
+            this->AddCoupling(this, "RedFire", plt1[i], "FireIn", EIC);
+            this->AddCoupling(plt1[i], "FireOut", this, "BlueFire", EOC);
             this->AddCoupling(plt1[i], "PositionOut", this, "BluePosition", EOC);
-            this->AddCoupling(this,"RedPosition",plt1[i],"PositionIn",EIC);
-            this->AddCoupling(plt1_leader,"PlatoonOrd",plt1[i],"PlatoonOrd",IC);
-            this->AddCoupling(plt1[i],"SoldierRep",plt1_leader,"SoldierRep",IC);
-            this->AddCoupling(plt1[i],"FireOut",plt1_leader,"FireFinished",IC);
-            this->AddCoupling(art,"FireOut",plt1[i],"FireIn",IC); // FF 기능
+            this->AddCoupling(this, "RedPosition", plt1[i], "PositionIn", EIC);
+            this->AddCoupling(plt1_leader, "PlatoonOrd", plt1[i], "PlatoonOrd", IC);
+            this->AddCoupling(plt1[i], "SoldierRep", plt1_leader, "SoldierRep", IC);
+            this->AddCoupling(plt1[i], "FireOut", plt1_leader, "FireFinished", IC);
+            this->AddCoupling(art, "FireOut", plt1[i], "FireIn", IC);
         }
         for (int i = 0; i < numOfPl2; ++i) {
             this->AddCoupling(this, "Start", plt2[i], "Start", EIC);
-            this->AddCoupling(this, "RedFire",     plt2[i], "FireIn",     EIC);
-            this->AddCoupling(plt2[i], "FireOut",      this, "BlueFire",     EOC);
+            this->AddCoupling(this, "RedFire", plt2[i], "FireIn", EIC);
+            this->AddCoupling(plt2[i], "FireOut", this, "BlueFire", EOC);
             this->AddCoupling(plt2[i], "PositionOut", this, "BluePosition", EOC);
-            this->AddCoupling(this,"RedPosition",plt2[i],"PositionIn",EIC);
-            this->AddCoupling(plt2_leader,"PlatoonOrd",plt2[i],"PlatoonOrd",IC);
-            this->AddCoupling(plt2[i],"SoldierRep",plt2_leader,"SoldierRep",IC);
-            this->AddCoupling(plt2[i],"FireOut",plt2_leader,"FireFinished",IC);
-            this->AddCoupling(art,"FireOut",plt2[i],"FireIn",IC); // FF 기능
+            this->AddCoupling(this, "RedPosition", plt2[i], "PositionIn", EIC);
+            this->AddCoupling(plt2_leader, "PlatoonOrd", plt2[i], "PlatoonOrd", IC);
+            this->AddCoupling(plt2[i], "SoldierRep", plt2_leader, "SoldierRep", IC);
+            this->AddCoupling(plt2[i], "FireOut", plt2_leader, "FireFinished", IC);
+            this->AddCoupling(art, "FireOut", plt2[i], "FireIn", IC);
         }
-
-
-        plt1_leader->SetModelName("BLUE-PLT1-LEADER");
-        plt1_leader->SetParentModel(this);
-        this->RegisterSubModel(plt1_leader);
-
-        // {
-        //     // BLUE-TNK at {7,61}
-        //     int id = env->RegisterEntityIdByName("BLUE-TNK");
-        //     Tank* t = new Tank(engine, Entity{id, "BLUE-TNK", Side::BLUE, ForceType::TANK, {7,61}});
-        //     t->SetModelName("BLUE-TNK");
-        //     t->SetParentModel(this);
-        //     this->RegisterSubModel(t);
-
-        //     // Couple to force-level ports
-        //     this->AddCoupling(this, "Start", t, "Start", EIC);
-        //     this->AddCoupling(this, "RedFire",     t, "FireIn",     EIC);
-        //     this->AddCoupling(t, "FireOut",      this, "BlueFire",     EOC);
-        //     this->AddCoupling(t, "PositionOut", this, "BluePosition", EOC);
-        //     this->AddCoupling(this,"RedPosition",t,"PositionIn",EIC);
-
-        //     // Attach to PLT1 leader by default
-        //     this->AddCoupling(plt1_leader,"PlatoonOrd",t,"PlatoonOrd",IC);
-        //     this->AddCoupling(t,"SoldierRep",plt1_leader,"SoldierRep",IC);
-        //     this->AddCoupling(t,"FireOut",plt1_leader,"FireFinished",IC);
-        //     // Also track at company level if needed
-        //     plt1_Ids.push_back(id);
-        // }
+        for (int i = 0; i < numOfPl3; ++i) {
+            this->AddCoupling(this, "Start", plt3[i], "Start", EIC);
+            this->AddCoupling(this, "RedFire", plt3[i], "FireIn", EIC);
+            this->AddCoupling(plt3[i], "FireOut", this, "BlueFire", EOC);
+            this->AddCoupling(plt3[i], "PositionOut", this, "BluePosition", EOC);
+            this->AddCoupling(this, "RedPosition", plt3[i], "PositionIn", EIC);
+            this->AddCoupling(plt3_leader, "PlatoonOrd", plt3[i], "PlatoonOrd", IC);
+            this->AddCoupling(plt3[i], "SoldierRep", plt3_leader, "SoldierRep", IC);
+            this->AddCoupling(plt3[i], "FireOut", plt3_leader, "FireFinished", IC);
+            this->AddCoupling(art, "FireOut", plt3[i], "FireIn", IC);
+        }
     }
 };

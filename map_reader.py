@@ -26,7 +26,7 @@ def main():
     patches, units = spec.get("patches", []), spec.get("units", [])
 
     # === 여기서 윈도우 크기를 맵 크기에 맞게 자동 설정 ===
-    cell = 4  # 셀 크기(px)
+    cell = 10  # 셀 크기(px)
     WIN_W, WIN_H = W * cell, H * cell
 
     pygame.init()

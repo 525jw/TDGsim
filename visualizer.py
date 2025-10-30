@@ -35,6 +35,7 @@ COLORS = {
     "urban": (189, 189, 189),
     "rough": (231, 186, 82),
     "plain": (220, 220, 220),
+    "target_area": (180, 180, 180),
     "blue": (49, 130, 189),
     "blue_e": (8, 81, 156),
     "red": (222, 45, 38),
@@ -161,6 +162,7 @@ SHOOT_LINE_RE = re.compile(
     re.IGNORECASE,
 )
 COORD_IN_PARENS_RE = re.compile(r"\(\s*(?P<x>-?\d+)\s*,\s*(?P<y>-?\d+)\s*\)")
+UNIT_NAME_RE = re.compile(r"\b([A-Za-z0-9]+-[A-Za-z0-9\-_.]+)\b")
 MISSING_TARGET_RE = re.compile(r"shoot\s+at\s+missing\s+target", re.IGNORECASE)
 
 # DEAD: "[t] UNIT : DEAD" 또는 "[t] UNIT is dead"
@@ -217,10 +219,23 @@ def parse_log(log_path: str) -> Tuple[Dict[float, List[dict]], Dict[str, Tuple[i
                     events[current_time].append({"type": "shoot", "unit": unit, "target": None})
                     continue
 
-                cm = COORD_IN_PARENS_RE.search(body)
-                if cm:
-                    tx, ty = int(cm.group("x")), int(cm.group("y"))
-                    events[current_time].append({"type": "shoot", "unit": unit, "target_coord": (tx, ty)})
+                coords = list(COORD_IN_PARENS_RE.finditer(body))
+                if coords:
+                    for cm in coords:
+                        tx, ty = int(cm.group("x")), int(cm.group("y"))
+                        events[current_time].append(
+                            {"type": "shoot", "unit": unit, "target_coord": (tx, ty)}
+                        )
+                    continue
+
+                name_candidates = []
+                for raw in UNIT_NAME_RE.findall(body):
+                    base = base_unit_name(raw)
+                    if base and base not in name_candidates:
+                        name_candidates.append(base)
+                if name_candidates:
+                    for target in name_candidates:
+                        events[current_time].append({"type": "shoot", "unit": unit, "target": target})
                     continue
 
                 lowered = body.lower()
@@ -332,6 +347,7 @@ def draw_background(
     height: int,
     cell: int,
     patches: Iterable[dict],
+    target_areas: Optional[Iterable[dict]] = None,
     objective_cells: Optional[Iterable[Tuple[int, int]]] = None,
 ) -> None:
     screen.fill(COLORS["bg"])
@@ -348,6 +364,18 @@ def draw_background(
             (abs(x2 - x1) + 1) * cell, (abs(y2 - y1) + 1) * cell
         )
         pygame.draw.rect(screen, colour, rect)
+
+    if target_areas:
+        for area in target_areas:
+            try:
+                x1, y1, x2, y2 = area["x1"], area["y1"], area["x2"], area["y2"]
+            except (KeyError, TypeError):
+                continue
+            rect = pygame.Rect(
+                min(x1, x2) * cell, min(y1, y2) * cell,
+                (abs(x2 - x1) + 1) * cell, (abs(y2 - y1) + 1) * cell
+            )
+            pygame.draw.rect(screen, COLORS["target_area"], rect)
 
     if objective_cells:
         for ox, oy in objective_cells:
@@ -380,8 +408,8 @@ def draw_shots(screen: pygame.Surface, shots: Iterable[ShotOverlay], cell: int) 
         sx, sy = shot.source
         tx, ty = shot.target
         start = (sx * cell + cell // 2, sy * cell + cell // 2)
-        end   = (tx * cell + cell // 2, ty * cell + cell // 2)
-        pygame.draw.line(screen, (30, 30, 30), start, end, 3)
+        end = (tx * cell + cell // 2, ty * cell + cell // 2)
+        pygame.draw.line(screen, shot.colour, start, end, 3)
 
 # ---------------------- Playback ----------------------
 def build_timeline(events: Dict[float, List[dict]]) -> List[Tuple[float, List[dict]]]:
@@ -405,6 +433,7 @@ def playback(
 ) -> None:
     width, height = spec["w"], spec["h"]
     patches = spec.get("patches", [])
+    target_areas = spec.get("target areas") or spec.get("target_areas") or spec.get("targets") or []
     objective_cells = collect_objective_cells(spec, OBJECTIVE_TARGET_UNIT)
 
     pygame.init()
@@ -478,7 +507,12 @@ def playback(
                         target_pos = shooter_pos
                     if shooter_pos and target_pos:
                         side = state.ensure_info(shooter).side
-                        colour = COLORS["blue_e"] if side == "BLUE" else COLORS["red_e"]
+                        if side == "BLUE":
+                            colour = COLORS["blue"]
+                        elif side == "RED":
+                            colour = COLORS["red"]
+                        else:
+                            colour = COLORS["urban"]
                         current_shots.append(
                             ShotOverlay(source=shooter_pos, target=target_pos, colour=colour)
                         )
@@ -493,7 +527,7 @@ def playback(
         if current_shots and pygame.time.get_ticks() > shot_expire_at:
             current_shots = []
 
-        draw_background(screen, width, height, cell_size, patches, objective_cells)
+        draw_background(screen, width, height, cell_size, patches, target_areas, objective_cells)
         draw_units(screen, state, cell_size, font)
         draw_shots(screen, current_shots, cell_size)
 
