@@ -3,7 +3,7 @@
 #include "common.hpp"
 #include "DEVS/logger.hpp"
 
-class Environment; 
+class Environment;
 extern Environment* env;
 inline bool EnvReady() noexcept { return env != nullptr; }
 
@@ -15,7 +15,11 @@ private:
     std::unordered_map<int, Entity> entities; // entity Id -> entity instance
     std::unordered_map<std::string, int> nameToId; // name -> id
     int nextId = 1;
-    
+
+    // 추가: 초기 총원 기록
+    int initialBlue = 0;
+    int initialRed = 0;
+
 public:
     Environment(Engine* engine);
 
@@ -33,12 +37,12 @@ public:
 
     bool InBounds(Point p) const noexcept { return (p.x >= 0 && p.y >= 0 && p.y < GetHeight() && p.x < GetWidth()); }
 
-    const TerrainType& GetTerrainAt(Point p) const { 
+    const TerrainType& GetTerrainAt(Point p) const {
         assert(InBounds(p));
         return terrainMap[p.y][p.x];
     }
     // 탐색 실패 : return nullptr, 성공 : return Entity*
-    const Entity* QueryEntityById(int id) const noexcept { 
+    const Entity* QueryEntityById(int id) const noexcept {
         auto it = entities.find(id);
         return (it == entities.end()) ? nullptr : &it->second;
     }
@@ -63,10 +67,14 @@ public:
         auto it = nameToId.find(name);
         return (it != nameToId.end()) ? it->second : -1;
     }
-    
+
     int RegisterEntityIdByName(const std::string& name);
     EnvMoveResponse RequestMoveEntity(int id, Point p);
     EnvKillResponse RequestKillEntity(int id);
+
+    // 추가: 초기 총원 Get
+    int GetInitialBlue() const noexcept { return initialBlue; }
+    int GetInitialRed() const noexcept { return initialRed; }
 
     virtual ~Environment();
 };
