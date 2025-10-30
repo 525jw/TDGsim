@@ -1,4 +1,5 @@
 import subprocess
+import os
 import sys
 from pathlib import Path
 
@@ -66,7 +67,9 @@ def run_and_archive(runs: int = 10):
 
         # Run simulator (adjust args as needed)
         cmd = [str(exe), "--map", "map.json"]
-        result = subprocess.run(cmd, cwd=root)
+        env = os.environ.copy()
+        env["SIMCNT"] = str(i)
+        result = subprocess.run(cmd, cwd=root, env=env)
         if result.returncode != 0:
             print(f"Warning: tdg.exe exited with code {result.returncode} on run {i}")
 
@@ -89,6 +92,16 @@ def run_and_archive(runs: int = 10):
 
         print(f"=== Run {i} end ===\n")
 
+    # After batch: reset SIMCNT to 1 for subsequent runs
+    try:
+        os.environ["SIMCNT"] = "1"
+        if os.name == "nt":
+            # Persist for new Windows sessions; non-fatal if setx is unavailable
+            subprocess.run(["setx", "SIMCNT", "1"], check=False)
+        print("[Batch] SIMCNT reset to 1.")
+    except Exception as e:
+        print(f"[Batch] Warning: failed to reset SIMCNT: {e}")
+
 
 def main():
     compile_project()
@@ -97,4 +110,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

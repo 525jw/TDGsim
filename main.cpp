@@ -1,5 +1,6 @@
 #include "DEVS/engine.hpp"
 #include "tdg_sim.hpp"
+#include <cstdlib>
 
 int main(){
     std::puts("TDG starts");
@@ -10,6 +11,8 @@ int main(){
     engine.SetRootModel(&tdgSim);
 
     engine.Run();
+
+    int SimCnt = 1; // 시뮬레이션 실행 횟수
 
     // RSH
     // 시뮬레이션 결과 집계
@@ -82,8 +85,13 @@ int main(){
             const int kiasBlue = std::max(0, initBlue - aliveBlue -1);  // -1: 고정
             const int kiasRed  = std::max(0, initRed  - aliveRed);
 
+            // 환경변수 SIMCNT가 있으면 사용 (배치 실행 시 외부에서 주입)
+            if (const char* envCnt = std::getenv("SIMCNT")) {
+                int v = std::atoi(envCnt);
+                if (v > 0) SimCnt = v;
+            }
             // 콘솔 출력
-            std::printf("\n=== Simulation Result ===\n");
+            std::printf("\n=== Simulation Result %d ===\n", SimCnt);
             std::printf("Seed: %d\n", seed);
             std::printf("Objective Area 1 (x:%d~%d, y:%d~%d): BLUE inside = %d RED inside = %d\n",
                         A1_x1_disp, A1_x2_disp, A1_y1_disp, A1_y2_disp, blueInA1, redInA1);
@@ -105,7 +113,7 @@ int main(){
                 if (fsize > 0) {
                     std::fprintf(fp, "\n");
                 }
-                std::fprintf(fp, "=== Simulation Result ===\n");
+                std::fprintf(fp, "=== Simulation Result * %d ===\n", SimCnt);
                 std::fprintf(fp, "Seed: %d\n", seed);
                 std::fprintf(fp, "Objective Area 1 (x:%d~%d, y:%d~%d): BLUE inside = %d RED inside = %d\n",
                             A1_x1_disp, A1_x2_disp, A1_y1_disp, A1_y2_disp, blueInA1, redInA1);
