@@ -1,140 +1,35 @@
-{
-  "w": 100,
-  "h": 150,
-  "target areas": [
+{"w":100,"h":150,"target areas": [
     {"name": "Area1", "x1": 21, "y1": 84, "x2": 37, "y2": 100},
     {"name": "Area2", "x1": 63, "y1": 84, "x2": 79, "y2": 100},
-    {"name": "Area3", "x1": 13, "y1": 15, "x2": 80, "y2": 25}
-  ],
-  "patches": [
-    {"kind": "water","x1": 0,"y1": 73,"x2": 99,"y2": 77},
-    {"kind": "bridge","x1": 30,"y1": 73,"x2": 33,"y2": 77},
-    {"kind": "bridge","x1": 70,"y1": 73,"x2": 73,"y2": 77}
-  ],
-  "units": [
-    { "uid": "BLUE-ART","side": "BLUE","type": "artillery","x": 10,"y": 130 },
-
-    { "uid": "BLUE-PLT1-SOL01", "side": "BLUE", "type": "rifle", "x": 23, "y": 88 },
-    { "uid": "BLUE-PLT1-SOL02", "side": "BLUE", "type": "rifle", "x": 24, "y": 88 },
-    { "uid": "BLUE-PLT1-SOL03", "side": "BLUE", "type": "rifle", "x": 25, "y": 88 },
-    { "uid": "BLUE-PLT1-SOL04", "side": "BLUE", "type": "rifle", "x": 26, "y": 88 },
-    { "uid": "BLUE-PLT1-SOL05", "side": "BLUE", "type": "rifle", "x": 27, "y": 88 },
+    {"name": "Area3", "x1": 53, "y1": 15, "x2": 80, "y2": 25}
+  ],"patches":[{"kind":"water","x1":0,"y1":73,"x2":99,"y2":77},{"kind":"bridge","x1":30,"y1":73,"x2":33,"y2":77},{"kind":"bridge","x1":70,"y1":73,"x2":73,"y2":77}],"units":[{"uid":"BLUE-ART","side":"BLUE","type":"artillery","x":10,"y":130},{"uid":"BLUE-PLT1-SOL01","side":"BLUE","type":"rifle","x":23,"y":88},{"uid":"BLUE-PLT1-SOL02","side":"BLUE","type":"rifle","x":24,"y":88},{"uid":"BLUE-PLT1-SOL03","side":"BLUE","type":"rifle","x":25,"y":88},{"uid":"BLUE-PLT1-SOL04","side":"BLUE","type":"rifle","x":26,"y":88},{"uid":"BLUE-PLT1-SOL05","side":"BLUE","type":"rifle","x":27,"y":88},{"uid":"BLUE-PLT1-SOL06","side":"BLUE","type":"rifle","x":23,"y":89},{"uid":"BLUE-PLT1-SOL07","side":"BLUE","type":"rifle","x":24,"y":89},{"uid":"BLUE-PLT1-SOL08","side":"BLUE","type":"rifle","x":25,"y":89},{"uid":"BLUE-PLT1-SOL09","side":"BLUE","type":"rifle","x":26,"y":89},{"uid":"BLUE-PLT1-SOL10","side":"BLUE","type":"rifle","x":27,"y":89},{"uid":"BLUE-PLT1-SOL11","side":"BLUE","type":"rifle","x":23,"y":90},{"uid":"BLUE-PLT1-SOL12","side":"BLUE","type":"rifle","x":24,"y":90},{"uid":"BLUE-PLT1-SOL13","side":"BLUE","type":"rifle","x":25,"y":90},{"uid":"BLUE-PLT1-SOL14","side":"BLUE","type":"rifle","x":26,"y":90},{"uid":"BLUE-PLT1-SOL15","side":"BLUE","type":"rifle","x":27,"y":90},{"uid":"BLUE-PLT1-SOL16","side":"BLUE","type":"rifle","x":23,"y":91},{"uid":"BLUE-PLT1-SOL17","side":"BLUE","type":"rifle","x":24,"y":91},{"uid":"BLUE-PLT1-SOL18","side":"BLUE","type":"rifle","x":25,"y":91},{"uid":"BLUE-PLT1-SOL19","side":"BLUE","type":"rifle","x":26,"y":91},{"uid":"BLUE-PLT1-SOL20","side":"BLUE","type":"rifle","x":27,"y":91},{"uid":"BLUE-PLT1-SOL21","side":"BLUE","type":"rifle","x":23,"y":92},{"uid":"BLUE-PLT1-SOL22","side":"BLUE","type":"rifle","x":24,"y":92},{"uid":"BLUE-PLT1-SOL23","side":"BLUE","type":"rifle","x":25,"y":92},{"uid":"BLUE-PLT1-SOL24","side":"BLUE","type":"rifle","x":26,"y":92},{"uid":"BLUE-PLT1-SOL25","side":"BLUE","type":"rifle","x":27,"y":92},{"uid":"BLUE-PLT2-SOL01","side":"BLUE","type":"rifle","x":70,"y":123},{"uid":"BLUE-PLT2-SOL02","side":"BLUE","type":"rifle","x":71,"y":123},{"uid":"BLUE-PLT2-SOL03","side":"BLUE","type":"rifle","x":72,"y":123},{"uid":"BLUE-PLT2-SOL04","side":"BLUE","type":"rifle","x":73,"y":123},{"uid":"BLUE-PLT2-SOL05","side":"BLUE","type":"rifle","x":74,"y":123},{"uid":"BLUE-PLT2-SOL06","side":"BLUE","type":"rifle","x":70,"y":124},{"uid":"BLUE-PLT2-SOL07","side":"BLUE","type":"rifle","x":71,"y":124},{"uid":"BLUE-PLT2-SOL08","side":"BLUE","type":"rifle","x":72,"y":124},{"uid":"BLUE-PLT2-SOL09","side":"BLUE","type":"rifle","x":73,"y":124},{"uid":"BLUE-PLT2-SOL10","side":"BLUE","type":"rifle","x":74,"y":124},{"uid":"BLUE-PLT2-SOL11","side":"BLUE","type":"rifle","x":70,"y":125},{"uid":"BLUE-PLT2-SOL12","side":"BLUE","type":"rifle","x":71,"y":125},{"uid":"BLUE-PLT2-SOL13","side":"BLUE","type":"rifle","x":72,"y":125},{"uid":"BLUE-PLT2-SOL14","side":"BLUE","type":"rifle","x":73,"y":125},{"uid":"BLUE-PLT2-SOL15","side":"BLUE","type":"rifle","x":74,"y":125},{"uid":"BLUE-PLT2-SOL16","side":"BLUE","type":"rifle","x":70,"y":126},{"uid":"BLUE-PLT2-SOL17","side":"BLUE","type":"rifle","x":71,"y":126},{"uid":"BLUE-PLT2-SOL18","side":"BLUE","type":"rifle","x":72,"y":126},{"uid":"BLUE-PLT2-SOL19","side":"BLUE","type":"rifle","x":73,"y":126},{"uid":"BLUE-PLT2-SOL20","side":"BLUE","type":"rifle","x":74,"y":126},{"uid":"BLUE-PLT2-SOL21","side":"BLUE","type":"rifle","x":70,"y":127},{"uid":"BLUE-PLT2-SOL22","side":"BLUE","type":"rifle","x":71,"y":127},{"uid":"BLUE-PLT2-SOL23","side":"BLUE","type":"rifle","x":72,"y":127},{"uid":"BLUE-PLT2-SOL24","side":"BLUE","type":"rifle","x":73,"y":127},{"uid":"BLUE-PLT2-SOL25","side":"BLUE","type":"rifle","x":74,"y":127},
+  { "uid": "RED-PLT1-SOL01", "side": "RED", "type": "rifle", "x": 73, "y": 3 },
+    { "uid": "RED-PLT1-SOL02", "side": "RED", "type": "rifle", "x": 74, "y": 3 },
+    { "uid": "RED-PLT1-SOL03", "side": "RED", "type": "rifle", "x": 75, "y": 3 },
+    { "uid": "RED-PLT1-SOL04", "side": "RED", "type": "rifle", "x": 76, "y": 3 },
+    { "uid": "RED-PLT1-SOL05", "side": "RED", "type": "rifle", "x": 77, "y": 3 },
     
-    { "uid": "BLUE-PLT1-SOL06", "side": "BLUE", "type": "rifle", "x": 23, "y": 89 },
-    { "uid": "BLUE-PLT1-SOL07", "side": "BLUE", "type": "rifle", "x": 24, "y": 89 },
-    { "uid": "BLUE-PLT1-SOL08", "side": "BLUE", "type": "rifle", "x": 25, "y": 89 },
-    { "uid": "BLUE-PLT1-SOL09", "side": "BLUE", "type": "rifle", "x": 26, "y": 89 },
-    { "uid": "BLUE-PLT1-SOL10", "side": "BLUE", "type": "rifle", "x": 27, "y": 89 },
+    { "uid": "RED-PLT1-SOL06", "side": "RED", "type": "rifle", "x": 73, "y": 4 },
+    { "uid": "RED-PLT1-SOL07", "side": "RED", "type": "rifle", "x": 74, "y": 4 },
+    { "uid": "RED-PLT1-SOL08", "side": "RED", "type": "rifle", "x": 75, "y": 4 },
+    { "uid": "RED-PLT1-SOL09", "side": "RED", "type": "rifle", "x": 76, "y": 4 },
+    { "uid": "RED-PLT1-SOL10", "side": "RED", "type": "rifle", "x": 77, "y": 4 },
     
-    { "uid": "BLUE-PLT1-SOL11", "side": "BLUE", "type": "rifle", "x": 23, "y": 90 },
-    { "uid": "BLUE-PLT1-SOL12", "side": "BLUE", "type": "rifle", "x": 24, "y": 90 },
-    { "uid": "BLUE-PLT1-SOL13", "side": "BLUE", "type": "rifle", "x": 25, "y": 90 },
-    { "uid": "BLUE-PLT1-SOL14", "side": "BLUE", "type": "rifle", "x": 26, "y": 90 },
-    { "uid": "BLUE-PLT1-SOL15", "side": "BLUE", "type": "rifle", "x": 27, "y": 90 },
+    { "uid": "RED-PLT1-SOL11", "side": "RED", "type": "rifle", "x": 73, "y": 5 },
+    { "uid": "RED-PLT1-SOL12", "side": "RED", "type": "rifle", "x": 74, "y": 5 },
+    { "uid": "RED-PLT1-SOL13", "side": "RED", "type": "rifle", "x": 75, "y": 5 },
+    { "uid": "RED-PLT1-SOL14", "side": "RED", "type": "rifle", "x": 76, "y": 5 },
+    { "uid": "RED-PLT1-SOL15", "side": "RED", "type": "rifle", "x": 77, "y": 5 },
     
-    { "uid": "BLUE-PLT1-SOL16", "side": "BLUE", "type": "rifle", "x": 23, "y": 91 },
-    { "uid": "BLUE-PLT1-SOL17", "side": "BLUE", "type": "rifle", "x": 24, "y": 91 },
-    { "uid": "BLUE-PLT1-SOL18", "side": "BLUE", "type": "rifle", "x": 25, "y": 91 },
-    { "uid": "BLUE-PLT1-SOL19", "side": "BLUE", "type": "rifle", "x": 26, "y": 91 },
-    { "uid": "BLUE-PLT1-SOL20", "side": "BLUE", "type": "rifle", "x": 27, "y": 91 },
+    { "uid": "RED-PLT1-SOL16", "side": "RED", "type": "rifle", "x": 73, "y": 6 },
+    { "uid": "RED-PLT1-SOL17", "side": "RED", "type": "rifle", "x": 74, "y": 6 },
+    { "uid": "RED-PLT1-SOL18", "side": "RED", "type": "rifle", "x": 75, "y": 6 },
+    { "uid": "RED-PLT1-SOL19", "side": "RED", "type": "rifle", "x": 76, "y": 6 },
+    { "uid": "RED-PLT1-SOL20", "side": "RED", "type": "rifle", "x": 77, "y": 6 },
     
-    { "uid": "BLUE-PLT1-SOL21", "side": "BLUE", "type": "rifle", "x": 23, "y": 92 },
-    { "uid": "BLUE-PLT1-SOL22", "side": "BLUE", "type": "rifle", "x": 24, "y": 92 },
-    { "uid": "BLUE-PLT1-SOL23", "side": "BLUE", "type": "rifle", "x": 25, "y": 92 },
-    { "uid": "BLUE-PLT1-SOL24", "side": "BLUE", "type": "rifle", "x": 26, "y": 92 },
-    { "uid": "BLUE-PLT1-SOL25", "side": "BLUE", "type": "rifle", "x": 27, "y": 92 },
-    
-
-    { "uid": "BLUE-PLT2-SOL01", "side": "BLUE", "type": "rifle", "x": 70, "y": 123 },
-    { "uid": "BLUE-PLT2-SOL02", "side": "BLUE", "type": "rifle", "x": 71, "y": 123 },
-    { "uid": "BLUE-PLT2-SOL03", "side": "BLUE", "type": "rifle", "x": 72, "y": 123 },
-    { "uid": "BLUE-PLT2-SOL04", "side": "BLUE", "type": "rifle", "x": 73, "y": 123 },
-    { "uid": "BLUE-PLT2-SOL05", "side": "BLUE", "type": "rifle", "x": 74, "y": 123 },
-    
-    { "uid": "BLUE-PLT2-SOL06", "side": "BLUE", "type": "rifle", "x": 70, "y": 124 },
-    { "uid": "BLUE-PLT2-SOL07", "side": "BLUE", "type": "rifle", "x": 71, "y": 124 },
-    { "uid": "BLUE-PLT2-SOL08", "side": "BLUE", "type": "rifle", "x": 72, "y": 124 },
-    { "uid": "BLUE-PLT2-SOL09", "side": "BLUE", "type": "rifle", "x": 73, "y": 124 },
-    { "uid": "BLUE-PLT2-SOL10", "side": "BLUE", "type": "rifle", "x": 74, "y": 124 },
-    
-    { "uid": "BLUE-PLT2-SOL11", "side": "BLUE", "type": "rifle", "x": 70, "y": 125 },
-    { "uid": "BLUE-PLT2-SOL12", "side": "BLUE", "type": "rifle", "x": 71, "y": 125 },
-    { "uid": "BLUE-PLT2-SOL13", "side": "BLUE", "type": "rifle", "x": 72, "y": 125 },
-    { "uid": "BLUE-PLT2-SOL14", "side": "BLUE", "type": "rifle", "x": 73, "y": 125 },
-    { "uid": "BLUE-PLT2-SOL15", "side": "BLUE", "type": "rifle", "x": 74, "y": 125 },
-
-    { "uid": "BLUE-PLT2-SOL16", "side": "BLUE", "type": "rifle", "x": 70, "y": 126 },
-    { "uid": "BLUE-PLT2-SOL17", "side": "BLUE", "type": "rifle", "x": 71, "y": 126 },
-    { "uid": "BLUE-PLT2-SOL18", "side": "BLUE", "type": "rifle", "x": 72, "y": 126 },
-    { "uid": "BLUE-PLT2-SOL19", "side": "BLUE", "type": "rifle", "x": 73, "y": 126 },
-    { "uid": "BLUE-PLT2-SOL20", "side": "BLUE", "type": "rifle", "x": 74, "y": 126 },
-
-    { "uid": "BLUE-PLT2-SOL21", "side": "BLUE", "type": "rifle", "x": 70, "y": 127 },
-    { "uid": "BLUE-PLT2-SOL22", "side": "BLUE", "type": "rifle", "x": 71, "y": 127 },
-    { "uid": "BLUE-PLT2-SOL23", "side": "BLUE", "type": "rifle", "x": 72, "y": 127 },
-    { "uid": "BLUE-PLT2-SOL24", "side": "BLUE", "type": "rifle", "x": 73, "y": 127 },
-    { "uid": "BLUE-PLT2-SOL25", "side": "BLUE", "type": "rifle", "x": 74, "y": 127 },
-
-
-    { "uid": "RED-PLT1-SOL01", "side": "RED", "type": "rifle", "x": 73, "y": 18 },
-    { "uid": "RED-PLT1-SOL02", "side": "RED", "type": "rifle", "x": 74, "y": 18 },
-    { "uid": "RED-PLT1-SOL03", "side": "RED", "type": "rifle", "x": 75, "y": 18 },
-    { "uid": "RED-PLT1-SOL04", "side": "RED", "type": "rifle", "x": 76, "y": 18 },
-    { "uid": "RED-PLT1-SOL05", "side": "RED", "type": "rifle", "x": 77, "y": 18 },
-    
-    { "uid": "RED-PLT1-SOL06", "side": "RED", "type": "rifle", "x": 73, "y": 19 },
-    { "uid": "RED-PLT1-SOL07", "side": "RED", "type": "rifle", "x": 74, "y": 19 },
-    { "uid": "RED-PLT1-SOL08", "side": "RED", "type": "rifle", "x": 75, "y": 19 },
-    { "uid": "RED-PLT1-SOL09", "side": "RED", "type": "rifle", "x": 76, "y": 19 },
-    { "uid": "RED-PLT1-SOL10", "side": "RED", "type": "rifle", "x": 77, "y": 19 },
-    
-    { "uid": "RED-PLT1-SOL11", "side": "RED", "type": "rifle", "x": 73, "y": 20 },
-    { "uid": "RED-PLT1-SOL12", "side": "RED", "type": "rifle", "x": 74, "y": 20 },
-    { "uid": "RED-PLT1-SOL13", "side": "RED", "type": "rifle", "x": 75, "y": 20 },
-    { "uid": "RED-PLT1-SOL14", "side": "RED", "type": "rifle", "x": 76, "y": 20 },
-    { "uid": "RED-PLT1-SOL15", "side": "RED", "type": "rifle", "x": 77, "y": 20 },
-    
-    { "uid": "RED-PLT1-SOL16", "side": "RED", "type": "rifle", "x": 73, "y": 21 },
-    { "uid": "RED-PLT1-SOL17", "side": "RED", "type": "rifle", "x": 74, "y": 21 },
-    { "uid": "RED-PLT1-SOL18", "side": "RED", "type": "rifle", "x": 75, "y": 21 },
-    { "uid": "RED-PLT1-SOL19", "side": "RED", "type": "rifle", "x": 76, "y": 21 },
-    { "uid": "RED-PLT1-SOL20", "side": "RED", "type": "rifle", "x": 77, "y": 21 },
-    
-    { "uid": "RED-PLT1-SOL21", "side": "RED", "type": "rifle", "x": 73, "y": 22 },
-    { "uid": "RED-PLT1-SOL22", "side": "RED", "type": "rifle", "x": 74, "y": 22 },
-    { "uid": "RED-PLT1-SOL23", "side": "RED", "type": "rifle", "x": 75, "y": 22 },
-    { "uid": "RED-PLT1-SOL24", "side": "RED", "type": "rifle", "x": 76, "y": 22 },
-    { "uid": "RED-PLT1-SOL25", "side": "RED", "type": "rifle", "x": 77, "y": 22 },
-
-
-    { "uid": "RED-PLT2-SOL01", "side": "RED", "type": "rifle", "x": 70, "y": 88 },
-    { "uid": "RED-PLT2-SOL02", "side": "RED", "type": "rifle", "x": 71, "y": 88 },
-    { "uid": "RED-PLT2-SOL03", "side": "RED", "type": "rifle", "x": 72, "y": 88 },
-    { "uid": "RED-PLT2-SOL04", "side": "RED", "type": "rifle", "x": 73, "y": 88 },
-    { "uid": "RED-PLT2-SOL05", "side": "RED", "type": "rifle", "x": 74, "y": 88 },
-
-    { "uid": "RED-PLT2-SOL06", "side": "RED", "type": "rifle", "x": 70, "y": 89 },
-    { "uid": "RED-PLT2-SOL07", "side": "RED", "type": "rifle", "x": 71, "y": 89 },
-    { "uid": "RED-PLT2-SOL08", "side": "RED", "type": "rifle", "x": 72, "y": 89 },
-    { "uid": "RED-PLT2-SOL09", "side": "RED", "type": "rifle", "x": 73, "y": 89 },
-    { "uid": "RED-PLT2-SOL10", "side": "RED", "type": "rifle", "x": 74, "y": 89 },
-
-    { "uid": "RED-PLT2-SOL11", "side": "RED", "type": "rifle", "x": 70, "y": 90 },
-    { "uid": "RED-PLT2-SOL12", "side": "RED", "type": "rifle", "x": 71, "y": 90 },
-    { "uid": "RED-PLT2-SOL13", "side": "RED", "type": "rifle", "x": 72, "y": 90 },
-    { "uid": "RED-PLT2-SOL14", "side": "RED", "type": "rifle", "x": 73, "y": 90 },
-    { "uid": "RED-PLT2-SOL15", "side": "RED", "type": "rifle", "x": 74, "y": 90 },
-
-    { "uid": "RED-PLT2-SOL16", "side": "RED", "type": "rifle", "x": 70, "y": 91 },
-    { "uid": "RED-PLT2-SOL17", "side": "RED", "type": "rifle", "x": 71, "y": 91 },
-    { "uid": "RED-PLT2-SOL18", "side": "RED", "type": "rifle", "x": 72, "y": 91 },
-    { "uid": "RED-PLT2-SOL19", "side": "RED", "type": "rifle", "x": 73, "y": 91 },
-    { "uid": "RED-PLT2-SOL20", "side": "RED", "type": "rifle", "x": 74, "y": 91 },
-
-    { "uid": "RED-PLT2-SOL21", "side": "RED", "type": "rifle", "x": 70, "y": 92 },
-    { "uid": "RED-PLT2-SOL22", "side": "RED", "type": "rifle", "x": 71, "y": 92 },
-    { "uid": "RED-PLT2-SOL23", "side": "RED", "type": "rifle", "x": 72, "y": 92 },
-    { "uid": "RED-PLT2-SOL24", "side": "RED", "type": "rifle", "x": 73, "y": 92 },
-    { "uid": "RED-PLT2-SOL25", "side": "RED", "type": "rifle", "x": 74, "y": 92 }
-  ]
-}
+    { "uid": "RED-PLT1-SOL21", "side": "RED", "type": "rifle", "x": 73, "y": 7 },
+    { "uid": "RED-PLT1-SOL22", "side": "RED", "type": "rifle", "x": 74, "y": 7 },
+    { "uid": "RED-PLT1-SOL23", "side": "RED", "type": "rifle", "x": 75, "y": 7 },
+    { "uid": "RED-PLT1-SOL24", "side": "RED", "type": "rifle", "x": 76, "y": 7 },
+    { "uid": "RED-PLT1-SOL25", "side": "RED", "type": "rifle", "x": 77, "y": 7 },
+  {"uid":"RED-PLT2-SOL01","side":"RED","type":"rifle","x":70,"y":88},{"uid":"RED-PLT2-SOL02","side":"RED","type":"rifle","x":71,"y":88},{"uid":"RED-PLT2-SOL03","side":"RED","type":"rifle","x":72,"y":88},{"uid":"RED-PLT2-SOL04","side":"RED","type":"rifle","x":73,"y":88},{"uid":"RED-PLT2-SOL05","side":"RED","type":"rifle","x":74,"y":88},{"uid":"RED-PLT2-SOL06","side":"RED","type":"rifle","x":70,"y":89},{"uid":"RED-PLT2-SOL07","side":"RED","type":"rifle","x":71,"y":89},{"uid":"RED-PLT2-SOL08","side":"RED","type":"rifle","x":72,"y":89},{"uid":"RED-PLT2-SOL09","side":"RED","type":"rifle","x":73,"y":89},{"uid":"RED-PLT2-SOL10","side":"RED","type":"rifle","x":74,"y":89},{"uid":"RED-PLT2-SOL11","side":"RED","type":"rifle","x":70,"y":90},{"uid":"RED-PLT2-SOL12","side":"RED","type":"rifle","x":71,"y":90},{"uid":"RED-PLT2-SOL13","side":"RED","type":"rifle","x":72,"y":90},{"uid":"RED-PLT2-SOL14","side":"RED","type":"rifle","x":73,"y":90},{"uid":"RED-PLT2-SOL15","side":"RED","type":"rifle","x":74,"y":90},{"uid":"RED-PLT2-SOL16","side":"RED","type":"rifle","x":70,"y":91},{"uid":"RED-PLT2-SOL17","side":"RED","type":"rifle","x":71,"y":91},{"uid":"RED-PLT2-SOL18","side":"RED","type":"rifle","x":72,"y":91},{"uid":"RED-PLT2-SOL19","side":"RED","type":"rifle","x":73,"y":91},{"uid":"RED-PLT2-SOL20","side":"RED","type":"rifle","x":74,"y":91},{"uid":"RED-PLT2-SOL21","side":"RED","type":"rifle","x":70,"y":92},{"uid":"RED-PLT2-SOL22","side":"RED","type":"rifle","x":71,"y":92},{"uid":"RED-PLT2-SOL23","side":"RED","type":"rifle","x":72,"y":92},{"uid":"RED-PLT2-SOL24","side":"RED","type":"rifle","x":73,"y":92},{"uid":"RED-PLT2-SOL25","side":"RED","type":"rifle","x":74,"y":92},{"uid":"BLUE-PLT3-SOL01","side":"BLUE","type":"rifle","x":32,"y":100},{"uid":"BLUE-PLT3-SOL02","side":"BLUE","type":"rifle","x":33,"y":100},{"uid":"BLUE-PLT3-SOL03","side":"BLUE","type":"rifle","x":34,"y":100},{"uid":"BLUE-PLT3-SOL04","side":"BLUE","type":"rifle","x":35,"y":100},{"uid":"BLUE-PLT3-SOL05","side":"BLUE","type":"rifle","x":36,"y":100},{"uid":"BLUE-PLT3-SOL06","side":"BLUE","type":"rifle","x":32,"y":101},{"uid":"BLUE-PLT3-SOL07","side":"BLUE","type":"rifle","x":33,"y":101},{"uid":"BLUE-PLT3-SOL08","side":"BLUE","type":"rifle","x":34,"y":101},{"uid":"BLUE-PLT3-SOL09","side":"BLUE","type":"rifle","x":35,"y":101},{"uid":"BLUE-PLT3-SOL10","side":"BLUE","type":"rifle","x":36,"y":101},{"uid":"BLUE-PLT3-SOL11","side":"BLUE","type":"rifle","x":32,"y":102},{"uid":"BLUE-PLT3-SOL12","side":"BLUE","type":"rifle","x":33,"y":102},{"uid":"BLUE-PLT3-SOL13","side":"BLUE","type":"rifle","x":34,"y":102},{"uid":"BLUE-PLT3-SOL14","side":"BLUE","type":"rifle","x":35,"y":102},{"uid":"BLUE-PLT3-SOL15","side":"BLUE","type":"rifle","x":36,"y":102},{"uid":"BLUE-PLT3-SOL16","side":"BLUE","type":"rifle","x":32,"y":103},{"uid":"BLUE-PLT3-SOL17","side":"BLUE","type":"rifle","x":33,"y":103},{"uid":"BLUE-PLT3-SOL18","side":"BLUE","type":"rifle","x":34,"y":103},{"uid":"BLUE-PLT3-SOL19","side":"BLUE","type":"rifle","x":35,"y":103},{"uid":"BLUE-PLT3-SOL20","side":"BLUE","type":"rifle","x":36,"y":103},{"uid":"BLUE-PLT3-SOL21","side":"BLUE","type":"rifle","x":32,"y":104},{"uid":"BLUE-PLT3-SOL22","side":"BLUE","type":"rifle","x":33,"y":104},{"uid":"BLUE-PLT3-SOL23","side":"BLUE","type":"rifle","x":34,"y":104},{"uid":"BLUE-PLT3-SOL24","side":"BLUE","type":"rifle","x":35,"y":104},{"uid":"BLUE-PLT3-SOL25","side":"BLUE","type":"rifle","x":36,"y":104},{"uid":"RED-PLT3-SOL01","side":"RED","type":"rifle","x":25,"y":48},{"uid":"RED-PLT3-SOL02","side":"RED","type":"rifle","x":26,"y":48},{"uid":"RED-PLT3-SOL03","side":"RED","type":"rifle","x":27,"y":48},{"uid":"RED-PLT3-SOL04","side":"RED","type":"rifle","x":28,"y":48},{"uid":"RED-PLT3-SOL05","side":"RED","type":"rifle","x":29,"y":48},{"uid":"RED-PLT3-SOL06","side":"RED","type":"rifle","x":25,"y":49},{"uid":"RED-PLT3-SOL07","side":"RED","type":"rifle","x":26,"y":49},{"uid":"RED-PLT3-SOL08","side":"RED","type":"rifle","x":27,"y":49},{"uid":"RED-PLT3-SOL09","side":"RED","type":"rifle","x":28,"y":49},{"uid":"RED-PLT3-SOL10","side":"RED","type":"rifle","x":29,"y":49},{"uid":"RED-PLT3-SOL11","side":"RED","type":"rifle","x":25,"y":50},{"uid":"RED-PLT3-SOL12","side":"RED","type":"rifle","x":26,"y":50},{"uid":"RED-PLT3-SOL13","side":"RED","type":"rifle","x":27,"y":50},{"uid":"RED-PLT3-SOL14","side":"RED","type":"rifle","x":28,"y":50},{"uid":"RED-PLT3-SOL15","side":"RED","type":"rifle","x":29,"y":50},{"uid":"RED-PLT3-SOL16","side":"RED","type":"rifle","x":25,"y":51},{"uid":"RED-PLT3-SOL17","side":"RED","type":"rifle","x":26,"y":51},{"uid":"RED-PLT3-SOL18","side":"RED","type":"rifle","x":27,"y":51},{"uid":"RED-PLT3-SOL19","side":"RED","type":"rifle","x":28,"y":51},{"uid":"RED-PLT3-SOL20","side":"RED","type":"rifle","x":29,"y":51},{"uid":"RED-PLT3-SOL21","side":"RED","type":"rifle","x":25,"y":52},{"uid":"RED-PLT3-SOL22","side":"RED","type":"rifle","x":26,"y":52},{"uid":"RED-PLT3-SOL23","side":"RED","type":"rifle","x":27,"y":52},{"uid":"RED-PLT3-SOL24","side":"RED","type":"rifle","x":28,"y":52},{"uid":"RED-PLT3-SOL25","side":"RED","type":"rifle","x":29,"y":52}]}

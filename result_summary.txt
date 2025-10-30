@@ -7,3 +7,83 @@ Alive   - BLUE: 9 / RED: 4
 Initial - BLUE: 51 / RED: 50
 Casualties - BLUE: 41 / RED: 46
 ==========================
+
+=== Simulation Result ===
+Seed: -1400407408
+Objective Area 1 (x:21~37, y:84~100): BLUE inside = 30 RED inside = 0
+Objective Area 2 (x:63~79, y:84~100): BLUE inside = 0 RED inside = 17
+Objective Area 3 (x:13~80, y:15~25): BLUE inside = 0 RED inside = 25
+Alive   - BLUE: 51 / RED: 67
+Initial - BLUE: 76 / RED: 75
+Casualties - BLUE: 24 / RED: 8
+==========================
+
+=== Simulation Result ===
+Seed: -663343102
+Objective Area 1 (x:21~37, y:84~100): BLUE inside = 30 RED inside = 0
+Objective Area 2 (x:63~79, y:84~100): BLUE inside = 0 RED inside = 13
+Objective Area 3 (x:13~80, y:15~25): BLUE inside = 0 RED inside = 25
+Alive   - BLUE: 51 / RED: 63
+Initial - BLUE: 76 / RED: 75
+Casualties - BLUE: 24 / RED: 12
+==========================
+
+=== Simulation Result ===
+Seed: 1564768308
+Objective Area 1 (x:21~37, y:84~100): BLUE inside = 30 RED inside = 0
+Objective Area 2 (x:63~79, y:84~100): BLUE inside = 0 RED inside = 9
+Objective Area 3 (x:13~80, y:15~25): BLUE inside = 0 RED inside = 50
+Alive   - BLUE: 51 / RED: 59
+Initial - BLUE: 76 / RED: 75
+Casualties - BLUE: 24 / RED: 16
+==========================
+
+=== Simulation Result ===
+Seed: -998052826
+Objective Area 1 (x:21~37, y:84~100): BLUE inside = 30 RED inside = 0
+Objective Area 2 (x:63~79, y:84~100): BLUE inside = 10 RED inside = 0
+Objective Area 3 (x:13~80, y:15~25): BLUE inside = 0 RED inside = 50
+Alive   - BLUE: 61 / RED: 50
+Initial - BLUE: 76 / RED: 75
+Casualties - BLUE: 14 / RED: 25
+==========================
+
+=== Simulation Result ===
+Seed: -365419406
+Objective Area 1 (x:21~37, y:84~100): BLUE inside = 30 RED inside = 0
+Objective Area 2 (x:63~79, y:84~100): BLUE inside = 0 RED inside = 7
+Objective Area 3 (x:13~80, y:15~25): BLUE inside = 0 RED inside = 50
+Alive   - BLUE: 51 / RED: 57
+Initial - BLUE: 76 / RED: 75
+Casualties - BLUE: 24 / RED: 18
+==========================
+
+=== Simulation Result ===
+Seed: 1777025108
+Objective Area 1 (x:21~37, y:84~100): BLUE inside = 30 RED inside = 0
+Objective Area 2 (x:63~79, y:84~100): BLUE inside = 14 RED inside = 0
+Objective Area 3 (x:13~80, y:15~25): BLUE inside = 0 RED inside = 50
+Alive   - BLUE: 65 / RED: 50
+Initial - BLUE: 76 / RED: 75
+Casualties - BLUE: 10 / RED: 25
+==========================
+
+=== Simulation Result ===
+Seed: -1068577086
+Objective Area 1 (x:21~37, y:84~100): BLUE inside = 30 RED inside = 0
+Objective Area 2 (x:63~79, y:84~100): BLUE inside = 0 RED inside = 18
+Objective Area 3 (x:13~80, y:15~25): BLUE inside = 0 RED inside = 50
+Alive   - BLUE: 51 / RED: 68
+Initial - BLUE: 76 / RED: 75
+Casualties - BLUE: 24 / RED: 7
+==========================
+
+=== Simulation Result ===
+Seed: 1514532843
+Objective Area 1 (x:21~37, y:84~100): BLUE inside = 30 RED inside = 0
+Objective Area 2 (x:63~79, y:84~100): BLUE inside = 0 RED inside = 7
+Objective Area 3 (x:13~80, y:15~25): BLUE inside = 0 RED inside = 50
+Alive   - BLUE: 51 / RED: 57
+Initial - BLUE: 76 / RED: 75
+Casualties - BLUE: 24 / RED: 18
+==========================
