@@ -33,12 +33,12 @@ void Detection::RebuildEnemyPosList() {
     const int vx = curPos.x;
     const int vy = curPos.y;
 
-    const int y0 = std::max(0,     vy - vision);
-    const int y1 = std::min(H - 1, vy + vision);
-    const int x0 = std::max(0,     vx - vision);
-    const int x1 = std::min(W - 1, vx + vision);
+    const int y0 = std::max(0,     vy - config::inf.vision);
+    const int y1 = std::min(H - 1, vy + config::inf.vision);
+    const int x0 = std::max(0,     vx - config::inf.vision);
+    const int x1 = std::min(W - 1, vx + config::inf.vision);
 
-    const int r2 = vision * vision;
+    const int r2 = config::inf.vision * config::inf.vision;
 
     std::unordered_set<int> seen;
 

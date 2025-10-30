@@ -15,13 +15,19 @@ Maneuver::Maneuver(Engine* engine, Entity* info)
     this->AddInputPort("FireIn");
     this->AddOutputPort("PositionOut");
 
+    // std::string startStr = "DEFAULT";
+    // if (info->name.rfind(startStr, 0) == 0) {
+    //     // name이 startStr로 시작
+    //     this->lookAround = this->moveSpeed = this->moveSpeed * 0.7;
+    // }
+
 }
 
 TIME_T Maneuver::mnvEquation(float speed) {\
     if(speed){
         return 1.0f / speed;
     }else{
-        return 1.0f / this->lookAroundPeriod;
+        return 1.0f / config::inf.looking_speed_cps;
     }
 }
 
@@ -38,7 +44,7 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
 
         if(ord.task == TaskType::MOVE){ //이동명령
             this->nextPos = ord.to;
-            this->curSpeed = moveSpeed; // TODO:지형에 의존적으로 적용시킬것 
+            this->curSpeed = config::inf.walking_speed_cps; // TODO:지형에 의존적으로 적용시킬것 
             // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"RECEIVE_ORDER",
             //             "task=","MOVE",
             //             " from=(",this->info->position.x,", ",this->info->position.y,")",
@@ -56,10 +62,15 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
         FireMsg message;
         if(!TryCastMessage(anyMessage,message,"")) return false;
 
+        if(env->QueryEntityById(this->info->id)==nullptr){
+            return true;
+        }
         // 본인에게 온 사격인지 탐색
         bool isDead = false;
         if(message.senderType == ForceType::RIFLE && message.targetId == this->info->id){
-            isDead = true;
+            ensureRng();
+            std::uniform_real_distribution<float> dist(0.0f, 1.0f);
+            isDead = dist(rng) < this->curPkill;
         }else if(message.senderType == ForceType::ARTILLERY){
             const Point& curPos = this->info->position;
             for (const Point& targetPos : message.targetPoint) {
@@ -69,7 +80,6 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
                 }
             }
         }
-
         if(isDead){
             env->RequestKillEntity(this->info->id);
             this->SetCurState("DEAD");

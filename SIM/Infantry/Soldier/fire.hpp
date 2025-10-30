@@ -10,12 +10,10 @@ private:
     Entity* info;
 
     // attribute
-    TIME_T fireFreq = 3.0f;
-    float accuracy = 0.1f;
     int targetId = -1;
 
     // DEVS
-    TIME_T t_fire = -0.5f;
+    TIME_T t_fire = -0.5f; // TODO : 이런거 에러뜨는 음수도 DEVS/model.cpp 에 넣어야겠다
     TIME_T fireEquation();
 
     // RNG

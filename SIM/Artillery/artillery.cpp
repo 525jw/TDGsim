@@ -15,7 +15,7 @@ Artillery::Artillery(Engine* engine, Entity info)
     this->AddOutputPort("FireOut");
 }
 TIME_T Artillery::fireEquation(){
-    return this->fireFreq;
+    return config::art.fire_freq_rps;
 }
 bool Artillery::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
     if (inPort == "CompanyOrd") {
@@ -59,7 +59,7 @@ bool Artillery::ExtTransFn(const std::string& inPort, const std::any& anyMessage
 
 bool Artillery::OutputFn(){
     if (this->GetCurState() == "FIRE") {
-        this->ammo--;
+        this->curAmmo--;
         ensureRng();
         std::uniform_real_distribution<float> dist(0.0f, 1.0f);
         float roll = dist(rng);
@@ -69,7 +69,7 @@ bool Artillery::OutputFn(){
         message.senderType = this->info.forceType;
 
         message.targetPoint.clear();
-        int targetCount = std::max(0, static_cast<int>(std::round(this->power)));
+        int targetCount = std::max(0, static_cast<int>(std::round(this->curPower)));
         message.targetPoint.reserve(static_cast<std::size_t>(targetCount));
 
         constexpr float twoPi = 6.28318530717958647692f;
@@ -78,7 +78,7 @@ bool Artillery::OutputFn(){
 
         for (int i = 0; i < targetCount; ++i) {
             float angle = angleDist(rng);
-            float radius = std::sqrt(unitDist(rng)) * this->targetRange;
+            float radius = std::sqrt(unitDist(rng)) * this->curTargetRange;
             int x = static_cast<int>(std::round(this->targetPos.x + std::cos(angle) * radius));
             int y = static_cast<int>(std::round(this->targetPos.y + std::sin(angle) * radius));
             message.targetPoint.push_back({x, y});
@@ -103,7 +103,7 @@ bool Artillery::OutputFn(){
 }
 
 bool Artillery::IntTransFn(){
-    if(this->GetCurState()=="FIRE" && this->ammo <= 0)
+    if(this->GetCurState()=="FIRE" && this->curAmmo <= 0)
         this->SetCurState("WAIT");
     return true;
 }

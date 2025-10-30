@@ -7,12 +7,16 @@
 class Artillery : public AtomicModel{
 private:
     Entity info;
+    
+    // attribute
     Point targetPos = {-1,-1};
-    float targetRange = 10.0f;
-    float power = 30;
-    float fireFreq = 10.0f;
+    float curTargetRange = config::art.explosive_range;
+    float curPower = config::art.explosive_power;
+    int curAmmo = config::art.ammo;
+    
+    //DEVS
     TIME_T t_fire = 0.0f;
-    int ammo = 10;
+    
     // RNG
     std::mt19937 rng;
     bool rngInit = false;

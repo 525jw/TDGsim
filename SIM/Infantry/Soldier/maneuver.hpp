@@ -12,12 +12,21 @@ private:
     // attribute
     Point nextPos = {-1,-1};
     float curSpeed = -1.0f;
-    float moveSpeed = 1.0f;
-    TIME_T lookAroundPeriod = 1.0f; // TODO:이산시간시뮬레이션화 될 수 있음, env와 pos가 상호작용하게 하는 편이 좋을 것
+    float curPkill = config::inf.pkill_covered;
 
     // DEVS
     TIME_T t_mnv = -1.0f;
     TIME_T mnvEquation(float speed);
+
+    // RNG
+    std::mt19937 rng;
+    bool rngInit = false;
+    inline void ensureRng() {
+        if (!rngInit) {
+            rng.seed(env->GetSeed() + this->info->id);
+            rngInit = true;
+        }
+    }
 public:
     Maneuver(Engine* engine, Entity* info);
 

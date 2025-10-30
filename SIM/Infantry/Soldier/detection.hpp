@@ -11,11 +11,9 @@ private:
 
     // attribute
     std::vector<int> enemyIds;   // tracked enemy ids inside vision
-    int vision = 20;
 
     // DEVS
     TIME_T t_det = 0.0f;
-
     TIME_T detEquation() const;
 public:
     Detection(Engine* engine, Entity* info);

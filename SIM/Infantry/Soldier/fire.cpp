@@ -13,10 +13,15 @@ Fire::Fire(Engine* engine, Entity* info)
     this->AddInputPort("SoldierRep");
     this->AddOutputPort("FireOut");
 
+    std::string startStr = "DEFAULT";
+    if (info->name.rfind(startStr, 0) == 0) {
+        // name이 startStr로 시작
+    }
+
 }
 
 TIME_T Fire::fireEquation(){
-    return this->fireFreq;
+    return config::inf.fire_freq_rifle;
 }
 
 bool Fire::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
@@ -50,7 +55,7 @@ bool Fire::OutputFn(){
 
         const Entity* targetEntity = env->QueryEntityById(targetId);
         const bool targetAlive = targetEntity != nullptr;
-        const bool hit = targetAlive && roll <= this->accuracy;
+        const bool hit = targetAlive && roll <= config::inf.fire_accuracy_rifle;
 
         if (hit) {
             message.targetId = this->targetId;
