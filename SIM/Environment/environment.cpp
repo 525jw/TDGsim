@@ -70,6 +70,7 @@ bool Environment::ExtTransFn(const std::string& inPort, const std::any& anyMessa
             entities[assignedId] = std::move(e);
         }
 
+        // RSH
         // 추가: 초기 총원 집계
         initialBlue = 0;
         initialRed = 0;

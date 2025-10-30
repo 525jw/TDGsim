@@ -16,6 +16,7 @@ private:
     std::unordered_map<std::string, int> nameToId; // name -> id
     int nextId = 1;
 
+    // RSH
     // 추가: 초기 총원 기록
     int initialBlue = 0;
     int initialRed = 0;
@@ -72,6 +73,7 @@ public:
     EnvMoveResponse RequestMoveEntity(int id, Point p);
     EnvKillResponse RequestKillEntity(int id);
 
+    // RSH
     // 추가: 초기 총원 Get
     int GetInitialBlue() const noexcept { return initialBlue; }
     int GetInitialRed() const noexcept { return initialRed; }
