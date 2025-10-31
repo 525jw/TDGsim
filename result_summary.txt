@@ -87,3 +87,18 @@ Alive   - BLUE: 51 / RED: 57
 Initial - BLUE: 76 / RED: 75
 Casualties - BLUE: 24 / RED: 18
 ==========================
+
+=== Simulation Result 1 ===
+Seed: -1919932304
+Objective Area 1 (x:21~37, y:84~100): BLUE inside = 30 RED inside = 0
+Objective Area 2 (x:63~79, y:84~100): BLUE inside = 0 RED inside = 18
+Objective Area 3 (x:53~80, y:15~25): BLUE inside = 0 RED inside = 50
+Alive   - BLUE: 51 / RED: 68
+Initial - BLUE: 76 / RED: 75
+Casualties - BLUE: 24 / RED: 7
+Score Weights: Area1=0.2 Area2=0.3 Area3=0.5
+Area1 Score: 6.000 (blue=30, red=0)
+Area2 Score: 0.000 (blue=0, red=18)
+Area3 Score: 0.000 (blue=0, red=50)
+Total Score: 6.000
+==========================

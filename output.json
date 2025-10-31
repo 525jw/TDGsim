@@ -20,6 +20,12 @@
       "priority": 50,"constraints": {},"when_sim": {"dur": 180}
     },
     {
+      "who": { "unit": "RED-PLT3","side": "RED","forcetype": "INF","echelon": "PLT" },
+      "what": { "task": "MOVE","task_params": {"speed_mode": "NORMAL"}},
+      "where": {"point": [68.0,20.0],"route": [[68.0,20.0]]},
+      "priority": 50,"constraints": {},"when_sim": {"dur": 180}
+    },
+    {
       "who": { "unit": "RED-PLT1","side": "RED","forcetype": "INF","echelon": "PLT" },
       "what": { "task": "MOVE","task_params": {"speed_mode": "NORMAL"}},
       "where": {"point": [72.0,20.0],"route": [[72.0,20.0]]},
