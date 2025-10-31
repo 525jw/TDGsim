@@ -100,7 +100,7 @@ int main(){
                 } else {
                     factor = 0.0; // 적군만 또는 없음
                 }
-                return w * (static_cast<double>(blueCnt) * factor);
+                return w * factor;
             };
 
             const double scoreA1 = areaScore(blueInA1, redInA1, wA1);
