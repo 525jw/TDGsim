@@ -43,7 +43,9 @@ OBJ_PATTERNS = {
 }
 
 def parse_blocks(text: str) -> List[RunRow]:
-    blocks = [b.strip() for b in text.split("=== Simulation Result ===") if b.strip()]
+    # main.cpp prints headers like: "=== Simulation Result <n> ==="
+    # Accept both with/without a run number.
+    blocks = [b.strip() for b in re.split(r"===\s*Simulation Result(?:\s+\d+)?\s*===\s*", text) if b.strip()]
     rows: List[RunRow] = []
     for b in blocks:
         seed_m = re.search(r"Seed:\s*([-\d]+)", b)
