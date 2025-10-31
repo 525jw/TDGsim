@@ -10,7 +10,7 @@
     {
       "who": { "unit": "BLUE-PLT2","side": "BLUE","forcetype": "INF","echelon": "PLT" },
       "what": { "task": "MOVE","task_params": {"speed_mode": "NORMAL"}},
-      "where": {"point": [72.0,95.0],"route": [[72.0,95.0]]},
+      "where": {"point": [72.0,20.0],"route": [[72.0,20.0]]},
       "priority": 50,"constraints": {},"when_sim": {"dur": 180}
     },
     {
