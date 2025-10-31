@@ -10,8 +10,6 @@ private:
     
     // attribute
     Point targetPos = {-1,-1};
-    float curTargetRange = config::art.explosive_range;
-    float curPower = config::art.explosive_power;
     int curAmmo = config::art.ammo;
     
     //DEVS

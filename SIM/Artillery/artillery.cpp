@@ -61,31 +61,51 @@ bool Artillery::OutputFn(){
     if (this->GetCurState() == "FIRE") {
         this->curAmmo--;
         ensureRng();
-        std::uniform_real_distribution<float> dist(0.0f, 1.0f);
-        float roll = dist(rng);
-
         FireMsg message;
         message.senderId = this->info.id;
         message.senderType = this->info.forceType;
 
         message.targetPoint.clear();
-        int targetCount = std::max(0, static_cast<int>(std::round(this->curPower)));
-        message.targetPoint.reserve(static_cast<std::size_t>(targetCount));
-
+        message.explosive_pkill = config::art.phit_he;
         constexpr float twoPi = 6.28318530717958647692f;
         std::uniform_real_distribution<float> angleDist(0.0f, twoPi);
         std::uniform_real_distribution<float> unitDist(0.0f, 1.0f);
 
-        for (int i = 0; i < targetCount; ++i) {
+        Point impactPoint = this->targetPos;
+        const float rangeError = config::art.range_error;
+        if (rangeError > 0.0f) {
             float angle = angleDist(rng);
-            float radius = std::sqrt(unitDist(rng)) * this->curTargetRange;
-            int x = static_cast<int>(std::round(this->targetPos.x + std::cos(angle) * radius));
-            int y = static_cast<int>(std::round(this->targetPos.y + std::sin(angle) * radius));
-            message.targetPoint.push_back({x, y});
+            float radius = std::sqrt(unitDist(rng)) * rangeError;
+            impactPoint.x = static_cast<int>(std::round(this->targetPos.x + std::cos(angle) * radius));
+            impactPoint.y = static_cast<int>(std::round(this->targetPos.y + std::sin(angle) * radius));
+        }
+
+        if (EnvReady()) {
+            int maxX = std::max(0, env->GetWidth() - 1);
+            int maxY = std::max(0, env->GetHeight() - 1);
+            impactPoint.x = std::clamp(impactPoint.x, 0, maxX);
+            impactPoint.y = std::clamp(impactPoint.y, 0, maxY);
+        }
+
+        const float explosiveRange = config::art.explosive_range;
+        const int radiusLimit = static_cast<int>(std::ceil(explosiveRange));
+
+        for (int dx = -radiusLimit; dx <= radiusLimit; ++dx) {
+            for (int dy = -radiusLimit; dy <= radiusLimit; ++dy) {
+                Point candidate{impactPoint.x + dx, impactPoint.y + dy};
+                if (EnvReady() && !env->InBounds(candidate)) continue;
+                float distance = std::sqrt(static_cast<float>(dx * dx + dy * dy));
+                if (distance > explosiveRange) continue;
+                if (unitDist(rng) <= config::art.phit_he) {
+                    if (std::find(message.targetPoint.begin(), message.targetPoint.end(), candidate) == message.targetPoint.end()) {
+                        message.targetPoint.push_back(candidate);
+                    }
+                }
+            }
         }
 
         std::ostringstream oss;
-        oss << "targets: ";
+        oss << "=(" << impactPoint.x << "," << impactPoint.y << ") targets: ";
         for (size_t i = 0; i < message.targetPoint.size(); ++i) {
             const auto& p = message.targetPoint[i];
             oss << "(" << p.x << "," << p.y << ")";

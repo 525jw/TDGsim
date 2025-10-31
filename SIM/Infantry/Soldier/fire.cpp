@@ -55,7 +55,7 @@ bool Fire::OutputFn(){
 
         const Entity* targetEntity = env->QueryEntityById(targetId);
         const bool targetAlive = targetEntity != nullptr;
-        const bool hit = targetAlive && roll <= config::inf.fire_accuracy_rifle;
+        const bool hit = targetAlive && roll <= config::inf.phit_rifle;
 
         if (hit) {
             message.targetId = this->targetId;

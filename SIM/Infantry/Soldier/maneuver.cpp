@@ -73,11 +73,11 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
             isDead = dist(rng) < this->curPkill;
         }else if(message.senderType == ForceType::ARTILLERY){
             const Point& curPos = this->info->position;
-            for (const Point& targetPos : message.targetPoint) {
-                if (targetPos == curPos) {
-                    isDead = true;
-                    break;
-                }
+            bool designated = std::find(message.targetPoint.begin(), message.targetPoint.end(), curPos) != message.targetPoint.end();
+            if (designated) {
+                ensureRng();
+                std::uniform_real_distribution<float> dist(0.0f, 1.0f);
+                isDead = dist(rng) < config::inf.pkill_covered_art;
             }
         }
         if(isDead){

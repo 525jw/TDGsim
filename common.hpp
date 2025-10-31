@@ -26,18 +26,18 @@ namespace config {
         float walking_speed_spc = 9.0f; // when cell 10m x 10m
         float looking_speed_cps = 4.0f;
         float looking_speed_spc = 9.0f; // currently should be equal to walking speed 
-        float fire_freq_rifle = 3.0f;
-        float fire_accuracy_rifle = 0.7f;
-        float pkill_open = 0.35f; // https://www.jasss.org/18/4/10.html#fig1
-        float pkill_covered = 0.1f; // https://www.jasss.org/18/4/10.html#fig1
+        float fire_freq_rifle = 1.0f;
+        float phit_rifle = 0.7f;
+        float pkill_open = 0.35f; // https://www.jasss.org/18/4/10.html#fig1 !!!!!!!!!!unused
+        float pkill_covered_rifle = 0.1f; // https://www.jasss.org/18/4/10.html#fig1
+        float pkill_covered_art = 0.3f;
         int vision = 20;
     };
     struct Artillery {
         float fire_freq_rps = 20.0f; // M777 155mm 3 rpm 위키백과
-        // 반지름 5의 원을 그린다
+        float range_error = 5;
         float explosive_range = 5;
-        // 그 중 한 점을 고른다
-        float explosive_power = 5;
+        float phit_he = 1.0f;
         float ammo = 10;
     };
     inline Infantry inf;
@@ -154,6 +154,7 @@ public:
     ForceType senderType;
     int targetId;
     std::vector<Point> targetPoint;
+    float explosive_pkill;
 };
 
 class DeadMsg{

@@ -12,7 +12,7 @@ private:
     // attribute
     Point nextPos = {-1,-1};
     float curSpeed = -1.0f;
-    float curPkill = config::inf.pkill_covered;
+    float curPkill = config::inf.pkill_covered_rifle;
 
     // DEVS
     TIME_T t_mnv = -1.0f;
