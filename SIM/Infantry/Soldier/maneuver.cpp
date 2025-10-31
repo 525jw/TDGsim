@@ -45,7 +45,6 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
         if(ord.task == TaskType::MOVE){ //이동명령
             this->nextPos = ord.to;
             this->curSpeed = config::inf.walking_speed_cps; // TODO:지형에 의존적으로 적용시킬것
-            this->curPkill = config::inf.pkill_open;
             // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"RECEIVE_ORDER",
             //             "task=","MOVE",
             //             " from=(",this->info->position.x,", ",this->info->position.y,")",
@@ -86,6 +85,8 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
             env->RequestKillEntity(this->info->id);
             this->SetCurState("DEAD");
             LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"DEAD");
+        }else{
+            this->curPkill = config::inf.pkill_covered;
         }
     }
     return true;
@@ -100,10 +101,12 @@ bool Maneuver::OutputFn() {
             message.curPos = this->nextPos;
             std::any anyMessage = message;
             if(this->info->position != this->nextPos){
+                this->curPkill=config::inf.pkill_open;
                 LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"MOVE",
                         " from=(",this->info->position.x,", ",this->info->position.y,")",
                         " to=(",this->nextPos.x,", ",this->nextPos.y,")");
             }else{
+                this->curPkill=config::inf.pkill_covered;
                 // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"HOLD_POSITION");
             }
             
