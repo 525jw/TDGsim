@@ -17,7 +17,7 @@ Soldier에는 MOVE 명령, HOLD 명령을 내릴 수 있다. MOVE 명령을 받�
 ㄴvision = 200m;
 - Artillery
 ㄴfire frequency = 20 sec per round
-ㄴexplosive range = 5m
+ㄴexplosive range = 50m
 ㄴP(hit_artillery) = 1.0
 ㄴammo = 10 rounds;
 [전장 설명]
