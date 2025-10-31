@@ -44,7 +44,8 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
 
         if(ord.task == TaskType::MOVE){ //이동명령
             this->nextPos = ord.to;
-            this->curSpeed = config::inf.walking_speed_cps; // TODO:지형에 의존적으로 적용시킬것 
+            this->curSpeed = config::inf.walking_speed_cps; // TODO:지형에 의존적으로 적용시킬것
+            this->curPkill = config::inf.pkill_open;
             // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"RECEIVE_ORDER",
             //             "task=","MOVE",
             //             " from=(",this->info->position.x,", ",this->info->position.y,")",
@@ -52,6 +53,7 @@ bool Maneuver::ExtTransFn(const std::string& inPort, const std::any& anyMessage)
         }else if(ord.task == TaskType::HOLD){ //정지명령
             this->nextPos = this->info->position;
             this->curSpeed = 0.0f;
+            this->curPkill = config::inf.pkill_covered;
             // LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"RECEIVE_ORDER","task=","HOLD");
         }
 
