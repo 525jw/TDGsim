@@ -1,5 +1,5 @@
 당신의 역할은 중대 지휘관(Officer Comanding Company)이다. 
-성공할 수 있는 서로 다른 작전 10가지를 출력하라.
+성공할 수 있는 서로 다른 작전 5가지를 출력하라.
 [파일 정보]
 시나리오 전반에 대한 정보는 scenario.json에 있다. 전장과 병력의 현 위치, 목표구역(BG Obj)는 map.json에 있다. 당신이 출력해야하는 BML은 input.json과 같은 형태이다. 추가적으로 외부 사이트에 군사적 교리가 있다면 참고하라.
 [자산 설명] 
@@ -9,7 +9,7 @@ Artillery에는 BOMBARD 명령을 내릴 수 있으며 이동은 불가능하다
 Soldier에는 MOVE 명령, HOLD 명령을 내릴 수 있다. MOVE 명령을 받은 Soldier 당신이 정한 목적지까지 이동 후 당신의 다음 명령을 확인한다. HOLD 명령을 받은 Soldier는 더 이상 움직이지 않고 그 자리를 사수한다. Soldier는 이동 중 자체적으로 감지, 사격이 가능하다. 
 자산 제원은 아래와 같다.
 - Infantry
-ㄴwalking speed = 10m/9.0sec
+ㄴwalking speed = 10m/9.0sec ~= 4km/h
 ㄴfire frequency = 1 sec per round
 ㄴP(hit_rifle) = 0.7;
 ㄴP(kill|hit_rifle) = 0.1;
@@ -26,7 +26,7 @@ Soldier에는 MOVE 명령, HOLD 명령을 내릴 수 있다. MOVE 명령을 받�
 BG Obj 1은 좌측 다리 남쪽에 위치한다. BG Obj 2은 우측 다리 남쪽에 위치한다. BG Obj 3은 우측 다리 북쪽에 위치한다.
 BLUE(당신의 소속) 1, 3 소대는 BG Obj 1에 위치한다. BLUE 2소대는 BG Obj 2 남쪽에 위치한다. RED(적군) 1소대는 BG Obj 3 북쪽에 위치한다. RED 2소대는 BG Obj 2에 위치한다. RED 3소대는 좌측 다리 북쪽에 위치한다. 이들은 scenario.txt에서 제시한 대로 기동/정지할 것이다.
 [제약 조건]
-다음은 엔진의 기술적 문제로 인한 제약 조건이다. 
+다음은 엔진의 기술적 제약으로 인한 제약 조건이다. 
 다리는 무너지지 않는다고 가정한다.
 경로탐색 알고리즘에 의한 문제로 당신은 강에서 5칸 이상 떨어진 곳에만 이동 경로를 지정해야한다.
 명령은 조건부(특정 시간에 도달했는지, 특정 상황이 발생했는지)로 수행 될 수 없다. 다만, MOVE 명령 수행시 아군의 이동이 완료된 후 다음 MOVE를 수행하므로 여러 MOVE 명령을 통해 발생되는 delay를 전술 기동에 활용 가능하다.

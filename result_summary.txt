@@ -192,3 +192,48 @@ Area2 Score: 0.000 (blue=0, red=16)
 Area3 Score: 0.000 (blue=0, red=36)
 Total Score: 6.000
 ==========================
+
+=== Simulation Result 1 ===
+Seed: -100588532
+Objective Area 1 (x:21~37, y:84~100): BLUE inside = 30 RED inside = 0
+Objective Area 2 (x:63~79, y:84~100): BLUE inside = 0 RED inside = 10
+Objective Area 3 (x:53~80, y:15~25): BLUE inside = 0 RED inside = 33
+Alive   - BLUE: 51 / RED: 43
+Initial - BLUE: 76 / RED: 75
+Casualties - BLUE: 24 / RED: 32
+Score Weights: Area1=0.2 Area2=0.3 Area3=0.5
+Area1 Score: 6.000 (blue=30, red=0)
+Area2 Score: 0.000 (blue=0, red=10)
+Area3 Score: 0.000 (blue=0, red=33)
+Total Score: 6.000
+==========================
+
+=== Simulation Result 1 ===
+Seed: -932241596
+Objective Area 1 (x:21~37, y:84~100): BLUE inside = 30 RED inside = 0
+Objective Area 2 (x:63~79, y:84~100): BLUE inside = 0 RED inside = 6
+Objective Area 3 (x:53~80, y:15~25): BLUE inside = 0 RED inside = 30
+Alive   - BLUE: 51 / RED: 36
+Initial - BLUE: 76 / RED: 75
+Casualties - BLUE: 24 / RED: 39
+Score Weights: Area1=0.2 Area2=0.3 Area3=0.5
+Area1 Score: 6.000 (blue=30, red=0)
+Area2 Score: 0.000 (blue=0, red=6)
+Area3 Score: 0.000 (blue=0, red=30)
+Total Score: 6.000
+==========================
+
+=== Simulation Result 1 ===
+Seed: 992970268
+Objective Area 1 (x:21~37, y:84~100): BLUE inside = 30 RED inside = 0
+Objective Area 2 (x:63~79, y:84~100): BLUE inside = 13 RED inside = 0
+Objective Area 3 (x:53~80, y:15~25): BLUE inside = 0 RED inside = 34
+Alive   - BLUE: 64 / RED: 34
+Initial - BLUE: 76 / RED: 75
+Casualties - BLUE: 11 / RED: 41
+Score Weights: Area1=0.2 Area2=0.3 Area3=0.5
+Area1 Score: 6.000 (blue=30, red=0)
+Area2 Score: 3.900 (blue=13, red=0)
+Area3 Score: 0.000 (blue=0, red=34)
+Total Score: 9.900
+==========================
