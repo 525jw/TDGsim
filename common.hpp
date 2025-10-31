@@ -22,10 +22,10 @@ using json = nlohmann::json;
 // ============================ Config ===========================
 namespace config {
     struct Infantry {
-        float walking_speed_cps = 4.0f;
+        // float walking_speed_cps = 4.0f; 
         float walking_speed_spc = 9.0f; // when cell 10m x 10m
-        float looking_speed_cps = 4.0f;
-        float looking_speed_spc = 9.0f;
+        // float looking_speed_cps = 4.0f;
+        float looking_speed_spc = 9.0f; // currently should be equal to walking speed 
         float fire_freq_rifle = 3.0f;
         float fire_accuracy_rifle = 0.7f;
         float pkill_open = 0.35f; // https://www.jasss.org/18/4/10.html#fig1
