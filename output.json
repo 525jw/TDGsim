@@ -2,34 +2,6 @@
   "version": "bml-v1-simtime",
   "orders": [
     {
-      "who": {
-        "unit": "BLUE-ART",
-        "side": "BLUE",
-        "forcetype": "ART"
-      },
-      "what": {
-        "task": "BOMBARD",
-        "task_params": {
-          "ammo": "HE",
-          "method": "TIME",
-          "volume": {
-            "duration": 180,
-            "rate": "SUSTAINED"
-          },
-          "point": [
-            72.0,
-            20.0
-          ]
-        }
-      },
-      "where": {},
-      "priority": 50,
-      "constraints": {},
-      "when_sim": {
-        "dur": 3
-      }
-    },
-    {
       "who": { "unit": "RED-PLT2","side": "RED","forcetype": "INF","echelon": "PLT" },
       "what": { "task": "MOVE","task_params": {"speed_mode": "NORMAL"}},
       "where": {"point": [72.0,89.0],"route": [[72.0,89.0]]},
