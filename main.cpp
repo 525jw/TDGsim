@@ -64,7 +64,7 @@ int main(){
 
             // 2) 전체 생존자/사상자
             std::unordered_set<int> aliveIds;
-            int aliveBlue = 0, aliveRed = 0;
+            int aliveBlue = -1, aliveRed = 0; // 포병 엔티티 통계 제외
 
             for (int y = 0; y < H; ++y) {
                 for (int x = 0; x < W; ++x) {
@@ -80,9 +80,9 @@ int main(){
                 }
             }
 
-            const int initBlue = env->GetInitialBlue();
+            const int initBlue = env->GetInitialBlue()-1; // 포병 엔티티 통계 제외
             const int initRed  = env->GetInitialRed();
-            const int kiasBlue = std::max(0, initBlue - aliveBlue -1);  // -1: 고정
+            const int kiasBlue = std::max(0, initBlue - aliveBlue);
             const int kiasRed  = std::max(0, initRed  - aliveRed);
 
             // 목표 구역 가중치

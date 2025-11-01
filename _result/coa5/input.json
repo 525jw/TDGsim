@@ -1,0 +1,7 @@
+{
+ "orders":[
+  {"unit":"BLUE-ART","task":"BOMBARD","point":[30,60]},
+  {"unit":"BLUE-PLT1","task":"HOLD"},
+  {"unit":"BLUE-PLT3","task":"HOLD"}
+ ]
+}

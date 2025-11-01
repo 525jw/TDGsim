@@ -15,6 +15,9 @@ Usage:
 import sys
 import re
 import argparse
+import io
+import os
+from pathlib import Path
 from dataclasses import dataclass, asdict
 from typing import List, Dict, Any, Optional
 import statistics as stats
@@ -35,12 +38,24 @@ class RunRow:
     blue_casualties: int
     red_casualties: int
     blue_win: int  # 1 if red_alive == 0 else 0
+    initial_blue: int
+    initial_red: int
+    area1_score: float
+    area2_score: float
+    area3_score: float
+    total_score: float
 
 OBJ_PATTERNS = {
     1: re.compile(r"Objective Area 1.*?BLUE inside\s*=\s*(\d+)\s*RED inside\s*=\s*(\d+)", re.S),
     2: re.compile(r"Objective Area 2.*?BLUE inside\s*=\s*(\d+)\s*RED inside\s*=\s*(\d+)", re.S),
     3: re.compile(r"Objective Area 3.*?BLUE inside\s*=\s*(\d+)\s*RED inside\s*=\s*(\d+)", re.S),
 }
+SCORE_PATTERNS = {
+    1: re.compile(r"Area1 Score:\s*([0-9]*\.?[0-9]+)"),
+    2: re.compile(r"Area2 Score:\s*([0-9]*\.?[0-9]+)"),
+    3: re.compile(r"Area3 Score:\s*([0-9]*\.?[0-9]+)"),
+}
+TOTAL_SCORE_PATTERN = re.compile(r"Total Score:\s*([0-9]*\.?[0-9]+)")
 
 def parse_blocks(text: str) -> List[RunRow]:
     # main.cpp prints headers like: "=== Simulation Result <n> ==="
@@ -51,6 +66,7 @@ def parse_blocks(text: str) -> List[RunRow]:
         seed_m = re.search(r"Seed:\s*([-\d]+)", b)
         alive = re.search(r"Alive\s*-\s*BLUE:\s*(\d+)\s*/\s*RED:\s*(\d+)", b)
         cas = re.search(r"Casualties\s*-\s*BLUE:\s*(\d+)\s*/\s*RED:\s*(\d+)", b)
+        initial = re.search(r"Initial\s*-\s*BLUE:\s*(\d+)\s*/\s*RED:\s*(\d+)", b)
         # Objective Areas (1..3, BLUE/RED)
         obj_vals = {}
         for i in (1,2,3):
@@ -62,14 +78,21 @@ def parse_blocks(text: str) -> List[RunRow]:
                 blue_in = int(m.group(1))
                 red_in  = int(m.group(2))
                 obj_vals[i] = (blue_in, red_in)
+        score_vals = {}
+        for i in (1, 2, 3):
+            sm = SCORE_PATTERNS[i].search(b)
+            score_vals[i] = float(sm.group(1)) if sm else float("nan")
+        total_score_m = TOTAL_SCORE_PATTERN.search(b)
+        total_score = float(total_score_m.group(1)) if total_score_m else float("nan")
 
-        if not (seed_m and alive and cas):
+        if not (seed_m and alive and cas and initial):
             # Skip malformed block
             continue
 
         seed = int(seed_m.group(1))
         blue_alive, red_alive = int(alive.group(1)), int(alive.group(2))
         blue_cas, red_cas = int(cas.group(1)), int(cas.group(2))
+        initial_blue, initial_red = int(initial.group(1)), int(initial.group(2))
 
         rows.append(RunRow(
             seed=seed,
@@ -84,6 +107,12 @@ def parse_blocks(text: str) -> List[RunRow]:
             blue_casualties=blue_cas,
             red_casualties=red_cas,
             blue_win=int(red_alive == 0),
+            initial_blue=initial_blue,
+            initial_red=initial_red,
+            area1_score=score_vals[1],
+            area2_score=score_vals[2],
+            area3_score=score_vals[3],
+            total_score=total_score,
         ))
     # Sort by seed for stable display
     rows.sort(key=lambda r: r.seed)
@@ -145,28 +174,36 @@ def fmt_float(x: float) -> str:
         return f"{int(round(x))}"
     return f"{x:.2f}"
 
-def print_table(title: str, rows: List[Dict[str, Any]], cols: List[str]) -> None:
-    print(f"\n{title}")
+def print_table(title: str, rows: List[Dict[str, Any]], cols: List[str], out: Optional[io.TextIOBase] = None) -> None:
+    if out is None:
+        out = sys.stdout
+    print(f"\n{title}", file=out)
     widths = {c: max(len(c), *(len(str(r.get(c, ''))) for r in rows)) for c in cols}
     header = " | ".join(c.ljust(widths[c]) for c in cols)
     sep = "-+-".join("-" * widths[c] for c in cols)
-    print(header)
-    print(sep)
+    print(header, file=out)
+    print(sep, file=out)
     for r in rows:
         line = " | ".join(str(r.get(c, "")).ljust(widths[c]) for c in cols)
-        print(line)
+        print(line, file=out)
 
 def main():
     ap = argparse.ArgumentParser(description="Compute robust summaries for TDGsim results (BLUE/RED Obj1-3).")
-    ap.add_argument("--input", "-i", type=str, default="-", help="Input file path (default: stdin)")
+    ap.add_argument("--input", "-i", type=str, default=None, help="Input file path (default: result_summary.txt)")
     ap.add_argument("--trim", type=float, default=0.10, help="Trim proportion for trimmed mean (default: 0.10)")
     ap.add_argument("--verbose", action="store_true", help="Print per-run compact table")
     args = ap.parse_args()
 
-    if args.input == "-" or args.input is None:
+    default_input = "result_summary.txt"
+    input_path = args.input or default_input
+    if input_path == "-":
         text = sys.stdin.read()
     else:
-        with open(args.input, "r", encoding="utf-8") as f:
+        if not os.path.exists(input_path) and input_path == default_input:
+            alt_path = os.path.join("_result", "coa1", default_input)
+            if os.path.exists(alt_path):
+                input_path = alt_path
+        with open(input_path, "r", encoding="utf-8") as f:
             text = f.read()
 
     rows = parse_blocks(text)
@@ -175,6 +212,9 @@ def main():
         sys.exit(1)
 
     # Per-run compact view
+    output_buffer = io.StringIO()
+    out = output_buffer
+
     if args.verbose:
         compact = [{
             "seed": r.seed,
@@ -192,13 +232,19 @@ def main():
         } for r in rows]
         print_table("Runs (sorted by seed)", compact,
                     ["seed","blue_alive","red_alive","blue_cas","red_cas",
-                     "obj1_B","obj1_R","obj2_B","obj2_R","obj3_B","obj3_R","blue_win"])
+                     "obj1_B","obj1_R","obj2_B","obj2_R","obj3_B","obj3_R","blue_win"],
+                    out=out)
 
     # Build metric arrays
     blue_alive = [r.blue_alive for r in rows]
     red_alive = [r.red_alive for r in rows]
     blue_cas = [r.blue_casualties for r in rows]
     red_cas = [r.red_casualties for r in rows]
+
+    initial_metrics = {
+        "initial_blue": [r.initial_blue for r in rows],
+        "initial_red": [r.initial_red for r in rows],
+    }
 
     # Objective arrays
     obj_metrics = {
@@ -208,6 +254,12 @@ def main():
         "obj2_red_inside":  [r.obj2_red_inside  for r in rows],
         "obj3_blue_inside": [r.obj3_blue_inside for r in rows],
         "obj3_red_inside":  [r.obj3_red_inside  for r in rows],
+    }
+    score_metrics = {
+        "area1_score": [r.area1_score for r in rows],
+        "area2_score": [r.area2_score for r in rows],
+        "area3_score": [r.area3_score for r in rows],
+        "score": [r.total_score for r in rows],
     }
 
     blue_win_rate = sum(r.blue_win for r in rows) / len(rows)
@@ -230,7 +282,7 @@ def main():
     }
 
     rows_out = []
-    for name, vals in {**basic_metrics, **obj_metrics}.items():
+    for name, vals in {**initial_metrics, **basic_metrics, **obj_metrics, **score_metrics}.items():
         s = summarize([float(v) for v in vals], args.trim)
         rows_out.append({
             "metric": name,
@@ -244,17 +296,22 @@ def main():
         })
 
     print_table("Summary (robust)", rows_out,
-                ["metric","median","IQR[p25,p75]",f"trimmed_mean({int(args.trim*100)}%)","mean","std","min","max"])
+                ["metric","median","IQR[p25,p75]",f"trimmed_mean({int(args.trim*100)}%)","mean","std","min","max"],
+                out=out)
 
     # KPI block
-    print("\nKPI")
-    print(f"- BLUE win rate                   : {blue_win_rate*100:.1f}%")
+    print("\nKPI", file=out)
+    print(f"- BLUE win rate                   : {blue_win_rate*100:.1f}%", file=out)
     for i in (1,2,3):
         for side in ("blue","red"):
             arr = obj_metrics[f"obj{i}_{side}_inside"]
             rate, cond_mean = occ_stats(arr)
             label = f"Obj{i} {side.upper()} inside"
-            print(f"- {label:26s} : occurrence {rate*100:5.1f}% | conditional mean {cond_mean:.2f}")
+            print(f"- {label:26s} : occurrence {rate*100:5.1f}% | conditional mean {cond_mean:.2f}", file=out)
+
+    out_path = Path("average.txt")
+    out_path.write_text(out.getvalue(), encoding="utf-8")
+    print(f"Wrote summary to {out_path}")
 
 if __name__ == "__main__":
     main()
