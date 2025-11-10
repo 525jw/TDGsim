@@ -6,7 +6,7 @@
 
 class HQ : public AtomicModel{
 private:
-    std::unordered_set<int> controlledEntityIds;
+    std::unordered_set<int> memberIds; // 자식 노드에 해당하는 id만 보유
     Side hqSide;
     std::string ordersFilePath;
     TIME_T t_dec = 0.0f;

@@ -2,7 +2,7 @@
 #include "DEVS/coupled_model.hpp"
 #include "DEVS/logger.hpp"
 #include "generator.hpp"
-// #include "data_collector.hpp"
+#include "transducer.hpp"
 
 class ExperimentFrame : public CoupledModel{
 public:
@@ -11,7 +11,7 @@ public:
     {
         // 생성
         Generator* generator = new Generator(engine);
-        // DataCollector* dataCollector = new DataCollector(engine);
+        T
 
         // 이름 설정-id는 생성자에서 자동 등록,TODO 이름도 생성자에서 handle가능하게
         generator->SetModelName("Generator");

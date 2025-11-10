@@ -168,10 +168,9 @@ CompanyOrd LoadOrderFromFile(const std::string& path,
 
     return companyOrder;
 }
-
-
+// ------------- HQ class -------------
 HQ::HQ(Engine* engine,
-       std::vector<int>* membersId,
+       std::vector<int>* memberIds,
        Side side,
        std::string ordersFile)
     : AtomicModel(engine),
@@ -179,13 +178,13 @@ HQ::HQ(Engine* engine,
       ordersFilePath(std::move(ordersFile)) {
     this->engine = engine;
 
-    if (membersId) {
-        controlledEntityIds.insert(membersId->begin(), membersId->end());
+    if (memberIds) {
+        this->memberIds.insert(memberIds->begin(), memberIds->end());
     }
 
     this->AddState("WAIT");
     this->AddState("DECIDE");
-    this->AddState("Report");
+    this->AddState("REPORT");
 
     this->SetCurState("WAIT");
 
@@ -209,7 +208,7 @@ bool HQ::OutputFn() {
         CompanyOrd order = LoadOrderFromFile(
             ordersFilePath,
             hqSide,
-            controlledEntityIds);
+            memberIds);
 
         LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER");
         if (order.orders.empty()) {
