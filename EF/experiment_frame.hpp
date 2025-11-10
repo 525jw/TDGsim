@@ -11,7 +11,7 @@ public:
     {
         // 생성
         Generator* generator = new Generator(engine);
-        T
+
 
         // 이름 설정-id는 생성자에서 자동 등록,TODO 이름도 생성자에서 handle가능하게
         generator->SetModelName("Generator");
