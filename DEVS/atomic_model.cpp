@@ -24,7 +24,7 @@ void AtomicModel::RemoveState(const std::string& state) {
 }
 
 
-void AtomicModel::ReceiveEvent(Event& event,TIME_T currentTime){
+void AtomicModel::ReceiveEvent(Event& event,float currentTime){
     LogTrace(this->engine->GetCurrentTime(),"AM::ReceiveEvent","model=",this->GetNameWithId()," senderPort=",event.getSenderPort());
     if(this->lastTime <= currentTime && currentTime <= this->nextTime){
         this->executedTime = currentTime - this->lastTime;
@@ -35,7 +35,7 @@ void AtomicModel::ReceiveEvent(Event& event,TIME_T currentTime){
     }
 }
 
-void AtomicModel::ReceiveScheduleTime(const TIME_T currentTime){
+void AtomicModel::ReceiveScheduleTime(const float currentTime){
     LogTrace(this->engine->GetCurrentTime(),"AM::ReceiveScheduleTime","model=",this->GetNameWithId()," scheduleTime=",currentTime, " nextTime=",this->nextTime);
     if(currentTime == this->nextTime){
         OutputFn();
@@ -45,13 +45,13 @@ void AtomicModel::ReceiveScheduleTime(const TIME_T currentTime){
         // ERROR
     }
 }
-const TIME_T AtomicModel::QueryNextTime() const{
+const float AtomicModel::QueryNextTime() const{
     // LogTrace(this->engine->GetCurrentTime(),"AM::QuerryNextTime","model=",this->GetNameWithId()," nextTime=",ToFixedString(this->GetNextTime()));
     return this->nextTime;
 }
 
 // Ref. 4-3-8d
-void AtomicModel::UpdateTime(const TIME_T currentTime){
+void AtomicModel::UpdateTime(const float currentTime){
     this->lastTime = currentTime;
     this->nextTime = currentTime + TimeAdvanceFn();
 }

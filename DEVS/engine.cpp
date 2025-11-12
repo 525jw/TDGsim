@@ -3,7 +3,7 @@
 Engine::Engine() : currentTime(0.0f), lastTime(0.0f) {}
 
 void Engine::Run(){
-    while(this->currentTime<1000.0){ //// TODO : needs while loop unitl the end time
+    while(this->currentTime<TIME_INF){
         LogTrace(this->GetCurrentTime(),"Engine::Run","event queue size=",this->eventQueue.size(),"-------------------------------------------------------------------");
 
         if(lastTime > currentTime){
@@ -19,7 +19,7 @@ void Engine::Run(){
             LogTrace(this->GetCurrentTime(),"Engine::Run","event queue is empty");
 
 
-            TIME_T minTA = this->rootModel->QueryNextTime();
+            float minTA = this->rootModel->QueryNextTime();
             if(minTA > TIME_INF)
                 return;
             this->lastTime = this->currentTime;
@@ -74,4 +74,9 @@ int Engine::RegisterModelInEngine(Model* model) {
     modelsWithID[id] = model;
     model->SetModelID(id);
     return id;
+}
+void Engine::RequestResetEngine(){
+    this->lastTime = 0.0f;
+    this->currentTime = 0.0f;
+    this->eventQueue = std::queue<Event*>();
 }

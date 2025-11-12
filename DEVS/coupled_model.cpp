@@ -48,7 +48,7 @@ bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort,
 bool CoupledModel::RemoveCoupling(Model* srcModel, std::string* srcPort) {
     return RemoveCoupling(srcModel, srcPort, nullptr, nullptr);
 }
-void CoupledModel::ReceiveEvent(Event& event, TIME_T currentTime){ // when receive (x,t)
+void CoupledModel::ReceiveEvent(Event& event, float currentTime){ // when receive (x,t)
     if(this->lastTime <= currentTime && currentTime <= this->nextTime){
         if (std::find(this->GetInputPorts().begin(), this->GetInputPorts().end(), event.getSenderPort()) != this->GetInputPorts().end()){
             this->RouteEIC(event, currentTime);
@@ -65,7 +65,7 @@ void CoupledModel::ReceiveEvent(Event& event, TIME_T currentTime){ // when recei
         // TODO : event를 free 해야함
     }
 }
-void CoupledModel::RouteEIC(Event& event, TIME_T currentTime){  // Handling EIC
+void CoupledModel::RouteEIC(Event& event, float currentTime){  // Handling EIC
 
     for (auto& cp : this->couplings[EIC]) {
         if (cp->getSrcModel()->GetModelID() != event.getSenderModelID() ||
@@ -89,7 +89,7 @@ void CoupledModel::RouteEIC(Event& event, TIME_T currentTime){  // Handling EIC
         // }
     }
 }
-void CoupledModel::RouteEOC(Event& event, TIME_T currentTime){  // Handling EOC
+void CoupledModel::RouteEOC(Event& event, float currentTime){  // Handling EOC
 
     for (auto& cp : this->couplings[EOC]) {
         if (cp->getSrcModel()->GetModelID() != event.getSenderModelID() ||
@@ -110,7 +110,7 @@ void CoupledModel::RouteEOC(Event& event, TIME_T currentTime){  // Handling EOC
     }
 }
 
-void CoupledModel::RouteIC(Event& event, TIME_T currentTime){  // Handling IC
+void CoupledModel::RouteIC(Event& event, float currentTime){  // Handling IC
 
     for (auto& cp : this->couplings[IC]) {
         if (cp->getSrcModel()->GetModelID() != event.getSenderModelID() ||
@@ -139,7 +139,7 @@ Event CoupledModel::Translate(const Event& in, int srcModelID, const std::string
     out.setSenderPort(srcPort);
     return out;
 }
-void CoupledModel::ReceiveScheduleTime(const TIME_T currentTime){ // when receive (*,t)
+void CoupledModel::ReceiveScheduleTime(const float currentTime){ // when receive (*,t)
     if(currentTime == this->nextTime){
         for (auto& mid : subModelsWithID){
             if(mid.second->GetNextTime() == this->nextTime){
@@ -154,8 +154,8 @@ void CoupledModel::ReceiveScheduleTime(const TIME_T currentTime){ // when receiv
     }
 }
 
-const TIME_T CoupledModel::QueryNextTime() const{
-    TIME_T minTime = TIME_INF;
+const float CoupledModel::QueryNextTime() const{
+    float minTime = TIME_INF;
     for (auto& mid : subModelsWithID) {
         minTime = std::min(minTime, mid.second->QueryNextTime());
     }

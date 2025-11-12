@@ -1,0 +1,8 @@
+g++ -std=gnu++17 -O2 -I. \
+  main.cpp \
+  $(find DEVS EF SIM -name "*.cpp" 2>/dev/null) \
+  -static-libstdc++ -static-libgcc \
+  -o tdg.exe && ./tdg.exe
+
+
+g++ -std=gnu++17 -O2 -I. main.cpp $(find DEVS EF SIM -name "*.cpp") -o tdg && ./tdg

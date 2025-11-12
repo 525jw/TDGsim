@@ -6,15 +6,14 @@
 #include <optional>
 
 #define TIME_INF 1e30f
-using TIME_T = float;
 class Event;
 class Engine;
 
 class Model{
 protected:
     // Timing Variables
-    TIME_T lastTime = 0.0;
-    mutable TIME_T nextTime = TIME_INF;
+    float lastTime = 0.0;
+    mutable float nextTime = TIME_INF;
 
     Engine* engine = nullptr;
     Model* parentModel = nullptr;
@@ -40,7 +39,7 @@ public:
     const Engine* GetEngine() const;
     Model* GetParentModel() const;
 
-    const TIME_T GetNextTime() const;
+    const float GetNextTime() const;
 
     void AddInputPort(const std::string& inputPort);
     void AddOutputPort(const std::string& outputPort);
@@ -49,10 +48,10 @@ public:
     const std::vector<std::string>& GetInputPorts() const;
     const std::vector<std::string>& GetOutputPorts() const;
 
-    virtual void ReceiveEvent(Event& event, TIME_T currentTime) = 0; // when receive (x,t) 
-    virtual void ReceiveScheduleTime(const TIME_T currentTime) = 0; // when receive (*,t)
+    virtual void ReceiveEvent(Event& event, float currentTime) = 0; // when receive (x,t) 
+    virtual void ReceiveScheduleTime(const float currentTime) = 0; // when receive (*,t)
 
-    virtual const TIME_T QueryNextTime() const = 0; // Recursively returns earliest nextTime from child models
+    virtual const float QueryNextTime() const = 0; // Recursively returns earliest nextTime from child models
 
     virtual bool IsAtomic() const { return false; }
     virtual bool IsCoupled() const { return false; }

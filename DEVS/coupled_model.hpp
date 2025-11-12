@@ -14,9 +14,9 @@ enum CouplingType { EIC, EOC, IC };
 class CoupledModel : public Model{
 private:
     std::unordered_map<CouplingType, std::vector<std::unique_ptr<Coupling>>> couplings;
-    void RouteEIC(Event& event, TIME_T currentTime); 
-    void RouteEOC(Event& event, TIME_T currentTime);
-    void RouteIC(Event& event, TIME_T currentTime);
+    void RouteEIC(Event& event, float currentTime); 
+    void RouteEOC(Event& event, float currentTime);
+    void RouteIC(Event& event, float currentTime);
     Event Translate(const Event& in, int srcModelID, const std::string& srcPort);
 public:
     std::unordered_map<int, Model*> subModelsWithID;
@@ -26,10 +26,10 @@ public:
     bool RemoveCoupling(Model* srcModel, std::string* srcPort, Model* detModel, std::string* detPort);
     bool RemoveCoupling(Model* srcModel, std::string* srcPort);
     
-    void ReceiveEvent(Event& event, TIME_T currentTime);
-    void ReceiveScheduleTime(const TIME_T currentTime);
+    void ReceiveEvent(Event& event, float currentTime);
+    void ReceiveScheduleTime(const float currentTime);
 
-    const TIME_T QueryNextTime() const;
+    const float QueryNextTime() const;
     
     bool RegisterSubModel(Model* model);
     bool IsCoupled() const override { return true; }

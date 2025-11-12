@@ -37,7 +37,7 @@ const Engine* Model::GetEngine() const{
 Model* Model::GetParentModel() const{
     return this->parentModel;
 }
-const TIME_T Model::GetNextTime() const{
+const float Model::GetNextTime() const{
     return this->nextTime;
 }
 

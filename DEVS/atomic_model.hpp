@@ -11,7 +11,7 @@ class Engine;
 
 class AtomicModel : public Model{
 protected:
-    TIME_T executedTime;
+    float executedTime;
     template<typename T>
     static bool TryCastMessage(const std::any& raw, T& typed, const std::string& context = "") {
         try {
@@ -34,17 +34,17 @@ public:
     void SetCurState(std::string state);
     const std::string& GetCurState() const;
 
-    void ReceiveEvent(Event& event, TIME_T currentTime);
-    void ReceiveScheduleTime(const TIME_T currentTime);
-    const TIME_T QueryNextTime() const;
+    void ReceiveEvent(Event& event, float currentTime);
+    void ReceiveScheduleTime(const float currentTime);
+    const float QueryNextTime() const;
 
-    void UpdateTime(const TIME_T currentTime);
+    void UpdateTime(const float currentTime);
     void AddOutputEvent(const std::string& outputPort, std::any& message);
 
     virtual bool ExtTransFn(const std::string& inPort, const std::any& anyMessage) {return false;}
     virtual bool IntTransFn() {return false;}
     virtual bool OutputFn() {return false;}
-    virtual TIME_T TimeAdvanceFn() {return -1;}
+    virtual float TimeAdvanceFn() {return -1;}
 
     bool IsAtomic() const override { return true; }
 

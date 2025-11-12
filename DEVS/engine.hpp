@@ -12,17 +12,19 @@ private:
     Model* rootModel;
     
     std::queue<Event*> eventQueue;
-    TIME_T currentTime;
-    TIME_T lastTime;
+    float currentTime;
+    float lastTime;
 
     std::unordered_map<int, Model*> modelsWithID; // ID ascending from 1
     int  nextModelID = 1;
 public:
     Engine();
 
-    TIME_T GetCurrentTime() { return currentTime; };
+    float GetCurrentTime() { return currentTime; };
     void SetRootModel(Model* model){ this->rootModel = model; };
     void Run();
-    void AddEvent(Event* event); // NOTE : The only method accessible from external classes (e.g., AtomicModel) + Run would be public too, used in main.cpp
+    void AddEvent(Event* event);
     int RegisterModelInEngine(Model* model); // returns registered modelID, or -1 on error
+    void RequestEndSimulation(){ this->currentTime = TIME_INF;} // is it safe?
+    void RequestResetEngine();
 };
