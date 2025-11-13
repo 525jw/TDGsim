@@ -23,6 +23,14 @@ class BMLParseError(ValueError):
     pass
 
 def deepmerge(base: Dict[str, Any], over: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    base 딕셔너리에 over 딕셔너리를 재귀적으로 병합.
+    - base를 복사하고,
+    - over의 key/value를 하나씩 
+        - 값이 딕셔너리이고 base에도 같은 key가 있으면 재귀적으로 병합
+        - 아니면 덮어쓰기(복사)
+    용도: 
+    """
     out = copy.deepcopy(base)
     if not over:
         return out
@@ -34,6 +42,10 @@ def deepmerge(base: Dict[str, Any], over: Optional[Dict[str, Any]]) -> Dict[str,
     return out
 
 def _as_point(x: Any) -> List[float]:
+    """
+    좌표 형식이 유효한지 검사해서 [x,y] 부동소수점 리스트로 반환.
+    int를 달라고 하면 int로 바꿔도 됨.
+    """
     if isinstance(x, (list, tuple)) and len(x) == 2 and all(isinstance(v, (int, float)) for v in x):
         return [float(x[0]), float(x[1])]
     raise BMLParseError(f"좌표 형식 오류: {x} (예: [10,12])")
@@ -79,18 +91,32 @@ def BMLparse(
     passthrough_when_keys: List[str] = ("gate","pre","until","deadline","cancel_on","repeat","jitter"),
 ) -> Dict[str, Any]:
     """
+    입력 doc의 'orders' 배열을 순회하면서 각 오더를 표준화된 오브젝트로 만듦.
+
+    - WHO: unit/side/forcetype/echelon 추출(간단 추론 로직)
+    - WHAT: task 및 기본 task_params 병합
+    - WHERE: MOVE는 'to' 또는 'point'를 where.point로, route 작성
+            BOMBARD는 what.task_params.point로 표적 저장
+    - WHEN_sim: duration 처리 및 선택적인 gate/pre 등 pass-through
+    - 출력 스키마: {"version":..., "orders":[{who,what,where,when_sim?,priority,constraints}...]}
+    
+
     MOVE/BOMBARD만 정규화. t0는 생성하지 않음.
     - MOVE: to|point -> where.point, route=[[x,y]]
     - BOMBARD: point -> what.task_params.point
     - 시간: when_sim에 dur만 옵션으로 전달(또는 완전 생략)
     """
+
+    # 기본 유효성 검사
     if "orders" not in doc or not isinstance(doc["orders"], list):
         raise BMLParseError("'orders' 배열이 필요합니다.")
 
     out = {"version": "bml-v1-simtime", "orders": []}
 
+    # 각 오더 처리
     for idx, od in enumerate(doc["orders"], start=1):
         unit = od.get("unit"); task = od.get("task")
+        # 필수 필드 타입을 검사
         if not isinstance(unit, str) or not isinstance(task, str):
             raise BMLParseError(f"[order#{idx}] 'unit'과 'task'는 문자열이어야 합니다.")
         task = task.upper()
@@ -106,7 +132,7 @@ def BMLparse(
         base_params = defaults_params.get(task, {})
         task_params = deepmerge(base_params, {})
 
-        # WHERE & FIRE 표적
+        # WHERE & FIRE 표적 처리
         where: Dict[str, Any] = {}
         if task == MOVE:
             if "to" in od:
@@ -118,6 +144,7 @@ def BMLparse(
             where["point"] = p
             where["route"] = [p]
         elif task == BOMBARD:
+            # 얘는 point 필요
             if "point" not in od:
                 raise BMLParseError(f"[order#{idx}] BOMBARD에는 'point'가 필요합니다.")
             task_params["point"] = _as_point(od["point"])
@@ -152,6 +179,7 @@ def BMLparse(
             # 빈 딕셔너리면 None으로(완전 생략)
             if not when_sim:
                 when_sim = None
+        # when_sim 처리 끝
 
         std = {
             "who": who,
@@ -163,7 +191,7 @@ def BMLparse(
         if when_sim is not None:
             std["when_sim"] = when_sim  # dur/게이트만, t0 없음
 
-        # 최소 의미검사
+        # 최소 의미검사 MOVE, BOMBARD에 필요한 정보 검증
         if task == MOVE and not (("route" in where and where["route"]) or ("point" in where)):
             raise BMLParseError(f"[order#{idx}] MOVE: 공간 목표 필요.")
         if task == BOMBARD and not (task_params.get("point") or where.get("point")):
