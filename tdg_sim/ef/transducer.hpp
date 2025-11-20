@@ -6,10 +6,11 @@
 
 class Transducer : public AtomicModel{
 private:
-    std::string resultPath_ = "data/result.csv"; // 결과 파일 경로
     Result    result_;
     float simulationEndTime_ = 3600.0f; // 시뮬레이션 종료 시간 (초)
 
+    bool ReadMapFromJSON(const std::string& path, nlohmann::json& j);
+    bool ReadResultFromSimulation(Result& result);
     bool StoreResultToCSV(const std::string& path, const Result& result);
 public:
     Transducer(Engine* engine);

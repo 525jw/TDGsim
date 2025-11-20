@@ -51,6 +51,7 @@ bool Environment::ExtTransFn(const std::string& inPort, const std::any& anyMessa
         }
 
         // 엔티티정보 등록
+        initEntities.clear();
         entities.clear();
         for (const auto& src : s.entities) {
             Entity e{};
@@ -67,17 +68,8 @@ bool Environment::ExtTransFn(const std::string& inPort, const std::any& anyMessa
 
             const int assignedId = RegisterEntityIdByName(e.name);
             e.id = assignedId;
+            initEntities[assignedId] = e;
             entities[assignedId] = std::move(e);
-        }
-
-        // RSH
-        // 추가: 초기 총원 집계
-        initialBlue = 0;
-        initialRed = 0;
-        for(const auto& kv : entities){
-            const auto& ent = kv.second;
-            if (ent.side == Side::BLUE) ++initialBlue;
-            else if (ent.side == Side::RED) ++initialRed;
         }
 
         LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"ENV_INIT","seed=",this->seed);

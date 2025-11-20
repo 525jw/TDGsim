@@ -115,11 +115,14 @@ bool PlatoonLeader::ExtTransFn(const std::string& inPort, const std::any& anyMes
         CompanyOrd message;
         if (!TryCastMessage(anyMessage, message, "PlatoonLeader::ExtTransFn.CompanyOrd")) return false;
 
+        // Check if there are orders for this platoon
         auto it = message.orders.find(this->entityId);
         if (it == message.orders.end()) {
             return true;
         }
 
+        // Clear existing pending orders and queue new ones
+        // ***Input CompanyOrd replaces all previous orders***
         pendingOrders.clear();
         const auto& ordList = it->second;
         for (const Order& ord : ordList) {
@@ -312,7 +315,7 @@ bool PlatoonLeader::OutputFn() {
         };
 
         if (!alignPlanWithEnvironment()) {
-            if (!RebuildPlatoonWaypointPlan(plan, plan.activeWaypoint)) {
+            if (!RebuildPlatoonWayPointPlan(plan, plan.activeWayPoint)) {
                 return true;
             }
             if (!alignPlanWithEnvironment()) {

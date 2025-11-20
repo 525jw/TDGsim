@@ -41,7 +41,7 @@ def deepmerge(base: Dict[str, Any], over: Optional[Dict[str, Any]]) -> Dict[str,
             out[k] = copy.deepcopy(v)
     return out
 
-def _as_point(x: Any) -> List[float]:
+def _as_Point(x: Any) -> List[float]:
     """
     좌표 형식이 유효한지 검사해서 [x,y] 부동소수점 리스트로 반환.
     int를 달라고 하면 int로 바꿔도 됨.
@@ -95,15 +95,15 @@ def BMLparse(
 
     - WHO: unit/side/forcetype/echelon 추출(간단 추론 로직)
     - WHAT: task 및 기본 task_params 병합
-    - WHERE: MOVE는 'to' 또는 'point'를 where.point로, route 작성
-            BOMBARD는 what.task_params.point로 표적 저장
+    - WHERE: MOVE는 'to' 또는 'Point'를 where.Point로, route 작성
+            BOMBARD는 what.task_params.Point로 표적 저장
     - WHEN_sim: duration 처리 및 선택적인 gate/pre 등 pass-through
     - 출력 스키마: {"version":..., "orders":[{who,what,where,when_sim?,priority,constraints}...]}
     
 
     MOVE/BOMBARD만 정규화. t0는 생성하지 않음.
-    - MOVE: to|point -> where.point, route=[[x,y]]
-    - BOMBARD: point -> what.task_params.point
+    - MOVE: to|Point -> where.Point, route=[[x,y]]
+    - BOMBARD: Point -> what.task_params.Point
     - 시간: when_sim에 dur만 옵션으로 전달(또는 완전 생략)
     """
 
@@ -136,18 +136,18 @@ def BMLparse(
         where: Dict[str, Any] = {}
         if task == MOVE:
             if "to" in od:
-                p = _as_point(od["to"])
-            elif "point" in od:
-                p = _as_point(od["point"])
+                p = _as_Point(od["to"])
+            elif "Point" in od:
+                p = _as_Point(od["Point"])
             else:
-                raise BMLParseError(f"[order#{idx}] MOVE에는 'to' 또는 'point'가 필요합니다.")
-            where["point"] = p
+                raise BMLParseError(f"[order#{idx}] MOVE에는 'to' 또는 'Point'가 필요합니다.")
+            where["Point"] = p
             where["route"] = [p]
         elif task == BOMBARD:
-            # 얘는 point 필요
-            if "point" not in od:
-                raise BMLParseError(f"[order#{idx}] BOMBARD에는 'point'가 필요합니다.")
-            task_params["point"] = _as_point(od["point"])
+            # 얘는 Point 필요
+            if "Point" not in od:
+                raise BMLParseError(f"[order#{idx}] BOMBARD에는 'Point'가 필요합니다.")
+            task_params["Point"] = _as_Point(od["Point"])
         elif task == HOLD:
             # HOLD는 where 없음
             pass
@@ -192,9 +192,9 @@ def BMLparse(
             std["when_sim"] = when_sim  # dur/게이트만, t0 없음
 
         # 최소 의미검사 MOVE, BOMBARD에 필요한 정보 검증
-        if task == MOVE and not (("route" in where and where["route"]) or ("point" in where)):
+        if task == MOVE and not (("route" in where and where["route"]) or ("Point" in where)):
             raise BMLParseError(f"[order#{idx}] MOVE: 공간 목표 필요.")
-        if task == BOMBARD and not (task_params.get("point") or where.get("point")):
+        if task == BOMBARD and not (task_params.get("Point") or where.get("Point")):
             raise BMLParseError(f"[order#{idx}] BOMBARD: 표적 필요.")
 
         out["orders"].append(std)
@@ -211,12 +211,12 @@ if __name__ == "__main__":
             {"unit":"BLUE-PLT3","task":"MOVE","to":[8,11]},
             {"unit":"BLUE-MG","task":"MOVE","to":[7,13]},
             {"unit":"BLUE-TNK","task":"MOVE","to":[6,11]},
-            {"unit":"BLUE-ART","task":"BOMBARD","point":[22,5],"duration":3},
+            {"unit":"BLUE-ART","task":"BOMBARD","Point":[22,5],"duration":3},
             {"unit":"RED-PLT1","task":"MOVE","to":[9,10]},
             {"unit":"RED-APC","task":"MOVE","to":[20,6]},
             {"unit":"RED-MG","task":"MOVE","to":[19,5]},
             {"unit":"RED-TNK","task":"MOVE","to":[10,7]},
-            {"unit":"RED-ART","task":"BOMBARD","point":[8,12],"duration":40},
+            {"unit":"RED-ART","task":"BOMBARD","Point":[8,12],"duration":40},
         ]
     }
 

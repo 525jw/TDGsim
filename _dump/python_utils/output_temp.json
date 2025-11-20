@@ -16,7 +16,7 @@
             "duration": 180,
             "rate": "SUSTAINED"
           },
-          "point": [
+          "Point": [
             30.0,
             60.0
           ]

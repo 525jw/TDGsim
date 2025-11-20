@@ -7,6 +7,6 @@
 // - sideFilter: only accept orders whose "who.side" matches this side (if present)
 // - allowedRecipients: if non-empty, only include orders for entity ids in this set
 CompanyOrd LoadOrderFromFile(const std::string& path,
-                             Side sideFilter,
+                             SideType sideFilter,
                              const std::unordered_set<int>& allowedRecipients);
 

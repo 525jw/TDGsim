@@ -73,17 +73,17 @@ namespace {
         return {-1, -1};
     }
 
-    Point ComputeReferencePoint(const std::vector<Point>& points) {
-        if (points.empty()) {
+    Point ComputeReferencePoint(const std::vector<Point>& Points) {
+        if (Points.empty()) {
             return {0, 0};
         }
         long long sumX = 0;
         long long sumY = 0;
-        for (const Point& p : points) {
+        for (const Point& p : Points) {
             sumX += p.x;
             sumY += p.y;
         }
-        const long long count = static_cast<long long>(points.size());
+        const long long count = static_cast<long long>(Points.size());
         return {
             static_cast<int>(sumX / count),
             static_cast<int>(sumY / count)
@@ -144,7 +144,7 @@ namespace {
         }
 
         if (static_cast<int>(result.size()) < requiredCount) {
-            failureReason = "Not enough passable tiles near waypoint to place platoon members.";
+            failureReason = "Not enough passable tiles near wayPoint to place platoon members.";
         }
         return result;
     }
@@ -240,7 +240,7 @@ namespace {
 
     bool ComputePathsForMembers(PlatoonManeuverPlan& plan,
                                 Environment& environment,
-                                Point waypointGoal,
+                                Point wayPointGoal,
                                 std::string& failureReason) {
         plan.memberStartPositions.clear();
         plan.memberGoalPositions.clear();
@@ -262,7 +262,7 @@ namespace {
 
         std::vector<Point> candidateGoals = CollectCandidateGoals(
             environment,
-            waypointGoal,
+            wayPointGoal,
             static_cast<int>(plan.orderedMemberIds.size()),
             plan.maxExpand,
             failureReason);
@@ -280,7 +280,7 @@ namespace {
         sortedMembers.reserve(plan.orderedMemberIds.size());
         for (int id : plan.orderedMemberIds) {
             Point pos = plan.memberStartPositions[id];
-            int heuristic = std::abs(pos.x - waypointGoal.x) + std::abs(pos.y - waypointGoal.y);
+            int heuristic = std::abs(pos.x - wayPointGoal.x) + std::abs(pos.y - wayPointGoal.y);
             sortedMembers.push_back(MemberOrderInfo{id, heuristic});
         }
         std::sort(sortedMembers.begin(), sortedMembers.end(),
@@ -355,16 +355,16 @@ PlatoonManeuverPlan BuildPlatoonManeuverPlan(
 
     Point sanitizedGoal = FindNearestPassable(environment, desiredGoal, max_expand);
     if (!environment.InBounds(sanitizedGoal) || !TerrainPassable(environment, sanitizedGoal)) {
-        plan.failureReason = "Unable to resolve waypoint in bounds.";
+        plan.failureReason = "Unable to resolve wayPoint in bounds.";
         return plan;
     }
 
-    plan.waypointGoals.clear();
-    plan.waypointGoals.push_back(sanitizedGoal);
+    plan.wayPointGoals.clear();
+    plan.wayPointGoals.push_back(sanitizedGoal);
 
     plan.goal = sanitizedGoal;
     plan.currentGoal = sanitizedGoal;
-    plan.activeWaypoint = 0;
+    plan.activeWayPoint = 0;
 
     if (!ComputePathsForMembers(plan, environment, plan.currentGoal, plan.failureReason)) {
         plan.success = false;
@@ -376,25 +376,25 @@ PlatoonManeuverPlan BuildPlatoonManeuverPlan(
     return plan;
 }
 
-bool RebuildPlatoonWaypointPlan(
+bool RebuildPlatoonWayPointPlan(
     PlatoonManeuverPlan& plan,
-    std::size_t waypointIndex) {
+    std::size_t wayPointIndex) {
     if (!EnvReady()) {
         plan.failureReason = "Environment is not ready.";
         plan.success = false;
         return false;
     }
-    if (plan.waypointGoals.empty() ||
+    if (plan.wayPointGoals.empty() ||
         plan.orderedMemberIds.empty() ||
-        waypointIndex >= plan.waypointGoals.size()) {
-        plan.failureReason = "Waypoint index out of range.";
+        wayPointIndex >= plan.wayPointGoals.size()) {
+        plan.failureReason = "WayPoint index out of range.";
         plan.success = false;
         return false;
     }
 
     Environment& environment = *env;
-    plan.activeWaypoint = waypointIndex;
-    plan.currentGoal = plan.waypointGoals[plan.activeWaypoint];
+    plan.activeWayPoint = wayPointIndex;
+    plan.currentGoal = plan.wayPointGoals[plan.activeWayPoint];
 
     if (!ComputePathsForMembers(plan, environment, plan.currentGoal, plan.failureReason)) {
         plan.success = false;

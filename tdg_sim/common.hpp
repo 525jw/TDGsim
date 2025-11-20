@@ -17,8 +17,10 @@
 #include <cstdint>
 #include <functional>
 #include <chrono>
-#include "json.hpp"
+#include "utils/json.hpp"
+#include "utils/geometry.hpp"
 using json = nlohmann::json;
+
 // ============================ Config ===========================
 namespace config {
     struct Infantry {
@@ -44,30 +46,14 @@ namespace config {
     inline Artillery art;
 }
 // ============================ Types ============================
-
-// coordinate def
-typedef struct { int x,y; } Point;
-inline bool operator==(const Point& a, const Point& b) {
-    return a.x == b.x && a.y == b.y;
-}
-inline bool operator!=(const Point& a, const Point& b) {
-    return !(a == b);
-}
-
-// terrain def
-enum class TerrainType { PLAIN, RIVER };
-struct TerrainRect {
-    TerrainType kind;   //
-    int x1, y1, x2, y2; // 범위
-};
-
-// entity def
-enum class Side { BLUE, RED };
-enum class ForceType { RIFLE, ARTILLERY, TANK };
+enum class TerrainType { PLAIN, RIVER }; // terrain def
+enum class SideType { BLUE, RED }; 
+enum class ForceType { RIFLE, ARTILLERY, TANK, DEFAULT };
+enum class TaskType { MOVE, BOMBARD, HOLD };
 struct Entity { 
     int id;
     std::string name; // -> entity Id 
-    Side side; 
+    SideType side; 
     ForceType forceType; 
     Point position; 
 };
@@ -78,24 +64,31 @@ struct Scenario {
     int height = 0;                         // 맵 세로
     unsigned int seed = 0;                  // RNG 시드 (0이면 Generator가 생성)
 
-    std::vector<TerrainRect> terrainRects;
+    std::vector<std::pair<TerrainType, Rect>> terrainRects; // first: terrain type, second: area rect
     std::vector<Entity> entities;
 };
 
 // order def
-enum class TaskType { MOVE, BOMBARD, HOLD };
 struct Order {
     TaskType task = TaskType::HOLD;
     Point to{0, 0};
     bool hasDestination = false;
 };
 
-// result def
+struct ScoringWeights {
+    static constexpr double ALLY = 1.0;
+    static constexpr double BOTH = 0.5;
+    static constexpr double ENEMY = 0.0;
+};
+// column headers: seed, blueInit, redInit, blueCasualties, redCasualties, bg control info, totalScore
 struct Result{
     unsigned int seed = 0;
+    int blueInit = 0;
+    int redInit = 0;
     int blueCasualties = 0;
     int redCasualties = 0;
-    double totalScore = 0.0;
+    std::unordered_map<int, float> bgControl;
+    float totalScore = 0.0;
 };
 enum class EnvMoveResponse {
     Accepted,

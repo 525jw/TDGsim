@@ -25,6 +25,8 @@ public:
     void Run();
     void AddEvent(Event* event);
     int RegisterModelInEngine(Model* model); // returns registered modelID, or -1 on error
+    
+    // transducer용 함수
     void RequestEndSimulation(){ this->currentTime = TIME_INF;} // is it safe?
     void RequestResetEngine();
 };

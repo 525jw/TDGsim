@@ -56,7 +56,7 @@
             "duration": 180,
             "rate": "SUSTAINED"
           },
-          "point": [
+          "Point": [
             85.0,
             31.0
           ]
@@ -84,7 +84,7 @@
             "duration": 180,
             "rate": "SUSTAINED"
           },
-          "point": [
+          "Point": [
             76.0,
             55.0
           ]
@@ -110,7 +110,7 @@
         }
       },
       "where": {
-        "point": [
+        "Point": [
           12.0,
           60.0
         ],
@@ -141,7 +141,7 @@
         }
       },
       "where": {
-        "point": [
+        "Point": [
           75.0,
           30.0
         ],
@@ -170,7 +170,7 @@
         }
       },
       "where": {
-        "point": [
+        "Point": [
           78.0,
           66.0
         ],
@@ -200,7 +200,7 @@
         }
       },
       "where": {
-        "point": [
+        "Point": [
           24.0,
           46.0
         ],

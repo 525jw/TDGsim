@@ -44,7 +44,7 @@ public:
     virtual bool ExtTransFn(const std::string& inPort, const std::any& anyMessage) {return false;}
     virtual bool IntTransFn() {return false;}
     virtual bool OutputFn() {return false;}
-    virtual float TimeAdvanceFn() {return -1;}
+    virtual float TimeAdvanceFn() {return -1;} // return -1 for error - likely no "STATE" defined
 
     bool IsAtomic() const override { return true; }
 

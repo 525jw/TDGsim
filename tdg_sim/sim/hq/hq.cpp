@@ -3,7 +3,7 @@
 // ------------- HQ class -------------
 HQ::HQ(Engine* engine,
        std::vector<int>* memberIds,
-       Side side,
+       SideType side,
        std::string ordersFile)
     : AtomicModel(engine),
       hqSide(side),

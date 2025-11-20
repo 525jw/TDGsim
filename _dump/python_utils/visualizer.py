@@ -275,20 +275,20 @@ def load_map(map_path: str) -> Tuple[dict, Dict[str, Tuple[int, int]], Dict[str,
 
     return spec, units_pos, info
 
-def _add_candidate_point(target: Set[Tuple[int, int]], candidate) -> None:
+def _add_candidate_Point(target: Set[Tuple[int, int]], candidate) -> None:
     """Normalize assorted JSON coordinate formats into integer grid cells."""
     if candidate is None:
         return
     if isinstance(candidate, dict):
         if "x" in candidate and "y" in candidate:
-            _add_candidate_point(target, (candidate["x"], candidate["y"]))
+            _add_candidate_Point(target, (candidate["x"], candidate["y"]))
             return
-        for key in ("cell", "point", "pos", "position", "coord"):
+        for key in ("cell", "Point", "pos", "position", "coord"):
             if key in candidate:
-                _add_candidate_point(target, candidate[key])
-        for key in ("cells", "points", "positions", "coords", "tiles", "route"):
+                _add_candidate_Point(target, candidate[key])
+        for key in ("cells", "Points", "positions", "coords", "tiles", "route"):
             if key in candidate:
-                _add_candidate_point(target, candidate[key])
+                _add_candidate_Point(target, candidate[key])
         return
     if isinstance(candidate, (list, tuple)):
         if len(candidate) == 2:
@@ -300,7 +300,7 @@ def _add_candidate_point(target: Set[Tuple[int, int]], candidate) -> None:
             target.add((x, y))
         else:
             for item in candidate:
-                _add_candidate_point(target, item)
+                _add_candidate_Point(target, item)
 
 def collect_objective_cells(spec: dict, unit_name: str) -> Set[Tuple[int, int]]:
     """Extract every destination cell declared for the given unit in map.json."""
@@ -309,34 +309,34 @@ def collect_objective_cells(spec: dict, unit_name: str) -> Set[Tuple[int, int]]:
     objectives = spec.get("objectives")
     if isinstance(objectives, dict):
         if unit_name in objectives:
-            _add_candidate_point(cells, objectives[unit_name])
+            _add_candidate_Point(cells, objectives[unit_name])
         for value in objectives.values():
             if isinstance(value, dict) and base_unit_name(value.get("unit") or "") == unit_name:
-                for key in ("cells", "points", "positions", "coords", "tiles", "route"):
+                for key in ("cells", "Points", "positions", "coords", "tiles", "route"):
                     if key in value:
-                        _add_candidate_point(cells, value[key])
+                        _add_candidate_Point(cells, value[key])
                 if "x" in value and "y" in value:
-                    _add_candidate_point(cells, (value["x"], value["y"]))
+                    _add_candidate_Point(cells, (value["x"], value["y"]))
     elif isinstance(objectives, list):
         for entry in objectives:
             if isinstance(entry, dict):
                 candidate_name = entry.get("unit") or entry.get("uid") or entry.get("name") or ""
                 if base_unit_name(candidate_name) != unit_name:
                     continue
-                for key in ("cells", "points", "positions", "coords", "tiles", "route"):
+                for key in ("cells", "Points", "positions", "coords", "tiles", "route"):
                     if key in entry:
-                        _add_candidate_point(cells, entry[key])
+                        _add_candidate_Point(cells, entry[key])
                 if "x" in entry and "y" in entry:
-                    _add_candidate_point(cells, (entry["x"], entry["y"]))
+                    _add_candidate_Point(cells, (entry["x"], entry["y"]))
             else:
-                _add_candidate_point(cells, entry)
+                _add_candidate_Point(cells, entry)
 
     for unit_spec in spec.get("units", []):
         if base_unit_name(unit_spec.get("uid") or unit_spec.get("name") or "") != unit_name:
             continue
         for key in ("objectives", "objective", "destinations", "destination", "route", "routes"):
             if key in unit_spec:
-                _add_candidate_point(cells, unit_spec[key])
+                _add_candidate_Point(cells, unit_spec[key])
 
     return cells
 

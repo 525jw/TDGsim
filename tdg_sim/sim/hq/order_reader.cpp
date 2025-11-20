@@ -9,10 +9,10 @@ TaskType ParseTaskType(const std::string& value) noexcept {
     return TaskType::HOLD;
 }
 
-Point ParsePoint(const json& pointNode) noexcept {
-    if (!pointNode.is_array() || pointNode.size() < 2u) return {0, 0};
-    const auto& x = pointNode[0];
-    const auto& y = pointNode[1];
+Point ParsePoint(const json& PointNode) noexcept {
+    if (!PointNode.is_array() || PointNode.size() < 2u) return {0, 0};
+    const auto& x = PointNode[0];
+    const auto& y = PointNode[1];
     if (!x.is_number() || !y.is_number()) return {0, 0};
     Point p{};
     p.x = static_cast<int>(x.get<double>());
@@ -20,7 +20,7 @@ Point ParsePoint(const json& pointNode) noexcept {
     return p;
 }
 
-std::optional<Side> ParseSideFromWho(const json& whoNode) noexcept {
+std::optional<SideType> ParseSideFromWho(const json& whoNode) noexcept {
     auto sideIt = whoNode.find("side");
     if (sideIt == whoNode.end() || !sideIt->is_string()) return std::nullopt;
 
@@ -31,14 +31,14 @@ std::optional<Side> ParseSideFromWho(const json& whoNode) noexcept {
         normalized.push_back(static_cast<char>(std::toupper(ch)));
     }
 
-    if (normalized == "BLUE") return Side::BLUE;
-    if (normalized == "RED")  return Side::RED;
+    if (normalized == "BLUE") return SideType::BLUE;
+    if (normalized == "RED")  return SideType::RED;
     return std::nullopt;
 }
 } // namespace
 
 CompanyOrd LoadOrderFromFile(const std::string& path,
-                             Side sideFilter,
+                             SideType sideFilter,
                              const std::unordered_set<int>& allowedRecipients) {
     CompanyOrd companyOrder;
     std::ifstream input(path);
@@ -133,18 +133,18 @@ CompanyOrd LoadOrderFromFile(const std::string& path,
 
         auto whereIt = entry.find("where");
         if (whereIt != entry.end() && whereIt->is_object()) {
-            auto pointIt = whereIt->find("point");
-            if (pointIt != whereIt->end()) {
-                destination = ParsePoint(*pointIt);
+            auto PointIt = whereIt->find("Point");
+            if (PointIt != whereIt->end()) {
+                destination = ParsePoint(*PointIt);
                 hasDestination = true;
             }
         }
         if (!hasDestination && whatIt != entry.end() && whatIt->is_object()) {
             auto paramsIt = whatIt->find("task_params");
             if (paramsIt != whatIt->end() && paramsIt->is_object()) {
-                auto pointIt = paramsIt->find("point");
-                if (pointIt != paramsIt->end()) {
-                    destination = ParsePoint(*pointIt);
+                auto PointIt = paramsIt->find("Point");
+                if (PointIt != paramsIt->end()) {
+                    destination = ParsePoint(*PointIt);
                     hasDestination = true;
                 }
             }

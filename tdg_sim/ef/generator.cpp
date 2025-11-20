@@ -11,7 +11,7 @@ Generator::Generator(Engine* engine)
     this->AddInputPort("Restart");
     this->AddOutputPort("Start");
 
-    randomSeed_ = GenerateRandomSeed();
+    seed_ = GenerateRandomSeed();
     this->UpdateTime(0.0f); // TODO : In dynamic DEVS, this value can be modified later
 }
 
@@ -24,7 +24,13 @@ unsigned int Generator::GenerateRandomSeed() {
 
 bool Generator::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
     if(inPort == "Restart" && this->GetCurState() == "WAIT"){
-        
+        RestartMsg msg;
+        if (!TryCastMessage(anyMessage, msg, "Generator::ExtTransFn.Restart")) return false;
+
+        if (msg.needChangeSeed) seed_ = GenerateRandomSeed();
+        if (msg.needChangeScenario)
+
+        this->SetCurState("GENERATE");
     }
     return true;
 }
@@ -33,7 +39,7 @@ bool Generator::OutputFn() {
         if(!LoadScenarioFromJson(scenarioPath_, scenario_)){
             // error
         }
-        if(scenario_.seed == 0 ) scenario_.seed = randomSeed_;
+        if(scenario_.seed == 0 ) scenario_.seed = seed_;
 
         StartMsg message;
         message.scen = &scenario_;     
@@ -70,9 +76,9 @@ static TerrainType parseTerrainType(const std::string& s){
     if (k == "river" || k == "water") return TerrainType::RIVER;
     return TerrainType::PLAIN;
 }
-static Side parseSide(const std::string& s){
+static SideType parseSide(const std::string& s){
     std::string k = to_lower(s);
-    return (k == "red") ? Side::RED : Side::BLUE;
+    return (k == "red") ? SideType::RED : SideType::BLUE;
 }
 static ForceType parseForceType(const std::string& s){
     std::string k = to_lower(s);
