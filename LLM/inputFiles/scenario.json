@@ -1,0 +1,25 @@
+{
+  "id": "scenario_01",
+
+  "size": { "w": 100, "h": 150 },
+
+  "goal": [
+    { "id": "BG_Obj1", "score": 0.2, "x1": 21, "y1": 84, "x2": 37, "y2": 100 },
+    { "id": "BG_Obj2", "score": 0.3, "x1": 63, "y1": 84, "x2": 79, "y2": 100 },
+    { "id": "BG_Obj3", "score": 0.5, "x1": 53, "y1": 15, "x2": 80, "y2": 25 }
+  ],
+  "terrain": [
+    { "id": "River1",   "kind": "water",  "x1": 0,  "y1": 73, "x2": 99, "y2": 77 },
+    { "id": "Bridge1", "kind": "bridge", "x1": 30, "y1": 73, "x2": 33, "y2": 77 },
+    { "id": "Bridge2", "kind": "bridge", "x1": 70, "y1": 73, "x2": 73, "y2": 77 }
+  ],
+  "entity": [
+    { "id": "BLUE-PLT1", "side": "BLUE", "type": "rifle",     "count": 25, "anchor": { "x": 23, "y": 88 } },
+    { "id": "BLUE-PLT2", "side": "BLUE", "type": "rifle",     "count": 25, "anchor": { "x": 70, "y": 123 } },
+    { "id": "BLUE-PLT3", "side": "BLUE", "type": "rifle",     "count": 25, "anchor": { "x": 32, "y": 100 } },
+    { "id": "RED-PLT1",  "side": "RED",  "type": "rifle",     "count": 25, "anchor": { "x": 73, "y": 3 } },
+    { "id": "RED-PLT2",  "side": "RED",  "type": "rifle",     "count": 25, "anchor": { "x": 70, "y": 88 } },
+    { "id": "RED-PLT3",  "side": "RED",  "type": "rifle",     "count": 25, "anchor": { "x": 25, "y": 48 } },
+    { "id": "BLUE-ART",  "side": "BLUE", "type": "artillery", "count": 1,  "anchor": { "x": 10, "y": 130 } }
+  ]
+}
