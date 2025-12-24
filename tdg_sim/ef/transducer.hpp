@@ -3,15 +3,17 @@
 #include "tdg_sim/common.hpp"
 #include "tdg_sim/sim/environment/environment.hpp"
 #include "tdg_sim/sim/simulation.hpp"
+#include "tdg_sim/path.hpp"
 
 class Transducer : public AtomicModel{
 private:
     Result    result_;
-    float simulationEndTime_ = 3600.0f; // 시뮬레이션 종료 시간 (초)
+    std::vector<std::pair<float, Rect>> goalRects_;
 
-    bool ReadMapFromJSON(const std::string& path, nlohmann::json& j);
-    bool ReadResultFromSimulation(Result& result);
-    bool StoreResultToCSV(const std::string& path, const Result& result);
+    int experimentIndex_ = -1; // 몇 번째 실험인지
+
+    bool ReadResultFromSim(Result& result);
+    bool StoreResultCSV(const std::string_view& path, const Result& result);
 public:
     Transducer(Engine* engine);
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "SIM/Environment/environment.hpp"
+#include "tdg_sim/sim/environment/environment.hpp"
 #include <unordered_map>
 #include <vector>
 #include <string>

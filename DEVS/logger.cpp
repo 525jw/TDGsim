@@ -9,8 +9,21 @@
 Logger::Logger(const std::string& filename, std::size_t maxLines)
     : maxLines_(maxLines)
 {
-    namespace fs = std::filesystem;
+    Reopen(filename, true);
+}
 
+Logger::~Logger() {
+    if (outFile_.is_open()) outFile_.close();
+}
+
+void Logger::Reopen(const std::string& filename, bool truncate) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    if (outFile_.is_open()) {
+        outFile_.close();
+        outFile_.clear();
+    }
+
+    namespace fs = std::filesystem;
     try {
         fs::path p{filename};
         if (p.has_parent_path() && !p.parent_path().empty())
@@ -19,15 +32,15 @@ Logger::Logger(const std::string& filename, std::size_t maxLines)
         std::cerr << "[Logger] Failed to create directory, continuing anyway.\n";
     }
 
-    outFile_.open(filename, std::ios::out | std::ios::trunc);
+    std::ios_base::openmode mode = std::ios::out;
+    mode |= truncate ? std::ios::trunc : std::ios::app;
+    outFile_.open(filename, mode);
     if (!outFile_.is_open()) {
         std::cerr << "[Logger] '" << filename
                   << "' logs will be printed to console only.\n";
+        return;
     }
-}
-
-Logger::~Logger() {
-    if (outFile_.is_open()) outFile_.close();
+    lineCount_ = 0;
 }
 
 Logger& Logger::operator<<(std::ostream& (*manip)(std::ostream&)) {
@@ -66,11 +79,37 @@ std::string ToFixedString(float value, int precision) {
 
 /* ───────────── 전역 로거 정의 ───────────── */
 #ifndef DISABLE_LOG
-Logger logger_system{"logs/log_system.txt",0};
-Logger logger_simulation {"logs/log_simulation.txt",0};
+namespace {
+constexpr char kSystemLogDefaultPath[]     = "logs/log_system.txt";
+constexpr char kSimulationLogDefaultPath[] = "logs/log_simulation.txt";
+
+std::string BuildExperimentLogPath(const std::string& basePath,
+                                   int experimentIndex) {
+    namespace fs = std::filesystem;
+    int clampedIndex = (experimentIndex < 1) ? 1 : experimentIndex;
+    fs::path base{basePath};
+    std::ostringstream filename;
+    filename << base.stem().string()
+             << "_exp"
+             << std::setfill('0') << std::setw(3) << clampedIndex
+             << base.extension().string();
+    fs::path next = base;
+    next.replace_filename(filename.str());
+    return next.string();
+}
+}  // namespace
+
+Logger logger_system{kSystemLogDefaultPath,0};
+Logger logger_simulation {kSimulationLogDefaultPath,0};
+
+void ConfigureLogFiles(int experimentIndex) {
+    logger_system.Reopen(BuildExperimentLogPath(kSystemLogDefaultPath, experimentIndex), true);
+    logger_simulation.Reopen(BuildExperimentLogPath(kSimulationLogDefaultPath, experimentIndex), true);
+}
 #else
 DummyLogger logger_system;
 DummyLogger logger_simulation;
+void ConfigureLogFiles(int) {}
 #endif
 
 /* ───────────── 기타 로그 API ───────────── */

@@ -4,7 +4,7 @@
 #include "tdg_sim/common.hpp"
 #include "tdg_sim/sim/environment/environment.hpp"
 #include "tdg_sim/sim/infantry/soldier/soldier.hpp"
-#include "tdg_sim/sIM/infantry/platoon_leader/platoon_leader.hpp"
+#include "tdg_sim/sim/infantry/platoon_leader/platoon_leader.hpp"
 #include "tdg_sim/sim/hq/hq.hpp"
 #include "tdg_sim/sim/artillery/artillery.hpp"
 class BlueForce : public CoupledModel{

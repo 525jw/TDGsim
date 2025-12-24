@@ -1,17 +1,17 @@
 #include "hq.hpp"
-#include "order_reader.hpp"
+#include "tdg_sim/data_loader.hpp"
 // ------------- HQ class -------------
 HQ::HQ(Engine* engine,
        std::vector<int>* memberIds,
        SideType side,
-       std::string ordersFile)
+       std::string_view bmlPath)
     : AtomicModel(engine),
-      hqSide(side),
-      ordersFilePath(std::move(ordersFile)) {
+      side_(side),
+      bmlPath_(bmlPath){
     this->engine = engine;
 
     if (memberIds) {
-        this->memberIds.insert(memberIds->begin(), memberIds->end());
+        this->memberIds_.insert(memberIds->begin(), memberIds->end());
     }
 
     this->AddState("WAIT");
@@ -24,11 +24,11 @@ HQ::HQ(Engine* engine,
     AddOutputPort("CompanyOrd");
     AddInputPort("InfantryRep");
 
+    this->UpdateTime(0.0f);
 }
 
 bool HQ::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
     if (inPort == "Start"){
-        // Indirect message — payload contained in json file
         this->SetCurState("DECIDE");
     }else if(inPort == "InfantryRep"){
         this->SetCurState("REPORT");
@@ -37,34 +37,13 @@ bool HQ::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
 }
 bool HQ::OutputFn() {
     if (this->GetCurState() == "DECIDE") {
-        CompanyOrd order = LoadOrderFromFile(
-            ordersFilePath,
-            hqSide,
-            memberIds);
-
-        LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER");
-        if (order.orders.empty()) {
-            LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER"," orders are empty");
-        } else {
-            for (const auto& [entityId, ordList] : order.orders) {
-                for (std::size_t idx = 0; idx < ordList.size(); ++idx) {
-                    const Order& ord = ordList[idx];
-                    std::string taskStr;
-                    switch (ord.task) {
-                        case TaskType::MOVE: taskStr = "MOVE"; break;
-                        case TaskType::BOMBARD: taskStr = "BOMBARD"; break;
-                        case TaskType::HOLD: taskStr = "HOLD"; break;
-                        default: taskStr = "UNKNOWN"; break;
-                    }
-                    if (ord.hasDestination) {
-                        LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER"," entityId=",entityId," idx=",idx," task=",taskStr," to=",ord.to.x,",",ord.to.y);
-                    } else {
-                        LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER"," entityId=",entityId," idx=",idx," task=",taskStr," without destination");
-                    }
-                }
-            }
+        CompanyOrd order;
+        const bool loaded = data_loader::LoadOrderFromFile(this->bmlPath_,this->side_,order);
+        if (!loaded || order.orders.empty()) {
+            LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER"," failed to load file");
+        }else{
+            LogSimulation(this->engine->GetCurrentTime(),this->GetNameWithId(),"LOAD_ORDER");
         }
-
         std::any anyOrder = order;
         this->AddOutputEvent("CompanyOrd", anyOrder);
     }

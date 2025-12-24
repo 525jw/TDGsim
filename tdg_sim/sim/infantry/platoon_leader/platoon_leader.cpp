@@ -2,31 +2,31 @@
 #include <algorithm>
 
 void PlatoonLeader::ResetHoldPlan(const Order& ord) {
-    plan = PlatoonManeuverPlan{};
-    plan.orderedMemberIds = memberIds;
-    plan.success = true;
+    plan_ = PlatoonManeuverPlan{};
+    plan_.orderedMemberIds = memberIds_;
+    plan_.success = true;
     if (ord.hasDestination) {
-        plan.goal = ord.to;
-        plan.currentGoal = ord.to;
+        plan_.goal = ord.to;
+        plan_.currentGoal = ord.to;
     } else {
-        plan.goal = Point{0, 0};
-        plan.currentGoal = plan.goal;
+        plan_.goal = Point{0, 0};
+        plan_.currentGoal = plan_.goal;
     }
 }
 
 bool PlatoonLeader::IsCurrentGoalReached(Environment& environment) const {
-    if (currentTask != TaskType::MOVE) {
+    if (currentTask_ != TaskType::MOVE) {
         return true;
     }
-    if (!plan.success) {
+    if (!plan_.success) {
         return false;
     }
-    if (plan.orderedMemberIds.empty()) {
+    if (plan_.orderedMemberIds.empty()) {
         return true;
     }
-    for (int memberId : plan.orderedMemberIds) {
-        auto goalIt = plan.memberGoalPositions.find(memberId);
-        if (goalIt == plan.memberGoalPositions.end()) {
+    for (int memberId : plan_.orderedMemberIds) {
+        auto goalIt = plan_.memberGoalPositions.find(memberId);
+        if (goalIt == plan_.memberGoalPositions.end()) {
             return false;
         }
         Point currentPos = environment.QueryEntityPosById(memberId);
@@ -38,9 +38,9 @@ bool PlatoonLeader::IsCurrentGoalReached(Environment& environment) const {
 }
 
 bool PlatoonLeader::ActivateNextOrder(Environment& environment) {
-    while (!pendingOrders.empty()) {
-        Order ord = pendingOrders.front();
-        pendingOrders.pop_front();
+    while (!pendingOrders_.empty()) {
+        Order ord = pendingOrders_.front();
+        pendingOrders_.pop_front();
 
         if (ord.task == TaskType::BOMBARD) {
             LogSimulation(this->engine->GetCurrentTime(), this->GetNameWithId(),
@@ -55,24 +55,24 @@ bool PlatoonLeader::ActivateNextOrder(Environment& environment) {
                 continue;
             }
 
-            plan = BuildPlatoonManeuverPlan(memberIds, ord.to);
-            if (!plan.success) {
+            plan_ = BuildPlatoonManeuverPlan(memberIds_, ord.to);
+            if (!plan_.success) {
                 LogSimulation(this->engine->GetCurrentTime(), this->GetNameWithId(),
                               "ORDER_FAILED", "MOVE to=", ord.to.x, ",", ord.to.y,
-                              " reason=", plan.failureReason);
+                              " reason=", plan_.failureReason);
                 continue;
             }
 
-            currentTask = TaskType::MOVE;
-            activeOrder = ord;
+            currentTask_ = TaskType::MOVE;
+            activeOrder_ = ord;
             LogSimulation(this->engine->GetCurrentTime(), this->GetNameWithId(),
                           "ACTIVATE_ORDER", "task=MOVE to=", ord.to.x, ",", ord.to.y);
             return true;
         }
 
         if (ord.task == TaskType::HOLD) {
-            currentTask = TaskType::HOLD;
-            activeOrder = ord;
+            currentTask_ = TaskType::HOLD;
+            activeOrder_ = ord;
             ResetHoldPlan(ord);
             LogSimulation(this->engine->GetCurrentTime(), this->GetNameWithId(),
                           "ACTIVATE_ORDER", "task=HOLD");
@@ -80,8 +80,8 @@ bool PlatoonLeader::ActivateNextOrder(Environment& environment) {
         }
     }
 
-    activeOrder.reset();
-    currentTask = TaskType::HOLD;
+    activeOrder_.reset();
+    currentTask_ = TaskType::HOLD;
     Order idle;
     idle.task = TaskType::HOLD;
     idle.hasDestination = false;
@@ -94,7 +94,7 @@ PlatoonLeader::PlatoonLeader(Engine* engine, int entityId, std::vector<int> *mem
 {
     this->entityId = entityId;
     if (membersId) {
-        this->memberIds = *membersId;
+        this->memberIds_ = *membersId;
     }
 
     this->AddState("WAIT");
@@ -123,24 +123,35 @@ bool PlatoonLeader::ExtTransFn(const std::string& inPort, const std::any& anyMes
 
         // Clear existing pending orders and queue new ones
         // ***Input CompanyOrd replaces all previous orders***
-        pendingOrders.clear();
         const auto& ordList = it->second;
+        if (!ordList.empty()) {
+            const std::size_t orderCount = ordList.size();
+            for (int memberId : memberIds_) {
+                if (memberId == this->entityId) {
+                    continue;
+                }
+                auto& memberOrders = message.orders[memberId];
+                memberOrders.reserve(memberOrders.size() + orderCount);
+                memberOrders.insert(memberOrders.end(), ordList.begin(), ordList.end());
+            }
+        }
+        pendingOrders_.clear();
         for (const Order& ord : ordList) {
             if (ord.task == TaskType::HOLD && ord.hasDestination) {
                 Order moveOrder = ord;
                 moveOrder.task = TaskType::MOVE;
-                pendingOrders.push_back(moveOrder);
+                pendingOrders_.push_back(moveOrder);
             }
-            pendingOrders.push_back(ord);
+            pendingOrders_.push_back(ord);
         }
-        activeOrder.reset();
-        plan = PlatoonManeuverPlan{};
-        plan.orderedMemberIds = memberIds;
-        plan.success = true;
-        currentTask = TaskType::HOLD;
+        activeOrder_.reset();
+        plan_ = PlatoonManeuverPlan{};
+        plan_.orderedMemberIds = memberIds_;
+        plan_.success = true;
+        currentTask_ = TaskType::HOLD;
 
         LogSimulation(this->engine->GetCurrentTime(), this->GetNameWithId(),
-                      "QUEUE_ORDERS", "count=", pendingOrders.size());
+                      "QUEUE_ORDERS", "count=", pendingOrders_.size());
 
         this->SetCurState("DECIDE");
         this->t_dec = 0.0f;
@@ -177,10 +188,10 @@ bool PlatoonLeader::OutputFn() {
             }
         };
 
-        for (int memberId : memberIds) {
+        for (int memberId : memberIds_) {
             markMissing(memberId);
         }
-        for (int memberId : plan.orderedMemberIds) {
+        for (int memberId : plan_.orderedMemberIds) {
             markMissing(memberId);
         }
         if (missing.empty()) {
@@ -198,41 +209,41 @@ bool PlatoonLeader::OutputFn() {
                 ids.end());
         };
 
-        eraseMissingFromVec(memberIds);
-        eraseMissingFromVec(plan.orderedMemberIds);
+        eraseMissingFromVec(memberIds_);
+        eraseMissingFromVec(plan_.orderedMemberIds);
 
         for (int memberId : missing) {
-            plan.memberStartPositions.erase(memberId);
-            plan.memberGoalPositions.erase(memberId);
-            plan.memberPaths.erase(memberId);
-            plan.memberPathIndices.erase(memberId);
+            plan_.memberStartPositions.erase(memberId);
+            plan_.memberGoalPositions.erase(memberId);
+            plan_.memberPaths.erase(memberId);
+            plan_.memberPathIndices.erase(memberId);
         }
 
-        if (plan.orderedMemberIds.empty()) {
-            plan.memberStartPositions.clear();
-            plan.memberGoalPositions.clear();
-            plan.memberPaths.clear();
-            plan.memberPathIndices.clear();
-            plan.success = true;
-            plan.failureReason.clear();
+        if (plan_.orderedMemberIds.empty()) {
+            plan_.memberStartPositions.clear();
+            plan_.memberGoalPositions.clear();
+            plan_.memberPaths.clear();
+            plan_.memberPathIndices.clear();
+            plan_.success = true;
+            plan_.failureReason.clear();
         }
     };
 
     pruneMissingMembers();
 
     auto ensureActiveOrder = [&]() -> bool {
-        if (!activeOrder.has_value()) {
+        if (!activeOrder_.has_value()) {
             return ActivateNextOrder(environment);
         }
-        if (currentTask == TaskType::MOVE && IsCurrentGoalReached(environment)) {
+        if (currentTask_ == TaskType::MOVE && IsCurrentGoalReached(environment)) {
             return ActivateNextOrder(environment);
         }
-        return activeOrder.has_value();
+        return activeOrder_.has_value();
     };
 
     if (!ensureActiveOrder()) {
-        order.orders.reserve(memberIds.size());
-        for (int memberId : memberIds) {
+        order.orders.reserve(memberIds_.size());
+        for (int memberId : memberIds_) {
             Order holdOrder;
             holdOrder.task = TaskType::HOLD;
             holdOrder.hasDestination = true;
@@ -245,9 +256,9 @@ bool PlatoonLeader::OutputFn() {
         return true;
     }
 
-    if (this->currentTask == TaskType::HOLD) {
-        order.orders.reserve(memberIds.size());
-        for (int memberId : memberIds) {
+    if (this->currentTask_ == TaskType::HOLD) {
+        order.orders.reserve(memberIds_.size());
+        for (int memberId : memberIds_) {
             Order holdOrder;
             holdOrder.task = TaskType::HOLD;
             holdOrder.hasDestination = true;
@@ -260,42 +271,42 @@ bool PlatoonLeader::OutputFn() {
         return true;
     }
 
-    if (this->currentTask == TaskType::MOVE) {
-        if (!plan.success) {
+    if (this->currentTask_ == TaskType::MOVE) {
+        if (!plan_.success) {
             if (!ActivateNextOrder(environment)) {
                 return true;
             }
-            if (currentTask != TaskType::MOVE) {
+            if (currentTask_ != TaskType::MOVE) {
                 return this->OutputFn();
             }
         }
 
-        if (plan.orderedMemberIds.empty()) {
+        if (plan_.orderedMemberIds.empty()) {
             return true;
         }
 
-        order.orders.reserve(plan.orderedMemberIds.size());
+        order.orders.reserve(plan_.orderedMemberIds.size());
 
         auto alignPlanWithEnvironment = [&]() -> bool {
-            for (int memberId : plan.orderedMemberIds) {
+            for (int memberId : plan_.orderedMemberIds) {
                 Point currentPos = environment.QueryEntityPosById(memberId);
                 if (!environment.InBounds(currentPos)) {
                     return false;
                 }
 
-                auto pathIt = plan.memberPaths.find(memberId);
-                if (pathIt == plan.memberPaths.end()) {
+                auto pathIt = plan_.memberPaths.find(memberId);
+                if (pathIt == plan_.memberPaths.end()) {
                     return false;
                 }
                 const std::vector<Point>& path = pathIt->second;
                 if (path.empty()) {
-                    plan.memberPathIndices[memberId] = 0;
+                    plan_.memberPathIndices[memberId] = 0;
                     continue;
                 }
 
                 std::size_t idx = 0;
-                auto idxIt = plan.memberPathIndices.find(memberId);
-                if (idxIt != plan.memberPathIndices.end()) {
+                auto idxIt = plan_.memberPathIndices.find(memberId);
+                if (idxIt != plan_.memberPathIndices.end()) {
                     idx = idxIt->second;
                     if (idx >= path.size()) {
                         idx = path.size() - 1;
@@ -309,13 +320,13 @@ bool PlatoonLeader::OutputFn() {
                     }
                     idx = static_cast<std::size_t>(std::distance(path.begin(), found));
                 }
-                plan.memberPathIndices[memberId] = idx;
+                plan_.memberPathIndices[memberId] = idx;
             }
             return true;
         };
 
         if (!alignPlanWithEnvironment()) {
-            if (!RebuildPlatoonWayPointPlan(plan, plan.activeWayPoint)) {
+            if (!RebuildPlatoonWayPointPlan(plan_, plan_.activeWayPoint)) {
                 return true;
             }
             if (!alignPlanWithEnvironment()) {
@@ -323,17 +334,17 @@ bool PlatoonLeader::OutputFn() {
             }
         }
 
-        for (int memberId : plan.orderedMemberIds) {
+        for (int memberId : plan_.orderedMemberIds) {
             Point currentPos = environment.QueryEntityPosById(memberId);
             Order memberOrder;
             memberOrder.task = TaskType::HOLD;
             memberOrder.hasDestination = true;
             memberOrder.to = currentPos;
 
-            auto pathIt = plan.memberPaths.find(memberId);
-            if (pathIt == plan.memberPaths.end() || pathIt->second.empty()) {
-                auto goalIt = plan.memberGoalPositions.find(memberId);
-                if (goalIt != plan.memberGoalPositions.end()) {
+            auto pathIt = plan_.memberPaths.find(memberId);
+            if (pathIt == plan_.memberPaths.end() || pathIt->second.empty()) {
+                auto goalIt = plan_.memberGoalPositions.find(memberId);
+                if (goalIt != plan_.memberGoalPositions.end()) {
                     memberOrder.to = goalIt->second;
                 }
                 order.orders.emplace(memberId, memberOrder);
@@ -342,20 +353,20 @@ bool PlatoonLeader::OutputFn() {
 
             const std::vector<Point>& path = pathIt->second;
             std::size_t idx = 0;
-            auto idxIt = plan.memberPathIndices.find(memberId);
-            if (idxIt != plan.memberPathIndices.end()) {
+            auto idxIt = plan_.memberPathIndices.find(memberId);
+            if (idxIt != plan_.memberPathIndices.end()) {
                 idx = idxIt->second;
             }
             if (idx >= path.size()) {
                 idx = path.size() - 1;
-                plan.memberPathIndices[memberId] = idx;
+                plan_.memberPathIndices[memberId] = idx;
             }
 
             if (path[idx] != currentPos) {
                 auto found = std::find(path.begin(), path.end(), currentPos);
                 if (found != path.end()) {
                     idx = static_cast<std::size_t>(std::distance(path.begin(), found));
-                    plan.memberPathIndices[memberId] = idx;
+                    plan_.memberPathIndices[memberId] = idx;
                 } else {
                     order.orders.emplace(memberId, memberOrder);
                     continue;
@@ -367,11 +378,11 @@ bool PlatoonLeader::OutputFn() {
                 if (nextTarget != currentPos) {
                     memberOrder.task = TaskType::MOVE;
                     memberOrder.to = nextTarget;
-                    plan.memberPathIndices[memberId] = idx + 1;
+                    plan_.memberPathIndices[memberId] = idx + 1;
                 }
             } else {
-                auto goalIt = plan.memberGoalPositions.find(memberId);
-                if (goalIt != plan.memberGoalPositions.end()) {
+                auto goalIt = plan_.memberGoalPositions.find(memberId);
+                if (goalIt != plan_.memberGoalPositions.end()) {
                     memberOrder.to = goalIt->second;
                 }
             }

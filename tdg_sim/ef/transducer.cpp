@@ -9,32 +9,38 @@ Transducer::Transducer(Engine* engine)
     this->SetCurState("WAIT");
     
     this->AddInputPort("Start");
-    this->AddOutputPort("Restart");
+    // this->AddOutputPort("Restart");
 
     this->UpdateTime(0.0f);
 }
 
 bool Transducer::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
     if(inPort == "Start" && this->GetCurState() == "WAIT"){
+        StartMsg msg;
+        if (!TryCastMessage(anyMessage, msg, "Transducer::ExtTransFn.Start")) return false;
+        this->goalRects_ = msg.scen->goalRects;
+        this->experimentIndex_ = msg.experimentIndex;
         this->SetCurState("RESTART");
     }
     return true;
 }
 bool Transducer::OutputFn() {
     if (this->GetCurState() == "RESTART") {
+        LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"SIM ENDS");
         // gather result data from Environment
-        if (!this->ReadResultFromSimulation(this->result_)) {
+        if (!this->ReadResultFromSim(this->result_)) {
             LogError(this->engine->GetCurrentTime(), this->GetName(), "Failed to read data from Environment.");
         }
         // write result to CSV - this might not obey DEVS rules strictly, it should be implemented by event transmission: 
-        if (!this->StoreResultToCSV(RESULT_PATH, this->result_)) {
+        if (!this->StoreResultCSV(path::RESULT_CSV, this->result_)) {
             LogError(this->engine->GetCurrentTime(), this->GetName(), "Failed to store result to CSV.");
         }
-        RestartMsg message;
-        message.needChangeScenario = false;
-        message.needChangeSeed = false;
-        std::any anyMessage = message;
-        this->AddOutputEvent("Restart",anyMessage);
+        // EF 개념 공부하고 다시 구현 필요
+        // RestartMsg message;
+        // message.needChangeScenario = false;
+        // message.needChangeSeed = true;
+        // std::any anyMessage = message;
+        // this->AddOutputEvent("Restart",anyMessage);
     }
     return true;
 }
@@ -46,31 +52,82 @@ bool Transducer::IntTransFn() {
 }
 
 float Transducer::TimeAdvanceFn() {
-    if (this->GetCurState() == "RESTART") return this->simulationEndTime_;
+    if (this->GetCurState() == "RESTART") return this->engine->GetSimulationEndTime();
     if(this->GetCurState()=="WAIT") return TIME_INF;
     return -1;
 }
-bool Transducer::ReadResultFromSimulation(Result& result) {
+bool Transducer::ReadResultFromSim(Result& result) {
+    // 컬럼헤더 바뀌면 여기도 수정 필요
+    // seed
     result.seed = env->GetSeed();
     std::pair<int,int> initRifleCounts = env->QueryInitialEntityCounts(ForceType::RIFLE);
+    // blueInit
     result.blueInit = initRifleCounts.first;
+    // redInit
     result.redInit  = initRifleCounts.second;
+    // blueCasualties & redCasualties
     std::pair<int,int> aliveRifleCounts = env->QueryEntityCounts(ForceType::RIFLE);
     result.blueCasualties = result.blueInit - aliveRifleCounts.first;
     result.redCasualties  = result.redInit  - aliveRifleCounts.second;
-    result.bgControl.clear();
-    // target area를 MAP_PATH에서 읽어오기
-
-    result.bgControl[1] = env->QueryEntityCounts(ForceType::RIFLE);
+    // bg control info & totalScore
+    result.goalScore.clear();
+    result.goalScore.reserve(this->goalRects_.size());
+    result.totalScore = 0.0f;
+    for (const auto& [scoreWeight, rect] : this->goalRects_) {
+        const auto [blueCount, redCount] = env->QueryEntityCounts(ForceType::DEFAULT, rect);
+        float goalScore = 0.0f;
+        if (blueCount > 0) {
+            goalScore = (redCount == 0) ? scoreWeight : (scoreWeight * 0.5f);
+        }
+        result.goalScore.push_back(goalScore);
+        result.totalScore += goalScore;
+    }
     return true;
 }
 // column headers: seed, blueInit, redInit, blueCasualties, redCasualties, bg control info, totalScore
-bool Transducer::StoreResultToCSV(const std::string& path, const Result& result) {
-    std::ofstream ofs(path, std::ios::app);
+bool Transducer::StoreResultCSV(const std::string_view& path, const Result& result) {
+    const std::string filename(path);
+
+    bool needsHeader = true; 
+    {
+        std::ifstream ifs(filename);
+        if (ifs.is_open()) {
+            std::string firstLine;
+            if (std::getline(ifs, firstLine)) {
+                needsHeader = firstLine.empty();
+            }
+        }
+    }
+
+    std::ios_base::openmode mode = std::ios::out | std::ios::app;
+    std::ofstream ofs(filename, mode);
     if (!ofs.is_open()) {
-        LogError(this->engine->GetCurrentTime(), this->GetName(), "Failed to open result file:", path);
         return false;
     }
-    ofs.close();
+    // 헤더
+    if (needsHeader) {
+        ofs << "expIndex"
+            << ",seed"
+            << ",blueInit"
+            << ",redInit"
+            << ",blueCasualties"
+            << ",redCasualties";
+        for (size_t i = 0; i < result.goalScore.size(); ++i) {
+            ofs << ",goal" << (i + 1);
+        }
+        ofs << ",totalScore\n";
+    }
+    // 데이터
+    ofs << this->experimentIndex_
+        << ',' << result.seed
+        << ',' << result.blueInit
+        << ',' << result.redInit
+        << ',' << result.blueCasualties
+        << ',' << result.redCasualties;
+    for (size_t i = 0; i < result.goalScore.size(); ++i) {
+        ofs << ',' << result.goalScore[i];
+    }
+    ofs << ',' << result.totalScore << '\n';
     return true;
 }
+

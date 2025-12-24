@@ -14,6 +14,7 @@ private:
     std::queue<Event*> eventQueue;
     float currentTime;
     float lastTime;
+    float simulationEndTime = 4000.0f;
 
     std::unordered_map<int, Model*> modelsWithID; // ID ascending from 1
     int  nextModelID = 1;
@@ -27,6 +28,5 @@ public:
     int RegisterModelInEngine(Model* model); // returns registered modelID, or -1 on error
     
     // transducer용 함수
-    void RequestEndSimulation(){ this->currentTime = TIME_INF;} // is it safe?
-    void RequestResetEngine();
+    float GetSimulationEndTime() { return this->simulationEndTime; }
 };

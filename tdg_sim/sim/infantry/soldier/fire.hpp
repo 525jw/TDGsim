@@ -1,8 +1,8 @@
 #pragma once
 #include "DEVS/atomic_model.hpp"
-#include "common.hpp"
+#include "tdg_sim/common.hpp"
 #include "DEVS/logger.hpp"
-#include "SIM/Environment/environment.hpp"
+#include "tdg_sim/sim/environment/environment.hpp"
 
 class Fire : public AtomicModel{
 private:

@@ -64,8 +64,10 @@ struct Scenario {
     int height = 0;                         // 맵 세로
     unsigned int seed = 0;                  // RNG 시드 (0이면 Generator가 생성)
 
+    std::vector<std::pair<float, Rect>> goalRects;    // first: score weight, second: area rect
     std::vector<std::pair<TerrainType, Rect>> terrainRects; // first: terrain type, second: area rect
     std::vector<Entity> entities;
+
 };
 
 // order def
@@ -87,7 +89,7 @@ struct Result{
     int redInit = 0;
     int blueCasualties = 0;
     int redCasualties = 0;
-    std::unordered_map<int, float> bgControl;
+    std::vector<float> goalScore; // 각 목표 지역별로 얻은 점수
     float totalScore = 0.0;
 };
 enum class EnvMoveResponse {
@@ -107,6 +109,9 @@ enum class EnvKillResponse {
 class StartMsg{
 public:
     Scenario* scen;
+    // todo : ef한테만 보내면 되니까 나중에 ef info 같은 메시지로 분리시켜야함
+    int experimentIndex = -1; // 몇 번째 실험인지
+    float simulationEndTime = 0.0f; // 시뮬레이션 종료 시간
 };
 class RestartMsg{
 public:
@@ -120,7 +125,7 @@ public:
 
 class CompanyOrd{
 public:
-    std::unordered_map<int,std::vector<Order>> orders;
+    std::unordered_map<int,std::vector<Order>> orders; 
 };
 class PlatoonOrd{
 public:

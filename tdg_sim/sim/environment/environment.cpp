@@ -4,7 +4,6 @@ Environment::Environment(Engine* engine)
     : AtomicModel(engine)
 {
     this->AddState("IDLE");
-    this->AddState("WAIT");
     // this->AddState("UPDATE");
 
     this->SetCurState("IDLE");
@@ -22,7 +21,7 @@ Environment::~Environment() {
     if (env == this) env = nullptr;
 }
 bool Environment::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
-    if(inPort == "Start" && this->GetCurState()=="IDLE"){ // 초기화
+    if(inPort == "Start"){ // 초기화
         StartMsg message;
         if(!TryCastMessage(anyMessage,message,"")) return false;
         const Scenario& s = *message.scen;
@@ -35,7 +34,7 @@ bool Environment::ExtTransFn(const std::string& inPort, const std::any& anyMessa
         // 지형정보 등록
         terrainMap.assign(height, std::vector<TerrainType>(width, TerrainType::PLAIN));
         for (const auto& r : s.terrainRects) {
-            int x1 = r.x1, y1 = r.y1, x2 = r.x2, y2 = r.y2;
+            int x1 = r.second.x1, y1 = r.second.y1, x2 = r.second.x2, y2 = r.second.y2;
 
             if (x1 > x2) std::swap(x1, x2);
             if (y1 > y2) std::swap(y1, y2);
@@ -45,7 +44,7 @@ bool Environment::ExtTransFn(const std::string& inPort, const std::any& anyMessa
 
             for (int y = y1; y <= y2; ++y) {
                 for (int x = x1; x <= x2; ++x) {
-                    terrainMap[y][x] = r.kind; // TerrainRect.kind == TerrainType
+                    terrainMap[y][x] = r.first;
                 }
             }
         }
@@ -73,7 +72,6 @@ bool Environment::ExtTransFn(const std::string& inPort, const std::any& anyMessa
         }
 
         LogSimulation(this->engine->GetCurrentTime(),this->GetName(),"ENV_INIT","seed=",this->seed);
-        this->SetCurState("WAIT");
     }
     return true;
 }
@@ -94,7 +92,6 @@ bool Environment::OutputFn() {
 
 float Environment::TimeAdvanceFn() {
     if (this->GetCurState() == "IDLE") return TIME_INF;
-    if (this->GetCurState() == "WAIT") return TIME_INF;
     if (this->GetCurState() == "UPDATE") return 0.0f;
     return -1;
 }

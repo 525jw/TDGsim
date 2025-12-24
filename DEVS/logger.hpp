@@ -12,8 +12,8 @@
 /* ───────────── Logger 본체 ───────────── */
 class Logger final {
 public:
-    explicit Logger(const std::string& filename,
-                    std::size_t maxLines = 1'000'000);
+    // explicit Logger(const std::string& filename, std::size_t maxLines = 1'000'000);
+    explicit Logger(const std::string& filename, std::size_t maxLines = 10'000);
     ~Logger();
 
     Logger(const Logger&)            = delete;
@@ -34,6 +34,8 @@ public:
     Logger& operator<<(std::ostream& (*manip)(std::ostream&));
 
     /* 부가 기능 */
+    void        Reopen(const std::string& filename,
+                       bool truncate = true);
     void        setMaxLines(std::size_t max);
     std::size_t lineCount()    const;
     bool        limitReached() const;
@@ -59,6 +61,8 @@ struct DummyLogger {
 extern DummyLogger logger_system;
 extern DummyLogger logger_simulation;
 #endif
+
+void ConfigureLogFiles(int experimentIndex);
 
 /* ───────────── 로그 API ───────────── */
 template <typename... Args>

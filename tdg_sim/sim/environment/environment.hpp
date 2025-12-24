@@ -1,7 +1,7 @@
 #pragma once
 #include "DEVS/atomic_model.hpp"
-#include "common.hpp"
 #include "DEVS/logger.hpp"
+#include "tdg_sim/common.hpp"
 
 class Environment;
 extern Environment* env;

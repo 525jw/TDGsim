@@ -1,15 +1,12 @@
 #include "DEVS/engine.hpp"
 #include "tdg_sim/tdg_sim.hpp"
-#include <cstdlib>
 
 int main(){
     std::puts("TDG starts");
 
     Engine engine;
-
     TdgSim tdgSim(&engine);
     engine.SetRootModel(&tdgSim);
-
     engine.Run();
 
     std::puts("TDG ends");
