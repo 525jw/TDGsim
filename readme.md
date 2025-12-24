@@ -5,3 +5,5 @@ g++ -std=gnu++17 -O2 -I. \
 
 
 .\run_exp.ps1 -Runs <experiment_number>
+
+python visualizer.py --log <log_number>
