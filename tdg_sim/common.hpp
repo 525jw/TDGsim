@@ -89,6 +89,8 @@ struct Result{
     int redInit = 0;
     int blueCasualties = 0;
     int redCasualties = 0;
+    std::vector<int> goalBlueCount; // blue units per goal area
+    std::vector<int> goalRedCount;  // red units per goal area
     std::vector<float> goalScore; // 각 목표 지역별로 얻은 점수
     float totalScore = 0.0;
 };

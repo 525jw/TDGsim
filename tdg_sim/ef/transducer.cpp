@@ -70,11 +70,18 @@ bool Transducer::ReadResultFromSim(Result& result) {
     result.blueCasualties = result.blueInit - aliveRifleCounts.first;
     result.redCasualties  = result.redInit  - aliveRifleCounts.second;
     // bg control info & totalScore
+    const size_t goalCount = this->goalRects_.size();
+    result.goalBlueCount.clear();
+    result.goalRedCount.clear();
     result.goalScore.clear();
-    result.goalScore.reserve(this->goalRects_.size());
+    result.goalBlueCount.reserve(goalCount);
+    result.goalRedCount.reserve(goalCount);
+    result.goalScore.reserve(goalCount);
     result.totalScore = 0.0f;
     for (const auto& [scoreWeight, rect] : this->goalRects_) {
         const auto [blueCount, redCount] = env->QueryEntityCounts(ForceType::DEFAULT, rect);
+        result.goalBlueCount.push_back(blueCount);
+        result.goalRedCount.push_back(redCount);
         float goalScore = 0.0f;
         if (blueCount > 0) {
             goalScore = (redCount == 0) ? scoreWeight : (scoreWeight * 0.5f);
@@ -84,7 +91,7 @@ bool Transducer::ReadResultFromSim(Result& result) {
     }
     return true;
 }
-// column headers: seed, blueInit, redInit, blueCasualties, redCasualties, bg control info, totalScore
+// column headers: seed, blueInit, redInit, blueCasualties, redCasualties, bg control info(red/blue/score per goal), totalScore
 bool Transducer::StoreResultCSV(const std::string_view& path, const Result& result) {
     const std::string filename(path);
 
@@ -112,8 +119,12 @@ bool Transducer::StoreResultCSV(const std::string_view& path, const Result& resu
             << ",redInit"
             << ",blueCasualties"
             << ",redCasualties";
-        for (size_t i = 0; i < result.goalScore.size(); ++i) {
-            ofs << ",goal" << (i + 1);
+        const size_t goalCount = result.goalScore.size();
+        for (size_t i = 0; i < goalCount; ++i) {
+            const size_t idx = i + 1;
+            ofs << ",goal" << idx << "Red"
+                << ",goal" << idx << "Blue"
+                << ",goal" << idx << "Score";
         }
         ofs << ",totalScore\n";
     }
@@ -124,8 +135,11 @@ bool Transducer::StoreResultCSV(const std::string_view& path, const Result& resu
         << ',' << result.redInit
         << ',' << result.blueCasualties
         << ',' << result.redCasualties;
-    for (size_t i = 0; i < result.goalScore.size(); ++i) {
-        ofs << ',' << result.goalScore[i];
+    const size_t goalCount = result.goalScore.size();
+    for (size_t i = 0; i < goalCount; ++i) {
+        ofs << ',' << result.goalRedCount[i]
+            << ',' << result.goalBlueCount[i]
+            << ',' << result.goalScore[i];
     }
     ofs << ',' << result.totalScore << '\n';
     return true;

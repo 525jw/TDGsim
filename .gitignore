@@ -1,4 +1,6 @@
 .vscode/
 logs/
 .env/
-data/result.csv
+data/result.csv/
+data/result_stats_summary.json/
+.exp_results/

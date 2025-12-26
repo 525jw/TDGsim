@@ -1,17 +1,11 @@
 {
   "orders": [
-    { "entity": "BLUE-ART",  "task": "BOMBARD", "point": [25, 48] },
+    { "entity": "BLUE-ART", "task": "BOMBARD", "point": [30,68] },
 
-    { "entity": "BLUE-PLT3", "task": "MOVE",    "to": [28, 90] },
-    { "entity": "BLUE-PLT3", "task": "MOVE",    "to": [31, 82] },
-    { "entity": "BLUE-PLT3", "task": "MOVE",    "to": [31, 68] },
-    { "entity": "BLUE-PLT3", "task": "MOVE",    "to": [40, 60] },
-    { "entity": "BLUE-PLT3", "task": "MOVE",    "to": [50, 50] },
-    { "entity": "BLUE-PLT3", "task": "HOLD" },
+    { "entity": "BLUE-PLT1", "task": "MOVE", "to": [22,90] },
+    { "entity": "BLUE-PLT1", "task": "HOLD" },
 
-    { "entity": "BLUE-PLT1", "task": "MOVE",    "to": [45, 92] },
-    { "entity": "BLUE-PLT1", "task": "MOVE",    "to": [60, 95] },
-    { "entity": "BLUE-PLT1", "task": "MOVE",    "to": [71, 95] },
-    { "entity": "BLUE-PLT1", "task": "HOLD" }
+    { "entity": "BLUE-PLT3", "task": "MOVE", "to": [35,88] },
+    { "entity": "BLUE-PLT3", "task": "HOLD" }
   ]
 }

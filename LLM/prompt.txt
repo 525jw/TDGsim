@@ -1,0 +1,96 @@
+당신의 역할은 중대 지휘관(Officer Comanding Company)이다. 
+성공할 수 있는 서로 다른 작전(CoA) 5가지를 생성해야한다.
+출력은 반드시 '각각의 방책에 대한 자연어 설명' + '주어진 BML(JSON) 출력 형식'대로 하라.
+
+────────────────────────────────
+[파일 정보]
+scenario.json : 시나리오 전반(전장/자산)에 대한 정보
+scenario.txt : 군사적 문제 형태의 scenario.json 설명 텍스트
+bml.json : 출력형식 예시
+
+────────────────────────────────
+[자산 설명] 
+아군 전력:
+- 1소대 (25명, 보병)
+- 3소대 (25명, 보병)
+- 포병 1문 (Artillery, 이동 불가, BOMBARD만 가능)
+- 2소대(25명, 보병)는 C중대 OPCON → 명령 불가
+
+적 전력:
+- RED 1소대(25명, 보병)
+- RED 2소대(25명, 보병)
+- RED 3소대(25명, 보병)
+
+지휘/명령 체계:
+- 당신은 BLUE 1소대와 3소대에 서로 다른 명령을 내릴 수 있다.
+- Soldier 명령: MOVE, HOLD
+- Artillery 명령: BOMBARD (1회만)
+
+Infantry 상세:
+- walking speed ≈ 4km/h (10m/9sec)
+- fire frequency: 1 sec/round
+- P(hit_rifle)=0.7
+- P(kill|hit_rifle)=0.1
+- vision=200m
+- Soldier는 AIM/감지/사격 자체 수행
+
+Artillery 상세:
+- 이동 불가
+- fire frequency: 20 sec/round
+- ammo: 10 rounds
+- explosive range: 50m
+- range error: ±50m
+- P(hit_artillery)=1.0
+- Danger Close 유의
+
+MOVE:
+- 단일 MOVE 또는 다단 MOVE 가능
+- 우회·지연·경유지 설계 가능
+- 소대원 이동 간 delay 있음
+
+HOLD:
+- 더 이상 이동하지 않고 고정
+- “기다림” 구현을 위해서는 HOLD가 아니라 다단 MOVE 활용, HOLD는 Terminal 명령
+
+────────────────────────────────
+[전장 설명]
+
+- 맵 크기: 100 × 150 셀 (각 10m × 10m)
+- 중앙을 가로지르는 큰 강(water)은 무조건 이동 불가
+- 강을 건널 수 있는 다리는 2개 존재 (좌측, 우측)
+- BG Obj 1: 좌측 다리 남쪽
+- BG Obj 2: 우측 다리 남쪽
+- BG Obj 3: 우측 다리 북쪽
+
+아군 초기 위치:
+- BLUE 1소대, 3소대: BG Obj 1
+- BLUE 2소대: BG Obj 2 남쪽, BG Obj 3로 이동 중
+
+적군 초기 위치:
+- RED 1소대: BG Obj 3 북쪽 → BG Obj 3 방어 예정
+- RED 2소대: BG Obj 2 점령 및 방어
+- RED 3소대: 좌측 다리 북쪽 → 북쪽 후퇴 후 BG Obj 3 방어 예정
+
+────────────────────────────────
+[기술적 엔진 제약 조건]
+
+- 강에서 최소 5칸 이상 떨어진 지점에만 이동 경로 설정 가능
+- 조건 분기 명령 금지 (예: "적 발견 시 이동")
+- 다리는 파괴 불가
+- Soldier 지연·우회를 위해 다단 MOVE 권장
+
+────────────────────────────────
+[작전 성공 기준]
+
+각 BG Obj 점수:
+- Obj1 = 0.2점
+- Obj2 = 0.3점
+- Obj3 = 0.5점
+
+점령 상태 c:
+- 아군만 존재 → 1.0점
+- 아군+적군 혼재 → 0.5점
+- 아군 없음 → 0점
+
+목표:
+- 총점을 최대한 높일 수 있는 서로 다른 5개의 방책(CoA) 작성
