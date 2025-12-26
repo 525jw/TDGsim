@@ -42,27 +42,24 @@ HQ::HQ(Engine* engine,
 }
 
 bool HQ::ExtTransFn(const std::string& inPort, const std::any& anyMessage) {
-    auto loadAndAppend = [&](std::string_view path, const char* sourceTag, bool& loadedFlag) {
-        if (loadedFlag) {
-            return;
-        }
-        CompanyOrd order;
-        const bool loaded = data_loader::LoadOrderFromFile(path, this->side_, order);
-        if (!loaded || order.orders.empty()) {
-            LogSimulation(this->engine->GetCurrentTime(), this->GetNameWithId(),
-                          "LOAD_ORDER", "source=", sourceTag, " failed to load file");
-        } else {
-            LogSimulation(this->engine->GetCurrentTime(), this->GetNameWithId(),
-                          "LOAD_ORDER", "source=", sourceTag);
-            AppendOrders(pendingOrders_, order);
-        }
-        loadedFlag = true;
-    };
-
-    if (inPort == "Start"){
+    if(inPort == "Start"){
+        auto loadAndAppend = [&](std::string_view path, const char* sourceTag, bool& loadedFlag) {
+            if (loadedFlag) {
+                return;
+            }
+            CompanyOrd order;
+            const bool loaded = data_loader::LoadOrderFromFile(path, this->side_, order);
+            if (!loaded || order.orders.empty()) {
+                LogSimulation(this->engine->GetCurrentTime(), this->GetNameWithId(),
+                            "LOAD_ORDER", "source=", sourceTag, " failed to load file");
+            } else {
+                LogSimulation(this->engine->GetCurrentTime(), this->GetNameWithId(),
+                            "LOAD_ORDER", "source=", sourceTag);
+                AppendOrders(pendingOrders_, order);
+            }
+            loadedFlag = true;
+        };
         loadAndAppend(this->npcPath_, "npc", npcLoaded_);
-        this->SetCurState("DECIDE");
-    }else if(inPort == "InfantryRep"){
         loadAndAppend(this->bmlPath_, "bml", bmlLoaded_);
         this->SetCurState("DECIDE");
     }

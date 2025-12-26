@@ -1,7 +1,7 @@
 #pragma once
 #include "DEVS/coupled_model.hpp"
 #include "DEVS/logger.hpp"
-#include "tdg_sim/sim/Environment/environment.hpp"
+#include "tdg_sim/sim/environment/environment.hpp"
 #include "blue_force.hpp"
 #include "red_force.hpp"
 
