@@ -10,6 +10,10 @@ private:
     std::unordered_set<int> memberIds_;
     SideType side_; // HQ 소속 진영
     std::string_view bmlPath_;
+    std::string_view npcPath_;
+    CompanyOrd pendingOrders_;
+    bool npcLoaded_ = false;
+    bool bmlLoaded_ = false;
     // devs
     float t_dec = 0.0f;
     float t_rep = 0.0f;
@@ -17,7 +21,8 @@ public:
     HQ(Engine* engine,
        std::vector<int>* membersId,
        SideType side = SideType::BLUE,
-       std::string_view bmlPath = path::BML_JSON);
+       std::string_view bmlPath = path::BML_JSON,
+       std::string_view npcPath = path::BML_NPC_JSON);
 
     bool ExtTransFn(const std::string& inPort, const std::any& anyMessage);
     bool IntTransFn();

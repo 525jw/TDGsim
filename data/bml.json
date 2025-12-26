@@ -1,23 +1,9 @@
 {
   "orders": [
-    { "entity": "RED-PLT1", "task": "HOLD"},
-    { "entity": "RED-PLT2", "task": "HOLD"},
+    { "entity": "BLUE-ART", "task": "BOMBARD", "point": [72.0, 88.0] },
 
-    { "entity": "BLUE-ART", "task": "BOMBARD", "point": [85,31]},
-    { "entity": "BLUE-ART", "task": "BOMBARD", "point": [76,55]},
-
-    { "entity": "BLUE-TNK", "task": "MOVE", "to": [12,60] },
-    { "entity": "BLUE-TNK", "task": "MOVE", "to": [22,50] },
-
-    { "entity": "BLUE-PLT1", "task": "MOVE", "to": [18,66] },
-    { "entity": "BLUE-PLT1", "task": "MOVE", "to": [20,52] },
-    { "entity": "BLUE-PLT1", "task": "MOVE", "to": [20,46] },
-    { "entity": "BLUE-PLT1", "task": "MOVE", "to": [26,42] },
-
-    { "entity": "BLUE-PLT2", "task": "MOVE", "to": [78,66] },
-    { "entity": "BLUE-PLT2", "task": "MOVE", "to": [70,60] },
-    { "entity": "BLUE-PLT2", "task": "MOVE", "to": [69,52] },
-
-    { "entity": "BLUE-TNK", "task": "MOVE", "to": [24,46] }
+    { "entity": "BLUE-PLT1", "task": "MOVE", "to": [70.0, 86.0] },
+    { "entity": "BLUE-PLT2", "task": "MOVE", "to": [72.0, 20.0] },
+    { "entity": "BLUE-PLT3", "task": "HOLD" }
   ]
 }
