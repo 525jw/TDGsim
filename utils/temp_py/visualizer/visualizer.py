@@ -520,6 +520,8 @@ def playback(
     cell_size: int,
     fps: int,
     step_delay_ms: int,
+    snapshot_count: int,
+    snapshot_dir: Optional[str],
 ) -> None:
     width, height = spec["w"], spec["h"]
     patches = spec.get("patches", [])
@@ -545,6 +547,22 @@ def playback(
 
     running = True
     step_once = False
+
+    snapshot_indices: Set[int] = set()
+    if snapshot_count > 0 and timeline:
+        count = min(snapshot_count, len(timeline))
+        if count == 1:
+            snapshot_indices = {len(timeline) - 1}
+        else:
+            for i in range(count):
+                idx = int(round(i * (len(timeline) - 1) / (count - 1)))
+                snapshot_indices.add(idx)
+    if snapshot_indices and snapshot_dir:
+        os.makedirs(snapshot_dir, exist_ok=True)
+        for name in os.listdir(snapshot_dir):
+            path = os.path.join(snapshot_dir, name)
+            if os.path.isfile(path):
+                os.remove(path)
     while running:
         dt = clock.tick(fps)
         accumulator += dt
@@ -633,6 +651,12 @@ def playback(
 
         pygame.display.flip()
 
+        if snapshot_indices and (current_index - 1) in snapshot_indices and snapshot_dir:
+            file_time = f"{current_time:.2f}".replace(".", "p")
+            snap_name = f"snapshot_{current_index:02d}_t{file_time}.png"
+            pygame.image.save(screen, os.path.join(snapshot_dir, snap_name))
+            snapshot_indices.discard(current_index - 1)
+
     pygame.quit()
 
 # ---------------------- Helpers ----------------------
@@ -664,6 +688,17 @@ def auto_find_log(script_dir: str) -> Optional[str]:
     return None
 
 
+def find_repo_root(start_dir: str) -> str:
+    cur = os.path.abspath(start_dir)
+    while True:
+        if os.path.isdir(os.path.join(cur, ".git")):
+            return cur
+        parent = os.path.dirname(cur)
+        if parent == cur:
+            return start_dir
+        cur = parent
+
+
 def resolve_log_path(arg: str, script_dir: str) -> Optional[str]:
     if not arg:
         return None
@@ -690,23 +725,26 @@ def main() -> None:
     parser.add_argument("--cell", type=int, default=10, help="Pixel size of each map cell.")
     parser.add_argument("--fps", type=int, default=60, help="Render frames per second.")
     parser.add_argument("--interval", type=int, default=600, help="Milliseconds per simulation step.")
+    parser.add_argument("--snapshots", type=int, default=0, help="Number of timeline snapshots to save (0 = off).")
+    parser.add_argument("--snap-dir", default="snapshots", help="Directory to save snapshots.")
     args = parser.parse_args()
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    repo_root = find_repo_root(script_dir)
 
-    map_path = args.map or os.path.join(script_dir, "data", "scenario.json")
+    map_path = args.map or os.path.join(repo_root, "data", "scenario.json")
     if not os.path.isabs(map_path):
-        map_path = os.path.join(script_dir, map_path)
+        map_path = os.path.join(repo_root, map_path)
 
     if args.log:
-        log_path = resolve_log_path(args.log, script_dir)
+        log_path = resolve_log_path(args.log, repo_root)
         if not log_path:
-            auto = auto_find_log(script_dir)
+            auto = auto_find_log(repo_root)
             if not auto:
                 raise FileNotFoundError(f"Log not found: {args.log}")
             log_path = auto
     else:
-        log_path = auto_find_log(script_dir)
+        log_path = auto_find_log(repo_root)
         if not log_path:
             raise FileNotFoundError("No log file found. Put one of these next to the script:\n"
                                     "  logs/log_simulation_exp###.txt, logs/log_simulation.txt, "
@@ -738,6 +776,8 @@ def main() -> None:
         cell_size=args.cell,
         fps=args.fps,
         step_delay_ms=max(50, args.interval),
+        snapshot_count=max(0, args.snapshots),
+        snapshot_dir=os.path.join(script_dir, args.snap_dir) if args.snapshots > 0 else None,
     )
 
 if __name__ == "__main__":
