@@ -1,9 +1,8 @@
 {
   "orders": [
-    { "entity": "RED-PLT1", "task": "MOVE", "to": [72.0, 20.0] },
-    { "entity": "RED-PLT2", "task": "MOVE", "to": [72.0, 89.0] },
-    { "entity": "RED-PLT3", "task": "MOVE", "to": [20.0, 20.0] },
-    { "entity": "RED-PLT3", "task": "MOVE", "to": [63.0, 20.0] },
-    { "entity": "BLUE-PLT2", "task": "MOVE", "to": [72.0, 20.0] }
+    { "entity": "RED-PLT1", "task": "HOLD"},
+    { "entity": "RED-PLT2", "task": "HOLD"},
+    { "entity": "RED-PLT3", "task": "HOLD"},
+    { "entity": "RED-PLT4", "task": "HOLD"}
   ]
 }
