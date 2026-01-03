@@ -1,93 +1,14 @@
 당신의 역할은 중대 지휘관(Officer Comanding Company)이다. 
 성공할 수 있는 서로 다른 작전(CoA) 5가지를 생성해야한다.
+당신이 생성한 방책은 시뮬레이션 된다. 시뮬레이션에 대한 설명은 'rule.txt'을 참고하라. 
+방책이 'rule.txt'를 어긋나지 않도록 항상 참조하라.
+시나리오에 대한 초기 데이터는 'scenario.json', 'scenario_view.png'를 참고하라.
 출력은 반드시 'bml.json' 출력 형식을 포함할 수 있도록 해라.
 각각 방책에 대한 자연어 설명은 'bml.json' 출력 형식과 분리하라. 
 
 ────────────────────────────────
 [파일 정보]
-scenario.json : 시나리오 전반(전장/자산)에 대한 정보
+scenario.json : 시나리오 상 환경/객체의 초기 데이터
+scenario_view.png : 시나리오 상 환경/객체의 초기 사진
 bml.json : 출력형식 예시
-scenario_view.png : 시나리오 초기 상태 사진
-
-────────────────────────────────
-[자산 설명] 
-아군 전력:
-- 보병 1소대,2소대,3소대 (Rifle, 25명)
-- 포병 1문 (Artillery, 이동 불가, BOMBARD만 가능)
-
-적 전력:
-- 보병 1소대,2소대,3소대,4소대 (Rifle, 25명)
-
-지휘/명령 체계:
-- 당신은 1소대, 2소대, 3소대에 서로 다른 명령을 내릴 수 있다.
-- Soldier 명령: MOVE, HOLD
-- Artillery 명령: BOMBARD (1회만)
-
-Infantry 상세:
-- walking speed ≈ 4km/h (10m/9sec)
-- fire frequency: 1 sec/round
-- P(hit_rifle)=0.7
-- P(kill|hit_rifle)=0.1
-- vision=200m
-- Soldier는 AIM/감지/사격 자체 수행
-
-Artillery 상세:
-- 이동 불가
-- fire frequency: 20 sec/round
-- ammo: 10 rounds
-- explosive range: 50m
-- range error: ±50m
-- P(hit_artillery)=1.0
-- Danger Close 유의
-
-MOVE:
-- 단일 MOVE 또는 다단 MOVE 가능
-- 우회·지연·경유지 설계 가능
-- 소대원 이동 간 delay 있음
-
-HOLD:
-- 더 이상 이동하지 않고 고정
-
-────────────────────────────────
-[전장 설명]
-
-- 맵 크기: 150 × 100 셀 (각 10m × 10m)
-- 중앙 큰 강(water)은 무조건 이동 불가
-- 강을 건널 수 있는 다리는 3개 존재 (north side 1개, south side 2개)
-
-목표구역 위치 : 
-- BG_Obj1: south central island
-- BG_Obj2: north east
-- BG_Obj3: south east
-
-아군 초기 위치:
-- north left
-
-적군 초기 위치:
-- RED 1소대: BG_Obj2
-- RED 2소대: BG_Obj2
-- RED 3소대: BG_Obj1
-- RED 4소대: BG_Obj3
-
-────────────────────────────────
-[기술적 엔진 제약 조건]
-
-- 조건 분기 명령 금지 (예: "적 발견 시 이동")
-- 다리는 파괴 불가
-- Soldier 지연·우회를 위해 다단 MOVE 권장
-
-────────────────────────────────
-[작전 성공 기준]
-
-각 BG Obj 점수:
-- Obj1 = 0.25점
-- Obj2 = 0.25점
-- Obj3 = 0.5점
-
-점령 상태 c:
-- 아군만 존재 → 1.0점
-- 아군+적군 혼재 → 0.5점
-- 아군 없음 → 0점
-
-목표:
-- 총점을 최대한 높일 수 있는 서로 다른 5개의 방책(CoA) 작성
+rule.txt : 시뮬레이션 설명
