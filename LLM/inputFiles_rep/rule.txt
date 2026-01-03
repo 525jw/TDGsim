@@ -19,6 +19,7 @@ Infantry 상세:
 - P(kill|hit_rifle)=0.1
 - vision=200m
 - Soldier는 AIM/감지/사격 자체 수행
+- Soldier 간 경로 방해(병목) 없음, 서로 통과 가능
 
 Artillery 상세:
 - 이동 불가

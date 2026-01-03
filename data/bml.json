@@ -1,64 +1,24 @@
 {
   "orders": [
-    {
-      "entity": "BLUE-ART",
-      "task": "BOMBARD",
-      "point": [120, 75]
-    },
+    { "entity": "BLUE-ART", "task": "BOMBARD", "point": [112, 66] },
 
-    {
-      "entity": "BLUE-PLT2",
-      "task": "MOVE",
-      "to": [50, 80]
-    },
-    {
-      "entity": "BLUE-PLT2",
-      "task": "MOVE",
-      "to": [90, 80]
-    },
-    {
-      "entity": "BLUE-PLT2",
-      "task": "MOVE",
-      "to": [118, 80]
-    },
-    {
-      "entity": "BLUE-PLT2",
-      "task": "HOLD"
-    },
+    { "entity": "BLUE-PLT2", "task": "MOVE", "to": [70, 20] },
+    { "entity": "BLUE-PLT2", "task": "MOVE", "to": [84, 38] },
+    { "entity": "BLUE-PLT2", "task": "MOVE", "to": [90, 72] },
+    { "entity": "BLUE-PLT2", "task": "MOVE", "to": [93, 80] },
+    { "entity": "BLUE-PLT2", "task": "MOVE", "to": [120, 76] },
+    { "entity": "BLUE-PLT2", "task": "HOLD" },
 
-    {
-      "entity": "BLUE-PLT3",
-      "task": "MOVE",
-      "to": [50, 80]
-    },
-    {
-      "entity": "BLUE-PLT3",
-      "task": "MOVE",
-      "to": [90, 80]
-    },
-    {
-      "entity": "BLUE-PLT3",
-      "task": "MOVE",
-      "to": [122, 82]
-    },
-    {
-      "entity": "BLUE-PLT3",
-      "task": "HOLD"
-    },
+    { "entity": "BLUE-PLT3", "task": "MOVE", "to": [72, 18] },
+    { "entity": "BLUE-PLT3", "task": "MOVE", "to": [86, 40] },
+    { "entity": "BLUE-PLT3", "task": "MOVE", "to": [92, 74] },
+    { "entity": "BLUE-PLT3", "task": "MOVE", "to": [95, 81] },
+    { "entity": "BLUE-PLT3", "task": "MOVE", "to": [122, 78] },
+    { "entity": "BLUE-PLT3", "task": "HOLD" },
 
-    {
-      "entity": "BLUE-PLT1",
-      "task": "MOVE",
-      "to": [70, 78]
-    },
-    {
-      "entity": "BLUE-PLT1",
-      "task": "MOVE",
-      "to": [74, 82]
-    },
-    {
-      "entity": "BLUE-PLT1",
-      "task": "HOLD"
-    }
+    { "entity": "BLUE-PLT1", "task": "MOVE", "to": [50, 80] },
+    { "entity": "BLUE-PLT1", "task": "MOVE", "to": [70, 78] },
+    { "entity": "BLUE-PLT1", "task": "MOVE", "to": [74, 82] },
+    { "entity": "BLUE-PLT1", "task": "HOLD" }
   ]
 }
