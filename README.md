@@ -6,6 +6,7 @@ g++ -std=gnu++17 -O2 -I. \
   -o tdg.exe && ./tdg.exe
 ### 실험
 .\run_exp.ps1 -Runs <experiment_number>
+./run_exp.sh -r 20
 
 ## Linux
 ### 컴파일&&실행
@@ -17,3 +18,4 @@ g++ -std=gnu++17 -O2 -I. \
 
 ## 시각화
 python visualizer.py --log <log_number> --snapshot <snapshot_number>
+python visualizer.py --log 5 --snapshot 5 --cell 8

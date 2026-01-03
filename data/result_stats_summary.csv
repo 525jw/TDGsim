@@ -1,11 +1,11 @@
 ,avg,min,max
 blueInit,75.0,75.0,75.0
 redInit,100.0,100.0,100.0
-blueCasualties,0.0,0.0,0.0
-redCasualties,69.0,55.0,78.0
+blueCasualties,26.6,13.0,51.0
+redCasualties,49.35,37.0,50.0
 goal1Red,0.0,0.0,0.0
-goal1Blue,15.0,15.0,15.0
-goal2Red,31.0,22.0,45.0
+goal1Blue,23.15,19.0,25.0
+goal2Red,50.0,50.0,50.0
 goal2Blue,0.0,0.0,0.0
-goal3Red,0.0,0.0,0.0
-goal3Blue,50.0,50.0,50.0
+goal3Red,0.65,0.0,13.0
+goal3Blue,25.25,0.0,37.0

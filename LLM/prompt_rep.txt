@@ -10,7 +10,7 @@
 
 ────────────────────────────────
 [파일 정보]
-result_stats_summary.csv : CoA 1 시뮬레이션 결과
+result_stats_summary.csv : CoA 1 시뮬레이션 결과 통계
 snapshot_{number1}_t{number2}p00.png : 시뮬레이션(임의 1개 선택)에 대한 {number2} 시점에서의 snapshot
 bml.json : 출력형식 예시
 rule.txt : 시뮬레이션 설명
