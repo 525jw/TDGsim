@@ -6,7 +6,6 @@ g++ -std=gnu++17 -O2 -I. \
   -o tdg.exe && ./tdg.exe
 ### 실험
 .\run_exp.ps1 -Runs <experiment_number>
-./run_exp.sh -r 20
 
 ## Linux
 ### 컴파일&&실행
