@@ -4,7 +4,7 @@
 - 포병 1문 (Artillery, 이동 불가, BOMBARD만 가능)
 
 적 전력:
-- 보병 1소대,2소대,3소대,4소대,5소대 (Rifle, 25명)
+- 보병 1소대,2소대,3소대,4소대 (Rifle, 25명)
 
 지휘/명령 체계:
 - 당신은 1소대, 2소대, 3소대, 포병에 서로 다른 명령을 내릴 수 있다.
@@ -65,7 +65,6 @@ BOMBARD:
 - RED 2소대: center, defending the west side bridge
 - RED 3소대: BG_Obj1, defending the west side bridge 
 - RED 4소대: north east, moving to defend (reinforce) BG_Obj1
-- RED 5소대: north east, moving to defend (reinforce) BG_Obj1
 
 ────────────────────────────────
 [기술적 엔진 제약 조건]

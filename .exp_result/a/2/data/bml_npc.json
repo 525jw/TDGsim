@@ -1,9 +1,0 @@
-{
-  "orders": [
-    { "entity": "RED-PLT1", "task": "HOLD"},
-    { "entity": "RED-PLT2", "task": "HOLD"},
-    { "entity": "RED-PLT3", "task": "HOLD"},
-    { "entity": "RED-PLT4", "task": "MOVE","to": [15, 15]},
-    { "entity": "RED-PLT5", "task": "MOVE","to": [35, 15]}
-  ]
-}
