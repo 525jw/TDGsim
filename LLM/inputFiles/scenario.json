@@ -136,16 +136,6 @@
       }
     },
     {
-      "id": "RED-PLT5",
-      "side": "RED",
-      "type": "rifle",
-      "count": 25,
-      "anchor": {
-        "x": 144,
-        "y": 7
-      }
-    },
-    {
       "id": "BLUE-ART",
       "side": "BLUE",
       "type": "artillery",
