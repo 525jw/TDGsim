@@ -4,7 +4,7 @@
 - 포병 1문 (Artillery, 이동 불가, BOMBARD만 가능)
 
 적 전력:
-- 보병 1소대,2소대,3소대,4소대 (Rifle, 25명)
+- 보병 1소대,2소대,3소대,4소대,5소대 (Rifle, 25명)
 
 지휘/명령 체계:
 - 당신은 1소대, 2소대, 3소대, 포병에 서로 다른 명령을 내릴 수 있다.
@@ -50,21 +50,22 @@ BOMBARD:
 - orange 셀 : 다리
 - gray 셀 : 목표 구역 
 - 중앙 큰 강(water)은 무조건 이동 불가
-- 강을 건널 수 있는 다리는 3개 존재 (north side 1개, south side 2개)
+- 강을 건널 수 있는 다리는 2개 존재 (west side 1개, east side 1개)
 
 목표구역 위치 : 
-- BG_Obj1: south central island
-- BG_Obj2: north east
+- BG_Obj1: north west
+- BG_Obj2: south west
 - BG_Obj3: south east
 
 아군 초기 위치:
-- north left
+- south west
 
 적군 초기 위치:
-- RED 1소대: BG_Obj2
-- RED 2소대: BG_Obj2
-- RED 3소대: BG_Obj1
-- RED 4소대: BG_Obj3
+- RED 1소대: center, defending the west side bridge
+- RED 2소대: center, defending the west side bridge
+- RED 3소대: BG_Obj1, defending the west side bridge 
+- RED 4소대: north east, moving to defend (reinforce) BG_Obj1
+- RED 5소대: north east, moving to defend (reinforce) BG_Obj1
 
 ────────────────────────────────
 [기술적 엔진 제약 조건]
@@ -77,9 +78,9 @@ BOMBARD:
 [작전 성공 기준]
 
 각 BG Obj 점수 가중치 w:
-- Obj1 = 0.25
-- Obj2 = 0.25
-- Obj3 = 0.5
+- Obj1 = 0.6
+- Obj2 = 0.2
+- Obj3 = 0.2
 
 점령 상태 c:
 - 아군만 존재 → 1.0점
@@ -90,4 +91,4 @@ BOMBARD:
 - sum of w*c
 
 목표:
-- 총점을 최대한 높일 수 있는 서로 다른 5개의 방책(CoA) 작성
+- 총점을 최대한 높일 수 있는 방책(CoA) 작성

@@ -17,4 +17,4 @@ g++ -std=gnu++17 -O2 -I. \
 
 ## 시각화
 python visualizer.py --log <log_number> --snapshot <snapshot_number>
-python visualizer.py --log 5 --snapshot 5 --cell 8
+python visualizer.py --log 3 --snapshot 3 --cell 8
